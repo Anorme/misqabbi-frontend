@@ -1,8 +1,24 @@
 import loginImg from '../assets/login.png';
 import UserAuthForm from '../components/UserAuthForm';
 import { Link } from 'react-router';
+import { useState, useContext } from 'react';
+import AuthContext from '../contexts/AuthContext';
 
 const Login = () => {
+  const { loginUserWithEmail } = useContext(AuthContext) || {};
+  const [error, setError] = useState('');
+
+  // Handler for login form submission
+  const handleLogin = async (username, password) => {
+    setError('');
+    try {
+      // You may want to use email instead of username depending on your backend
+      await loginUserWithEmail(username, password);
+    } catch (err) {
+      setError(err.message || 'Login failed');
+    }
+  };
+
   return (
     <div className="min-h-screen w-screen flex items-center justify-center bg-purple-300 p-0 m-0 font-lato">
       <div
@@ -21,7 +37,8 @@ const Login = () => {
           <h2 className="text-2xl font-bebas font-bold uppercase text-purple-700 text-center mb-6">
             LOGIN
           </h2>
-          <UserAuthForm mode="login" />
+          {error && <p className="text-red-500 text-sm text-center mb-2">{error}</p>}
+          <UserAuthForm mode="login" onSubmit={handleLogin} />
           <Link to="/register" className="text-purple-700 font-medium mt-4 text-center">
             <span className="font-corsiva">Create Account?</span>
           </Link>
