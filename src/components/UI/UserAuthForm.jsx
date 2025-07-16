@@ -118,10 +118,10 @@ const UserAuthForm = () => {
         <input
           type={showPassword ? 'text' : 'password'}
           name="password"
-          placeholder="Enter a password"
+          placeholder={mode === 'register' ? 'Enter a password' : 'enter your password'}
           value={password}
           onChange={handleChange}
-          className="w-full p-3 pr-10 border border-gray-300"
+          className="w-full p-3 pr-10 border border-gray-300 font-medium placeholder:font-medium"
           style={{ borderRadius: '15px' }}
         />
         {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
@@ -133,7 +133,7 @@ const UserAuthForm = () => {
         >
           {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
         </button>
-        {passwordStrength && (
+        {mode === 'register' && passwordStrength && (
           <p
             className={`text-sm mt-1 ${passwordStrength === 'Strong' ? 'text-green-600' : passwordStrength === 'Weak' ? 'text-yellow-600' : 'text-red-600'}`}
           >
@@ -168,7 +168,7 @@ const UserAuthForm = () => {
       <button
         className="w-[60%] mx-auto py-3 rounded-md flex justify-center items-center gap-2 cursor-pointer"
         type="button"
-        onClick={handleGoogleSignIn}
+        onClick={handleGoogle}
       >
         <FcGoogle size={22} />
         Continue with Google
