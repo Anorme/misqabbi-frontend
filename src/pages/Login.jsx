@@ -1,10 +1,6 @@
 import loginImg from '../assets/login.png';
-import UserAuthForm from '../components/UI/UserAuthForm';
+import UserAuthForm from '../components/UserAuthForm';
 import { Link } from 'react-router';
-import { useState, useContext } from 'react';
-import AuthContext from '../contexts/AuthContext';
-import { auth } from '../services/firebase.config';
-import { setPersistence, browserLocalPersistence, browserSessionPersistence } from 'firebase/auth';
 
 const Login = () => {
   const { loginUserWithEmail } = useContext(AuthContext) || {};
@@ -36,11 +32,10 @@ const Login = () => {
           />
         </div>
         <div className="w-full md:w-[55%] p-10 flex flex-col justify-center pt-8 pb-8">
-          <h2 className="font-bebas text-[25px] font-bold uppercase text-purple-700 text-center mb-6">
+          <h2 className="text-2xl font-bebas font-bold uppercase text-purple-700 text-center mb-6">
             LOGIN
           </h2>
-          {error && <p className="text-red-500 text-sm text-center mb-2">{error}</p>}
-          <UserAuthForm mode="login" onSubmit={handleLogin} />
+          <UserAuthForm mode="login" />
           <Link to="/register" className="text-purple-700 font-medium mt-4 text-center">
             <span className="font-corsiva">Create Account?</span>
           </Link>
