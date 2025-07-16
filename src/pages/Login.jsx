@@ -3,16 +3,18 @@ import UserAuthForm from '../components/UserAuthForm';
 import { Link } from 'react-router';
 import { useState, useContext } from 'react';
 import AuthContext from '../contexts/AuthContext';
+import { auth } from '../services/firebase.config';
+import { setPersistence, browserLocalPersistence, browserSessionPersistence } from 'firebase/auth';
 
 const Login = () => {
   const { loginUserWithEmail } = useContext(AuthContext) || {};
   const [error, setError] = useState('');
 
   // Handler for login form submission
-  const handleLogin = async (username, password) => {
+  const handleLogin = async (username, password, rememberMe) => {
     setError('');
     try {
-      // You may want to use email instead of username depending on your backend
+      await setPersistence(auth, rememberMe ? browserLocalPersistence : browserSessionPersistence);
       await loginUserWithEmail(username, password);
     } catch (err) {
       setError(err.message || 'Login failed');
