@@ -1,5 +1,5 @@
 import loginImg from '../assets/login.png';
-import UserAuthForm from '../components/UserAuthForm';
+import UserAuthForm from '../components/UI/UserAuthForm';
 import { Link } from 'react-router';
 import { useState, useContext } from 'react';
 import AuthContext from '../contexts/AuthContext';
