@@ -86,9 +86,13 @@ const UserAuthForm = () => {
   return (
     <form onSubmit={handleRegister} className="space-y-4">
       <div className="relative">
+        <label htmlFor="fullName" className="block mb-1 font-medium text-left">
+          Full Name
+        </label>
         <input
           type="text"
           name="fullName"
+          id="fullName"
           placeholder="Enter your name"
           value={fullName}
           onChange={handleChange}
@@ -100,9 +104,13 @@ const UserAuthForm = () => {
         </span>
       </div>
       <div className="relative">
+        <label htmlFor="email" className="block mb-1 font-medium text-left">
+          Email
+        </label>
         <input
           type="email"
           name="email"
+          id="email"
           placeholder="Enter your email address"
           value={email}
           onChange={handleChange}
@@ -115,6 +123,9 @@ const UserAuthForm = () => {
         </span>
       </div>
       <div className="relative">
+        <label htmlFor="password" className="block mb-1 font-medium text-left">
+          Password
+        </label>
         <input
           type={showPassword ? 'text' : 'password'}
           name="password"
