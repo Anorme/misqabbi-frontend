@@ -18,7 +18,7 @@ const Register = () => {
           />
         </div>
         <div className="w-full md:w-[55%] p-10 flex flex-col justify-center pt-8 pb-8">
-          <h2 className="text-2xl font-bebas font-bold uppercase text-purple-700 text-center mb-6">
+          <h2 className="font-bebas text-[25px] font-bold uppercase text-purple-700 text-center mb-6 tracking-wide">
             CREATE YOUR ACCOUNT
           </h2>
           <UserAuthForm />

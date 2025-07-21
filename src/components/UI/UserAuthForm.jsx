@@ -85,45 +85,61 @@ const UserAuthForm = () => {
 
   return (
     <form onSubmit={handleRegister} className="space-y-4">
-      <div className="relative">
-        <label htmlFor="fullName" className="block mb-1 font-medium text-left">
+      <div className="mb-4">
+        <label
+          htmlFor="fullName"
+          style={{ fontSize: '15px', fontWeight: 600 }}
+          className="block mb-1 text-left"
+        >
           Full Name
         </label>
-        <input
-          type="text"
-          name="fullName"
-          id="fullName"
-          placeholder="Enter your name"
-          value={fullName}
-          onChange={handleChange}
-          className="w-full p-3 pr-10 border border-gray-300"
-          style={{ borderRadius: '15px' }}
-        />
-        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-          <MdPerson size={20} />
-        </span>
+        <div className="relative">
+          <input
+            type="text"
+            name="fullName"
+            id="fullName"
+            placeholder="Enter your name"
+            value={fullName}
+            onChange={handleChange}
+            className="w-full p-3 pr-10 border border-gray-300"
+            style={{ borderRadius: '18px' }}
+          />
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <MdPerson size={20} />
+          </span>
+        </div>
       </div>
-      <div className="relative">
-        <label htmlFor="email" className="block mb-1 font-medium text-left">
+      <div className="mb-4">
+        <label
+          htmlFor="email"
+          style={{ fontSize: '15px', fontWeight: 600 }}
+          className="block mb-1 text-left"
+        >
           Email
         </label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Enter your email address"
-          value={email}
-          onChange={handleChange}
-          className="w-full p-3 pr-10 border border-gray-300"
-          style={{ borderRadius: '15px' }}
-        />
-        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-          <MdEmail size={20} />
-        </span>
+        <div className="relative">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your email address"
+            value={email}
+            onChange={handleChange}
+            className="w-full p-3 pr-10 border border-gray-300"
+            style={{ borderRadius: '18px' }}
+          />
+          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <MdEmail size={20} />
+          </span>
+        </div>
       </div>
-      <div className="relative">
-        <label htmlFor="password" className="block mb-1 font-medium text-left">
+      <div className="mb-4">
+        <label
+          htmlFor="password"
+          style={{ fontSize: '15px', fontWeight: 600 }}
+          className="block mb-1 text-left"
+        >
           Password
         </label>
         <input
@@ -155,7 +171,7 @@ const UserAuthForm = () => {
       <button
         type="submit"
         className="w-[60%] mx-auto bg-purple-700 text-white py-3 font-semibold"
-        style={{ borderRadius: '15px' }}
+        style={{ borderRadius: '18px' }}
         disabled={isAuthLoading || isSubmitting}
       >
         {isAuthLoading ? 'Registering...' : 'Create Account'}
