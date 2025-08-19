@@ -2,35 +2,82 @@ import { FaWhatsapp } from "react-icons/fa6";
 import { IoLogoInstagram } from "react-icons/io5";
 import { RiTwitterXFill } from "react-icons/ri";
 import { PiTelegramLogoLight } from "react-icons/pi";
+
 const Footer = () => {
-  return <div className="bg-[#b3a7d8] w-full h-[400px] mt-[100px]">
-     <div className=" flex justify-around pt-[50px]">
-    <div className="flex flex-col">
-    <img src="/images/Logo.png" alt="logo here" className="w-[350px]" />
-    <p className="text-lg">Discover beautifully women's clothing, <br />thoughtfully styled for both special occasions and <br /> everyday elegance</p>
+  return (
+    <div className="bg-[#b3a7d8] w-[98vw] m-[10px] mt-16 px-6 sm:px-12 md:px-20 py-10">
+      {/* Top Section */}
+      <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-16">
+        {/* Logo + Text */}
+        <div className="flex flex-col max-w-sm">
+          <img
+            src="/images/Logo.png"
+            alt="logo here"
+            className="w-40 sm:w-56 md:w-72"
+          />
+          <p className="text-sm sm:text-base mt-3">
+            Discover beautifully women's clothing, <br />
+            thoughtfully styled for both special occasions and <br />
+            everyday elegance
+          </p>
+        </div>
+
+        {/* Middle Links */}
+        <div className="flex gap-12 sm:gap-20">
+          <p className="text-sm sm:text-base">
+            <span className="text-gray-600 font-semibold">Made for</span> <br />
+            Women clothes <br />
+            Classy <br />
+            Casual
+          </p>
+          <p className="text-sm sm:text-base">
+            <span className="text-gray-600 font-semibold">Collections</span>{" "}
+            <br />
+            Wedding dress <br />
+            Events and occasions <br />
+            Group match <br />
+            Summer <br />
+            Handwoven
+          </p>
+        </div>
+
+        {/* Quick Links */}
+        <div>
+          <p className="text-sm sm:text-base">
+            <span className="text-gray-600 font-semibold">Quick links</span>{" "}
+            <br />
+            Home <br />
+            Shop All <br />
+            About Us
+          </p>
+        </div>
+      </div>
+
+      {/* Bottom Section */}
+      <div className="flex flex-col md:flex-row justify-between items-center border-t border-gray-300 mt-10 pt-6 gap-6 md:gap-0">
+        {/* Social Icons */}
+        <div className="flex text-xl sm:text-2xl text-gray-600 gap-4 sm:gap-6">
+          <FaWhatsapp />
+          <IoLogoInstagram />
+          <RiTwitterXFill />
+          <PiTelegramLogoLight />
+        </div>
+
+        {/* Footer Links */}
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-8 text-sm sm:text-base">
+          <p>About Us</p>
+          <p>Terms of Service</p>
+          <p>Privacy Policies</p>
+          <p>Cookies</p>
+        </div>
+
+        {/* Copyright */}
+        <p className="text-xs sm:text-sm text-gray-700 text-center">
+          ©️2025 Misqabbi. All rights reserved.
+        </p>
+      </div>
     </div>
-    <span className="flex gap-[150px]">
-    <p> <span className="text-gray-600 text-lg">Made for </span> <br /> Women clothes <br />Classy <br /> Casual</p>
-    <p> <span className="text-gray-600 text-lg">Collections </span> <br />Wedding dress <br />Events and occasions <br />Group match <br />Summer <br />Handwoven</p>
-    </span>
-   <p> <span className="text-lg text-gray-600">Quick links </span> <br />Home <br />Shop All <br />About Us</p>
-</div>
-<div className="flex justify-around pt-[70px]">
-<span className="flex text-2xl text-gray-500 gap-[20px]">
-<FaWhatsapp />
-<IoLogoInstagram />
-<RiTwitterXFill />
-<PiTelegramLogoLight />
-</span>
-<span className="flex gap-[30px]">
-<p>About Us</p>
-<p>Terms of Service</p>
-<p>Privacy Policies</p>
-<p>Cookies</p>
-</span>
- ©️2025 Misqabbi. All rights reserved.
-</div>
-  </div>;
+  );
 };
 
 export default Footer;
