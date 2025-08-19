@@ -1,6 +1,6 @@
 import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { BsPerson } from 'react-icons/bs';
-import { Link, useLocation } from 'react-router'; // <-- make sure it's react-router-dom
+import { Link, useLocation } from 'react-router'; // <-- ensure it's react-router-dom
 
 const NavBar = () => {
   const location = useLocation();
@@ -13,33 +13,42 @@ const NavBar = () => {
 
   return (
     <div>
-      <nav className="flex justify-between">
+      <nav className="flex justify-between items-center px-4 sm:px-8 md:px-16 py-3">
+        {/* Logo */}
         <img
           src="/images/Logo.png"
           alt="Logo here"
-          className="w-[250px] ml-[70px] mt-[10px]" />
-        <ul className="flex mt-[35px] text-2xl text-white gap-[50px]">
+          className="w-28 sm:w-40 md:w-56 object-contain"
+        />
+
+        {/* Links */}
+        <ul className="flex gap-4 sm:gap-8 md:gap-12 text-base sm:text-lg md:text-2xl text-white">
           {links.map(({ path, label }) => {
             const isActive = location.pathname === path;
             return (
               <Link
                 key={path}
                 to={path}
-                className={isActive ? 'text-[#c01da8] border-b-2 border-white' : ''} >
+                className={isActive ? 'text-[#c01da8] border-b-2 border-white' : ''}
+              >
                 <li
                   className={
                     isActive
-                      ? 'text-[#c01da8]' // active style
-                      : 'hover:text-[#c01da8] hover:border-b-2 hover:border-white'  }>
+                      ? 'text-[#c01da8]'
+                      : 'hover:text-[#c01da8] hover:border-b-2 hover:border-white'
+                  }
+                >
                   {label}
                 </li>
               </Link>
             );
           })}
         </ul>
-        <div className="flex text-2xl gap-5 text-white pr-[30px] pt-[30px]">
-          <HiOutlineShoppingBag className="border-2 border-[#c01da8] w-[50px] h-[35px] bg-[#c01da8] hover:bg-white hover:text-[#991485]" />
-          <BsPerson className="border-2 w-[50px] h-[35px] border-[#c01da8] bg-[#c01da8] hover:bg-white hover:text-[#991485]" />
+
+        {/* Icons */}
+        <div className="flex text-xl sm:text-2xl gap-3 sm:gap-5 text-white">
+          <HiOutlineShoppingBag className="border-2 border-[#c01da8] w-8 h-8 sm:w-10 sm:h-10 bg-[#c01da8] hover:bg-white hover:text-[#991485]" />
+          <BsPerson className="border-2 border-[#c01da8] w-8 h-8 sm:w-10 sm:h-10 bg-[#c01da8] hover:bg-white hover:text-[#991485]" />
         </div>
       </nav>
     </div>
