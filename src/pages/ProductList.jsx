@@ -140,7 +140,7 @@ const ProductList = () => {
                     className="bg-white max-w-[320px] w-full h-auto p-3 rounded-lg shadow-md mx-auto"
                   >
                     <img
-                      src={product.image || 'https://via.placeholder.com/150'}
+                      src={product.images?.[0] || 'https://via.placeholder.com/150'}
                       alt={product.name}
                       className="w-full h-36 object-cover rounded-md"
                     />
