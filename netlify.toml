@@ -14,4 +14,4 @@
   VITE_API_URL = "https://dev.misqabbi.com/api/v1/"
 
 [context.development.environment]
-  VITE_API_URL = "https://dev.misqabbi.com/api/v1"
+  VITE_API_URL = "https://dev.misqabbi.com/api/v1/"
