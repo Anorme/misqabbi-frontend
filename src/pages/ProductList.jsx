@@ -1,40 +1,23 @@
-import { useState, useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import useProducts from './useProducts.jsx';
+import { useState } from 'react';
+import UseFilterProducts from './UseFilterProducts.jsx';
+import Pagination from './Pagination.jsx'; 
 
 const ProductList = () => {
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const options = ['All', 'Newest', 'Oldest', 'Popular'];
   const productsPerPage = 6;
 
-  // Fetch products from backend
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/products`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch products');
-        }
-        const data = await response.json();
-        setProducts(data?.data || []); // adjust if backend structure differs
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, []);
+  const { products, loading, error } = useProducts();
 
-  const totalPages = Math.ceil(products.length / productsPerPage);
+  // filter logic
+  const filteredProducts = UseFilterProducts(products, selected);
+
+  // pagination logic
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
   const startIndex = (currentPage - 1) * productsPerPage;
-  const currentProducts = products.slice(startIndex, startIndex + productsPerPage);
+  const currentProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
 
   const goToPrevious = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -44,13 +27,15 @@ const ProductList = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
+  const options = ['All', 'Newest', 'Oldest', 'Popular'];
+
   return (
     <div className="h-auto">
       <h1 className="text-[#4a0579] text-2xl flex justify-self-start font-mono pl-[20px]">
-        MISQAABI/ <span className="text-[#c01da8]">Shop </span>
+        MISQABBI/ <span className="text-[#c01da8]">Shop </span>
       </h1>
 
-      {/* Filter Section */}
+      {/* Filter + Categories */}
       <div className="flex flex-col lg:flex-row lg:items-center">
         <h1 className="text-[#630254] text-5xl font-sans flex justify-start ml-[140px] mt-[50px]">
           Items
@@ -60,7 +45,7 @@ const ProductList = () => {
             <li
               key={item}
               className="text-white bg-[#c01da8] w-[150px] h-[50px] hover:bg-white 
-              hover:text-[#c01da8] p-3 rounded-sm text-center"
+              hover:text-[#c01da8] p-3 rounded-sm text-center cursor-pointer"
             >
               {item}
             </li>
@@ -126,7 +111,7 @@ const ProductList = () => {
         </div>
 
         {/* Product Grid */}
-        <div className="flex flex-col w-full lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] ">
+        <div className="flex flex-col w-full lg:ml-[3rem] mt-[3rem] lg:mt-[5rem]">
           {loading ? (
             <p className="text-center text-lg text-gray-500">Loading products...</p>
           ) : error ? (
@@ -158,34 +143,13 @@ const ProductList = () => {
                 ))}
               </div>
 
-              {/* Pagination */}
-              <div className="flex justify-center items-center gap-6 mt-[70px]">
-                <button
-                  onClick={goToPrevious}
-                  disabled={currentPage === 1}
-                  className={`p-2 rounded-full ${
-                    currentPage === 1
-                      ? 'bg-gray-300 cursor-not-allowed'
-                      : 'bg-[#630254] text-white hover:bg-[#5b0792]'
-                  }`}
-                >
-                  <FaArrowLeft />
-                </button>
-                <span className="text-lg font-medium">
-                  Page {currentPage} of {totalPages}
-                </span>
-                <button
-                  onClick={goToNext}
-                  disabled={currentPage === totalPages}
-                  className={`p-2 rounded-full ${
-                    currentPage === totalPages
-                      ? 'bg-gray-300 cursor-not-allowed'
-                      : 'bg-[#630254] text-white hover:bg-[#5b0792]'
-                  }`}
-                >
-                  <FaArrowRight />
-                </button>
-              </div>
+              {/* Pagination Component */}
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                goToPrevious={goToPrevious}
+                goToNext={goToNext}
+              />
             </>
           )}
         </div>
