@@ -1,6 +1,6 @@
 import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { BsPerson } from 'react-icons/bs';
-import { Link, useLocation } from 'react-router'; // <-- ensure it's react-router-dom
+import { Link, useLocation } from 'react-router'; 
 
 const NavBar = () => {
   const location = useLocation();
