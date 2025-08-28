@@ -6,3 +6,12 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[context.production.environment]
+  VITE_API_URL = "https://api.misqabbi.com/api/v1"
+
+[context.deploy-preview.environment]
+  VITE_API_URL = "https://dev.misqabbi.com/api/v1"
+
+[context.development.environment]
+  VITE_API_URL = "https://dev.misqabbi.com/api/v1"

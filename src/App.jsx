@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import FinishSignUp from './pages/FinishSignUp';
 
 import './App.css';
+import NotFound from './components/UI/NotFound';
 
 const App = () => {
   return (
@@ -60,6 +61,14 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/finishSignUp" element={<FinishSignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route
+          path="*"
+          element={
+            <MainLayout>
+              <NotFound />
+            </MainLayout>
+          }
+        />
       </Routes>
     </div>
   );

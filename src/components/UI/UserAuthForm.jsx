@@ -1,12 +1,9 @@
 import { useState } from 'react';
-
 import { FcGoogle } from 'react-icons/fc';
 import { MdPerson, MdEmail, MdVisibility, MdVisibilityOff } from 'react-icons/md';
-
 import { getPasswordStrength } from '../../utils/strength';
 import { isValidEmail, isStrongPassword } from '../../utils/validation';
 import { registerUserWithEmail, signInWithGooglePopup } from '../../utils/firebase';
-
 import { useAuthState, useAuthDispatch } from '../../contexts/auth/useAuth';
 import { setAuthLoading, setCurrentUser, setAuthError } from '../../contexts/auth/authActions';
 import { useFormState, useFormDispatch } from '../../contexts/form/useForm';
@@ -18,7 +15,6 @@ import {
   stopSubmit,
   resetForm,
 } from '../../contexts/form/formActions';
-
 import { EmailSignInModal } from './EmailSignInModal';
 
 const UserAuthForm = () => {
@@ -40,7 +36,6 @@ const UserAuthForm = () => {
 
   const handleRegister = async e => {
     e.preventDefault();
-
     formDispatch(clearErrors());
     formDispatch(startSubmit());
     authDispatch(setAuthError(null));
@@ -72,7 +67,6 @@ const UserAuthForm = () => {
   const handleGoogleSignIn = async () => {
     authDispatch(setAuthError(null));
     authDispatch(setAuthLoading(true));
-
     try {
       const userCred = await signInWithGooglePopup();
       authDispatch(setCurrentUser(userCred.user));
@@ -85,54 +79,84 @@ const UserAuthForm = () => {
 
   return (
     <form onSubmit={handleRegister} className="space-y-4">
-      <div className="relative">
-        <input
-          type="text"
-          name="fullName"
-          placeholder="Enter your name"
-          value={fullName}
-          onChange={handleChange}
-          className="w-full p-3 pr-10 border border-gray-300"
-          style={{ borderRadius: '15px' }}
-        />
-        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-          <MdPerson size={20} />
-        </span>
-      </div>
-      <div className="relative">
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter your email address"
-          value={email}
-          onChange={handleChange}
-          className="w-full p-3 pr-10 border border-gray-300"
-          style={{ borderRadius: '15px' }}
-        />
-        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-          <MdEmail size={20} />
-        </span>
-      </div>
-      <div className="relative">
-        <input
-          type={showPassword ? 'text' : 'password'}
-          name="password"
-          placeholder="Enter a password"
-          value={password}
-          onChange={handleChange}
-          className="w-full p-3 pr-10 border border-gray-300"
-          style={{ borderRadius: '15px' }}
-        />
-        {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-        <button
-          type="button"
-          onClick={() => setShowPassword(!showPassword)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-gray-400"
-          tabIndex={-1}
+      <div className="mb-4">
+        <label
+          htmlFor="fullName"
+          style={{ fontSize: '15px', fontWeight: 600 }}
+          className="block mb-1 text-left"
         >
-          {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
-        </button>
+          Full Name
+        </label>
+        <div className="relative">
+          <input
+            type="text"
+            name="fullName"
+            id="fullName"
+            placeholder="Enter your name"
+            value={fullName}
+            onChange={handleChange}
+            className="w-full p-3 pr-10 border border-gray-300"
+            style={{ borderRadius: '18px' }}
+          />
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <MdPerson size={20} />
+          </span>
+        </div>
+      </div>
+      <div className="mb-4">
+        <label
+          htmlFor="email"
+          style={{ fontSize: '15px', fontWeight: 600 }}
+          className="block mb-1 text-left"
+        >
+          Email
+        </label>
+        <div className="relative">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your email address"
+            value={email}
+            onChange={handleChange}
+            className="w-full p-3 pr-10 border border-gray-300"
+            style={{ borderRadius: '18px' }}
+          />
+          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <MdEmail size={20} />
+          </span>
+        </div>
+      </div>
+      <div className="mb-4">
+        <label
+          htmlFor="password"
+          style={{ fontSize: '15px', fontWeight: 600 }}
+          className="block mb-1 text-left"
+        >
+          Password
+        </label>
+        <div className="relative">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            id="password"
+            placeholder="Enter a password"
+            value={password}
+            onChange={handleChange}
+            className="w-full p-3 pr-10 border border-gray-300"
+            style={{ borderRadius: '18px' }}
+          />
+          {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-gray-400"
+            tabIndex={-1}
+          >
+            {showPassword ? <MdVisibilityOff size={20} /> : <MdVisibility size={20} />}
+          </button>
+        </div>
         {passwordStrength && (
           <p
             className={`text-sm mt-1 ${passwordStrength === 'Strong' ? 'text-green-600' : passwordStrength === 'Weak' ? 'text-yellow-600' : 'text-red-600'}`}
@@ -144,7 +168,7 @@ const UserAuthForm = () => {
       <button
         type="submit"
         className="w-[60%] mx-auto bg-purple-700 text-white py-3 font-semibold"
-        style={{ borderRadius: '15px' }}
+        style={{ borderRadius: '18px' }}
         disabled={isAuthLoading || isSubmitting}
       >
         {isAuthLoading ? 'Registering...' : 'Create Account'}
@@ -156,7 +180,6 @@ const UserAuthForm = () => {
         <span className="mx-4 text-gray-700 font-bold">or</span>
         <hr className="flex-grow border-t-2 border-gray-400" />
       </div>
-
       <button
         className="w-[60%] mx-auto py-3 rounded-md mb-2 flex justify-center items-center gap-2 cursor-pointer"
         type="button"
