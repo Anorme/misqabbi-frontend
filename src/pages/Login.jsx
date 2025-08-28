@@ -1,13 +1,13 @@
 import loginImg from '../assets/login.png';
 import UserAuthForm from '../components/UI/UserAuthForm';
 import { Link } from 'react-router';
-import { useState, useContext } from 'react';
-import AuthContext from '../contexts/AuthContext';
+import { useState } from 'react';
 import { auth } from '../services/firebase.config';
 import { setPersistence, browserLocalPersistence, browserSessionPersistence } from 'firebase/auth';
+import { useAuthState } from '../contexts/auth/useAuth';
 
 const Login = () => {
-  const { loginUserWithEmail } = useContext(AuthContext) || {};
+  const { loginUserWithEmail } = useAuthState();
   const [error, setError] = useState('');
 
   // Handler for login form submission
