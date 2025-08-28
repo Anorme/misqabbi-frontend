@@ -1,20 +1,20 @@
-import loginImg from '../assets/login.png';
-import UserAuthForm from '../components/UI/UserAuthForm';
-import { Link } from 'react-router';
 import { useState } from 'react';
-import { auth } from '../services/firebase.config';
-import { setPersistence, browserLocalPersistence, browserSessionPersistence } from 'firebase/auth';
+
+import { Link } from 'react-router';
+
+import UserAuthForm from '../components/UI/UserAuthForm';
 import { useAuthState } from '../contexts/auth/useAuth';
+
+import loginImg from '../assets/login.png';
 
 const Login = () => {
   const { loginUserWithEmail } = useAuthState();
   const [error, setError] = useState('');
 
   // Handler for login form submission
-  const handleLogin = async (username, password, rememberMe) => {
+  const handleLogin = async (username, password) => {
     setError('');
     try {
-      await setPersistence(auth, rememberMe ? browserLocalPersistence : browserSessionPersistence);
       await loginUserWithEmail(username, password);
     } catch (err) {
       setError(err.message || 'Login failed');
