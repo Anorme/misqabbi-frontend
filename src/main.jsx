@@ -1,6 +1,5 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-
 import { BrowserRouter as Router } from 'react-router';
 
 import App from './App.jsx';
@@ -10,14 +9,14 @@ import { FormProvider } from './contexts/form/FormProvider.jsx';
 
 import './index.css';
 import './styles/tailwind.css';
-import { CatalogProvider } from './contexts/CatalogContext.jsx';
+import { CatalogProvider } from './contexts/catalog/catalogProvider.jsx';
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
       <FormProvider>
-        <CatalogProvider> 
+        <CatalogProvider>
           <Router>
             <App />
           </Router>
