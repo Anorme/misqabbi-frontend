@@ -1,12 +1,16 @@
 import { useState } from 'react';
+
 import { FcGoogle } from 'react-icons/fc';
 import { MdPerson, MdEmail, MdVisibility, MdVisibilityOff } from 'react-icons/md';
+
 import { getPasswordStrength } from '../../utils/strength';
 import { isValidEmail, isStrongPassword } from '../../utils/validation';
-import { registerUserWithEmail, signInWithGooglePopup } from '../../utils/firebase';
+import { signInWithGooglePopup } from '../../utils/firebase';
+import { registerUserWithEmail, loginUserWithEmail } from '../../api/auth';
+
+import { useFormState, useFormDispatch } from '../../contexts/form/useForm';
 import { useAuthState, useAuthDispatch } from '../../contexts/auth/useAuth';
 import { setAuthLoading, setCurrentUser, setAuthError } from '../../contexts/auth/authActions';
-import { useFormState, useFormDispatch } from '../../contexts/form/useForm';
 import {
   updateField,
   setErrors,
@@ -15,9 +19,10 @@ import {
   stopSubmit,
   resetForm,
 } from '../../contexts/form/formActions';
+
 import { EmailSignInModal } from './EmailSignInModal';
 
-const UserAuthForm = () => {
+const UserAuthForm = ({ mode }) => {
   const { values, errors, isSubmitting } = useFormState();
   const formDispatch = useFormDispatch();
   const { fullName = '', email = '', password = '' } = values;
@@ -53,9 +58,25 @@ const UserAuthForm = () => {
     }
 
     try {
-      const userCred = await registerUserWithEmail(email, password, { fullName });
+      const userCred = await registerUserWithEmail(email, password, fullName);
       authDispatch(setCurrentUser(userCred.user));
       formDispatch(resetForm());
+    } catch (err) {
+      authDispatch(setAuthError(err.message));
+    } finally {
+      formDispatch(stopSubmit());
+      authDispatch(setAuthLoading(false));
+    }
+  };
+
+  const handleLogin = async e => {
+    e.preventDefault();
+    formDispatch(clearErrors());
+    formDispatch(startSubmit());
+    authDispatch(setAuthError(null));
+    authDispatch(setAuthLoading(true));
+    try {
+      await loginUserWithEmail(email, password);
     } catch (err) {
       authDispatch(setAuthError(err.message));
     } finally {
@@ -78,31 +99,33 @@ const UserAuthForm = () => {
   };
 
   return (
-    <form onSubmit={handleRegister} className="space-y-4">
-      <div className="mb-4">
-        <label
-          htmlFor="fullName"
-          style={{ fontSize: '15px', fontWeight: 600 }}
-          className="block mb-1 text-left"
-        >
-          Full Name
-        </label>
-        <div className="relative">
-          <input
-            type="text"
-            name="fullName"
-            id="fullName"
-            placeholder="Enter your name"
-            value={fullName}
-            onChange={handleChange}
-            className="w-full p-3 pr-10 border border-gray-300"
-            style={{ borderRadius: '18px' }}
-          />
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-            <MdPerson size={20} />
-          </span>
+    <form onSubmit={mode === 'register' ? handleRegister : handleLogin} className="space-y-4">
+      {mode === 'register' && (
+        <div className="mb-4">
+          <label
+            htmlFor="fullName"
+            style={{ fontSize: '15px', fontWeight: 600 }}
+            className="block mb-1 text-left"
+          >
+            Full Name
+          </label>
+          <div className="relative">
+            <input
+              type="text"
+              name="fullName"
+              id="fullName"
+              placeholder="Enter your name"
+              value={fullName}
+              onChange={handleChange}
+              className="w-full p-3 pr-10 border border-gray-300"
+              style={{ borderRadius: '18px' }}
+            />
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+              <MdPerson size={20} />
+            </span>
+          </div>
         </div>
-      </div>
+      )}
       <div className="mb-4">
         <label
           htmlFor="email"
