@@ -21,7 +21,7 @@ const Register = () => {
           <h2 className="font-bebas text-[25px] font-bold uppercase text-purple-700 text-center mb-6 tracking-wide">
             CREATE YOUR ACCOUNT
           </h2>
-          <UserAuthForm />
+          <UserAuthForm mode="register" />
           <p className="text-center mt-4">
             <span className="font-corsiva">Have an account?</span>{' '}
             <Link to="/login" className="text-purple-700 font-medium">
