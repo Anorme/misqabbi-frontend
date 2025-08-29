@@ -1,12 +1,12 @@
-import { useState } from 'react';
-
 import { FcGoogle } from 'react-icons/fc';
-import { MdPerson, MdEmail, MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import { MdPerson, MdEmail } from 'react-icons/md';
 
-import { getPasswordStrength } from '../../utils/strength';
 import { isValidEmail, isStrongPassword } from '../../utils/validation';
-import { signInWithGooglePopup } from '../../utils/firebase';
-import { registerUserWithEmail, loginUserWithEmail } from '../../api/auth';
+import {
+  registerUserWithEmail,
+  loginUserWithEmail,
+  signInWithGoogleRedirect,
+} from '../../api/auth';
 
 import { useFormState, useFormDispatch } from '../../contexts/form/useForm';
 import { useAuthState, useAuthDispatch } from '../../contexts/auth/useAuth';
@@ -20,19 +20,30 @@ import {
   resetForm,
 } from '../../contexts/form/formActions';
 
-import { EmailSignInModal } from './EmailSignInModal';
+import InputField from '../form/InputField';
+import PasswordInput from '../form/PasswordInput';
+import ErrorMessage from '../form/ErrorMessage';
+import SubmitButton from '../form/SubmitButton';
+import Divider from '../form/Divider';
+import SocialButton from '../form/SocialButton';
 
 const UserAuthForm = ({ mode }) => {
   const { values, errors, isSubmitting } = useFormState();
   const formDispatch = useFormDispatch();
   const { fullName = '', email = '', password = '' } = values;
-  const passwordStrength = getPasswordStrength(password);
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showEmailModal, setShowEmailModal] = useState(false);
-
-  const { isAuthLoading, authError, currentUser } = useAuthState();
+  const { isAuthLoading, authError } = useAuthState();
   const authDispatch = useAuthDispatch();
+
+  const isFormIncomplete = !email || !password || (mode === 'register' && !fullName);
+
+  const submitLabel = isAuthLoading
+    ? mode === 'register'
+      ? 'Registering...'
+      : 'Logging in...'
+    : mode === 'register'
+      ? 'Create Account'
+      : 'Login';
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -76,7 +87,8 @@ const UserAuthForm = ({ mode }) => {
     authDispatch(setAuthError(null));
     authDispatch(setAuthLoading(true));
     try {
-      await loginUserWithEmail(email, password);
+      const userCred = await loginUserWithEmail(email, password);
+      authDispatch(setCurrentUser(userCred.user));
     } catch (err) {
       authDispatch(setAuthError(err.message));
     } finally {
@@ -89,8 +101,8 @@ const UserAuthForm = ({ mode }) => {
     authDispatch(setAuthError(null));
     authDispatch(setAuthLoading(true));
     try {
-      const userCred = await signInWithGooglePopup();
-      authDispatch(setCurrentUser(userCred.user));
+      const redirectUrl = signInWithGoogleRedirect();
+      window.location.href = redirectUrl;
     } catch (err) {
       authDispatch(setAuthError(err.message));
     } finally {
@@ -101,125 +113,47 @@ const UserAuthForm = ({ mode }) => {
   return (
     <form onSubmit={mode === 'register' ? handleRegister : handleLogin} className="space-y-4">
       {mode === 'register' && (
-        <div className="mb-4">
-          <label
-            htmlFor="fullName"
-            style={{ fontSize: '15px', fontWeight: 600 }}
-            className="block mb-1 text-left"
-          >
-            Full Name
-          </label>
-          <div className="relative">
-            <input
-              type="text"
-              name="fullName"
-              id="fullName"
-              placeholder="Enter your name"
-              value={fullName}
-              onChange={handleChange}
-              className="w-full p-3 pr-10 border border-gray-300"
-              style={{ borderRadius: '18px' }}
-            />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-              <MdPerson size={20} />
-            </span>
-          </div>
-        </div>
+        <InputField
+          label="Full Name"
+          type="text"
+          name="fullName"
+          value={fullName}
+          onChange={handleChange}
+          placeholder="Enter your name"
+          icon={<MdPerson size={20} />}
+          error={errors.fullName}
+        />
       )}
-      <div className="mb-4">
-        <label
-          htmlFor="email"
-          style={{ fontSize: '15px', fontWeight: 600 }}
-          className="block mb-1 text-left"
-        >
-          Email
-        </label>
-        <div className="relative">
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Enter your email address"
-            value={email}
-            onChange={handleChange}
-            className="w-full p-3 pr-10 border border-gray-300"
-            style={{ borderRadius: '18px' }}
-          />
-          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-            <MdEmail size={20} />
-          </span>
-        </div>
-      </div>
-      <div className="mb-4">
-        <label
-          htmlFor="password"
-          style={{ fontSize: '15px', fontWeight: 600 }}
-          className="block mb-1 text-left"
-        >
-          Password
-        </label>
-        <div className="relative">
-          <input
-            type={showPassword ? 'text' : 'password'}
-            name="password"
-            id="password"
-            placeholder="Enter a password"
-            value={password}
-            onChange={handleChange}
-            className="w-full p-3 pr-10 border border-gray-300"
-            style={{ borderRadius: '18px' }}
-          />
-          {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-gray-400"
-            tabIndex={-1}
-          >
-            {showPassword ? <MdVisibilityOff size={20} /> : <MdVisibility size={20} />}
-          </button>
-        </div>
-        {passwordStrength && (
-          <p
-            className={`text-sm mt-1 ${passwordStrength === 'Strong' ? 'text-green-600' : passwordStrength === 'Weak' ? 'text-yellow-600' : 'text-red-600'}`}
-          >
-            Password strength: {passwordStrength}
-          </p>
-        )}
-      </div>
-      <button
-        type="submit"
-        className="w-[60%] mx-auto bg-purple-700 text-white py-3 font-semibold"
-        style={{ borderRadius: '18px' }}
-        disabled={isAuthLoading || isSubmitting}
-      >
-        {isAuthLoading ? 'Registering...' : 'Create Account'}
-      </button>
-      {authError && <p className="text-red-500 text-sm">{authError}</p>}
-      {currentUser && <p className="text-green-500 text-sm">Welcome {currentUser.displayName}</p>}
-      <div className="flex items-center my-4 w-[60%] mx-auto">
-        <hr className="flex-grow border-t-2 border-gray-400" />
-        <span className="mx-4 text-gray-700 font-bold">or</span>
-        <hr className="flex-grow border-t-2 border-gray-400" />
-      </div>
-      <button
-        className="w-[60%] mx-auto py-3 rounded-md mb-2 flex justify-center items-center gap-2 cursor-pointer"
-        type="button"
-        onClick={() => setShowEmailModal(true)}
-      >
-        <MdEmail size={22} />
-        Continue with email
-      </button>
-      <button
-        className="w-[60%] mx-auto py-3 rounded-md flex justify-center items-center gap-2 cursor-pointer"
-        type="button"
+
+      <InputField
+        label="Email"
+        type="email"
+        name="email"
+        value={email}
+        onChange={handleChange}
+        placeholder="Enter your email address"
+        icon={<MdEmail size={20} />}
+        error={errors.email}
+      />
+
+      <PasswordInput
+        value={password}
+        onChange={handleChange}
+        error={errors.password}
+        showStrength={mode === 'register'}
+      />
+
+      <SubmitButton label={submitLabel} disabled={isFormIncomplete || isSubmitting} />
+
+      {authError && <ErrorMessage error={authError} />}
+
+      <Divider />
+
+      <SocialButton
+        icon={<FcGoogle size={20} />}
+        text="Sign in with Google"
         onClick={handleGoogleSignIn}
-      >
-        <FcGoogle size={22} />
-        Continue with Google
-      </button>
-      {showEmailModal && <EmailSignInModal onClose={() => setShowEmailModal(false)} />}
+      />
     </form>
   );
 };
