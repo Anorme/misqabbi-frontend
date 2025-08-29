@@ -51,4 +51,8 @@ const loginUserWithEmail = async (email, password) => {
   }
 };
 
-export { registerUserWithEmail, loginUserWithEmail };
+const signInWithGoogleRedirect = () => {
+  return `${API_URL}/auth/google`;
+};
+
+export { registerUserWithEmail, loginUserWithEmail, signInWithGoogleRedirect };
