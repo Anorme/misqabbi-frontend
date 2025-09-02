@@ -101,8 +101,7 @@ const UserAuthForm = ({ mode }) => {
     authDispatch(setAuthError(null));
     authDispatch(setAuthLoading(true));
     try {
-      const redirectUrl = signInWithGoogleRedirect();
-      window.location.href = redirectUrl;
+      signInWithGoogleRedirect();
     } catch (err) {
       authDispatch(setAuthError(err.message));
     } finally {
