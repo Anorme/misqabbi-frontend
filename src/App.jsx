@@ -8,7 +8,7 @@ import Checkout from './pages/Checkout';
 import ProductList from './pages/ProductList';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import FinishSignUp from './pages/FinishSignUp';
+import AuthCallback from './pages/auth/AuthCallback';
 
 import './App.css';
 import NotFound from './components/UI/NotFound';
@@ -59,8 +59,11 @@ const App = () => {
         ></Route>
 
         <Route path="/register" element={<Register />} />
-        <Route path="/finishSignUp" element={<FinishSignUp />} />
+
         <Route path="/login" element={<Login />} />
+
+        <Route path="/auth/callback" element={<AuthCallback />} />
+
         <Route
           path="*"
           element={
