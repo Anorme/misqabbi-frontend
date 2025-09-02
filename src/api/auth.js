@@ -51,8 +51,32 @@ const loginUserWithEmail = async (email, password) => {
   }
 };
 
-const signInWithGoogleRedirect = () => {
-  return `${API_URL}/auth/google`;
+const signInWithGoogleRedirect = async () => {
+  // navigate to google auth page
+  window.location.href = `${API_URL}/auth/google`;
 };
 
-export { registerUserWithEmail, loginUserWithEmail, signInWithGoogleRedirect };
+const fetchAuthenticatedUser = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/auth/me`, { withCredentials: true });
+
+    const { success, message, data } = response.data;
+
+    if (success && data.user) {
+      return data.user;
+    } else {
+      console.error('Failed to fetch user:', message);
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching authenticated user', error);
+    return null;
+  }
+};
+
+export {
+  registerUserWithEmail,
+  loginUserWithEmail,
+  signInWithGoogleRedirect,
+  fetchAuthenticatedUser,
+};
