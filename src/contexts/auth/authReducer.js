@@ -34,6 +34,15 @@ export const authReducer = (state, action) => {
         isAuthLoading: false,
       };
 
+    case AUTH_ACTION_TYPES.LOGOUT_USER:
+      return {
+        ...state,
+        currentUser: payload,
+        isAuthenticated: false,
+        isAuthLoading: false,
+        authError: null,
+      };
+
     default:
       console.warn(`Unhandled auth action type: ${type}`);
       return state;
