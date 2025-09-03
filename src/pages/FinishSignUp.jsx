@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { completeSignInWithEmailLink } from '../utils/firebase';
 import { createUserDocument } from '../utils/firebase';
-import FullScreenLoader from '../components/UI/FullScreenLoader';
+import FullScreenLoader from '../components/ui/FullScreenLoader';
 
 const FinishSignUp = () => {
   const navigate = useNavigate();
