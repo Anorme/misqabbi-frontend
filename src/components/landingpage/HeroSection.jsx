@@ -11,7 +11,7 @@ const HeroSection = () => (
   >
     {/* Content container */}
     <div className=" z-10 h-full px-8 flex items-center justify-center">
-      <div className="max-w-[1050x]">
+      <div className="max-w-[1050px]">
         <h1 className="text-[64px] font-bebas text-white leading-tight text-nowrap">
           STEP INTO TIMELESS ELEGANCE.
         </h1>
