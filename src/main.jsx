@@ -8,7 +8,7 @@ import { FormProvider } from './contexts/form/FormProvider.jsx';
 
 import './index.css';
 import './styles/tailwind.css';
-import { CatalogProvider } from './contexts/catalog/catalogProvider.jsx';
+import { CatalogProvider } from './contexts/catalog/CatalogProvider.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
