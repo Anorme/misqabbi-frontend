@@ -1,8 +1,10 @@
 // src/components/FilterMenu.jsx
 
-const FilterMenu = ({ options = [], selected, onChange, className = "" }) => {
+const FilterMenu = ({ options = [], selected, onChange, className = '' }) => {
   return (
-    <div className={`flex flex-wrap justify-center gap-2 mt-[20px] lg:mt-[70px] lg:ml-[300px] ${className}`}>
+    <div
+      className={`flex flex-wrap justify-center gap-2 mt-[20px] lg:mt-[70px] lg:ml-[300px] ${className}`}
+    >
       <label htmlFor="filter" className="text-xl text-[#630254]">
         Filter:
       </label>

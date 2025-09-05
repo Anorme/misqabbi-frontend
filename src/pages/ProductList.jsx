@@ -1,13 +1,12 @@
-import useProducts from "./useProducts.jsx";
-import { useMemo } from "react";
-import Pagination from "../components/Pagination.jsx"; 
-import ProductGrid from "../components/ProductGrid.jsx";
-import ProductCard from "../components/ProductCard.jsx";
-import CategoryList from "../components/CategoryList.jsx";
-import FilterMenu from "../components/FilterMenu.jsx";
-import filterProducts from "./FilterProducts.jsx";
-import { useCatalog } from "../contexts/catalog/useCatalog.jsx";
-
+import useProducts from './useProducts.jsx';
+import { useMemo } from 'react';
+import Pagination from '../components/Pagination.jsx';
+import ProductGrid from '../components/ProductGrid.jsx';
+import ProductCard from '../components/ProductCard.jsx';
+import CategoryList from '../components/CategoryList.jsx';
+import FilterMenu from '../components/FilterMenu.jsx';
+import filterProducts from './FilterProducts.jsx';
+import { useCatalog } from '../contexts/catalog/useCatalog.jsx';
 
 const ProductList = () => {
   const { state, setFilter, setPage } = useCatalog();
@@ -34,8 +33,8 @@ const ProductList = () => {
     if (currentPage < totalPages) setPage(currentPage + 1);
   };
 
-  const filterOptions = ["All", "Newest", "Oldest", "Popular"];
-  const categories = ["Shirt", "T-Shirt", "Accessories", "Jacket", "Cap", "Jeans"];
+  const filterOptions = ['All', 'Newest', 'Oldest', 'Popular'];
+  const categories = ['Shirt', 'T-Shirt', 'Accessories', 'Jacket', 'Cap', 'Jeans'];
 
   return (
     <div className="h-auto">
@@ -50,11 +49,7 @@ const ProductList = () => {
 
         <CategoryList categories={categories} />
 
-        <FilterMenu
-          options={filterOptions}
-          selected={selectedFilter}
-          onChange={setFilter}
-        />
+        <FilterMenu options={filterOptions} selected={selectedFilter} onChange={setFilter} />
       </div>
 
       {/* Sidebar remains unchanged */}
@@ -67,7 +62,7 @@ const ProductList = () => {
         ) : (
           <>
             <ProductGrid>
-              {currentProducts.map((product) => (
+              {currentProducts.map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </ProductGrid>
