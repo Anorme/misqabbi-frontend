@@ -1,16 +1,19 @@
-import useProducts from './useProducts.jsx';
 import { useMemo } from 'react';
+
 import Pagination from '../components/Pagination.jsx';
 import ProductGrid from '../components/ProductGrid.jsx';
 import ProductCard from '../components/ProductCard.jsx';
 import CategoryList from '../components/CategoryList.jsx';
 import FilterMenu from '../components/FilterMenu.jsx';
 import filterProducts from './FilterProducts.jsx';
-import { useCatalog } from '../contexts/catalog/useCatalog.js';
+
+import useProducts from './useProducts.jsx';
+import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog.js';
+import { setPage, setFilter } from '../contexts/catalog/catalogActions.js';
 
 const ProductList = () => {
-  const { state, setFilter, setPage } = useCatalog();
-  const { selectedFilter, currentPage, productsPerPage } = state;
+  const { selectedFilter, currentPage, productsPerPage } = useCatalogState();
+  const catalogDispatch = useCatalogDispatch();
 
   const { products, loading, error } = useProducts();
 
@@ -26,11 +29,11 @@ const ProductList = () => {
 
   // Handlers now update context instead of local state
   const goToPrevious = () => {
-    if (currentPage > 1) setPage(currentPage - 1);
+    if (currentPage > 1) catalogDispatch(setPage(currentPage - 1));
   };
 
   const goToNext = () => {
-    if (currentPage < totalPages) setPage(currentPage + 1);
+    if (currentPage < totalPages) catalogDispatch(setPage(currentPage + 1));
   };
 
   const filterOptions = ['All', 'Newest', 'Oldest', 'Popular'];
