@@ -13,4 +13,8 @@ body,
   width: 98vw;
   height: 100%;
   background-color: #ffffff;
+  overflow-x: hidden;
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
 }
