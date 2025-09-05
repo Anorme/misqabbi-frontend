@@ -1,10 +1,10 @@
-import { SET_PRODUCTS, SET_FILTER, SET_PAGE } from "./catalogActionTypes";
+import { SET_PRODUCTS, SET_FILTER, SET_PAGE } from './catalogActionTypes';
 
 export const initialState = {
-  products: [],          // all products
-  selectedFilter: "All", // current filter
-  currentPage: 1,        // current page
-  productsPerPage: 6,    // items per page
+  products: [], // all products
+  selectedFilter: 'All', // current filter
+  currentPage: 1, // current page
+  productsPerPage: 6, // items per page
 };
 
 export const catalogReducer = (state, action) => {
