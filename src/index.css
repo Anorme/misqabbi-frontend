@@ -14,3 +14,11 @@ body,
   height: 100%;
   background-color: #a78bfa; /* Tailwind's bg-purple-300 */
 }
+/* global.css */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
+}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { startSignInWithEmailLink } from '../../utils/firebase';
+// import { startSignInWithEmailLink } from '../../utils/firebase';
 import { isValidEmail } from '../../utils/validation';
 
 export const EmailSignInModal = ({ onClose }) => {
@@ -12,14 +12,31 @@ export const EmailSignInModal = ({ onClose }) => {
       setFeedback('Please enter a valid email address.');
       return;
     }
+
     setLoading(true);
     try {
-      await startSignInWithEmailLink(email);
+      // 🔹 Call backend API instead of Firebase
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to log in');
+      }
+
+      const data = await response.json();
+
+      // 🔹 Save JWT token for authenticated requests
+      localStorage.setItem('token', data.token);
+
+      // Keep the same feedback behavior
       setFeedback('Check your inbox for the sign-in link.');
       setTimeout(onClose, 3000);
     } catch (error) {
-      console.warn('Error sending link', error);
-      setFeedback('Failed to send link. Please try again.');
+      console.warn('Error logging in', error);
+      setFeedback('Failed to log in. Please try again.');
     } finally {
       setLoading(false);
     }

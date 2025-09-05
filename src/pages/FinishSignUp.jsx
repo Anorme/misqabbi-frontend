@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { completeSignInWithEmailLink } from '../utils/firebase';
-import { createUserDocument } from '../utils/firebase';
 import FullScreenLoader from '../components/UI/FullScreenLoader';
 
 const FinishSignUp = () => {
@@ -9,12 +7,40 @@ const FinishSignUp = () => {
 
   useEffect(() => {
     const completeAuthFlow = async () => {
-      const user = await completeSignInWithEmailLink();
+      try {
+        // Example: read token or email confirmation params from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
 
-      if (user) {
-        await createUserDocument(user);
+        if (!token) {
+          navigate('/register');
+          return;
+        }
+
+        // Call backend API to confirm sign-in / finish sign-up
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ token }),
+        });
+
+        if (!response.ok) {
+          navigate('/register');
+          return;
+        }
+
+        const data = await response.json();
+
+        // Save user + token in localStorage or context
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        // Navigate to shop after successful sign-in
         navigate('/shop');
-      } else {
+      } catch (error) {
+        console.error('Error completing sign-in:', error);
         navigate('/register');
       }
     };

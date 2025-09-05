@@ -3,7 +3,6 @@ import { FcGoogle } from 'react-icons/fc';
 import { MdPerson, MdEmail, MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { getPasswordStrength } from '../../utils/strength';
 import { isValidEmail, isStrongPassword } from '../../utils/validation';
-import { registerUserWithEmail, signInWithGooglePopup } from '../../utils/firebase';
 import { useAuthState, useAuthDispatch } from '../../contexts/auth/useAuth';
 import { setAuthLoading, setCurrentUser, setAuthError } from '../../contexts/auth/authActions';
 import { useFormState, useFormDispatch } from '../../contexts/form/useForm';
@@ -53,8 +52,31 @@ const UserAuthForm = () => {
     }
 
     try {
-      const userCred = await registerUserWithEmail(email, password, { fullName });
-      authDispatch(setCurrentUser(userCred.user));
+      // 🔹 Call backend API instead of Firebase
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fullName, email, password }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to register');
+      }
+
+      const data = await response.json();
+
+      // Store token for authenticated requests
+      localStorage.setItem('token', data.token);
+
+      // Mimic Firebase's user object for consistency
+      const user = {
+        id: data.user?.id,
+        displayName: data.user?.fullName,
+        email: data.user?.email,
+      };
+
+      authDispatch(setCurrentUser(user));
       formDispatch(resetForm());
     } catch (err) {
       authDispatch(setAuthError(err.message));
@@ -68,8 +90,24 @@ const UserAuthForm = () => {
     authDispatch(setAuthError(null));
     authDispatch(setAuthLoading(true));
     try {
-      const userCred = await signInWithGooglePopup();
-      authDispatch(setCurrentUser(userCred.user));
+      // 🔹 Call backend API for Google auth (placeholder, depends on backend implementation)
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/google`, {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (!response.ok) throw new Error('Google sign-in failed');
+
+      const data = await response.json();
+      localStorage.setItem('token', data.token);
+
+      const user = {
+        id: data.user?.id,
+        displayName: data.user?.fullName,
+        email: data.user?.email,
+      };
+
+      authDispatch(setCurrentUser(user));
     } catch (err) {
       authDispatch(setAuthError(err.message));
     } finally {
@@ -103,6 +141,7 @@ const UserAuthForm = () => {
           </span>
         </div>
       </div>
+
       <div className="mb-4">
         <label
           htmlFor="email"
@@ -128,6 +167,7 @@ const UserAuthForm = () => {
           </span>
         </div>
       </div>
+
       <div className="mb-4">
         <label
           htmlFor="password"
@@ -159,12 +199,19 @@ const UserAuthForm = () => {
         </div>
         {passwordStrength && (
           <p
-            className={`text-sm mt-1 ${passwordStrength === 'Strong' ? 'text-green-600' : passwordStrength === 'Weak' ? 'text-yellow-600' : 'text-red-600'}`}
+            className={`text-sm mt-1 ${
+              passwordStrength === 'Strong'
+                ? 'text-green-600'
+                : passwordStrength === 'Weak'
+                  ? 'text-yellow-600'
+                  : 'text-red-600'
+            }`}
           >
             Password strength: {passwordStrength}
           </p>
         )}
       </div>
+
       <button
         type="submit"
         className="w-[60%] mx-auto bg-purple-700 text-white py-3 font-semibold"
@@ -175,11 +222,13 @@ const UserAuthForm = () => {
       </button>
       {authError && <p className="text-red-500 text-sm">{authError}</p>}
       {currentUser && <p className="text-green-500 text-sm">Welcome {currentUser.displayName}</p>}
+
       <div className="flex items-center my-4 w-[60%] mx-auto">
         <hr className="flex-grow border-t-2 border-gray-400" />
         <span className="mx-4 text-gray-700 font-bold">or</span>
         <hr className="flex-grow border-t-2 border-gray-400" />
       </div>
+
       <button
         className="w-[60%] mx-auto py-3 rounded-md mb-2 flex justify-center items-center gap-2 cursor-pointer"
         type="button"
@@ -188,6 +237,7 @@ const UserAuthForm = () => {
         <MdEmail size={22} />
         Continue with email
       </button>
+
       <button
         className="w-[60%] mx-auto py-3 rounded-md flex justify-center items-center gap-2 cursor-pointer"
         type="button"
@@ -196,6 +246,7 @@ const UserAuthForm = () => {
         <FcGoogle size={22} />
         Continue with Google
       </button>
+
       {showEmailModal && <EmailSignInModal onClose={() => setShowEmailModal(false)} />}
     </form>
   );
