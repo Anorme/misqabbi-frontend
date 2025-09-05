@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 const useProducts = () => {
   const [products, setProducts] = useState([]);
@@ -10,7 +10,7 @@ const useProducts = () => {
       try {
         setLoading(true);
         const response = await fetch(`${import.meta.env.VITE_API_URL}/products`);
-        if (!response.ok) throw new Error("Failed to fetch products");
+        if (!response.ok) throw new Error('Failed to fetch products');
         const data = await response.json();
         setProducts(data?.data || []);
       } catch (err) {
