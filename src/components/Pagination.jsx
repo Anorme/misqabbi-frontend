@@ -1,4 +1,4 @@
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 const Pagination = ({ currentPage, totalPages, onPrevious, onNext }) => {
   return (
@@ -8,8 +8,8 @@ const Pagination = ({ currentPage, totalPages, onPrevious, onNext }) => {
         disabled={currentPage === 1}
         className={`p-2 rounded-full ${
           currentPage === 1
-            ? "bg-gray-300 cursor-not-allowed"
-            : "bg-[#630254] text-white hover:bg-[#5b0792]"
+            ? 'bg-gray-300 cursor-not-allowed'
+            : 'bg-[#630254] text-white hover:bg-[#5b0792]'
         }`}
       >
         <FaArrowLeft />
@@ -22,8 +22,8 @@ const Pagination = ({ currentPage, totalPages, onPrevious, onNext }) => {
         disabled={currentPage === totalPages}
         className={`p-2 rounded-full ${
           currentPage === totalPages
-            ? "bg-gray-300 cursor-not-allowed"
-            : "bg-[#630254] text-white hover:bg-[#5b0792]"
+            ? 'bg-gray-300 cursor-not-allowed'
+            : 'bg-[#630254] text-white hover:bg-[#5b0792]'
         }`}
       >
         <FaArrowRight />
