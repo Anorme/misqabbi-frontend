@@ -6,7 +6,7 @@ import ProductCard from '../components/ProductCard.jsx';
 import CategoryList from '../components/CategoryList.jsx';
 import FilterMenu from '../components/FilterMenu.jsx';
 import filterProducts from './FilterProducts.jsx';
-import { useCatalog } from '../contexts/catalog/useCatalog.jsx';
+import { useCatalog } from '../contexts/catalog/useCatalog.js';
 
 const ProductList = () => {
   const { state, setFilter, setPage } = useCatalog();
