@@ -5,16 +5,21 @@ export const initialState = {
   selectedFilter: 'All', // current filter
   currentPage: 1, // current page
   productsPerPage: 6, // items per page
+  totalPages: 1, // total number of pages
 };
 
 export const catalogReducer = (state, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case CATALOG_ACTION_TYPES.SET_PRODUCTS:
-      return { ...state, products: action.payload };
+      return { ...state, products: payload };
     case CATALOG_ACTION_TYPES.SET_FILTER:
-      return { ...state, selectedFilter: action.payload, currentPage: 1 };
+      return { ...state, selectedFilter: payload, currentPage: 1 };
     case CATALOG_ACTION_TYPES.SET_PAGE:
-      return { ...state, currentPage: action.payload };
+      return { ...state, currentPage: payload };
+    case CATALOG_ACTION_TYPES.SET_TOTAL_PAGES:
+      return { ...state, totalPages: payload };
     default:
       return state;
   }
