@@ -1,5 +1,3 @@
-// src/utils/filterProducts.js
-
 export default function filterProducts(products, filter) {
   if (!Array.isArray(products)) return [];
 
