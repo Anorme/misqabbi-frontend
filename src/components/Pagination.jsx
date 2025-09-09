@@ -1,10 +1,24 @@
+import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog';
+import { setPage } from '../contexts/catalog/catalogActions';
+
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
-const Pagination = ({ currentPage, totalPages, onPrevious, onNext }) => {
+const Pagination = () => {
+  const { currentPage, totalPages } = useCatalogState();
+  const catalogDispatch = useCatalogDispatch();
+
+  const goToPrevious = () => {
+    if (currentPage > 1) catalogDispatch(setPage(currentPage - 1));
+  };
+
+  const goToNext = () => {
+    if (currentPage < totalPages) catalogDispatch(setPage(currentPage + 1));
+  };
+
   return (
     <div className="flex justify-center items-center gap-6 mt-[70px]">
       <button
-        onClick={onPrevious}
+        onClick={goToPrevious}
         disabled={currentPage === 1}
         className={`p-2 rounded-full ${
           currentPage === 1
@@ -18,7 +32,7 @@ const Pagination = ({ currentPage, totalPages, onPrevious, onNext }) => {
         Page {currentPage} of {totalPages}
       </span>
       <button
-        onClick={onNext}
+        onClick={goToNext}
         disabled={currentPage === totalPages}
         className={`p-2 rounded-full ${
           currentPage === totalPages
