@@ -1,7 +1,11 @@
 function TrendingItemCard({ name, image, price }) {
   return (
     <div className="border-none p-4">
-      <img src={image} alt={name} className="w-[299px] h-[337px] object-cover rounded-none" />
+      <img
+        src={image}
+        alt={name}
+        className="w-[182px] md:w-[299px] h-[205px] md:h-[337px] object-cover rounded-none"
+      />
       <div>
         <h3 className="mt-3 text-[16px] text-msq-purple font-lato text-left text-nowrap ">
           {name}

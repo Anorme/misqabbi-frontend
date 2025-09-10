@@ -30,13 +30,15 @@ const items = [
 function TrendingCollection() {
   return (
     <section>
-      <div className="flex flex-col w-[500px] text-left border-l-msq-purple-rich border-l-3 pl-2">
-        <h2 className="text-msq-purple-deep font-lato text-[32px]  mb-2">Trending this Season</h2>
-        <p className="text-msq-purple-light font-lato text-[20px]">
+      <div className="flex flex-col w-[500px] text-left border-l-msq-purple-rich border-l-3 pl-2 mt-4">
+        <h2 className="text-msq-purple-deep font-lato  text-[24px] md:text-[32px] md:mb-2 ">
+          Trending this Season
+        </h2>
+        <p className="text-msq-purple-light font-lato text-[12px] md:text-[20px]">
           Shine bright with this week's must-have trend selections.
         </p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 md:gap-6">
         {items.map(item => (
           <TrendingItemCard key={item.name} {...item} />
         ))}
