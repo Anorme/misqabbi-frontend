@@ -1,6 +1,7 @@
 import { MdArrowBackIos } from 'react-icons/md';
 import { fetchProductById } from '../api/products';
 import { useEffect, useState } from 'react';
+import GalleryImages from '../components/ui/GalleryImages';
 
 const PRODUCT_ID = '68a3d39ee837aef0596710e3'; // Example product ID
 
@@ -41,7 +42,21 @@ function ProductDetails() {
         <p className="lg:hidden">Product Details</p>
       </header>
 
-      <main className="overflow-y-auto overflow-x-hidden scrollbar-hide text-start flex flex-col gap-2"></main>
+      <main className="overflow-y-auto overflow-x-hidden scrollbar-hide text-start flex flex-col gap-2">
+        {/* Images Section */}
+        <div className="flex flex-col gap-5">
+          <div>
+            <img
+              className="h-[25.75rem] lg:h-[40.125rem] w-full object-cover rounded-md"
+              src={product.image || product.images[0]}
+              alt={product?.name}
+            />
+          </div>
+
+          {/* Image Gallery */}
+          <GalleryImages product={product}></GalleryImages>
+        </div>
+      </main>
     </div>
   );
 }
