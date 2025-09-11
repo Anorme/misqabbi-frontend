@@ -12,6 +12,7 @@ import AuthCallback from './pages/auth/AuthCallback';
 
 import './App.css';
 import NotFound from './components/ui/NotFound';
+import ProductDetails from './pages/ProductDetails';
 
 const App = () => {
   return (
@@ -21,7 +22,7 @@ const App = () => {
           path="/"
           element={
             <MainLayout>
-              <Home />
+              <ProductDetails />
             </MainLayout>
           }
         ></Route>
