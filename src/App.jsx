@@ -11,7 +11,7 @@ import Login from './pages/Login';
 import AuthCallback from './pages/auth/AuthCallback';
 
 import './App.css';
-import NotFound from './components/UI/NotFound';
+import NotFound from './components/ui/NotFound';
 
 const App = () => {
   return (
