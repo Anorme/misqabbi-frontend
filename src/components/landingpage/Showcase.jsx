@@ -4,7 +4,7 @@ import TrendingCollection from './TrendingCollection';
 
 const Showcase = () => {
   return (
-    <section className="px-4 max-w-7xl mx-auto bg-white">
+    <section className="w-full bg-white">
       <h2 className="font-lato text-3xl md:text-[32px] text-msq-purple-deep mb-2 md:mb-4">
         All Categories
       </h2>
@@ -14,7 +14,7 @@ const Showcase = () => {
         <TrendingCollection />
       </div>
 
-      <div className="flex justify-center mt-4 md:mt-8">
+      <div className="flex justify-center mt-[29pt] md:mt-[59px]">
         <MsqButton
           label="VIEW THE COLLECTION"
           variant="gold"
