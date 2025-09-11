@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-import UserAuthForm from '../components/UI/UserAuthForm';
+import UserAuthForm from '../components/ui/UserAuthForm';
 
 import loginImg from '../assets/login.png';
 
