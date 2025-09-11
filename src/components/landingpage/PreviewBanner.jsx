@@ -15,7 +15,7 @@ const PreviewBanner = () => {
 
   return (
     <div
-      className="relative w-[380px] h-[122px] md:w-full md:h-[500px] bg-cover bg-top md:bg-center "
+      className="relative w-full h-[122px] md:h-[500px] bg-cover bg-top md:bg-center "
       style={{
         backgroundPosition: bgPosition,
         backgroundImage:
