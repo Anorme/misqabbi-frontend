@@ -2,6 +2,9 @@ import { MdArrowBackIos } from 'react-icons/md';
 import { fetchProductById } from '../api/products';
 import { useEffect, useState } from 'react';
 import GalleryImages from '../components/ui/GalleryImages';
+import SizeSelect from '../components/ui/SizeSelect';
+import QuantitySelector from '../components/ui/QuantitySelector';
+import ColorPalette from '../components/ui/ColorPalette';
 
 const PRODUCT_ID = '68a3d39ee837aef0596710e3'; // Example product ID
 
@@ -43,18 +46,49 @@ function ProductDetails() {
       </header>
 
       <main className="overflow-y-auto overflow-x-hidden scrollbar-hide text-start flex flex-col gap-2">
-        {/* Images Section */}
-        <div className="flex flex-col gap-5">
-          <div>
-            <img
-              className="h-[25.75rem] lg:h-[40.125rem] w-full object-cover rounded-md"
-              src={product.image || product.images[0]}
-              alt={product?.name}
-            />
+        <div className="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-5 py-6">
+          {/* Images Section */}
+          <div className="flex flex-col gap-5">
+            <div>
+              <img
+                className="h-[25.75rem] lg:h-[40.125rem] w-full object-cover rounded-md"
+                src={product.image || product.images[0]}
+                alt={product?.name}
+              />
+            </div>
+
+            {/* Image Gallery */}
+            <GalleryImages product={product}></GalleryImages>
           </div>
 
-          {/* Image Gallery */}
-          <GalleryImages product={product}></GalleryImages>
+          {/* Product Info Section */}
+          <div className="divide-y-2 divide-gray-300 max-w-[534px]">
+            <div className="flex flex-col gap-2 pb-6">
+              <h1 className="font-extrabold text-2xl tracking-tight text-purple-500">
+                {product?.name}
+              </h1>
+              <h2 className="text-2xl">Details</h2>
+              <p>{product?.description}</p>
+            </div>
+
+            <SizeSelect></SizeSelect>
+
+            <div className="flex justify-between pb-6">
+              <QuantitySelector />
+              <ColorPalette />
+            </div>
+
+            {/* Product price and CTA */}
+            <div className="flex py-6">
+              <div className="w-1/2 px-3 py-2 bg-[#EEE5E5] rounded-lg flex flex-col">
+                <p className="text-sm text-[#B1B2B2]">Total price:</p>
+                <h1 className="text-2xl font-extrabold text-purple-700">GHC {product?.price}</h1>
+              </div>
+              <button className="bg-purple-500 text-lg text-white rounded-lg flex-grow">
+                Add to Cart
+              </button>
+            </div>
+          </div>
         </div>
       </main>
     </div>
