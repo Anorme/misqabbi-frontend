@@ -21,7 +21,7 @@ const CtaSection = () => {
   ];
 
   return (
-    <section className="px-4 pb-10 max-w-7xl mx-auto text-center">
+    <section className="pb-10 w-full text-center">
       <h2 className="text-2xl md:text-3xl font-bebas tracking-wide text-msq-purple-rich mb-6">
         FOLLOW US ON INSTAGRAM <span className="text-msq-purple-light">@MISQABBIGH</span>
       </h2>
