@@ -18,7 +18,7 @@ export default function MsqButton({ label, variant = 'gold', className = '', onC
   }
 
   const baseClasses =
-    'text-[16px] font-lato border px-5 py-3 rounded-none cursor-pointer transition';
+    'text-[12px] md:text-[16px] font-lato border px-4 md:px-5 py-2 md:py-3 rounded-none cursor-pointer transition';
 
   return (
     <button onClick={onClick} className={`${baseClasses} ${variantClasses} ${className}`}>
