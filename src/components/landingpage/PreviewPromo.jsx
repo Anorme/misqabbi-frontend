@@ -14,7 +14,7 @@ const PreviewPromo = () => {
 
   return (
     <div
-      className="relative w-[380px] md:w-full h-[122px] md:h-[417px] bg-cover bg-top md:bg-center"
+      className="relative w-full h-[122px] md:h-[417px] bg-cover bg-top md:bg-center"
       style={{
         backgroundPosition: bgPosition,
         backgroundImage:
