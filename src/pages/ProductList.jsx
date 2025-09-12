@@ -44,7 +44,7 @@ const ProductList = () => {
   const currentProducts = filteredProducts;
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main className="w-full px-4 sm:px-6 lg:px-8 py-8">
       <CategoryNavigation />
       {loading ? (
         <p className="flex flex-col w-full lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] text-center text-lg text-gray-500">
