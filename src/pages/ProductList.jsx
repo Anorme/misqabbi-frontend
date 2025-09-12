@@ -48,7 +48,7 @@ const ProductList = () => {
   const categories = ['Shirt', 'T-Shirt', 'Accessories', 'Jacket', 'Cap', 'Jeans'];
 
   return (
-    <div className="h-auto">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <h1 className="text-[#4a0579] text-2xl flex justify-self-start font-mono pl-[20px]">
         MISQABBI/ <span className="text-[#c01da8]">Shop </span>
       </h1>
@@ -59,28 +59,25 @@ const ProductList = () => {
         </h1>
 
         <CategoryList categories={categories} />
-
         <FilterMenu options={filterOptions} />
       </div>
-
-      <div className="flex flex-col w-full lg:ml-[3rem] mt-[3rem] lg:mt-[5rem]">
-        {loading ? (
-          <p className="text-center text-lg text-gray-500">Loading products...</p>
-        ) : error ? (
-          <p className="text-center text-red-500">{error}</p>
-        ) : (
-          <>
-            <ProductGrid>
-              {currentProducts.map(product => (
-                <ProductCard key={product._id} product={product} />
-              ))}
-            </ProductGrid>
-
-            <Pagination />
-          </>
-        )}
-      </div>
-    </div>
+      {loading ? (
+        <p className="flex flex-col w-full lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] text-center text-lg text-gray-500">
+          Loading products...
+        </p>
+      ) : error ? (
+        <p className="text-center text-red-500">{error}</p>
+      ) : (
+        <>
+          <ProductGrid>
+            {currentProducts.map(product => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </ProductGrid>
+          <Pagination />
+        </>
+      )}
+    </main>
   );
 };
 
