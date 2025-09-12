@@ -1,11 +1,11 @@
 import { CATALOG_ACTION_TYPES } from './catalogActionTypes';
 
 export const initialState = {
-  products: [], // all products
-  selectedFilter: 'All', // current filter
-  currentPage: 1, // current page
-  productsPerPage: 8, // items per page
-  totalPages: 1, // total number of pages
+  products: [],
+  selectedFilter: 'All',
+  currentPage: 1,
+  productsPerPage: 8,
+  totalPages: 1,
 };
 
 export const catalogReducer = (state, action) => {
