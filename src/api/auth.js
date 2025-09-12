@@ -74,9 +74,28 @@ const fetchAuthenticatedUser = async () => {
   }
 };
 
+const logoutUser = async () => {
+  try {
+    const response = await axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true });
+
+    const { success, message } = response.data;
+
+    if (success) {
+      return true;
+    } else {
+      console.error(message);
+      return false;
+    }
+  } catch (error) {
+    console.error('Error logging out user:', error);
+    throw error;
+  }
+};
+
 export {
   registerUserWithEmail,
   loginUserWithEmail,
   signInWithGoogleRedirect,
   fetchAuthenticatedUser,
+  logoutUser,
 };
