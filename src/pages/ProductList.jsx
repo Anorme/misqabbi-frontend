@@ -3,14 +3,13 @@ import { useState, useEffect, useMemo } from 'react';
 import Pagination from '../components/Pagination.jsx';
 import ProductGrid from '../components/ProductGrid.jsx';
 import ProductCard from '../components/ProductCard.jsx';
-import CategoryList from '../components/CategoryList.jsx';
-import FilterMenu from '../components/FilterMenu.jsx';
 import filterProducts from '../utils/filterProducts.js';
 
 import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog.js';
 import { setPage, setTotalPages, setProducts } from '../contexts/catalog/catalogActions.js';
 
 import { fetchPaginatedProducts } from '../api/products.js';
+import CategoryNavigation from '../components/layout/CategoryNavigation.jsx';
 
 const ProductList = () => {
   const { products, selectedFilter, productsPerPage, currentPage } = useCatalogState();
@@ -44,23 +43,9 @@ const ProductList = () => {
 
   const currentProducts = filteredProducts;
 
-  const filterOptions = ['All', 'Newest', 'Oldest', 'Popular'];
-  const categories = ['Shirt', 'T-Shirt', 'Accessories', 'Jacket', 'Cap', 'Jeans'];
-
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-[#4a0579] text-2xl flex justify-self-start font-mono pl-[20px]">
-        MISQABBI/ <span className="text-[#c01da8]">Shop </span>
-      </h1>
-
-      <div className="flex flex-col lg:flex-row lg:items-center">
-        <h1 className="text-[#630254] text-5xl font-sans flex justify-start ml-[140px] mt-[50px]">
-          Items
-        </h1>
-
-        <CategoryList categories={categories} />
-        <FilterMenu options={filterOptions} />
-      </div>
+      <CategoryNavigation />
       {loading ? (
         <p className="flex flex-col w-full lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] text-center text-lg text-gray-500">
           Loading products...
