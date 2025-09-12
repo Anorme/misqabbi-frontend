@@ -1,5 +1,3 @@
-// src/components/CategoryList.jsx
-
 const CategoryList = ({ categories = [], className = '' }) => {
   return (
     <ul
