@@ -1,18 +1,26 @@
+import { Link } from 'react-router';
 import { ShoppingCart, Heart, Search } from 'lucide-react';
+import { useAuthState } from '../../contexts/auth/useAuth.js';
+import LoginButton from '../auth/LoginButton.jsx';
+import LogoutButton from '../auth/LogoutButton.jsx';
 
 const NavBar = () => {
+  const { isAuthenticated } = useAuthState();
+
   return (
     <header className="mt-8 ">
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex-shrink-0">
-            <img
-              src="/images/Logo.png"
-              alt="Misqobbi Logo"
-              className="w-28 sm:w-40 md:w-56 object-contain"
-            />
-          </div>
+          <Link to="/">
+            <div className="flex-shrink-0">
+              <img
+                src="/images/Logo.png"
+                alt="Misqabbi Logo"
+                className="w-28 sm:w-40 md:w-56 object-contain cursor-pointer"
+              />
+            </div>
+          </Link>
 
           {/* Search Bar */}
           <div className="flex-1 max-w-lg mx-8">
@@ -33,15 +41,15 @@ const NavBar = () => {
             <button className="p-2 text-msq-gold-light">
               <Heart className="hover:fill-msq-gold-light cursor-pointer" size={20} />
             </button>
-            <button className="p-2 text-msq-gold-light cursor-pointer">
-              <ShoppingCart size={20} />
-            </button>
+            <Link to="/cart">
+              <button className="p-2 text-msq-gold-light cursor-pointer">
+                <ShoppingCart size={20} />
+              </button>
+            </Link>
             <button className="text-[#d265ff] hover:text-msq-purple-rich font-medium cursor-pointer">
               Help
             </button>
-            <button className="text-[#d265ff] hover:text-msq-purple-rich font-medium cursor-pointer">
-              Login
-            </button>
+            {isAuthenticated ? <LoginButton /> : <LogoutButton />}
             <button className="bg-msq-purple-rich text-white px-4 py-2 rounded-md hover:bg-msq-purple font-medium cursor-pointer">
               Create Account
             </button>
