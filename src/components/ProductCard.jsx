@@ -2,7 +2,7 @@ import { Heart, ShoppingBag } from 'lucide-react';
 
 const ProductCard = ({ product }) => {
   return (
-    <div className="bg-white border-none rounded-none shadow-sm hover:shadow-md transition-shadow duration-200 max-w-[320px] w-full mx-auto">
+    <div className="bg-white border-none rounded-none max-w-[320px] w-full mx-auto">
       <div className="relative group">
         <img
           src={product.images?.[0] || 'https://via.placeholder.com/150'}
