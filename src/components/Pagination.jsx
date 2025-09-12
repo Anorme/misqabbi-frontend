@@ -1,7 +1,6 @@
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog';
 import { setPage } from '../contexts/catalog/catalogActions';
-
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 const Pagination = () => {
   const { currentPage, totalPages } = useCatalogState();
@@ -16,31 +15,42 @@ const Pagination = () => {
   };
 
   return (
-    <div className="flex justify-center items-center gap-6 mt-[70px]">
+    <div className="flex items-center justify-center mt-12 space-x-2">
+      {/* Previous Button */}
       <button
         onClick={goToPrevious}
         disabled={currentPage === 1}
-        className={`p-2 rounded-full ${
+        className={`px-3 py-2 flex items-center gap-1 text-sm font-medium ${
           currentPage === 1
-            ? 'bg-gray-300 cursor-not-allowed'
-            : 'bg-[#630254] text-white hover:bg-[#5b0792]'
+            ? 'text-gray-300 cursor-not-allowed'
+            : 'text-msq-purple-deep hover:text-msq-purple-rich cursor-pointer '
         }`}
       >
-        <FaArrowLeft />
+        <ArrowLeft size={18} />
+        Previous
       </button>
-      <span className="text-lg font-medium">
-        Page {currentPage} of {totalPages}
-      </span>
+
+      {/* Page Indicator */}
+      <button className="px-3 py-2 text-msq-purple-deep bg-msq-gold-light/20 rounded-md font-medium">
+        {currentPage}
+      </button>
+      <span className="px-3 py-2 text-gray-500">of</span>
+      <button className="px-3 py-2 text-gray-700 hover:text-msq-purple-rich hover:bg-msq-gold-light/10 rounded-md">
+        {totalPages}
+      </button>
+
+      {/* Next Button */}
       <button
         onClick={goToNext}
         disabled={currentPage === totalPages}
-        className={`p-2 rounded-full ${
+        className={`px-3 py-2 flex items-center gap-1 text-sm font-medium ${
           currentPage === totalPages
-            ? 'bg-gray-300 cursor-not-allowed'
-            : 'bg-[#630254] text-white hover:bg-[#5b0792]'
+            ? 'text-gray-300 cursor-not-allowed'
+            : 'text-msq-purple-deep hover:text-msq-purple-rich cursor-pointer'
         }`}
       >
-        <FaArrowRight />
+        Next
+        <ArrowRight size={18} />
       </button>
     </div>
   );
