@@ -4,7 +4,7 @@ export const initialState = {
   products: [], // all products
   selectedFilter: 'All', // current filter
   currentPage: 1, // current page
-  productsPerPage: 6, // items per page
+  productsPerPage: 8, // items per page
   totalPages: 1, // total number of pages
 };
 
