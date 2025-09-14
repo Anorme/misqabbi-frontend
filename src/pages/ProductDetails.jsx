@@ -31,7 +31,9 @@ function ProductDetails() {
     loadProduct();
   }, []);
 
-  console.log('Product Details:', product);
+  function handleSizeSelect(size) {
+    console.log('Selected size:', size);
+  }
 
   if (loading) return <p className="p-4">Loading product...</p>;
   if (error) return <p className="p-4 text-red-500">{error}</p>;
@@ -66,7 +68,7 @@ function ProductDetails() {
           <div className="divide-y-2 divide-gray-300 max-w-[534px] lg:pt-4">
             <ProductInfo product={product}></ProductInfo>
 
-            <SizeSelect></SizeSelect>
+            <SizeSelect onChange={handleSizeSelect}></SizeSelect>
 
             <div className="flex justify-between pb-6">
               <QuantitySelector />
