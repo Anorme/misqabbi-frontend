@@ -46,7 +46,7 @@ function ProductDetails() {
       </header>
 
       <main className="overflow-y-auto overflow-x-hidden scrollbar-hide text-start flex flex-col gap-2">
-        <div className="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-5 py-6">
+        <div className="max-w-screen-xl mx-auto flex flex-col lg:grid lg:items-center lg:grid-cols-2 lg:gap-5 gap-5 py-6">
           {/* Images Section */}
           <div className="flex flex-col gap-5">
             <div>
@@ -58,7 +58,9 @@ function ProductDetails() {
             </div>
 
             {/* Image Gallery */}
-            <GalleryImages product={product}></GalleryImages>
+            <div>
+              <GalleryImages product={product}></GalleryImages>
+            </div>
           </div>
 
           {/* Product Info Section */}
