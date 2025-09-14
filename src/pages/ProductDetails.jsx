@@ -37,16 +37,16 @@ function ProductDetails() {
   if (!product) return <p className="p-4">No product found.</p>;
 
   return (
-    <div className="font-lato p-4 bg-white">
+    <div className="font-lato px-4 py-4 lg:py-8 bg-white">
       <header className="flex relative items-center justify-center">
-        <div className="absolute left-2 cursor-pointer">
+        <div className="absolute left-2 lg:text-2xl cursor-pointer">
           <MdArrowBackIos />
         </div>
         <p className="lg:hidden">Product Details</p>
       </header>
 
       <main className="overflow-y-auto overflow-x-hidden scrollbar-hide text-start flex flex-col gap-2">
-        <div className="max-w-screen-xl mx-auto flex flex-col lg:grid lg:items-center lg:grid-cols-2 lg:gap-5 gap-5 py-6">
+        <div className="max-w-screen-xl mx-auto flex flex-col lg:grid lg:grid-cols-2 lg:gap-5 gap-5 py-6">
           {/* Images Section */}
           <div className="flex flex-col gap-5">
             <div>
@@ -58,17 +58,18 @@ function ProductDetails() {
             </div>
 
             {/* Image Gallery */}
-            <div>
-              <GalleryImages product={product}></GalleryImages>
-            </div>
+            <GalleryImages product={product}></GalleryImages>
           </div>
 
           {/* Product Info Section */}
-          <div className="divide-y-2 divide-gray-300 max-w-[534px]">
+          <div className="divide-y-2 divide-gray-300 max-w-[534px] lg:pt-4">
             <div className="flex flex-col gap-2 pb-6">
               <h1 className="font-extrabold text-2xl tracking-tight text-purple-500">
                 {product?.name}
               </h1>
+              <p className="text-2xl font-extrabold text-purple-700 hidden lg:block">
+                GHC {product?.price}
+              </p>
               <h2 className="text-2xl">Details</h2>
               <p>{product?.description}</p>
             </div>
