@@ -5,6 +5,7 @@ import GalleryImages from '../components/ui/GalleryImages';
 import SizeSelect from '../components/ui/SizeSelect';
 import QuantitySelector from '../components/ui/QuantitySelector';
 import ColorPalette from '../components/ui/ColorPalette';
+import ProductInfo from '../components/ui/ProductInfo';
 
 const PRODUCT_ID = '68a3d39ee837aef0596710e3'; // Example product ID
 
@@ -63,16 +64,7 @@ function ProductDetails() {
 
           {/* Product Info Section */}
           <div className="divide-y-2 divide-gray-300 max-w-[534px] lg:pt-4">
-            <div className="flex flex-col gap-2 pb-6">
-              <h1 className="font-extrabold text-2xl tracking-tight text-purple-500">
-                {product?.name}
-              </h1>
-              <p className="text-2xl font-extrabold text-purple-700 hidden lg:block">
-                GHC {product?.price}
-              </p>
-              <h2 className="text-2xl">Details</h2>
-              <p>{product?.description}</p>
-            </div>
+            <ProductInfo product={product}></ProductInfo>
 
             <SizeSelect></SizeSelect>
 
