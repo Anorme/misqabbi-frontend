@@ -72,7 +72,6 @@ function ProductDetails() {
 
             <div className="flex justify-between pb-6">
               <QuantitySelector />
-              <ColorPalette />
             </div>
 
             {/* Product price and CTA */}
