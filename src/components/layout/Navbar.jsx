@@ -50,9 +50,11 @@ const NavBar = () => {
               Help
             </button>
             {isAuthenticated ? <LogoutButton /> : <LoginButton />}
-            <button className="bg-msq-purple-rich text-white px-4 py-2 rounded-md hover:bg-msq-purple font-medium cursor-pointer">
-              Create Account
-            </button>
+            <Link to="/register">
+              <button className="bg-msq-purple-rich text-white px-4 py-2 rounded-md hover:bg-msq-purple font-medium cursor-pointer">
+                Create Account
+              </button>
+            </Link>
           </div>
         </div>
       </div>
