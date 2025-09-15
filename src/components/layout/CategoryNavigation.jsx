@@ -13,7 +13,7 @@ const CategoryNavigation = () => {
             <div className="flex items-center pr-4 border-r border-r-[#949396] h-full">
               <button className="flex items-center text-msq-purple-deep hover:text-msq-purple-rich font-medium">
                 ALL CATEGORIES
-                <Triangle className="ml-1 fill-[#D9D9D9] rotate-180 stroke-none" size={10} />
+                <Triangle className="ml-1 fill-msq-gold-light rotate-180 stroke-none" size={10} />
               </button>
             </div>
             <div className="flex items-center px-4 border-r border-r-[#949396] h-full">
@@ -33,13 +33,13 @@ const CategoryNavigation = () => {
             <div className="flex items-center px-4 border-l border-r border-[#949396] h-full">
               <button className="flex items-center text-msq-purple-deep hover:text-msq-purple-rich font-medium">
                 SORT BY
-                <Triangle className="ml-1 fill-[#D9D9D9] rotate-180 stroke-none" size={10} />
+                <Triangle className="ml-1 fill-msq-gold-light rotate-180 stroke-none" size={10} />
               </button>
             </div>
             <div className="flex items-center px-4 border-r border-r-[#949396] h-full">
               <button className="flex items-center text-msq-purple-deep hover:text-msq-purple-rich font-medium">
                 FILTER
-                <Triangle className="ml-1 fill-[#D9D9D9] rotate-180 stroke-none" size={10} />
+                <Triangle className="ml-1 fill-msq-gold-light rotate-180 stroke-none" size={10} />
               </button>
             </div>
             <div className="flex items-center pl-4 space-x-2 h-full">
