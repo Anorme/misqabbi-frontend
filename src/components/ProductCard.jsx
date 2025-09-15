@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
         <img
           src={product.images?.[0] || 'https://via.placeholder.com/150'}
           alt={product.name}
-          className="w-full h-64 object-cover"
+          className="w-full h-94 object-cover"
         />
         <button
           type="button"
@@ -26,7 +26,7 @@ const ProductCard = ({ product }) => {
           {product.name}
         </h3>
         <div className="flex items-center justify-between">
-          <span className="text-xl md:text-3xl font-bold text-msq-purple-deep">
+          <span className="text-xl md:text-[20px] font-bold text-msq-purple-deep">
             GHC {product.price}
           </span>
           <button type="button" aria-label="Add to cart">
