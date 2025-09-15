@@ -45,7 +45,9 @@ const ProductList = () => {
 
   return (
     <main className="w-full px-4 sm:px-6 lg:px-8 py-8">
-      <CategoryNavigation />
+      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-white border-y border-[#949396]">
+        <CategoryNavigation />
+      </div>
       {loading ? (
         <p className="flex flex-col w-full lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] text-center text-lg text-gray-500">
           Loading products...
