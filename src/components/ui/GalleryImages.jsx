@@ -9,7 +9,7 @@ function GalleryImages({ product }) {
             <img
               src={img}
               alt={`${product?.name} thumbnail ${idx + 1}`}
-              className="object-cover h-full w-full rounded-md"
+              className="object-cover h-full w-full rounded-none"
             />
           </li>
         ))}
