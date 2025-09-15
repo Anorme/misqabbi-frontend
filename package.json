@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "rm -rf node_modules && npm install",
     "build": "vite build",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
