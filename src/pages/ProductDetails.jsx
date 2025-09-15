@@ -54,7 +54,7 @@ function ProductDetails() {
           <div className="flex flex-col gap-5">
             <div>
               <img
-                className="h-[25.75rem] lg:h-[40.125rem] w-full object-cover rounded-md"
+                className="h-[25.75rem] lg:h-[40.125rem] w-full object-cover rounded-none"
                 src={product.image || product.images[0]}
                 alt={product?.name}
               />
