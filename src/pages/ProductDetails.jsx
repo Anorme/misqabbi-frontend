@@ -75,12 +75,14 @@ function ProductDetails() {
             </div>
 
             {/* Product price and CTA */}
-            <div className="flex py-6">
-              <div className="w-1/2 px-3 py-2 bg-[#EEE5E5] rounded-lg flex flex-col">
+            <div className="flex py-6 space-x-5 justify-between">
+              <div className="w-1/2 px-3 py-2 bg-[#EEE5E5] rounded-md flex flex-col max-w-[190px]">
                 <p className="text-sm text-[#B1B2B2]">Total price:</p>
-                <h1 className="text-2xl font-extrabold text-purple-700">GHC {product?.price}</h1>
+                <h1 className="text-2xl font-extrabold text-msq-purple-deep">
+                  GHC {product?.price}
+                </h1>
               </div>
-              <button className="bg-purple-500 text-lg text-white rounded-lg flex-grow">
+              <button className="bg-msq-purple-rich text-lg text-white rounded-md flex-grow max-w-[320px] cursor-pointer">
                 Add to Cart
               </button>
             </div>
