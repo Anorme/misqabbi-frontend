@@ -65,7 +65,14 @@ const App = () => {
 
         <Route path="/auth/callback" element={<AuthCallback />} />
 
-        <Route path="/product/:slug" element={<ProductDetails />} />
+        <Route
+          path="/product/:slug"
+          element={
+            <MainLayout>
+              <ProductDetails />
+            </MainLayout>
+          }
+        />
 
         <Route
           path="*"
