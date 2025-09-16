@@ -1,5 +1,5 @@
 function GalleryImages({ product }) {
-  const galleryImages = Array(5).fill(product?.images[0] || product?.images);
+  const galleryImages = product?.images || [];
 
   return (
     <>
