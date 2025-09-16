@@ -1,15 +1,17 @@
-import { MdArrowBackIos } from 'react-icons/md';
-import { fetchProductById } from '../api/products';
 import { useEffect, useState } from 'react';
-import GalleryImages from '../components/ui/GalleryImages';
-import SizeSelect from '../components/ui/SizeSelect';
-import QuantitySelector from '../components/ui/QuantitySelector';
-import ColorPalette from '../components/ui/ColorPalette';
-import ProductInfo from '../components/ui/ProductInfo';
 
-const PRODUCT_ID = '68a3d39ee837aef0596710e3'; // Example product ID
+import { useParams } from 'react-router';
+import { MdArrowBackIos } from 'react-icons/md';
+
+import { fetchProductBySlug } from '../api/products';
+
+import SizeSelect from '../components/ui/SizeSelect';
+import ProductInfo from '../components/ui/ProductInfo';
+import GalleryImages from '../components/ui/GalleryImages';
+import QuantitySelector from '../components/ui/QuantitySelector';
 
 function ProductDetails() {
+  const { slug } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,7 +20,7 @@ function ProductDetails() {
     const loadProduct = async () => {
       try {
         setLoading(true);
-        const response = await fetchProductById(PRODUCT_ID);
+        const response = await fetchProductBySlug(slug);
         setProduct(response);
       } catch (err) {
         console.error('Failed to load product:', err);
@@ -29,7 +31,7 @@ function ProductDetails() {
     };
 
     loadProduct();
-  }, []);
+  }, [slug]);
 
   function handleSizeSelect(size) {
     console.log('Selected size:', size);
