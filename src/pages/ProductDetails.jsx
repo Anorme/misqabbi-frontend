@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useParams } from 'react-router';
-import { MdArrowBackIos } from 'react-icons/md';
+import BackButton from '../components/layout/BackButton';
 
 import { fetchProductBySlug } from '../api/products';
 
@@ -44,9 +44,7 @@ function ProductDetails() {
   return (
     <div className="font-lato px-4 py-4 lg:py-8 bg-white">
       <header className="flex relative items-center justify-center">
-        <div className="absolute left-2 lg:text-2xl cursor-pointer">
-          <MdArrowBackIos />
-        </div>
+        <BackButton />
         <p className="lg:hidden">Product Details</p>
       </header>
 
