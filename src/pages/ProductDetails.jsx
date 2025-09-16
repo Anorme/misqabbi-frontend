@@ -50,7 +50,7 @@ function ProductDetails() {
         <p className="lg:hidden">Product Details</p>
       </header>
 
-      <main className="overflow-y-auto overflow-x-hidden scrollbar-hide text-start flex flex-col gap-2">
+      <main className="overflow-hidden text-start flex flex-col gap-2">
         <div className="max-w-screen-xl mx-auto flex flex-col lg:grid lg:grid-cols-2 lg:gap-5 gap-5 py-6">
           {/* Images Section */}
           <div className="flex flex-col gap-5">
