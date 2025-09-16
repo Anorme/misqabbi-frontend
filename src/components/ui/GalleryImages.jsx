@@ -3,7 +3,7 @@ function GalleryImages({ product }) {
 
   return (
     <>
-      <ul className="grid grid-cols-5 gap-4 h-28 px-4 mx-auto scrollbar-hide">
+      <ul className="grid grid-cols-5 gap-4 h-28 px-4 mx-auto">
         {galleryImages.map((img, idx) => (
           <li key={idx}>
             <img
