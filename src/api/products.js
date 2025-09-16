@@ -13,9 +13,9 @@ const fetchPaginatedProducts = async (page = 1, limit = 6) => {
   }
 };
 
-const fetchProductById = async productId => {
+const fetchProductBySlug = async slug => {
   try {
-    const response = await axios.get(`${API_URL}/products/${productId}`);
+    const response = await axios.get(`${API_URL}/products/${slug}`);
     return response.data.data;
   } catch (error) {
     console.error('Error fetching product:', error);
@@ -23,4 +23,4 @@ const fetchProductById = async productId => {
   }
 };
 
-export { fetchPaginatedProducts, fetchProductById };
+export { fetchPaginatedProducts, fetchProductBySlug };
