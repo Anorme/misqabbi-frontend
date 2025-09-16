@@ -22,7 +22,7 @@ const App = () => {
           path="/"
           element={
             <MainLayout>
-              <ProductDetails />
+              <Home />
             </MainLayout>
           }
         ></Route>
@@ -64,6 +64,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
 
         <Route path="/auth/callback" element={<AuthCallback />} />
+
+        <Route path="/product/:slug" element={<ProductDetails />} />
 
         <Route
           path="*"
