@@ -10,7 +10,7 @@ const NavBar = () => {
   return (
     <header className="mt-8 ">
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between lg:h-16">
           {/* Logo */}
           <Link to="/">
             <div className="flex-shrink-0">
@@ -23,7 +23,7 @@ const NavBar = () => {
           </Link>
 
           {/* Search Bar */}
-          <div className="hidden lg:block flex-1 max-w-lg mx-8">
+          <div className="hidden md:block flex-1 max-w-lg mx-8">
             <div className="relative">
               <input
                 type="text"
@@ -37,8 +37,8 @@ const NavBar = () => {
           </div>
 
           {/* Right Navigation */}
-          <div className="flex items-center space-x-4">
-            <div className="p-2 lg:hidden text-msq-gold-light">
+          <div className="flex items-center lg:space-x-4 space-x-2">
+            <div className="p-2 md:hidden text-msq-gold-light">
               <Search size={20} className="text-msq-gold-light" />
             </div>
             <button className="p-2 text-msq-gold-light">
