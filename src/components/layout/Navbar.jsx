@@ -23,7 +23,7 @@ const NavBar = () => {
           </Link>
 
           {/* Search Bar */}
-          <div className="flex-1 max-w-lg mx-8">
+          <div className="hidden lg:block flex-1 max-w-lg mx-8">
             <div className="relative">
               <input
                 type="text"
