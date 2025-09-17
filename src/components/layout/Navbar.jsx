@@ -38,6 +38,9 @@ const NavBar = () => {
 
           {/* Right Navigation */}
           <div className="flex items-center space-x-4">
+            <div className="p-2 lg:hidden text-msq-gold-light">
+              <Search size={20} className="text-msq-gold-light" />
+            </div>
             <button className="p-2 text-msq-gold-light">
               <Heart className="hover:fill-msq-gold-light cursor-pointer" size={20} />
             </button>
@@ -46,11 +49,13 @@ const NavBar = () => {
                 <ShoppingCart size={20} />
               </button>
             </Link>
-            <button className="text-[#d265ff] hover:text-msq-purple-rich font-medium cursor-pointer">
+            <button className="text-[#d265ff] hover:text-msq-purple-rich hidden lg:block font-medium cursor-pointer">
               Help
             </button>
-            {isAuthenticated ? <LogoutButton /> : <LoginButton />}
-            <Link to="/register">
+            <div className="hidden lg:block">
+              {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+            </div>
+            <Link to="/register" className="hidden lg:block">
               <button className="bg-msq-purple-rich text-white px-4 py-2 rounded-md hover:bg-msq-purple font-medium cursor-pointer">
                 Create Account
               </button>
