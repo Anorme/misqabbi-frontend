@@ -1,7 +1,8 @@
+import { Link } from 'react-router';
+import { Heart, ShoppingBag } from 'lucide-react';
+
 import { useCartDispatch } from '../contexts/cart/useCart';
 import { addToCart } from '../contexts/cart/cartActions';
-
-import { Heart, ShoppingBag } from 'lucide-react';
 
 const ProductCard = ({ product }) => {
   const dispatch = useCartDispatch();
@@ -21,11 +22,13 @@ const ProductCard = ({ product }) => {
   return (
     <div className="bg-white border-none rounded-none max-w-[320px] w-full mx-auto">
       <div className="relative group">
-        <img
-          src={product.images?.[0] || 'https://via.placeholder.com/150'}
-          alt={product.name}
-          className="w-full h-94 object-cover"
-        />
+        <Link to={`/product/${product.slug}`}>
+          <img
+            src={product.images?.[0] || 'https://via.placeholder.com/150'}
+            alt={product.name}
+            className="w-full h-94 object-cover"
+          />
+        </Link>
         <button
           type="button"
           aria-label="Add to favorites"

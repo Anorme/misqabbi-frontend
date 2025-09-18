@@ -1,7 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
 
-import { Link } from 'react-router';
-
 import Pagination from '../components/Pagination.jsx';
 import ProductGrid from '../components/ProductGrid.jsx';
 import ProductCard from '../components/ProductCard.jsx';
@@ -60,9 +58,7 @@ const ProductList = () => {
         <>
           <ProductGrid>
             {currentProducts.map(product => (
-              <Link to={`/product/${product.slug}`} key={product._id}>
-                <ProductCard key={product._id} product={product} />
-              </Link>
+              <ProductCard key={product._id} product={product} />
             ))}
           </ProductGrid>
           <Pagination />
