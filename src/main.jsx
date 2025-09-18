@@ -6,6 +6,7 @@ import App from './App.jsx';
 import { AuthProvider } from './contexts/auth/AuthProvider.jsx';
 import { FormProvider } from './contexts/form/FormProvider.jsx';
 import { CatalogProvider } from './contexts/catalog/CatalogProvider.jsx';
+import { CartProvider } from './contexts/cart/CartProvider.jsx';
 
 import './index.css';
 import './styles/tailwind.css';
@@ -15,9 +16,11 @@ createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <FormProvider>
         <CatalogProvider>
-          <Router>
-            <App />
-          </Router>
+          <CartProvider>
+            <Router>
+              <App />
+            </Router>
+          </CartProvider>
         </CatalogProvider>
       </FormProvider>
     </AuthProvider>
