@@ -98,7 +98,7 @@ function ProductDetails() {
               <div className="w-1/2 px-3 py-2 bg-[#EEE5E5] rounded-md flex flex-col max-w-[190px]">
                 <p className="text-sm text-[#B1B2B2]">Total price:</p>
                 <h1 className="text-2xl font-extrabold text-msq-purple-deep">
-                  GHC {product?.price}
+                  GHC {(product?.price * selectedQuantity).toFixed(2)}
                 </h1>
               </div>
               <button
