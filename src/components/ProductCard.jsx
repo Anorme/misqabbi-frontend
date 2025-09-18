@@ -1,6 +1,23 @@
+import { useCartDispatch } from '../contexts/cart/useCart';
+import { addToCart } from '../contexts/cart/cartActions';
+
 import { Heart, ShoppingBag } from 'lucide-react';
 
 const ProductCard = ({ product }) => {
+  const dispatch = useCartDispatch();
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        id: product._id,
+        name: product.name,
+        price: product.price,
+        images: product.images,
+        quantity: 1,
+        size: 'M',
+      })
+    );
+  };
+
   return (
     <div className="bg-white border-none rounded-none max-w-[320px] w-full mx-auto">
       <div className="relative group">
@@ -29,7 +46,7 @@ const ProductCard = ({ product }) => {
           <span className="text-xl md:text-[20px] font-bold text-msq-purple-deep">
             GHC {product.price}
           </span>
-          <button type="button" aria-label="Add to cart">
+          <button type="button" aria-label="Add to cart" onClick={handleAddToCart}>
             {/* Shopping Cart SVG icon */}
             <ShoppingBag className="text-msq-gold-light cursor-pointer" size={30} />
           </button>
