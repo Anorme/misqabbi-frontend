@@ -9,7 +9,7 @@ export const cartReducer = (state, action) => {
 
   switch (type) {
     case CART_ACTION_TYPES.ADD_TO_CART: {
-      const key = `${payload._id}-${payload.size}`;
+      const key = `${payload.id}-${payload.size}`;
       const existingItem = state.cartItems[key];
 
       const updatedItem = existingItem
@@ -29,7 +29,7 @@ export const cartReducer = (state, action) => {
     }
 
     case CART_ACTION_TYPES.UPDATE_CART_ITEM: {
-      const key = `${payload._id}-${payload.size}`;
+      const key = `${payload.id}-${payload.size}`;
       const itemToUpdate = state.cartItems[key];
 
       if (!itemToUpdate) return state;
@@ -44,7 +44,7 @@ export const cartReducer = (state, action) => {
     }
 
     case CART_ACTION_TYPES.REMOVE_FROM_CART: {
-      const key = `${payload._id}-${payload.size}`;
+      const key = `${payload.id}-${payload.size}`;
       const updatedItems = { ...state.cartItems };
 
       delete updatedItems[key];
