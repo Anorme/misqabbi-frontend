@@ -1,10 +1,6 @@
-import { useState } from 'react';
-
-const QuantitySelector = () => {
-  const [quantity, setQuantity] = useState(1);
-
-  const increase = () => setQuantity(prev => prev + 1);
-  const decrease = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+const QuantitySelector = ({ quantity, onChange }) => {
+  const increase = () => onChange(quantity + 1);
+  const decrease = () => onChange(quantity > 1 ? quantity - 1 : 1);
 
   return (
     <div className="flex flex-col gap-2">
