@@ -1,11 +1,19 @@
 import { Link } from 'react-router';
 import { ShoppingCart, Heart, Search } from 'lucide-react';
+import { useState } from 'react';
 import { useAuthState } from '../../contexts/auth/useAuth.js';
+import { useCartState } from '../../contexts/cart/useCart';
+import { getCartItemCount } from '../../contexts/cart/cartSelectors';
 import LoginButton from '../auth/LoginButton.jsx';
 import LogoutButton from '../auth/LogoutButton.jsx';
+import CartDrawer from '../CartDrawer.jsx';
 
 const NavBar = () => {
   const { isAuthenticated } = useAuthState();
+  const cartState = useCartState();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const itemCount = getCartItemCount(cartState);
 
   return (
     <header className="mt-8 ">
@@ -44,12 +52,18 @@ const NavBar = () => {
             <button className="p-2 text-msq-gold-light">
               <Heart className="hover:fill-msq-gold-light cursor-pointer" size={20} />
             </button>
-            <Link to="/cart">
-              <button className="p-2 text-msq-gold-light cursor-pointer">
-                <ShoppingCart size={20} />
-              </button>
-            </Link>
-            <button className="text-[#d265ff] hover:text-msq-purple-rich hidden lg:block font-medium cursor-pointer">
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="p-2 text-msq-gold-light cursor-pointer relative"
+            >
+              <ShoppingCart size={20} />
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-msq-gold text-white text-[10px] font-lato px-1.5 py-0.5 rounded-full shadow-md">
+                  {itemCount}
+                </span>
+              )}
+            </button>
+            <button className="text-[#d265ff] hover:text-msq-purple-rich font-medium cursor-pointer">
               Help
             </button>
             <div className="hidden lg:block">
@@ -63,6 +77,9 @@ const NavBar = () => {
           </div>
         </div>
       </div>
+
+      {/* Cart Drawer */}
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </header>
   );
 };
