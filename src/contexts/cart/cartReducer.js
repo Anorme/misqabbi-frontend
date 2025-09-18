@@ -44,7 +44,7 @@ export const cartReducer = (state, action) => {
     }
 
     case CART_ACTION_TYPES.REMOVE_FROM_CART: {
-      const key = `${payload._id - payload.size}`;
+      const key = `${payload._id}-${payload.size}`;
       const updatedItems = { ...state.cartItems };
 
       delete updatedItems[key];
