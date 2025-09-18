@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { addToCart } from '../contexts/cart/cartActions';
+import { useCartDispatch } from '../contexts/cart/useCart';
 
 import { useParams } from 'react-router';
 import BackButton from '../components/layout/BackButton';
@@ -12,9 +14,30 @@ import QuantitySelector from '../components/ui/QuantitySelector';
 
 function ProductDetails() {
   const { slug } = useParams();
+  const cartDispatch = useCartDispatch();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedSize, setSelectedSize] = useState('M');
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      alert('Please select a size');
+      return;
+    }
+
+    cartDispatch(
+      addToCart({
+        id: product._id,
+        name: product.name,
+        price: product.price,
+        images: product.images,
+        size: selectedSize,
+        quantity: selectedQuantity,
+      })
+    );
+  };
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -32,10 +55,6 @@ function ProductDetails() {
 
     loadProduct();
   }, [slug]);
-
-  function handleSizeSelect(size) {
-    console.log('Selected size:', size);
-  }
 
   if (loading) return <p className="p-4">Loading product...</p>;
   if (error) return <p className="p-4 text-red-500">{error}</p>;
@@ -68,10 +87,10 @@ function ProductDetails() {
           <div className="divide-y-2 divide-gray-300 max-w-[534px] lg:pt-4">
             <ProductInfo product={product}></ProductInfo>
 
-            <SizeSelect onChange={handleSizeSelect}></SizeSelect>
+            <SizeSelect selected={selectedSize} onChange={setSelectedSize}></SizeSelect>
 
             <div className="flex justify-between pb-6">
-              <QuantitySelector />
+              <QuantitySelector quantity={selectedQuantity} onChange={setSelectedQuantity} />
             </div>
 
             {/* Product price and CTA */}
@@ -82,7 +101,10 @@ function ProductDetails() {
                   GHC {product?.price}
                 </h1>
               </div>
-              <button className="bg-msq-purple-rich text-lg text-white rounded-md flex-grow max-w-[320px] cursor-pointer">
+              <button
+                className="bg-msq-purple-rich text-lg text-white rounded-md flex-grow max-w-[320px] cursor-pointer"
+                onClick={handleAddToCart}
+              >
                 Add to Cart
               </button>
             </div>
