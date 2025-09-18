@@ -1,5 +1,5 @@
 import { createContext } from 'react';
 
-export const CartContext = createContext();
+export const CartContextState = createContext();
 
 export const CartContextDispatch = createContext();
