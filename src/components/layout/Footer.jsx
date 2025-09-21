@@ -1,19 +1,19 @@
 const Footer = () => {
   return (
-    <div className="w-screen bg-[#81298C] relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-      <footer className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-2 justify-between gap-12">
+    <div className="w-screen bg-[#7d3c98] relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+      <footer className="max-w-7xl mx-auto  px-6 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-2 lg:grid-cols-6 justify-between gap-12">
           {/*  Subscribe Section */}
 
-          <div className="col-span-2 flex flex-col items-start">
+          <div className="col-span-2 flex flex-col items-start lg:order-5">
             <h3 className="text-white font-semibold text-lg mb-4">Subscribe</h3>
-            <div className="flex  w-full ">
+            <div className="flex relative  w-full mb-4 ">
               <input
                 type="email"
                 placeholder="Enter your email address"
-                className="flex-1 px-4 py-3 h-15 bg-white/10 border border-white/20 rounded-l-md text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/30"
+                className="flex-1 px-4 py-3 h-15 bg-white/10 border border-white/20 rounded-md text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/30"
               />
-              <button className="px-4 py-3 h-15 hidden bg-white/20 border border-white/20 border-l-0 rounded-r-md hover:bg-white/30 transition-colors duration-200">
+              <button className="px-4 py-3 h-15 absolute right-0 border border-white/20 border-l-0 rounded-r-md hover:bg-white/30 transition-colors duration-200">
                 <svg
                   className="w-5 h-5 text-white"
                   fill="none"
@@ -35,7 +35,7 @@ const Footer = () => {
           </div>
 
           {/* Customer Care */}
-          <div className="space-y-4 min-w-[150px] text-start">
+          <div className="space-y-4 min-w-[150px] px-4 text-start lg:order-1">
             <h3 className="text-white font-semibold text-lg mb-4">Customer Care</h3>
             <ul className="space-y-3">
               <li>
@@ -62,9 +62,9 @@ const Footer = () => {
           </div>
 
           {/* Connect */}
-          <div className="space-y-4 min-w-[150px]  text-start">
+          <div className="space-y-4 min-w-[150px]  text-start lg:order-2">
             <h3 className="text-white font-semibold text-lg mb-4">Connect</h3>
-            <ul className="space-y-3">
+            <ul className="space-y-3 ">
               <li>
                 <a href="#" className="text-white/90 hover:text-white">
                   Instagram
@@ -89,7 +89,7 @@ const Footer = () => {
           </div>
 
           {/* Help */}
-          <div className="space-y-4 min-w-[150px]  text-start col-span-2">
+          <div className="space-y-4 min-w-[150px] lg:order-3  px-4 text-start col-span-2">
             <h3 className="text-white font-semibold text-lg mb-4">Help</h3>
             <ul className="space-y-3">
               <li>
@@ -110,7 +110,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="flex justify-between col-span-2">
+          <div className="flex justify-between col-span-2 lg:order-last lg:col-start-5 ">
             {/* Logo */}
             <img
               src="/images/Logo.png"
