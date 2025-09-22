@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useCartState, useCartDispatch } from '../contexts/cart/useCart';
 import { getCartItems, getCartItemCount, getCartSubtotal } from '../contexts/cart/cartSelectors';
-import { updateCartItem, removeFromCart, clearCart } from '../contexts/cart/cartActions';
+import {
+  updateCartItem,
+  removeFromCart,
+  clearCart,
+  changeItemSize,
+} from '../contexts/cart/cartActions';
 
 const useCartDrawer = (isOpen, onClose) => {
   const cartState = useCartState();
@@ -57,6 +62,10 @@ const useCartDrawer = (isOpen, onClose) => {
     console.log('Proceeding to checkout...');
   };
 
+  const handleSizeChange = (item, newSize) => {
+    dispatch(changeItemSize(item, newSize));
+  };
+
   return {
     // State
     isAnimating,
@@ -70,6 +79,7 @@ const useCartDrawer = (isOpen, onClose) => {
     handleRemoveItem,
     handleClearCart,
     handleCheckout,
+    handleSizeChange,
   };
 };
 
