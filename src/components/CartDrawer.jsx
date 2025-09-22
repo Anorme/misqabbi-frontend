@@ -1,7 +1,7 @@
-import { X, ShoppingBag } from 'lucide-react';
 import CartItem from './cart/CartItem';
 import CartSummary from './cart/CartSummary';
 import EmptyCartState from './cart/EmptyCartState';
+import CartDrawerHeader from './cart/CartDrawerHeader';
 import useCartDrawer from '../hooks/useCartDrawer';
 
 const CartDrawer = ({ isOpen, onClose }) => {
@@ -40,23 +40,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
         }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <div className="flex items-center space-x-3">
-            <ShoppingBag className="w-6 h-6 text-msq-purple-rich" />
-            <h2 className="text-2xl font-bebas text-msq-purple-rich">Shopping Cart</h2>
-            {itemCount > 0 && (
-              <span className="bg-msq-gold text-white text-sm font-lato px-2 py-1 rounded-full">
-                {itemCount}
-              </span>
-            )}
-          </div>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
-          >
-            <X className="w-5 h-5 text-gray-600" />
-          </button>
-        </div>
+        <CartDrawerHeader itemCount={itemCount} onClose={onClose} />
 
         {/* Cart Items */}
         <div
