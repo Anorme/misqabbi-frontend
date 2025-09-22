@@ -7,4 +7,7 @@ export const removeFromCart = product => createAction(CART_ACTION_TYPES.REMOVE_F
 
 export const updateCartItem = product => createAction(CART_ACTION_TYPES.UPDATE_CART_ITEM, product);
 
+export const changeItemSize = (item, newSize) =>
+  createAction(CART_ACTION_TYPES.CHANGE_ITEM_SIZE, { item, newSize });
+
 export const clearCart = () => createAction(CART_ACTION_TYPES.CLEAR_CART, null);
