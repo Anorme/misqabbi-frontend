@@ -1,4 +1,5 @@
 import { Plus, Minus, Trash2 } from 'lucide-react';
+import useCartItem from '../../hooks/useCartItem';
 
 const QuantityButton = ({ type, onClick }) => {
   const Icon = type === 'increase' ? Plus : Minus;
@@ -27,13 +28,15 @@ const RemoveButton = ({ onClick }) => {
   );
 };
 
-const CartItemControls = ({ item, onQuantityChange, onRemove }) => {
+const CartItemControls = ({ item }) => {
+  const { handleQuantityChange, handleRemove } = useCartItem(item);
+
   return (
     <div className="flex items-center space-x-2">
-      <QuantityButton type="decrease" onClick={() => onQuantityChange(item, item.quantity - 1)} />
+      <QuantityButton type="decrease" onClick={() => handleQuantityChange(item.quantity - 1)} />
       <QuantityDisplay quantity={item.quantity} />
-      <QuantityButton type="increase" onClick={() => onQuantityChange(item, item.quantity + 1)} />
-      <RemoveButton onClick={() => onRemove(item)} />
+      <QuantityButton type="increase" onClick={() => handleQuantityChange(item.quantity + 1)} />
+      <RemoveButton onClick={handleRemove} />
     </div>
   );
 };
