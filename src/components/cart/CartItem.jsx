@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { ShoppingBag } from 'lucide-react';
 import CartItemControls from './CartItemControls';
 import SizeSelectorModal from './SizeSelectorModal';
+import useCartItem from '../../hooks/useCartItem';
 
-const CartItem = ({ item, onQuantityChange, onRemove, onSizeChange }) => {
+const CartItem = ({ item }) => {
   const [showSizeModal, setShowSizeModal] = useState(false);
-
-  const handleSizeChange = newSize => {
-    onSizeChange(item, newSize);
-  };
+  const { handleQuantityChange, handleRemove, handleSizeChange } = useCartItem(item);
 
   return (
     <div className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow duration-200">
@@ -38,7 +36,11 @@ const CartItem = ({ item, onQuantityChange, onRemove, onSizeChange }) => {
       </div>
 
       {/* Quantity Controls */}
-      <CartItemControls item={item} onQuantityChange={onQuantityChange} onRemove={onRemove} />
+      <CartItemControls
+        item={item}
+        onQuantityChange={handleQuantityChange}
+        onRemove={handleRemove}
+      />
 
       {/* Size Selector Modal */}
       {showSizeModal && (
