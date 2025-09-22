@@ -11,11 +11,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
     itemCount,
     subtotal,
     handleBackdropClick,
-    handleQuantityChange,
-    handleRemoveItem,
     handleClearCart,
     handleCheckout,
-    handleSizeChange,
   } = useCartDrawer(isOpen, onClose);
 
   return (
@@ -53,13 +50,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
           ) : (
             <div className="p-6 space-y-4">
               {cartItems.map(item => (
-                <CartItem
-                  key={`${item.id}-${item.size}`}
-                  item={item}
-                  onQuantityChange={handleQuantityChange}
-                  onRemove={handleRemoveItem}
-                  onSizeChange={handleSizeChange}
-                />
+                <CartItem key={`${item.id}-${item.size}`} item={item} />
               ))}
             </div>
           )}
