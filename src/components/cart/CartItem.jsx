@@ -1,4 +1,5 @@
-import { Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
+import CartItemControls from './CartItemControls';
 
 const CartItem = ({ item, onQuantityChange, onRemove }) => {
   return (
@@ -24,27 +25,7 @@ const CartItem = ({ item, onQuantityChange, onRemove }) => {
       </div>
 
       {/* Quantity Controls */}
-      <div className="flex items-center space-x-2">
-        <button
-          onClick={() => onQuantityChange(item, item.quantity - 1)}
-          className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
-        >
-          <Minus className="w-4 h-4 text-gray-600" />
-        </button>
-        <span className="text-sm font-lato font-medium w-8 text-center">{item.quantity}</span>
-        <button
-          onClick={() => onQuantityChange(item, item.quantity + 1)}
-          className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
-        >
-          <Plus className="w-4 h-4 text-gray-600" />
-        </button>
-        <button
-          onClick={() => onRemove(item)}
-          className="p-1 hover:bg-red-100 rounded-full transition-colors duration-200 ml-2"
-        >
-          <Trash2 className="w-4 h-4 text-red-500" />
-        </button>
-      </div>
+      <CartItemControls item={item} onQuantityChange={onQuantityChange} onRemove={onRemove} />
     </div>
   );
 };
