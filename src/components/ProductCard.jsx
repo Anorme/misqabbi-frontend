@@ -3,6 +3,7 @@ import { Heart, ShoppingBag } from 'lucide-react';
 
 import { useCartDispatch } from '../contexts/cart/useCart';
 import { addToCart } from '../contexts/cart/cartActions';
+import { showAddedToCartToast } from '../utils/showToast';
 
 const ProductCard = ({ product }) => {
   const dispatch = useCartDispatch();
@@ -17,6 +18,8 @@ const ProductCard = ({ product }) => {
         size: 'M',
       })
     );
+
+    showAddedToCartToast();
   };
 
   return (

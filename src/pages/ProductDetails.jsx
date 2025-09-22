@@ -12,6 +12,8 @@ import ProductInfo from '../components/ui/ProductInfo';
 import GalleryImages from '../components/ui/GalleryImages';
 import QuantitySelector from '../components/ui/QuantitySelector';
 
+import { showAddedToCartToast } from '../utils/showToast';
+
 function ProductDetails() {
   const { slug } = useParams();
   const cartDispatch = useCartDispatch();
@@ -37,6 +39,8 @@ function ProductDetails() {
         quantity: selectedQuantity,
       })
     );
+
+    showAddedToCartToast();
   };
 
   useEffect(() => {
