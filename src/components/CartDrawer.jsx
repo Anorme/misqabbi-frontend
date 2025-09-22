@@ -15,6 +15,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
     handleRemoveItem,
     handleClearCart,
     handleCheckout,
+    handleSizeChange,
   } = useCartDrawer(isOpen, onClose);
 
   return (
@@ -57,6 +58,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
                   item={item}
                   onQuantityChange={handleQuantityChange}
                   onRemove={handleRemoveItem}
+                  onSizeChange={handleSizeChange}
                 />
               ))}
             </div>
