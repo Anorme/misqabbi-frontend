@@ -4,17 +4,28 @@ This directory contains the modular cart components that provide a complete shop
 
 ## Architecture Overview
 
-The cart system follows a modular architecture with clear separation of concerns:
+The cart system follows a modular architecture with clear separation of concerns and eliminates prop drilling through custom hooks:
 
 ```
 CartDrawer (Main Container)
+├── useCartDrawer (Drawer-specific logic)
 ├── CartDrawerHeader (Title & Close)
 ├── Cart Items Section
 │   ├── EmptyCartState (When empty)
 │   └── CartItem[] (Individual items)
-│       └── CartItemControls (Quantity & Remove)
+│       ├── useCartItem (Item-specific logic)
+│       ├── CartItemControls (Quantity & Remove)
+│       └── SizeSelectorModal (Size editing)
 └── CartSummary (Totals & Checkout)
 ```
+
+### State Management Architecture
+
+The cart uses a **reducer-backed Context pattern** that eliminates prop drilling:
+
+- **`useCartDrawer`** - Manages drawer-level concerns (clear cart, checkout, backdrop)
+- **`useCartItem`** - Manages item-level concerns (quantity, removal, size changes)
+- **Context + Reducer** - Centralized state management with action-based updates
 
 ## Components
 
@@ -79,15 +90,21 @@ CartDrawer (Main Container)
   - `images: array` - Product images
   - `size: string` - Selected size
   - `quantity: number` - Item quantity
-- `onQuantityChange: function` - Callback for quantity changes
-- `onRemove: function` - Callback for item removal
 
 **Features:**
 
 - Product image display with fallback
 - Product details (name, size, price)
-- Integrated quantity controls
+- **Size editing** - Click on size to change via modal
+- Integrated quantity controls via `useCartItem` hook
 - Hover effects
+- **No prop drilling** - Uses `useCartItem` hook directly
+
+**Dependencies:**
+
+- `useCartItem` hook for item operations
+- `SizeSelectorModal` for size editing
+- `CartItemControls` for quantity/removal
 
 ---
 
@@ -99,8 +116,6 @@ CartDrawer (Main Container)
 **Props:**
 
 - `item: object` - Cart item data
-- `onQuantityChange: function` - Callback for quantity changes
-- `onRemove: function` - Callback for item removal
 
 **Sub-components:**
 
@@ -114,6 +129,11 @@ CartDrawer (Main Container)
 - Item removal
 - Consistent button styling
 - Hover effects
+- **No prop drilling** - Uses `useCartItem` hook directly
+
+**Dependencies:**
+
+- `useCartItem` hook for item operations
 
 ---
 
@@ -144,6 +164,34 @@ CartDrawer (Main Container)
 
 ---
 
+### SizeSelectorModal
+
+**File:** `SizeSelectorModal.jsx`  
+**Purpose:** Modal for changing the size of a cart item.
+
+**Props:**
+
+- `currentSize: string` - Currently selected size
+- `onSizeChange: function` - Callback when size is changed
+- `onClose: function` - Callback to close modal
+
+**Features:**
+
+- Size selection grid (XS, S, M, L, XL, XXL)
+- Current vs new size comparison
+- Small, centered modal design
+- Transparent backdrop
+- Confirm/Cancel actions
+- Hover effects on size buttons
+
+**Styling:**
+
+- Uses `msq-purple-rich` for selected state
+- Compact design for mobile-friendly UX
+- Consistent with app's design system
+
+---
+
 ### EmptyCartState
 
 **File:** `EmptyCartState.jsx`  
@@ -160,12 +208,12 @@ CartDrawer (Main Container)
 
 ---
 
-## Custom Hook
+## Custom Hooks
 
 ### useCartDrawer
 
 **File:** `../../hooks/useCartDrawer.js`  
-**Purpose:** Manages all cart business logic and state.
+**Purpose:** Manages drawer-specific business logic and state.
 
 **Parameters:**
 
@@ -179,17 +227,37 @@ CartDrawer (Main Container)
 - `itemCount: number` - Total item count
 - `subtotal: number` - Total price
 - `handleBackdropClick: function` - Backdrop click handler
-- `handleQuantityChange: function` - Quantity change handler
-- `handleRemoveItem: function` - Item removal handler
 - `handleClearCart: function` - Clear cart handler
 - `handleCheckout: function` - Checkout handler
 
 **Features:**
 
-- Cart state management
+- **Drawer-level concerns only** - No item-specific operations
 - Animation handling
 - Body scroll management
-- Event handlers for all cart operations
+- Cart-level operations (clear, checkout)
+
+### useCartItem
+
+**File:** `../../hooks/useCartItem.js`  
+**Purpose:** Manages item-specific cart operations and eliminates prop drilling.
+
+**Parameters:**
+
+- `item: object` - Cart item data
+
+**Returns:**
+
+- `handleQuantityChange: function` - Quantity change handler
+- `handleRemove: function` - Item removal handler
+- `handleSizeChange: function` - Size change handler
+
+**Features:**
+
+- **Item-level concerns only** - Quantity, removal, size changes
+- **Eliminates prop drilling** - Components use hook directly
+- Centralized item operations
+- Clean separation of concerns
 
 ---
 
@@ -212,31 +280,46 @@ function App() {
 }
 ```
 
-### Individual Cart Item
+### Individual Cart Item (No Prop Drilling)
 
 ```jsx
 import CartItem from '../components/cart/CartItem';
 
 function CartPage() {
-  const handleQuantityChange = (item, newQuantity) => {
-    // Update quantity logic
-  };
-
-  const handleRemove = item => {
-    // Remove item logic
-  };
-
   return (
     <div>
       {cartItems.map(item => (
-        <CartItem
-          key={`${item.id}-${item.size}`}
-          item={item}
-          onQuantityChange={handleQuantityChange}
-          onRemove={handleRemove}
-        />
+        <CartItem key={`${item.id}-${item.size}`} item={item} />
       ))}
     </div>
+  );
+}
+```
+
+### Size Editing Example
+
+```jsx
+import { useState } from 'react';
+import CartItem from '../components/cart/CartItem';
+import SizeSelectorModal from '../components/cart/SizeSelectorModal';
+
+function CartItemWithSizeEditing({ item }) {
+  const [showSizeModal, setShowSizeModal] = useState(false);
+
+  return (
+    <>
+      <CartItem item={item} />
+      {showSizeModal && (
+        <SizeSelectorModal
+          currentSize={item.size}
+          onSizeChange={newSize => {
+            // Size change handled by useCartItem hook
+            setShowSizeModal(false);
+          }}
+          onClose={() => setShowSizeModal(false)}
+        />
+      )}
+    </>
   );
 }
 ```
@@ -254,11 +337,22 @@ All components use Tailwind CSS with the app's design system:
 
 ## State Management
 
-The cart uses React Context for state management:
+The cart uses a **reducer-backed Context pattern** that eliminates prop drilling:
 
-- **Cart State:** Managed by `CartProvider`
-- **Actions:** `addToCart`, `removeFromCart`, `updateCartItem`, `clearCart`
+### Context + Reducer Architecture
+
+- **Cart State:** Managed by `CartProvider` with reducer pattern
+- **Actions:** `addToCart`, `removeFromCart`, `updateCartItem`, `changeItemSize`, `clearCart`
 - **Selectors:** `getCartItems`, `getCartItemCount`, `getCartSubtotal`
+- **Hooks:** `useCartState`, `useCartDispatch` for context access
+
+### Key Benefits
+
+- **No Prop Drilling:** Components use hooks directly instead of passing handlers down
+- **Centralized State:** Single source of truth for cart state
+- **Action-Based Updates:** Predictable state changes via actions
+- **Separation of Concerns:** Different hooks for different levels of operations
+- **Easy Testing:** Mock hooks instead of complex prop chains
 
 ## Contributing
 
@@ -276,11 +370,21 @@ When contributing to cart components:
 src/components/cart/
 ├── README.md                 # This documentation
 ├── CartDrawerHeader.jsx      # Header component
-├── CartItem.jsx             # Individual cart item
+├── CartItem.jsx             # Individual cart item (with size editing)
 ├── CartItemControls.jsx     # Quantity and remove controls
 ├── CartSummary.jsx          # Totals and checkout
-└── EmptyCartState.jsx       # Empty cart display
+├── EmptyCartState.jsx       # Empty cart display
+└── SizeSelectorModal.jsx    # Size editing modal
 
 src/hooks/
-└── useCartDrawer.js         # Cart business logic hook
+├── useCartDrawer.js         # Drawer-level business logic
+└── useCartItem.js           # Item-level business logic
+
+src/contexts/cart/
+├── cartActions.js           # Action creators
+├── cartActionTypes.js       # Action type constants
+├── cartReducer.js           # State reducer
+├── cartSelectors.js         # State selectors
+├── CartProvider.jsx         # Context provider
+└── useCart.js               # Context hooks
 ```
