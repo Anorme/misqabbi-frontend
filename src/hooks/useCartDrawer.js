@@ -1,12 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useCartState, useCartDispatch } from '../contexts/cart/useCart';
 import { getCartItems, getCartItemCount, getCartSubtotal } from '../contexts/cart/cartSelectors';
-import {
-  updateCartItem,
-  removeFromCart,
-  clearCart,
-  changeItemSize,
-} from '../contexts/cart/cartActions';
+import { clearCart } from '../contexts/cart/cartActions';
 
 const useCartDrawer = (isOpen, onClose) => {
   const cartState = useCartState();
@@ -41,18 +36,6 @@ const useCartDrawer = (isOpen, onClose) => {
     }
   };
 
-  const handleQuantityChange = (item, newQuantity) => {
-    if (newQuantity <= 0) {
-      dispatch(removeFromCart(item));
-    } else {
-      dispatch(updateCartItem({ ...item, quantity: newQuantity }));
-    }
-  };
-
-  const handleRemoveItem = item => {
-    dispatch(removeFromCart(item));
-  };
-
   const handleClearCart = () => {
     dispatch(clearCart());
   };
@@ -60,10 +43,6 @@ const useCartDrawer = (isOpen, onClose) => {
   const handleCheckout = () => {
     // TODO: Implement checkout logic
     console.log('Proceeding to checkout...');
-  };
-
-  const handleSizeChange = (item, newSize) => {
-    dispatch(changeItemSize(item, newSize));
   };
 
   return {
@@ -75,11 +54,8 @@ const useCartDrawer = (isOpen, onClose) => {
 
     // Handlers
     handleBackdropClick,
-    handleQuantityChange,
-    handleRemoveItem,
     handleClearCart,
     handleCheckout,
-    handleSizeChange,
   };
 };
 
