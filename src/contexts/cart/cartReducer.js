@@ -43,6 +43,40 @@ export const cartReducer = (state, action) => {
       };
     }
 
+    case CART_ACTION_TYPES.CHANGE_ITEM_SIZE: {
+      const { item, newSize } = payload;
+      const oldKey = `${item.id}-${item.size}`;
+      const newKey = `${item.id}-${newSize}`;
+
+      // If size is the same, no change needed
+      if (item.size === newSize) return state;
+
+      // If new size already exists, combine quantities
+      const existingNewSizeItem = state.cartItems[newKey];
+      const updatedItems = { ...state.cartItems };
+
+      if (existingNewSizeItem) {
+        // Combine quantities and remove old item
+        updatedItems[newKey] = {
+          ...existingNewSizeItem,
+          quantity: existingNewSizeItem.quantity + item.quantity,
+        };
+        delete updatedItems[oldKey];
+      } else {
+        // Create new item with new size and remove old item
+        updatedItems[newKey] = {
+          ...item,
+          size: newSize,
+        };
+        delete updatedItems[oldKey];
+      }
+
+      return {
+        ...state,
+        cartItems: updatedItems,
+      };
+    }
+
     case CART_ACTION_TYPES.REMOVE_FROM_CART: {
       const key = `${payload.id}-${payload.size}`;
       const updatedItems = { ...state.cartItems };
