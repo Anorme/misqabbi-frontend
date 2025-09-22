@@ -6,7 +6,7 @@ import useCartItem from '../../hooks/useCartItem';
 
 const CartItem = ({ item }) => {
   const [showSizeModal, setShowSizeModal] = useState(false);
-  const { handleQuantityChange, handleRemove, handleSizeChange } = useCartItem(item);
+  const { handleSizeChange } = useCartItem(item);
 
   return (
     <div className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow duration-200">
@@ -36,11 +36,7 @@ const CartItem = ({ item }) => {
       </div>
 
       {/* Quantity Controls */}
-      <CartItemControls
-        item={item}
-        onQuantityChange={handleQuantityChange}
-        onRemove={handleRemove}
-      />
+      <CartItemControls item={item} />
 
       {/* Size Selector Modal */}
       {showSizeModal && (
