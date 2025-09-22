@@ -71,7 +71,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-screen w-full max-w-md bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{
@@ -98,7 +98,10 @@ const CartDrawer = ({ isOpen, onClose }) => {
         </div>
 
         {/* Cart Items */}
-        <div className="flex-1 overflow-y-auto">
+        <div
+          className="flex-1 overflow-y-auto"
+          style={{ willChange: 'scroll-position', WebkitOverflowScrolling: 'touch' }}
+        >
           {cartItems.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-64 text-center px-6">
               <ShoppingBag className="w-16 h-16 text-gray-300 mb-4" />
