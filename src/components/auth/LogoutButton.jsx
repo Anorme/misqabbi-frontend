@@ -9,6 +9,7 @@ const LogoutButton = () => {
     try {
       const success = await logoutUserApi();
       if (success) {
+        localStorage.removeItem('isAuthenticated');
         authDispatch(logoutUser());
       } else {
         console.error('Logout API call failed');
