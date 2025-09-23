@@ -1,3 +1,5 @@
+import { useNavigate, useLocation } from 'react-router';
+
 import { FcGoogle } from 'react-icons/fc';
 import { MdPerson, MdEmail } from 'react-icons/md';
 
@@ -10,7 +12,12 @@ import {
 
 import { useFormState, useFormDispatch } from '../../contexts/form/useForm';
 import { useAuthState, useAuthDispatch } from '../../contexts/auth/useAuth';
-import { setAuthLoading, setCurrentUser, setAuthError } from '../../contexts/auth/authActions';
+import {
+  setAuthLoading,
+  setCurrentUser,
+  setAuthError,
+  setAuthRestored,
+} from '../../contexts/auth/authActions';
 import {
   updateField,
   setErrors,
@@ -28,6 +35,10 @@ import Divider from '../form/Divider';
 import SocialButton from '../form/SocialButton';
 
 const UserAuthForm = ({ mode }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const redirectPath = location.state?.from || '/shop';
+
   const { values, errors, isSubmitting } = useFormState();
   const formDispatch = useFormDispatch();
   const { fullName = '', email = '', password = '' } = values;
@@ -70,8 +81,11 @@ const UserAuthForm = ({ mode }) => {
 
     try {
       const userCred = await registerUserWithEmail(email, password, fullName);
-      authDispatch(setCurrentUser(userCred.user));
+      authDispatch(setCurrentUser(userCred));
+      authDispatch(setAuthRestored());
+      localStorage.setItem('isAuthenticated', 'true');
       formDispatch(resetForm());
+      navigate(redirectPath);
     } catch (err) {
       authDispatch(setAuthError(err.message));
     } finally {
@@ -88,7 +102,14 @@ const UserAuthForm = ({ mode }) => {
     authDispatch(setAuthLoading(true));
     try {
       const userCred = await loginUserWithEmail(email, password);
-      authDispatch(setCurrentUser(userCred.user));
+      authDispatch(setCurrentUser(userCred));
+      authDispatch(setAuthRestored());
+      localStorage.setItem('isAuthenticated', 'true');
+
+      // Small delay to ensure state propagation before navigation
+      setTimeout(() => {
+        navigate(redirectPath);
+      }, 100);
     } catch (err) {
       authDispatch(setAuthError(err.message));
     } finally {
