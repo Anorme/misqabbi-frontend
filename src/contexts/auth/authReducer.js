@@ -6,6 +6,7 @@ export const initialAuthState = {
   currentUser: null,
   isAuthenticated: false,
   isAuthLoading: false,
+  hasRestoredAuth: false,
   authError: null,
 };
 
@@ -27,6 +28,12 @@ export const authReducer = (state, action) => {
         isAuthLoading: payload,
       };
 
+    case AUTH_ACTION_TYPES.SET_AUTH_RESTORED:
+      return {
+        ...state,
+        hasRestoredAuth: true,
+      };
+
     case AUTH_ACTION_TYPES.SET_AUTH_ERROR:
       return {
         ...state,
@@ -40,6 +47,7 @@ export const authReducer = (state, action) => {
         currentUser: payload,
         isAuthenticated: false,
         isAuthLoading: false,
+        hasRestoredAuth: false,
         authError: null,
       };
 
