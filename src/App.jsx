@@ -5,10 +5,12 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import Favorites from './pages/Favorites';
 import ProductList from './pages/ProductList';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import AuthCallback from './pages/auth/AuthCallback';
+import AuthBoundaryModal from './components/auth/AuthBoundaryModal';
 
 import './App.css';
 import NotFound from './components/ui/NotFound';
@@ -51,10 +53,22 @@ const App = () => {
           }
         ></Route>
         <Route
-          path="/checkouts"
+          path="/favorites"
           element={
             <MainLayout>
-              <Checkout />
+              <AuthBoundaryModal>
+                <Favorites />
+              </AuthBoundaryModal>
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path="/checkout"
+          element={
+            <MainLayout>
+              <AuthBoundaryModal>
+                <Checkout />
+              </AuthBoundaryModal>
             </MainLayout>
           }
         ></Route>
