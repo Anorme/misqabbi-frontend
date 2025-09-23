@@ -6,6 +6,8 @@ export const setCurrentUser = user => createAction(AUTH_ACTION_TYPES.SET_CURRENT
 export const setAuthLoading = isLoading =>
   createAction(AUTH_ACTION_TYPES.SET_AUTH_LOADING, isLoading);
 
+export const setAuthRestored = () => createAction(AUTH_ACTION_TYPES.SET_AUTH_RESTORED);
+
 export const setAuthError = errorMessage =>
   createAction(AUTH_ACTION_TYPES.SET_AUTH_ERROR, errorMessage);
 
