@@ -7,6 +7,7 @@ import { getCartItemCount } from '../../contexts/cart/cartSelectors';
 import LoginButton from '../auth/LoginButton.jsx';
 import LogoutButton from '../auth/LogoutButton.jsx';
 import CartDrawer from '../CartDrawer.jsx';
+import Banner from '../ui/Banner.jsx';
 
 const NavBar = () => {
   const { isAuthenticated } = useAuthState();
@@ -16,9 +17,10 @@ const NavBar = () => {
   const itemCount = getCartItemCount(cartState);
 
   return (
-    <header className="mt-8 ">
+    <div>
+      <Banner text="SUMMER SALES ONGOING"></Banner>
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between lg:h-16">
+        <div className="flex items-center justify-between lg:h-16 pt-8">
           {/* Logo */}
           <Link to="/">
             <div className="flex-shrink-0">
@@ -80,7 +82,7 @@ const NavBar = () => {
 
       {/* Cart Drawer */}
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-    </header>
+    </div>
   );
 };
 
