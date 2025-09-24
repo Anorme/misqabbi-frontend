@@ -2,7 +2,7 @@ import { Triangle, Columns4, LayoutGrid } from 'lucide-react';
 
 const CategoryNavigation = () => {
   return (
-    <nav className="px-6" aria-label="Category Navigation">
+    <nav className="px-6 hidden md:block" aria-label="Category Navigation">
       <div className="w-full">
         <div className="flex items-center justify-between h-12">
           {/* Left: Category Filters */}
