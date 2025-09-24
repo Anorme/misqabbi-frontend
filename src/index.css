@@ -17,4 +17,29 @@ body,
   overscroll-behavior-x: contain;
   overscroll-behavior-y: contain;
   touch-action: pan-y;
+
+  /* Custom Scrollbar Styles */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #9ca3af;
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #6b7280;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent; /* no track background */
+  }
+
+  /* Works in Firefox */
+  * {
+    scrollbar-width: thin; /* makes it thinner */
+    scrollbar-color: #9ca3af transparent; /* thumb color + track color */
+  }
 }
