@@ -36,7 +36,9 @@ const Footer = () => {
 
           {/* Customer Care */}
           <div className="space-y-4 min-w-[150px] px-4 text-start lg:order-1">
-            <h3 className="text-white font-semibold text-lg mb-4">Customer Care</h3>
+            <h3 className="text-white font-semibold whitespace-nowrap text-lg mb-4">
+              Customer Care
+            </h3>
             <ul className="space-y-3">
               <li>
                 <a href="#" className="text-white/90 hover:text-white">
