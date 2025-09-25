@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <div className="w-screen bg-[#7d3c98] relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+    <div className="w-screen bg-msq-purple relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
       <footer className="max-w-7xl mx-auto  px-6 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-2 lg:grid-cols-6 justify-between gap-12">
           {/*  Subscribe Section */}
