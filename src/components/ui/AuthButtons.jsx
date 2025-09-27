@@ -19,7 +19,9 @@ const AuthButtons = ({ variant = 'desktop', className = '' }) => {
   // Desktop variant
   return (
     <div className={`flex items-center ${className}`}>
-      <div className="hidden lg:block">{isAuthenticated ? <LogoutButton /> : <LoginButton />}</div>
+      <div className="hidden lg:block p-2 mr-1">
+        {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+      </div>
       <Link to="/register" className="hidden lg:block">
         <button className="bg-msq-purple-rich text-white px-4 py-2 rounded-md hover:bg-msq-purple font-medium cursor-pointer">
           Create Account
