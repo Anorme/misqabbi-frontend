@@ -1,12 +1,17 @@
 import { Link } from 'react-router';
-import { Heart, ShoppingBag } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
 
 import { useCartDispatch } from '../contexts/cart/useCart';
 import { addToCart } from '../contexts/cart/cartActions';
 import { showAddedToCartToast } from '../utils/showToast';
+import FavoritesLinkButton from './favorites/FavoritesLinkButton';
+import AuthActionModal from './auth/AuthActionModal';
+import useAuthAction from '../hooks/useAuthAction';
 
 const ProductCard = ({ product }) => {
   const dispatch = useCartDispatch();
+  const { requireAuth, closeModal, isModalOpen, modalContext } = useAuthAction();
+
   const handleAddToCart = () => {
     dispatch(
       addToCart({
@@ -22,6 +27,10 @@ const ProductCard = ({ product }) => {
     showAddedToCartToast();
   };
 
+  const handleFavoriteClick = () => {
+    requireAuth(() => {}, 'favorites');
+  };
+
   return (
     <div className="bg-white border-none rounded-none max-w-[320px] w-full mx-auto">
       <div className="relative group">
@@ -32,17 +41,18 @@ const ProductCard = ({ product }) => {
             className="w-full h-94 object-cover"
           />
         </Link>
-        <button
-          type="button"
-          aria-label="Add to favorites"
-          className="absolute top-3 right-3 p-2 bg-none"
-        >
-          {/* Heart SVG icon */}
-          <Heart
-            className="text-msq-gold-light cursor-pointer transition-colors duration-200 hover:fill-msq-gold-light active:fill-msq-gold-light"
-            size={30}
+        <div className="absolute top-3 right-3">
+          <FavoritesLinkButton
+            product={{
+              id: product._id,
+              name: product.name,
+              price: product.price,
+              images: product.images,
+              slug: product.slug,
+            }}
+            onAuthRequired={handleFavoriteClick}
           />
-        </button>
+        </div>
       </div>
       <div className="px-4 py-2">
         <h3 className="text-sm md:text-[20px] font-medium text-msq-purple uppercase text-left tracking-wide mb-2">
@@ -58,6 +68,9 @@ const ProductCard = ({ product }) => {
           </button>
         </div>
       </div>
+
+      {/* Auth Action Modal */}
+      <AuthActionModal isOpen={isModalOpen} onClose={closeModal} context={modalContext} />
     </div>
   );
 };
