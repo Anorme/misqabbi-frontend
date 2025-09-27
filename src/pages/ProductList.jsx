@@ -44,27 +44,27 @@ const ProductList = () => {
   const currentProducts = filteredProducts;
 
   return (
-    <main className="w-full px-4 sm:px-6 lg:px-8 py-8">
-      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-white border-y border-[#949396]">
-        <CategoryNavigation />
-      </div>
-      {loading ? (
-        <p className="flex flex-col w-full lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] text-center text-lg text-gray-500">
-          Loading products...
-        </p>
-      ) : error ? (
-        <p className="text-center text-red-500">{error}</p>
-      ) : (
-        <>
-          <ProductGrid>
-            {currentProducts.map(product => (
-              <ProductCard key={product._id} product={product} />
-            ))}
-          </ProductGrid>
-          <Pagination />
-        </>
-      )}
-    </main>
+    <>
+      <CategoryNavigation />
+      <main className="w-full px-4 sm:px-6 lg:px-8 py-8">
+        {loading ? (
+          <p className="flex flex-col w-full lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] text-center text-lg text-gray-500">
+            Loading products...
+          </p>
+        ) : error ? (
+          <p className="text-center text-red-500">{error}</p>
+        ) : (
+          <>
+            <ProductGrid>
+              {currentProducts.map(product => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </ProductGrid>
+            <Pagination />
+          </>
+        )}
+      </main>
+    </>
   );
 };
 
