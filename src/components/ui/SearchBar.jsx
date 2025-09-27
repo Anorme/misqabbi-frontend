@@ -1,6 +1,42 @@
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 
-const SearchBar = ({ className = '', placeholder = 'Search', showIcon = true, ...props }) => {
+const SearchBar = ({
+  className = '',
+  placeholder = 'Search',
+  showIcon = true,
+  variant = 'desktop',
+  onClose,
+  isSearchOpen = false,
+  ...props
+}) => {
+  if (variant === 'mobile') {
+    return (
+      <div className={`relative ${className}`}>
+        <input
+          type="text"
+          placeholder={placeholder}
+          className="w-full px-4 py-2 border border-msq-gold-light text-msq-gold-light rounded-full focus:outline-none focus:ring-2 focus:ring-msq-gold focus:border-transparent"
+          {...props}
+        />
+        {showIcon && (
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+            {isSearchOpen ? (
+              <button
+                onClick={onClose}
+                className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
+              >
+                <X size={18} className="text-msq-gold-light" />
+              </button>
+            ) : (
+              <Search size={18} className="text-msq-gold-light" />
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Desktop variant
   return (
     <div className={`relative ${className}`}>
       <input
