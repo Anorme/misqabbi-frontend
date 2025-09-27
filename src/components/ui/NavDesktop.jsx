@@ -1,52 +1,19 @@
-import { useState } from 'react';
-import { Link } from 'react-router';
-import { ShoppingCart, Heart } from 'lucide-react';
-
-import { useAuthState } from '../../contexts/auth/useAuth.js';
-import { useCartState } from '../../contexts/cart/useCart';
-import { getCartItemCount } from '../../contexts/cart/cartSelectors';
-import { useFavorites } from '../../contexts/favorites/useFavorites';
-
 import useAuthAction from '../../hooks/useAuthAction';
 
-import CartDrawer from '../CartDrawer.jsx';
-import LoginButton from '../auth/LoginButton.jsx';
-import LogoutButton from '../auth/LogoutButton.jsx';
 import AuthActionModal from '../auth/AuthActionModal.jsx';
-import FavoritesDrawer from '../favorites/FavoritesDrawer.jsx';
 import SearchBar from './SearchBar.jsx';
+import NavLogo from './NavLogo.jsx';
+import NavActions from './NavActions.jsx';
 
 const NavBar = () => {
-  const { isAuthenticated } = useAuthState();
-  const cartState = useCartState();
-  const { favoriteItems } = useFavorites();
-  const { requireAuth, closeModal, isModalOpen, modalContext } = useAuthAction();
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
-
-  const itemCount = getCartItemCount(cartState);
-  const favoritesCount = favoriteItems.length;
-
-  const handleFavoritesClick = () => {
-    if (requireAuth(() => setIsFavoritesOpen(true), 'favorites')) {
-      setIsFavoritesOpen(true);
-    }
-  };
+  const { closeModal, isModalOpen, modalContext } = useAuthAction();
 
   return (
     <header className="mt-8 ">
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between lg:h-16">
           {/* Logo */}
-          <Link to="/">
-            <div className="flex-shrink-0">
-              <img
-                src="/images/Logo.png"
-                alt="Misqabbi Logo"
-                className="w-28 sm:w-40 md:w-56 object-contain cursor-pointer"
-              />
-            </div>
-          </Link>
+          <NavLogo variant="desktop" />
 
           {/* Search Bar */}
           <div className="md:block flex-1 max-w-lg mx-8">
@@ -54,47 +21,9 @@ const NavBar = () => {
           </div>
 
           {/* Right Navigation */}
-          <div className="flex items-center lg:space-x-4 space-x-2">
-            <button
-              onClick={handleFavoritesClick}
-              className="p-2 text-msq-gold-light cursor-pointer relative"
-            >
-              <Heart className="hover:fill-msq-gold-light" size={20} />
-              {favoritesCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-msq-gold text-white text-[10px] font-lato px-1.5 py-0.5 rounded-full shadow-md">
-                  {favoritesCount}
-                </span>
-              )}
-            </button>
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="p-2 text-msq-gold-light cursor-pointer relative"
-            >
-              <ShoppingCart size={20} />
-              {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-msq-gold text-white text-[10px] font-lato px-1.5 py-0.5 rounded-full shadow-md">
-                  {itemCount}
-                </span>
-              )}
-            </button>
-
-            <div className="hidden lg:block">
-              {isAuthenticated ? <LogoutButton /> : <LoginButton />}
-            </div>
-            <Link to="/register" className="hidden lg:block">
-              <button className="bg-msq-purple-rich text-white px-4 py-2 rounded-md hover:bg-msq-purple font-medium cursor-pointer">
-                Create Account
-              </button>
-            </Link>
-          </div>
+          <NavActions variant="desktop" />
         </div>
       </div>
-
-      {/* Cart Drawer */}
-      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-
-      {/* Favorites Drawer */}
-      <FavoritesDrawer isOpen={isFavoritesOpen} onClose={() => setIsFavoritesOpen(false)} />
 
       {/* Auth Action Modal */}
       <AuthActionModal isOpen={isModalOpen} onClose={closeModal} context={modalContext} />
