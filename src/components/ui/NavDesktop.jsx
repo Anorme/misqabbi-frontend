@@ -1,16 +1,20 @@
-import { Link } from 'react-router';
-import { ShoppingCart, Heart, Search } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router';
+import { ShoppingCart, Heart } from 'lucide-react';
+
 import { useAuthState } from '../../contexts/auth/useAuth.js';
 import { useCartState } from '../../contexts/cart/useCart';
 import { getCartItemCount } from '../../contexts/cart/cartSelectors';
 import { useFavorites } from '../../contexts/favorites/useFavorites';
+
+import useAuthAction from '../../hooks/useAuthAction';
+
+import CartDrawer from '../CartDrawer.jsx';
 import LoginButton from '../auth/LoginButton.jsx';
 import LogoutButton from '../auth/LogoutButton.jsx';
-import CartDrawer from '../CartDrawer.jsx';
-import FavoritesDrawer from '../favorites/FavoritesDrawer.jsx';
 import AuthActionModal from '../auth/AuthActionModal.jsx';
-import useAuthAction from '../../hooks/useAuthAction';
+import FavoritesDrawer from '../favorites/FavoritesDrawer.jsx';
+import SearchBar from './SearchBar.jsx';
 
 const NavBar = () => {
   const { isAuthenticated } = useAuthState();
@@ -45,24 +49,12 @@ const NavBar = () => {
           </Link>
 
           {/* Search Bar */}
-          <div className="hidden md:block flex-1 max-w-lg mx-8">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full px-4 py-2 border border-msq-gold-light text-msq-gold-light rounded-full focus:outline-none focus:ring-2 focus:ring-msq-gold focus:border-transparent"
-              />
-              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                <Search size={18} className="text-msq-gold-light" />
-              </div>
-            </div>
+          <div className="md:block flex-1 max-w-lg mx-8">
+            <SearchBar />
           </div>
 
           {/* Right Navigation */}
           <div className="flex items-center lg:space-x-4 space-x-2">
-            <div className="p-2 md:hidden text-msq-gold-light">
-              <Search size={20} className="text-msq-gold-light" />
-            </div>
             <button
               onClick={handleFavoritesClick}
               className="p-2 text-msq-gold-light cursor-pointer relative"
@@ -85,9 +77,7 @@ const NavBar = () => {
                 </span>
               )}
             </button>
-            <button className="text-[#d265ff] hover:text-msq-purple-rich font-medium cursor-pointer">
-              Help
-            </button>
+
             <div className="hidden lg:block">
               {isAuthenticated ? <LogoutButton /> : <LoginButton />}
             </div>
