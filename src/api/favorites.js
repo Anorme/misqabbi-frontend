@@ -4,7 +4,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
 
 const fetchFavorites = async () => {
   try {
-    const { data } = await axios.get(`${API_URL}/favorites`);
+    const { data } = await axios.get(`${API_URL}/favorites`, { withCredentials: true });
     return data;
   } catch (error) {
     console.error('Error fetching favorites:', error);
@@ -14,7 +14,11 @@ const fetchFavorites = async () => {
 
 const addFavorite = async productId => {
   try {
-    const { data } = await axios.post(`${API_URL}/favorites`, { productId });
+    const { data } = await axios.post(
+      `${API_URL}/favorites`,
+      { productId },
+      { withCredentials: true }
+    );
     return data;
   } catch (error) {
     console.error('Error adding favorite:', error);
@@ -24,7 +28,9 @@ const addFavorite = async productId => {
 
 const removeFavorite = async productId => {
   try {
-    const { data } = await axios.delete(`${API_URL}/favorites/${productId}`);
+    const { data } = await axios.delete(`${API_URL}/favorites/${productId}`, {
+      withCredentials: true,
+    });
     return data;
   } catch (error) {
     console.error('Error removing favorite:', error);
@@ -34,7 +40,9 @@ const removeFavorite = async productId => {
 
 const toggleFavorite = async productId => {
   try {
-    const { data } = await axios.patch(`${API_URL}/favorites/${productId}`);
+    const { data } = await axios.patch(`${API_URL}/favorites/${productId}`, {
+      withCredentials: true,
+    });
     return data;
   } catch (error) {
     console.error('Error toggling favorite:', error);
@@ -44,7 +52,9 @@ const toggleFavorite = async productId => {
 
 const checkFavoriteStatus = async productId => {
   try {
-    const { data } = await axios.get(`${API_URL}/favorites/${productId}`);
+    const { data } = await axios.get(`${API_URL}/favorites/${productId}`, {
+      withCredentials: true,
+    });
     return data;
   } catch (error) {
     console.error('Error checking favorite status:', error);
