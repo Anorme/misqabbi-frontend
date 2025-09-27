@@ -30,7 +30,7 @@ function NavMobile() {
 
       {/* Bottom Row: Search Bar */}
       <div className="">
-        <SearchBar />
+        <SearchBar className="pt-4" />
       </div>
     </div>
   );
