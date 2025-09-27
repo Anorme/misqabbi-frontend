@@ -4,21 +4,35 @@ import { useState } from 'react';
 import { useAuthState } from '../../contexts/auth/useAuth.js';
 import { useCartState } from '../../contexts/cart/useCart';
 import { getCartItemCount } from '../../contexts/cart/cartSelectors';
+import { useFavorites } from '../../contexts/favorites/useFavorites';
 import LoginButton from '../auth/LoginButton.jsx';
 import LogoutButton from '../auth/LogoutButton.jsx';
 import CartDrawer from '../CartDrawer.jsx';
+import FavoritesDrawer from '../favorites/FavoritesDrawer.jsx';
+import AuthActionModal from '../auth/AuthActionModal.jsx';
+import useAuthAction from '../../hooks/useAuthAction';
 
-function NavDesktop() {
+const NavBar = () => {
   const { isAuthenticated } = useAuthState();
   const cartState = useCartState();
+  const { favoriteItems } = useFavorites();
+  const { requireAuth, closeModal, isModalOpen, modalContext } = useAuthAction();
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
 
   const itemCount = getCartItemCount(cartState);
+  const favoritesCount = favoriteItems.length;
+
+  const handleFavoritesClick = () => {
+    if (requireAuth(() => setIsFavoritesOpen(true), 'favorites')) {
+      setIsFavoritesOpen(true);
+    }
+  };
 
   return (
-    <>
-      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between lg:h-16 py-10">
+    <header className="mt-8 ">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between lg:h-16">
           {/* Logo */}
           <Link to="/">
             <div className="flex-shrink-0">
@@ -49,8 +63,16 @@ function NavDesktop() {
             <div className="p-2 md:hidden text-msq-gold-light">
               <Search size={20} className="text-msq-gold-light" />
             </div>
-            <button className="p-2 text-msq-gold-light">
-              <Heart className="hover:fill-msq-gold-light cursor-pointer" size={20} />
+            <button
+              onClick={handleFavoritesClick}
+              className="p-2 text-msq-gold-light cursor-pointer relative"
+            >
+              <Heart className="hover:fill-msq-gold-light" size={20} />
+              {favoritesCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-msq-gold text-white text-[10px] font-lato px-1.5 py-0.5 rounded-full shadow-md">
+                  {favoritesCount}
+                </span>
+              )}
             </button>
             <button
               onClick={() => setIsCartOpen(true)}
@@ -80,8 +102,14 @@ function NavDesktop() {
 
       {/* Cart Drawer */}
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-    </>
-  );
-}
 
-export default NavDesktop;
+      {/* Favorites Drawer */}
+      <FavoritesDrawer isOpen={isFavoritesOpen} onClose={() => setIsFavoritesOpen(false)} />
+
+      {/* Auth Action Modal */}
+      <AuthActionModal isOpen={isModalOpen} onClose={closeModal} context={modalContext} />
+    </header>
+  );
+};
+
+export default NavBar;
