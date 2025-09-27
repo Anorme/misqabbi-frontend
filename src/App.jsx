@@ -56,9 +56,7 @@ const App = () => {
           path="/favorites"
           element={
             <MainLayout>
-              <AuthBoundaryModal>
-                <Favorites />
-              </AuthBoundaryModal>
+              <Favorites />
             </MainLayout>
           }
         ></Route>
