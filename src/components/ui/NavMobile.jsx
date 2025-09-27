@@ -1,38 +1,40 @@
-import { ShoppingCart, Heart, Menu } from 'lucide-react';
-import { Link } from 'react-router';
+import useAuthAction from '../../hooks/useAuthAction';
+
+import AuthActionModal from '../auth/AuthActionModal.jsx';
 import SearchBar from './SearchBar.jsx';
+import NavLogo from './NavLogo.jsx';
+import NavActions from './NavActions.jsx';
 
 function NavMobile() {
+  const { closeModal, isModalOpen, modalContext } = useAuthAction();
+
   return (
-    <div className="max-w-screen-2xl px-4 sm:px-6 lg:px-8">
-      {/* Top Row: Logo and Icons */}
-      <div className="flex justify-between items-center pt-6">
-        {/* Left Section: Logo */}
-        <div className="flex gap-4 items-center">
-          <Link to="/">
-            <div className="flex-shrink-0 h-14">
-              <img
-                src="/images/Logo.png"
-                alt="Misqabbi Logo"
-                className="w-36 sm:w-40 md:w-56 object-contain h-full cursor-pointer"
-              />
-            </div>
-          </Link>
+    <>
+      <div className="max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        {/* Top Row: Logo and Icons */}
+        <div className="flex justify-between items-center pt-6">
+          {/* Left Section: Logo */}
+          <NavLogo variant="mobile" />
+
+          {/* Right Section: Icons */}
+          <NavActions
+            variant="mobile"
+            onMenuClick={() => {
+              // TODO: Implement hamburger menu functionality
+              console.log('Menu clicked - hamburger menu functionality to be implemented');
+            }}
+          />
         </div>
 
-        {/* Right Section: Icons */}
-        <div className="flex gap-4 items-center justify-end">
-          <Heart size={20} className="text-msq-gold-light cursor-pointer" />
-          <ShoppingCart size={20} className="text-msq-gold-light cursor-pointer" />
-          <Menu size={20} className="text-msq-gold-light cursor-pointer" />
+        {/* Bottom Row: Search Bar */}
+        <div className="">
+          <SearchBar className="pt-4" />
         </div>
       </div>
 
-      {/* Bottom Row: Search Bar */}
-      <div className="">
-        <SearchBar className="pt-4" />
-      </div>
-    </div>
+      {/* Auth Action Modal */}
+      <AuthActionModal isOpen={isModalOpen} onClose={closeModal} context={modalContext} />
+    </>
   );
 }
 
