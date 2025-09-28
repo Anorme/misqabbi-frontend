@@ -69,7 +69,12 @@ export const favoritesReducer = (state, action) => {
     case FAVORITES_ACTION_TYPES.SET_FAVORITES: {
       const favoritesMap = {};
       payload.forEach(favorite => {
-        favoritesMap[favorite.id] = favorite;
+        // Transform productId to id for consistency
+        const favoriteWithId = {
+          ...favorite,
+          id: favorite.productId,
+        };
+        favoritesMap[favorite.productId] = favoriteWithId;
       });
 
       return {
