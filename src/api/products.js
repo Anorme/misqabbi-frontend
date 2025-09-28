@@ -4,7 +4,9 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
 
 const fetchPaginatedProducts = async (page = 1, limit = 6) => {
   try {
-    const response = await axios.get(`${API_URL}/products?page=${page}&limit=${limit}`);
+    const response = await axios.get(`${API_URL}/products?page=${page}&limit=${limit}`, {
+      withCredentials: true,
+    });
     if (!response.data.success) throw new Error('Failed to fetch products');
     return response.data;
   } catch (error) {
@@ -15,7 +17,7 @@ const fetchPaginatedProducts = async (page = 1, limit = 6) => {
 
 const fetchProductBySlug = async slug => {
   try {
-    const response = await axios.get(`${API_URL}/products/${slug}`);
+    const response = await axios.get(`${API_URL}/products/${slug}`, { withCredentials: true });
     return response.data.data;
   } catch (error) {
     console.error('Error fetching product:', error);
