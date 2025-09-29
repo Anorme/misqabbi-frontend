@@ -5,6 +5,7 @@ import AuthActionModal from '../auth/AuthActionModal.jsx';
 import SearchBar from './SearchBar.jsx';
 import NavLogo from './NavLogo.jsx';
 import NavActions from './NavActions.jsx';
+import MenuButton from './MenuButton.jsx';
 
 function NavMobile() {
   const { closeModal, isModalOpen, modalContext } = useAuthAction();
@@ -45,16 +46,18 @@ function NavMobile() {
   return (
     <>
       <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
-        <div className="max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-2xl px-2 lg:px-8">
           {/* Top Row: Logo and Icons */}
           <div className="flex justify-between items-center pt-6">
             {/* Left Section: Logo */}
-            <NavLogo variant="mobile" />
+            <div className="flex items-center">
+              <MenuButton />
+              <NavLogo variant="mobile" className="-ml-2" />
+            </div>
 
             {/* Right Section: Icons */}
             <NavActions
               variant="mobile"
-              isSearchOpen={isSearchOpen}
               onSearchToggle={handleSearchToggle}
               onMenuClick={() => {
                 // TODO: Implement hamburger menu functionality
