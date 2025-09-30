@@ -1,7 +1,7 @@
 import useAuthAction from '../../hooks/useAuthAction';
 
 import AuthActionModal from '../auth/AuthActionModal.jsx';
-import SearchBar from './SearchBar.jsx';
+import ConnectedSearchBar from './ConnectedSearchBar.jsx';
 import NavLogo from './NavLogo.jsx';
 import NavActions from './NavActions.jsx';
 
@@ -17,7 +17,7 @@ const NavBar = () => {
 
           {/* Search Bar */}
           <div className="md:block flex-1 max-w-lg mx-8">
-            <SearchBar />
+            <ConnectedSearchBar />
           </div>
 
           {/* Right Navigation */}

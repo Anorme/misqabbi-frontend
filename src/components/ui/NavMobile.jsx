@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import useAuthAction from '../../hooks/useAuthAction';
 
 import AuthActionModal from '../auth/AuthActionModal.jsx';
-import SearchBar from './SearchBar.jsx';
+import ConnectedSearchBar from './ConnectedSearchBar.jsx';
 import NavLogo from './NavLogo.jsx';
 import NavActions from './NavActions.jsx';
 import MenuButton from './MenuButton.jsx';
@@ -74,7 +74,7 @@ function NavMobile() {
           `}
           >
             <div className="pt-4 pb-2">
-              <SearchBar
+              <ConnectedSearchBar
                 variant="mobile"
                 onClose={handleSearchClose}
                 isSearchOpen={isSearchOpen}
