@@ -15,6 +15,32 @@ const fetchPaginatedProducts = async (page = 1, limit = 6) => {
   }
 };
 
+const fetchDiscoverableProducts = async (params = {}) => {
+  try {
+    const { q = '', category = '', minPrice = '', maxPrice = '', page = 1, limit = 10 } = params;
+
+    const queryParams = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString(),
+    });
+
+    // Add optional search parameters
+    if (q.trim()) queryParams.append('q', q.trim());
+    if (minPrice) queryParams.append('minPrice', minPrice);
+    if (maxPrice) queryParams.append('maxPrice', maxPrice);
+    if (category) queryParams.append('category', category);
+
+    const response = await axios.get(`${API_URL}/products?${queryParams.toString()}`, {
+      withCredentials: true,
+    });
+    if (!response.data.success) throw new Error('Failed to fetch products');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching discoverable products:', error);
+    throw error;
+  }
+};
+
 const fetchProductBySlug = async slug => {
   try {
     const response = await axios.get(`${API_URL}/products/${slug}`, { withCredentials: true });
@@ -25,4 +51,4 @@ const fetchProductBySlug = async slug => {
   }
 };
 
-export { fetchPaginatedProducts, fetchProductBySlug };
+export { fetchPaginatedProducts, fetchProductBySlug, fetchDiscoverableProducts };
