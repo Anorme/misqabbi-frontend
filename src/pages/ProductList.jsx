@@ -8,11 +8,12 @@ import filterProducts from '../utils/filterProducts.js';
 import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog.js';
 import { setPage, setTotalPages, setProducts } from '../contexts/catalog/catalogActions.js';
 
-import { fetchPaginatedProducts } from '../api/products.js';
+import { fetchDiscoverableProducts } from '../api/products.js';
 import CategoryNavigation from '../components/layout/CategoryNavigation.jsx';
 
 const ProductList = () => {
-  const { products, selectedFilter, productsPerPage, currentPage } = useCatalogState();
+  const { products, selectedFilter, productsPerPage, currentPage, searchParams, isSearching } =
+    useCatalogState();
   const catalogDispatch = useCatalogDispatch();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,7 +22,11 @@ const ProductList = () => {
     const loadProducts = async () => {
       try {
         setLoading(true);
-        const { data, totalPages } = await fetchPaginatedProducts(currentPage, productsPerPage);
+        const { data, totalPages } = await fetchDiscoverableProducts({
+          page: currentPage,
+          limit: productsPerPage,
+          ...searchParams,
+        });
         catalogDispatch(setProducts(data));
         catalogDispatch(setPage(currentPage));
         catalogDispatch(setTotalPages(totalPages));
@@ -33,12 +38,12 @@ const ProductList = () => {
       }
     };
     loadProducts();
-  }, [currentPage, catalogDispatch, productsPerPage]);
+  }, [currentPage, catalogDispatch, productsPerPage, searchParams]);
 
-  // Filter products using context's selectedFilter
+  // Filter products using context's selectedFilter (only if not searching)
   const filteredProducts = useMemo(
-    () => filterProducts(products, selectedFilter),
-    [products, selectedFilter]
+    () => (isSearching ? products : filterProducts(products, selectedFilter)),
+    [products, selectedFilter, isSearching]
   );
 
   const currentProducts = filteredProducts;
@@ -49,12 +54,20 @@ const ProductList = () => {
       <main className="w-full px-4 sm:px-6 lg:px-8 py-8">
         {loading ? (
           <p className="flex flex-col w-full lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] text-center text-lg text-gray-500">
-            Loading products...
+            {isSearching ? 'Searching products...' : 'Loading products...'}
           </p>
         ) : error ? (
           <p className="text-center text-red-500">{error}</p>
         ) : (
           <>
+            {isSearching && (
+              <div className="mb-4 text-center">
+                <p className="text-gray-600">
+                  {currentProducts.length} result{currentProducts.length !== 1 ? 's' : ''} found
+                  {searchParams.q && ` for "${searchParams.q}"`}
+                </p>
+              </div>
+            )}
             <ProductGrid>
               {currentProducts.map(product => (
                 <ProductCard key={product._id} product={product} />
