@@ -6,6 +6,14 @@ export const initialState = {
   currentPage: 1,
   productsPerPage: 8,
   totalPages: 1,
+  searchQuery: '',
+  searchParams: {
+    q: '',
+    minPrice: '',
+    maxPrice: '',
+    category: '',
+  },
+  isSearching: false,
 };
 
 export const catalogReducer = (state, action) => {
@@ -20,6 +28,31 @@ export const catalogReducer = (state, action) => {
       return { ...state, currentPage: payload };
     case CATALOG_ACTION_TYPES.SET_TOTAL_PAGES:
       return { ...state, totalPages: payload };
+    case CATALOG_ACTION_TYPES.SET_SEARCH_QUERY:
+      return {
+        ...state,
+        searchQuery: payload,
+        searchParams: { ...state.searchParams, q: payload },
+        currentPage: 1,
+        isSearching: !!payload.trim(),
+      };
+    case CATALOG_ACTION_TYPES.SET_SEARCH_PARAMS:
+      return {
+        ...state,
+        searchParams: { ...state.searchParams, ...payload },
+        currentPage: 1,
+        isSearching: Object.values({ ...state.searchParams, ...payload }).some(
+          value => value && value.toString().trim()
+        ),
+      };
+    case CATALOG_ACTION_TYPES.CLEAR_SEARCH:
+      return {
+        ...state,
+        searchQuery: '',
+        searchParams: { q: '', minPrice: '', maxPrice: '', category: '' },
+        currentPage: 1,
+        isSearching: false,
+      };
     default:
       return state;
   }
