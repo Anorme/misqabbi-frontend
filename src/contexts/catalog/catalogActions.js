@@ -9,3 +9,10 @@ export const setPage = page => createAction(CATALOG_ACTION_TYPES.SET_PAGE, page)
 
 export const setTotalPages = totalPages =>
   createAction(CATALOG_ACTION_TYPES.SET_TOTAL_PAGES, totalPages);
+
+export const setSearchQuery = query => createAction(CATALOG_ACTION_TYPES.SET_SEARCH_QUERY, query);
+
+export const setSearchParams = params =>
+  createAction(CATALOG_ACTION_TYPES.SET_SEARCH_PARAMS, params);
+
+export const clearSearch = () => createAction(CATALOG_ACTION_TYPES.CLEAR_SEARCH);
