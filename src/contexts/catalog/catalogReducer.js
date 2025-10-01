@@ -53,6 +53,27 @@ export const catalogReducer = (state, action) => {
         currentPage: 1,
         isSearching: false,
       };
+    case CATALOG_ACTION_TYPES.SET_SEARCH_FROM_URL:
+      return {
+        ...state,
+        searchQuery: payload.q || '',
+        searchParams: {
+          q: payload.q || '',
+          minPrice: payload.minPrice || '',
+          maxPrice: payload.maxPrice || '',
+          category: payload.category || '',
+        },
+        currentPage: 1,
+        isSearching: !!(payload.q && payload.q.trim()),
+      };
+    case CATALOG_ACTION_TYPES.CLEAR_SEARCH_AND_URL:
+      return {
+        ...state,
+        searchQuery: '',
+        searchParams: { q: '', minPrice: '', maxPrice: '', category: '' },
+        currentPage: 1,
+        isSearching: false,
+      };
     default:
       return state;
   }
