@@ -6,9 +6,9 @@ import loginImg from '../assets/login.png';
 
 const Login = () => {
   return (
-    <div className="min-h-screen w-screen flex items-center justify-center bg-purple-300 p-0 m-0 font-lato">
+    <div className="min-h-screen w-screen flex items-center justify-center lg:bg-purple-300 p-0 m-0 font-lato">
       <div
-        className="flex bg-white rounded-2xl overflow-hidden shadow-lg mt-12 mb-12"
+        className="flex bg-white rounded-2xl overflow-hidden lg:shadow-lg mt-12 mb-12"
         style={{ height: '714px', width: '1000px' }}
       >
         <div className="w-[45%] hidden md:flex items-stretch">
