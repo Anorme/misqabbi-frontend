@@ -38,6 +38,7 @@ export default function useSearchWithRedirect({
     if (Object.values(urlParams).some(value => value)) {
       dispatch(setSearchFromURL(urlParams));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only run on mount
 
   // Debounced search (for typing feedback)
