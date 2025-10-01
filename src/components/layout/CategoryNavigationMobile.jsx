@@ -1,6 +1,10 @@
 import { Triangle, Square, LayoutGrid } from 'lucide-react';
+import CategoryDropdown from '../ui/CategoryDropdown.jsx';
+import useCategorySelection from '../../hooks/useCategorySelection.js';
 
 const CategoryNavigationMobile = () => {
+  const { selectedCategory, selectCategory } = useCategorySelection();
+
   return (
     <div className="w-full pt-4">
       <nav className="w-full bg-white" aria-label="Category Navigation">
@@ -9,10 +13,11 @@ const CategoryNavigationMobile = () => {
             {/* Left: Category Dropdown*/}
             <div className="flex items-center h-full">
               <div className="flex items-center">
-                <button className="flex items-center text-msq-purple-deep hover:text-msq-purple-rich font-medium">
-                  ALL CATEGORIES
-                  <Triangle className="ml-2 fill-msq-gold-light rotate-180 stroke-none" size={10} />
-                </button>
+                <CategoryDropdown
+                  selectedCategory={selectedCategory}
+                  onCategorySelect={selectCategory}
+                  variant="mobile"
+                />
               </div>
             </div>
 
