@@ -1,6 +1,10 @@
 import { Triangle, Columns4, LayoutGrid } from 'lucide-react';
+import CategoryDropdown from '../ui/CategoryDropdown.jsx';
+import useCategorySelection from '../../hooks/useCategorySelection.js';
 
 const CategoryNavigationDesktop = () => {
+  const { selectedCategory, selectCategory } = useCategorySelection();
+
   return (
     <div className="w-full border-t border-b border-[#949396]">
       <nav className="w-full bg-white" aria-label="Category Navigation">
@@ -9,10 +13,11 @@ const CategoryNavigationDesktop = () => {
             {/* Left: Category Filters */}
             <div className="flex items-center h-full">
               <div className="flex items-center px-4 border-r border-r-[#949396] h-full">
-                <button className="flex items-center text-msq-purple-deep hover:text-msq-purple-rich font-medium">
-                  ALL CATEGORIES
-                  <Triangle className="ml-1 fill-msq-gold-light rotate-180 stroke-none" size={10} />
-                </button>
+                <CategoryDropdown
+                  selectedCategory={selectedCategory}
+                  onCategorySelect={selectCategory}
+                  variant="desktop"
+                />
               </div>
               <div className="flex items-center px-4 border-r border-r-[#949396] h-full">
                 <button className="text-msq-purple-deep hover:text-msq-purple-rich font-medium">
