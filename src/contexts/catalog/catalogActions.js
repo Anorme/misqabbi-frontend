@@ -16,3 +16,8 @@ export const setSearchParams = params =>
   createAction(CATALOG_ACTION_TYPES.SET_SEARCH_PARAMS, params);
 
 export const clearSearch = () => createAction(CATALOG_ACTION_TYPES.CLEAR_SEARCH);
+
+export const setSearchFromURL = params =>
+  createAction(CATALOG_ACTION_TYPES.SET_SEARCH_FROM_URL, params);
+
+export const clearSearchAndURL = () => createAction(CATALOG_ACTION_TYPES.CLEAR_SEARCH_AND_URL);
