@@ -1,10 +1,18 @@
 import SearchBar from './SearchBar.jsx';
-import useCatalogSearch from '../../hooks/useCatalogSearch';
+import useSearchWithRedirect from '../../hooks/useSearchWithRedirect';
 
-const ConnectedSearchBar = props => {
-  const { value, onChange, onClear } = useCatalogSearch();
+const ConnectedSearchBar = ({ onSearchSubmit, ...props }) => {
+  const { value, onChange, onClear, onEnterKey } = useSearchWithRedirect({ onSearchSubmit });
 
-  return <SearchBar value={value} onChange={onChange} onClear={onClear} {...props} />;
+  return (
+    <SearchBar
+      value={value}
+      onChange={onChange}
+      onClear={onClear}
+      onKeyDown={onEnterKey}
+      {...props}
+    />
+  );
 };
 
 export default ConnectedSearchBar;
