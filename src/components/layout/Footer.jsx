@@ -116,7 +116,7 @@ const Footer = () => {
             {/* Logo */}
             <img
               src="/images/Logo.png"
-              alt="Misqobbi Logo"
+              alt="Misqabbi Logo"
               className="w-28 sm:w-40 md:w-56 object-contain"
             />
 
