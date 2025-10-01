@@ -78,6 +78,7 @@ function NavMobile() {
                 variant="mobile"
                 onClose={handleSearchClose}
                 isSearchOpen={isSearchOpen}
+                onSearchSubmit={handleSearchClose}
                 className="w-full"
               />
             </div>
