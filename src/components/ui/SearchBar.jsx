@@ -7,6 +7,7 @@ const SearchBar = ({
   variant = 'desktop',
   onClose,
   isSearchOpen = false,
+  onKeyDown,
   ...props
 }) => {
   if (variant === 'mobile') {
@@ -16,6 +17,7 @@ const SearchBar = ({
           type="text"
           placeholder={placeholder}
           className="w-full px-4 py-2 border border-msq-gold-light text-msq-gold-light rounded-full focus:outline-none focus:ring-2 focus:ring-msq-gold focus:border-transparent"
+          onKeyDown={onKeyDown}
           {...props}
         />
         {showIcon && (
@@ -43,6 +45,7 @@ const SearchBar = ({
         type="text"
         placeholder={placeholder}
         className="w-full px-4 py-2 border border-msq-gold-light text-msq-gold-light rounded-full focus:outline-none focus:ring-2 focus:ring-msq-gold focus:border-transparent"
+        onKeyDown={onKeyDown}
         {...props}
       />
       {showIcon && (
