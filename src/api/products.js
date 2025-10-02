@@ -17,7 +17,15 @@ const fetchPaginatedProducts = async (page = 1, limit = 6) => {
 
 const fetchDiscoverableProducts = async (params = {}) => {
   try {
-    const { q = '', category = '', minPrice = '', maxPrice = '', page = 1, limit = 10 } = params;
+    const {
+      q = '',
+      category = '',
+      minPrice = '',
+      maxPrice = '',
+      sort = 'latest',
+      page = 1,
+      limit = 10,
+    } = params;
 
     const queryParams = new URLSearchParams({
       page: page.toString(),
@@ -29,6 +37,7 @@ const fetchDiscoverableProducts = async (params = {}) => {
     if (minPrice) queryParams.append('minPrice', minPrice);
     if (maxPrice) queryParams.append('maxPrice', maxPrice);
     if (category) queryParams.append('category', category);
+    if (sort && sort !== 'latest') queryParams.append('sort', sort);
 
     const response = await axios.get(`${API_URL}/products?${queryParams.toString()}`, {
       withCredentials: true,
