@@ -1,9 +1,18 @@
 import { Triangle, Columns4, LayoutGrid } from 'lucide-react';
 import CategoryDropdown from '../ui/CategoryDropdown.jsx';
+import SortDropdown from '../ui/SortDropdown.jsx';
 import useCategorySelection from '../../hooks/useCategorySelection.js';
+import { useCatalogState, useCatalogDispatch } from '../../contexts/catalog/useCatalog.js';
+import { setSortOption } from '../../contexts/catalog/catalogActions.js';
 
 const CategoryNavigationDesktop = () => {
   const { selectedCategory, selectCategory } = useCategorySelection();
+  const { sortOption } = useCatalogState();
+  const catalogDispatch = useCatalogDispatch();
+
+  const handleSortSelect = sortOption => {
+    catalogDispatch(setSortOption(sortOption));
+  };
 
   return (
     <div className="w-full border-t border-b border-[#949396]">
@@ -34,10 +43,11 @@ const CategoryNavigationDesktop = () => {
             {/* Right: Sort, Filter, View Toggles */}
             <div className="flex items-center h-full">
               <div className="flex items-center px-4 border-l border-r border-[#949396] h-full">
-                <button className="flex items-center text-msq-purple-deep hover:text-msq-purple-rich font-medium">
-                  SORT BY
-                  <Triangle className="ml-1 fill-msq-gold-light rotate-180 stroke-none" size={10} />
-                </button>
+                <SortDropdown
+                  selectedSort={sortOption}
+                  onSortSelect={handleSortSelect}
+                  variant="desktop"
+                />
               </div>
               <div className="flex items-center px-4 border-r border-r-[#949396] h-full">
                 <button className="flex items-center text-msq-purple-deep hover:text-msq-purple-rich font-medium">

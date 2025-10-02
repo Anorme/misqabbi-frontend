@@ -1,9 +1,18 @@
 import { Triangle, Square, LayoutGrid } from 'lucide-react';
 import CategoryDropdown from '../ui/CategoryDropdown.jsx';
+import SortDropdown from '../ui/SortDropdown.jsx';
 import useCategorySelection from '../../hooks/useCategorySelection.js';
+import { useCatalogState, useCatalogDispatch } from '../../contexts/catalog/useCatalog.js';
+import { setSortOption } from '../../contexts/catalog/catalogActions.js';
 
 const CategoryNavigationMobile = () => {
   const { selectedCategory, selectCategory } = useCategorySelection();
+  const { sortOption } = useCatalogState();
+  const catalogDispatch = useCatalogDispatch();
+
+  const handleSortSelect = sortOption => {
+    catalogDispatch(setSortOption(sortOption));
+  };
 
   return (
     <div className="w-full pt-4">
@@ -23,10 +32,11 @@ const CategoryNavigationMobile = () => {
 
             {/* Middle: Sort Dropdown */}
             <div className="flex items-center">
-              <button className="flex items-center text-msq-purple-deep hover:text-msq-purple-rich font-medium">
-                SORT BY
-                <Triangle className="ml-2 fill-msq-gold-light rotate-180 stroke-none" size={10} />
-              </button>
+              <SortDropdown
+                selectedSort={sortOption}
+                onSortSelect={handleSortSelect}
+                variant="mobile"
+              />
             </div>
 
             {/* Right: View Toggle Icons */}
