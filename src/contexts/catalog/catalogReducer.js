@@ -16,6 +16,11 @@ export const initialState = {
   },
   sortOption: 'latest',
   isSearching: false,
+  isFilterModalOpen: false,
+  priceFilter: {
+    minPrice: '',
+    maxPrice: '',
+  },
 };
 
 export const catalogReducer = (state, action) => {
@@ -81,6 +86,28 @@ export const catalogReducer = (state, action) => {
         ...state,
         sortOption: payload,
         searchParams: { ...state.searchParams, sort: payload },
+        currentPage: 1,
+      };
+    case CATALOG_ACTION_TYPES.OPEN_FILTER_MODAL:
+      return { ...state, isFilterModalOpen: true };
+    case CATALOG_ACTION_TYPES.CLOSE_FILTER_MODAL:
+      return { ...state, isFilterModalOpen: false };
+    case CATALOG_ACTION_TYPES.SET_PRICE_FILTER:
+      return {
+        ...state,
+        priceFilter: payload,
+        searchParams: {
+          ...state.searchParams,
+          minPrice: payload.minPrice,
+          maxPrice: payload.maxPrice,
+        },
+        currentPage: 1,
+      };
+    case CATALOG_ACTION_TYPES.CLEAR_PRICE_FILTER:
+      return {
+        ...state,
+        priceFilter: { minPrice: '', maxPrice: '' },
+        searchParams: { ...state.searchParams, minPrice: '', maxPrice: '' },
         currentPage: 1,
       };
     default:
