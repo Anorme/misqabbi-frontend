@@ -40,10 +40,10 @@ const CategoryDropdown = ({
     triggerRef.current?.focus();
   };
 
-  const displayText = selectedCategory ? getCategoryLabel(selectedCategory) : 'All Categories';
+  const displayText = selectedCategory ? getCategoryLabel(selectedCategory) : 'All CATEGORIES';
 
   const baseButtonClasses =
-    'flex items-center text-msq-purple-deep hover:text-msq-purple-rich font-medium transition-colors duration-200';
+    'flex items-center text-msq-purple-deep hover:text-msq-purple-rich font-medium transition-colors duration-200 cursor-pointer';
   const baseDropdownClasses = 'z-40 bg-white border border-[#949396] shadow-lg rounded-md py-1';
 
   const dropdownClasses = `${baseDropdownClasses} absolute left-0 mt-1 min-w-full`; // Button width for both desktop and mobile
@@ -76,7 +76,7 @@ const CategoryDropdown = ({
             <button
               key={category.value}
               onClick={() => handleCategoryClick(category.value)}
-              className={`w-full text-left px-4 py-2 text-sm transition-colors duration-200 ${
+              className={`w-full text-left px-4 py-2 text-sm transition-colors duration-200 cursor-pointer ${
                 selectedCategory === category.value || (!selectedCategory && category.value === '')
                   ? 'bg-msq-gold-light/20 text-msq-purple-deep font-medium'
                   : 'text-msq-purple-deep hover:bg-msq-gold-light/10 hover:text-msq-purple-rich'
