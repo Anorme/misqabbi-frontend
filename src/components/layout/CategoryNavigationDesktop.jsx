@@ -1,6 +1,8 @@
 import { Triangle, Columns4, LayoutGrid } from 'lucide-react';
 import CategoryDropdown from '../ui/CategoryDropdown.jsx';
 import SortDropdown from '../ui/SortDropdown.jsx';
+import FilterDropdown from '../ui/FilterDropdown.jsx';
+import PriceFilterModal from '../ui/PriceFilterModal.jsx';
 import useCategorySelection from '../../hooks/useCategorySelection.js';
 import { useCatalogState, useCatalogDispatch } from '../../contexts/catalog/useCatalog.js';
 import { setSortOption } from '../../contexts/catalog/catalogActions.js';
@@ -50,10 +52,7 @@ const CategoryNavigationDesktop = () => {
                 />
               </div>
               <div className="flex items-center px-4 border-r border-r-[#949396] h-full">
-                <button className="flex items-center text-msq-purple-deep hover:text-msq-purple-rich font-medium">
-                  FILTER
-                  <Triangle className="ml-1 fill-msq-gold-light rotate-180 stroke-none" size={10} />
-                </button>
+                <FilterDropdown variant="desktop" />
               </div>
               <div className="flex items-center pl-4 space-x-2 h-full">
                 <button className="">
@@ -69,6 +68,7 @@ const CategoryNavigationDesktop = () => {
           </div>
         </div>
       </nav>
+      <PriceFilterModal />
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import { Triangle, Square, LayoutGrid } from 'lucide-react';
 import CategoryDropdown from '../ui/CategoryDropdown.jsx';
 import SortDropdown from '../ui/SortDropdown.jsx';
+import FilterDropdown from '../ui/FilterDropdown.jsx';
+import PriceFilterModal from '../ui/PriceFilterModal.jsx';
 import useCategorySelection from '../../hooks/useCategorySelection.js';
 import { useCatalogState, useCatalogDispatch } from '../../contexts/catalog/useCatalog.js';
 import { setSortOption } from '../../contexts/catalog/catalogActions.js';
@@ -39,6 +41,11 @@ const CategoryNavigationMobile = () => {
               />
             </div>
 
+            {/* Filter Dropdown */}
+            <div className="flex items-center">
+              <FilterDropdown variant="mobile" />
+            </div>
+
             {/* Right: View Toggle Icons */}
             <div className="flex items-center h-full space-x-2">
               <button className="p-1">
@@ -53,6 +60,7 @@ const CategoryNavigationMobile = () => {
           </div>
         </div>
       </nav>
+      <PriceFilterModal />
     </div>
   );
 };
