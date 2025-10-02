@@ -24,3 +24,12 @@ export const clearSearchAndURL = () => createAction(CATALOG_ACTION_TYPES.CLEAR_S
 
 export const setSortOption = sortOption =>
   createAction(CATALOG_ACTION_TYPES.SET_SORT_OPTION, sortOption);
+
+export const openFilterModal = () => createAction(CATALOG_ACTION_TYPES.OPEN_FILTER_MODAL);
+
+export const closeFilterModal = () => createAction(CATALOG_ACTION_TYPES.CLOSE_FILTER_MODAL);
+
+export const setPriceFilter = priceFilter =>
+  createAction(CATALOG_ACTION_TYPES.SET_PRICE_FILTER, priceFilter);
+
+export const clearPriceFilter = () => createAction(CATALOG_ACTION_TYPES.CLEAR_PRICE_FILTER);
