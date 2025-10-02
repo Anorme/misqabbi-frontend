@@ -12,7 +12,9 @@ export const initialState = {
     minPrice: '',
     maxPrice: '',
     category: '',
+    sort: 'latest',
   },
+  sortOption: 'latest',
   isSearching: false,
 };
 
@@ -70,9 +72,16 @@ export const catalogReducer = (state, action) => {
       return {
         ...state,
         searchQuery: '',
-        searchParams: { q: '', minPrice: '', maxPrice: '', category: '' },
+        searchParams: { q: '', minPrice: '', maxPrice: '', category: '', sort: 'latest' },
         currentPage: 1,
         isSearching: false,
+      };
+    case CATALOG_ACTION_TYPES.SET_SORT_OPTION:
+      return {
+        ...state,
+        sortOption: payload,
+        searchParams: { ...state.searchParams, sort: payload },
+        currentPage: 1,
       };
     default:
       return state;
