@@ -21,3 +21,6 @@ export const setSearchFromURL = params =>
   createAction(CATALOG_ACTION_TYPES.SET_SEARCH_FROM_URL, params);
 
 export const clearSearchAndURL = () => createAction(CATALOG_ACTION_TYPES.CLEAR_SEARCH_AND_URL);
+
+export const setSortOption = sortOption =>
+  createAction(CATALOG_ACTION_TYPES.SET_SORT_OPTION, sortOption);
