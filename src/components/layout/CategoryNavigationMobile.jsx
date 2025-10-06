@@ -1,4 +1,4 @@
-import { Triangle, Square, LayoutGrid } from 'lucide-react';
+import { Square, LayoutGrid } from 'lucide-react';
 import CategoryDropdown from '../ui/CategoryDropdown.jsx';
 import SortDropdown from '../ui/SortDropdown.jsx';
 import FilterDropdown from '../ui/FilterDropdown.jsx';
