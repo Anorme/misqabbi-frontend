@@ -11,6 +11,9 @@ import SizeSelect from '../components/ui/SizeSelect';
 import ProductInfo from '../components/ui/ProductInfo';
 import GalleryImages from '../components/ui/GalleryImages';
 import QuantitySelector from '../components/ui/QuantitySelector';
+import FavoritesLinkButton from '../components/favorites/FavoritesLinkButton';
+import AuthActionModal from '../components/auth/AuthActionModal';
+import useAuthAction from '../hooks/useAuthAction';
 
 import { showAddedToCartToast } from '../utils/showToast';
 
@@ -22,6 +25,7 @@ function ProductDetails() {
   const [error, setError] = useState(null);
   const [selectedSize, setSelectedSize] = useState('M');
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const { requireAuth, closeModal, isModalOpen, modalContext } = useAuthAction();
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -41,6 +45,10 @@ function ProductDetails() {
     );
 
     showAddedToCartToast();
+  };
+
+  const handleFavoriteClick = () => {
+    requireAuth(() => {}, 'favorites');
   };
 
   useEffect(() => {
@@ -75,12 +83,24 @@ function ProductDetails() {
         <div className="max-w-screen-xl mx-auto flex flex-col lg:grid lg:grid-cols-2 lg:gap-5 gap-5 py-6">
           {/* Images Section */}
           <div className="flex flex-col gap-5">
-            <div>
+            <div className="relative">
               <img
                 className="h-[25.75rem] lg:h-[40.125rem] w-full object-cover rounded-none"
                 src={product.image || product.images[0]}
                 alt={product?.name}
               />
+              <div className="absolute top-3 right-3">
+                <FavoritesLinkButton
+                  product={{
+                    id: product._id,
+                    name: product.name,
+                    price: product.price,
+                    images: product.images,
+                    slug: product.slug,
+                  }}
+                  onAuthRequired={handleFavoriteClick}
+                />
+              </div>
             </div>
 
             {/* Image Gallery */}
@@ -115,6 +135,7 @@ function ProductDetails() {
           </div>
         </div>
       </main>
+      <AuthActionModal isOpen={isModalOpen} onClose={closeModal} context={modalContext} />
     </div>
   );
 }
