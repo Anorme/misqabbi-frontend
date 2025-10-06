@@ -1,8 +1,8 @@
 import { Heart, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router';
 import { useFavorites } from '../../contexts/favorites/useFavorites';
-import { removeFavorite } from '../../contexts/favorites/favoritesActions';
-import { removeFavorite as removeFavoriteAPI } from '../../api/favorites';
+import { removeFavorite, setFavorites } from '../../contexts/favorites/favoritesActions';
+import { removeFavorite as removeFavoriteAPI, fetchFavorites } from '../../api/favorites';
 import { showRemovedFromFavoritesToast, showErrorToast } from '../../utils/showToast';
 
 const FavoriteItem = ({ item }) => {
@@ -16,13 +16,22 @@ const FavoriteItem = ({ item }) => {
       // API call
       await removeFavoriteAPI(item.id);
 
+      // Always refetch to ensure state matches server after mutation
+      const latestFavorites = await fetchFavorites();
+      dispatch(setFavorites(latestFavorites));
+
       showRemovedFromFavoritesToast();
     } catch (error) {
       console.error('Error removing favorite:', error);
       showErrorToast('Failed to remove from favorites');
 
-      // Revert optimistic update on error
-      // Note: In a real app, you might want to refetch from server
+      // Revert optimistic update by syncing with server state
+      try {
+        const latestFavorites = await fetchFavorites();
+        dispatch(setFavorites(latestFavorites));
+      } catch (refetchError) {
+        console.error('Error refetching favorites after failure:', refetchError);
+      }
     }
   };
 
