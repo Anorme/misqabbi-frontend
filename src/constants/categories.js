@@ -6,7 +6,6 @@ export const CATEGORIES = [
   { value: 'dresses', label: 'Dresses' },
   { value: 'tops', label: 'Tops' },
   { value: 'dungarees', label: 'Dungarees' },
-  { value: 'custom', label: 'Custom' },
 ];
 
 export const getCategoryLabel = value => {
