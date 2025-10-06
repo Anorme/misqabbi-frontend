@@ -5,11 +5,11 @@ import FilterDropdown from '../ui/FilterDropdown.jsx';
 import PriceFilterModal from '../ui/PriceFilterModal.jsx';
 import useCategorySelection from '../../hooks/useCategorySelection.js';
 import { useCatalogState, useCatalogDispatch } from '../../contexts/catalog/useCatalog.js';
-import { setSortOption } from '../../contexts/catalog/catalogActions.js';
+import { setSortOption, setMobileColumns } from '../../contexts/catalog/catalogActions.js';
 
 const CategoryNavigationMobile = () => {
   const { selectedCategory, selectCategory } = useCategorySelection();
-  const { sortOption } = useCatalogState();
+  const { sortOption, layout } = useCatalogState();
   const catalogDispatch = useCatalogDispatch();
 
   const handleSortSelect = sortOption => {
@@ -48,11 +48,21 @@ const CategoryNavigationMobile = () => {
 
             {/* Right: View Toggle Icons */}
             <div className="flex items-center h-full space-x-2">
-              <button className="p-1">
+              <button
+                className={`p-1 ${layout.mobileColumns === 1 ? 'opacity-100' : 'opacity-50'}`}
+                aria-label="Set mobile layout to 1 column"
+                aria-pressed={layout.mobileColumns === 1}
+                onClick={() => catalogDispatch(setMobileColumns(1))}
+              >
                 {/* Single column icon */}
                 <Square className="stroke-msq-gold-light fill-msq-gold-light" size={20} />
               </button>
-              <button className="p-1">
+              <button
+                className={`p-1 ${layout.mobileColumns === 2 ? 'opacity-100' : 'opacity-50'}`}
+                aria-label="Set mobile layout to 2 columns"
+                aria-pressed={layout.mobileColumns === 2}
+                onClick={() => catalogDispatch(setMobileColumns(2))}
+              >
                 {/* 2x2 grid icon */}
                 <LayoutGrid className="fill-msq-gold-light stroke-none" size={20} />
               </button>
