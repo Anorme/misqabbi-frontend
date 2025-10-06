@@ -32,7 +32,7 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="bg-white border-none rounded-none max-w-[320px] w-full mx-auto">
+    <div className="bg-white border-none rounded-none w-full mx-auto">
       <div className="relative group">
         <Link to={`/product/${product.slug}`}>
           <img
