@@ -55,7 +55,9 @@ const CategoryDropdown = ({
         ref={triggerRef}
         onClick={() => setIsOpen(!isOpen)}
         onKeyDown={handleKeyDown}
-        className={`${baseButtonClasses} ${variant === 'mobile' ? 'px-2' : 'px-4'}`}
+        className={`${baseButtonClasses} ${
+          variant === 'mobile' ? 'px-2 text-xs whitespace-nowrap' : 'px-4'
+        }`}
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-label={`Category dropdown, currently: ${displayText}`}

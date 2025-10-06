@@ -53,9 +53,9 @@ const FilterDropdown = ({ variant = 'desktop', className = '' }) => {
         ref={triggerRef}
         onClick={() => setIsOpen(!isOpen)}
         onKeyDown={handleKeyDown}
-        className={`${baseButtonClasses} ${variant === 'mobile' ? 'px-2' : 'px-4'} ${
-          hasActiveFilters ? 'text-msq-purple-rich' : ''
-        }`}
+        className={`${baseButtonClasses} ${
+          variant === 'mobile' ? 'px-2 text-xs whitespace-nowrap' : 'px-4'
+        } ${hasActiveFilters ? 'text-msq-purple-rich' : ''}`}
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-label={`Filter dropdown${hasActiveFilters ? ', filters active' : ''}`}
