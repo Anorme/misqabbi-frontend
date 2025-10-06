@@ -5,11 +5,11 @@ import FilterDropdown from '../ui/FilterDropdown.jsx';
 import PriceFilterModal from '../ui/PriceFilterModal.jsx';
 import useCategorySelection from '../../hooks/useCategorySelection.js';
 import { useCatalogState, useCatalogDispatch } from '../../contexts/catalog/useCatalog.js';
-import { setSortOption } from '../../contexts/catalog/catalogActions.js';
+import { setSortOption, setDesktopColumns } from '../../contexts/catalog/catalogActions.js';
 
 const CategoryNavigationDesktop = () => {
   const { selectedCategory, selectCategory } = useCategorySelection();
-  const { sortOption } = useCatalogState();
+  const { sortOption, layout } = useCatalogState();
   const catalogDispatch = useCatalogDispatch();
 
   const handleSortSelect = sortOption => {
@@ -45,11 +45,21 @@ const CategoryNavigationDesktop = () => {
                 <FilterDropdown variant="desktop" />
               </div>
               <div className="flex items-center pl-4 space-x-2 h-full">
-                <button className="">
+                <button
+                  className={`${layout.desktopColumns === 4 ? 'opacity-100' : 'opacity-50'}`}
+                  aria-label="Set desktop layout to 4 columns"
+                  aria-pressed={layout.desktopColumns === 4}
+                  onClick={() => catalogDispatch(setDesktopColumns(4))}
+                >
                   {/* Grid icon */}
                   <LayoutGrid className="fill-msq-gold-light stroke-none" size={20} />
                 </button>
-                <button className="">
+                <button
+                  className={`${layout.desktopColumns === 6 ? 'opacity-100' : 'opacity-50'}`}
+                  aria-label="Set desktop layout to 6 columns"
+                  aria-pressed={layout.desktopColumns === 6}
+                  onClick={() => catalogDispatch(setDesktopColumns(6))}
+                >
                   {/* List icon */}
                   <Columns4 className="stroke-msq-gold-light" size={20} />
                 </button>
