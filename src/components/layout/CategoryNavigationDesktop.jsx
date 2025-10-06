@@ -1,4 +1,4 @@
-import { Triangle, Columns4, LayoutGrid } from 'lucide-react';
+import { Columns4, LayoutGrid } from 'lucide-react';
 import CategoryDropdown from '../ui/CategoryDropdown.jsx';
 import SortDropdown from '../ui/SortDropdown.jsx';
 import FilterDropdown from '../ui/FilterDropdown.jsx';
@@ -29,16 +29,6 @@ const CategoryNavigationDesktop = () => {
                   onCategorySelect={selectCategory}
                   variant="desktop"
                 />
-              </div>
-              <div className="flex items-center px-4 border-r border-r-[#949396] h-full">
-                <button className="text-msq-purple-deep hover:text-msq-purple-rich font-medium">
-                  BEST SELLERS
-                </button>
-              </div>
-              <div className="flex items-center border-r border-r-[#949396] px-4 h-full">
-                <button className="text-msq-purple-deep hover:text-msq-purple-rich font-medium">
-                  NEWEST ARRIVALS
-                </button>
               </div>
             </div>
 
