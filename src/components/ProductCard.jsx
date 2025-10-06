@@ -34,12 +34,14 @@ const ProductCard = ({ product }) => {
   return (
     <div className="bg-white border-none rounded-none w-full mx-auto">
       <div className="relative group">
-        <Link to={`/product/${product.slug}`}>
-          <img
-            src={product.images?.[0] || 'https://via.placeholder.com/150'}
-            alt={product.name}
-            className="w-full h-94 object-cover"
-          />
+        <Link to={`/product/${product.slug}`} className="block">
+          <div className="aspect-[3/4] w-full relative">
+            <img
+              src={product.images?.[0] || 'https://via.placeholder.com/150'}
+              alt={product.name}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </div>
         </Link>
         <div className="absolute top-3 right-3">
           <FavoritesLinkButton
