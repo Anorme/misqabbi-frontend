@@ -21,6 +21,10 @@ export const initialState = {
     minPrice: '',
     maxPrice: '',
   },
+  layout: {
+    mobileColumns: 2,
+    desktopColumns: 4,
+  },
 };
 
 export const catalogReducer = (state, action) => {
@@ -109,6 +113,16 @@ export const catalogReducer = (state, action) => {
         priceFilter: { minPrice: '', maxPrice: '' },
         searchParams: { ...state.searchParams, minPrice: '', maxPrice: '' },
         currentPage: 1,
+      };
+    case CATALOG_ACTION_TYPES.SET_MOBILE_COLUMNS:
+      return {
+        ...state,
+        layout: { ...state.layout, mobileColumns: payload },
+      };
+    case CATALOG_ACTION_TYPES.SET_DESKTOP_COLUMNS:
+      return {
+        ...state,
+        layout: { ...state.layout, desktopColumns: payload },
       };
     default:
       return state;
