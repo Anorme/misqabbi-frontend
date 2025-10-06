@@ -46,7 +46,7 @@ const CategoryNavigationDesktop = () => {
               </div>
               <div className="flex items-center pl-4 space-x-2 h-full">
                 <button
-                  className={`${layout.desktopColumns === 4 ? 'opacity-100' : 'opacity-50'}`}
+                  className={`${layout.desktopColumns === 4 ? 'opacity-100' : 'opacity-50'} cursor-pointer`}
                   aria-label="Set desktop layout to 4 columns"
                   aria-pressed={layout.desktopColumns === 4}
                   onClick={() => catalogDispatch(setDesktopColumns(4))}
@@ -55,7 +55,7 @@ const CategoryNavigationDesktop = () => {
                   <LayoutGrid className="fill-msq-gold-light stroke-none" size={20} />
                 </button>
                 <button
-                  className={`${layout.desktopColumns === 6 ? 'opacity-100' : 'opacity-50'}`}
+                  className={`${layout.desktopColumns === 6 ? 'opacity-100' : 'opacity-50'} cursor-pointer`}
                   aria-label="Set desktop layout to 6 columns"
                   aria-pressed={layout.desktopColumns === 6}
                   onClick={() => catalogDispatch(setDesktopColumns(6))}
