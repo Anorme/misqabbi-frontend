@@ -71,9 +71,23 @@ const App = () => {
           }
         ></Route>
 
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/register"
+          element={
+            <MainLayout>
+              <Register />
+            </MainLayout>
+          }
+        />
 
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <MainLayout>
+              <Login />
+            </MainLayout>
+          }
+        />
 
         <Route path="/auth/callback" element={<AuthCallback />} />
 
