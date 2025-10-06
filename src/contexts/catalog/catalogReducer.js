@@ -4,7 +4,7 @@ export const initialState = {
   products: [],
   selectedFilter: 'All',
   currentPage: 1,
-  productsPerPage: 8,
+  productsPerPage: 12,
   totalPages: 1,
   searchQuery: '',
   searchParams: {
