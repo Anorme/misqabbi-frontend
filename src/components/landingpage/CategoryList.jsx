@@ -1,32 +1,46 @@
 import { useEffect, useRef, useState } from 'react';
+
+import { Link } from 'react-router';
+
 import CategoryCard from './CategoryCard';
 
 // Placeholder data
 const categories = [
   {
-    name: 'Jean',
-    image:
-      'https://images.unsplash.com/photo-1714729382668-7bc3bb261662?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-  {
-    name: 'T-Shirt',
-    image:
-      'https://plus.unsplash.com/premium_photo-1689536143095-eaa89c407aa7?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-  {
-    name: 'Gown',
-    image:
-      'https://images.unsplash.com/photo-1752836094974-630711fb07c7?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-  {
-    name: 'Lace',
+    name: 'Dresses',
+    value: 'dresses',
     image:
       'https://images.unsplash.com/photo-1631233999975-3d559f0526e1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
-    name: 'Swimsuit',
+    name: 'Dungarees',
+    value: 'dungarees',
     image:
       'https://plus.unsplash.com/premium_photo-1671748710834-fd02d65ca400?q=80&w=626&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    name: 'Pants',
+    value: 'pants',
+    image:
+      'https://images.unsplash.com/photo-1714729382668-7bc3bb261662?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    name: 'Shorts',
+    value: 'shorts',
+    image:
+      'https://plus.unsplash.com/premium_photo-1689536143095-eaa89c407aa7?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    name: 'Skirts',
+    value: 'skirts',
+    image:
+      'https://images.unsplash.com/photo-1752836094974-630711fb07c7?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    name: 'Tops',
+    value: 'tops',
+    image:
+      'https://plus.unsplash.com/premium_photo-1690820318448-f2f7e938cb58?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
 ];
 
@@ -92,7 +106,9 @@ function CategoryList() {
       <div className="flex py-2  mx-auto">
         {visibleCards.map((cat, idx) => (
           <div key={cat.name} ref={idx === 0 ? cardRef : null}>
-            <CategoryCard name={cat.name} image={cat.image} />
+            <Link to={`/shop?category=${cat.value}`}>
+              <CategoryCard name={cat.name} image={cat.image} />
+            </Link>
           </div>
         ))}
       </div>
