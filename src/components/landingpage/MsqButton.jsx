@@ -2,8 +2,7 @@ export default function MsqButton({ label, variant = 'gold', className = '', onC
   let variantClasses = '';
 
   if (variant === 'gold') {
-    variantClasses =
-      'text-msq-gold-light border-msq-gold-light hover:bg-msq-gold-light hover:text-white';
+    variantClasses = 'border-msq-gold-light bg-msq-gold-light text-white';
   } else if (variant === 'purple') {
     variantClasses = 'text-msq-purple border-msq-purple hover:bg-msq-purple hover:text-white';
   } else if (variant === 'purple-deep') {
