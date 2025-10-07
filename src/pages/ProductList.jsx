@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router';
 
 import Pagination from '../components/Pagination.jsx';
 import ProductGrid from '../components/ProductGrid.jsx';
@@ -7,6 +8,7 @@ import filterProducts from '../utils/filterProducts.js';
 
 import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog.js';
 import { setPage, setTotalPages, setProducts } from '../contexts/catalog/catalogActions.js';
+import { setSearchFromURL } from '../contexts/catalog/catalogActions.js';
 
 import { fetchDiscoverableProducts } from '../api/products.js';
 import CategoryNavigation from '../components/layout/CategoryNavigation.jsx';
@@ -17,8 +19,29 @@ const ProductList = () => {
   const catalogDispatch = useCatalogDispatch();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [urlSearchParams] = useSearchParams();
+  const [isInitialSearchSynced, setIsInitialSearchSynced] = useState(false);
+
+  // Initialize catalog search state from URL when /shop mounts
+  useEffect(() => {
+    const urlParams = {
+      q: urlSearchParams.get('q') || '',
+      minPrice: urlSearchParams.get('minPrice') || '',
+      maxPrice: urlSearchParams.get('maxPrice') || '',
+      category: urlSearchParams.get('category') || '',
+      sort: urlSearchParams.get('sort') || 'latest',
+    };
+    const hasAnyParam = Object.values(urlParams).some(v => v);
+    if (hasAnyParam) {
+      catalogDispatch(setSearchFromURL(urlParams));
+    }
+    // Mark initial sync complete (if there were params, state will update before next effect run)
+    setIsInitialSearchSynced(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
+    if (!isInitialSearchSynced) return;
     const loadProducts = async () => {
       try {
         setLoading(true);
@@ -38,7 +61,7 @@ const ProductList = () => {
       }
     };
     loadProducts();
-  }, [currentPage, catalogDispatch, productsPerPage, searchParams]);
+  }, [currentPage, catalogDispatch, productsPerPage, searchParams, isInitialSearchSynced]);
 
   // Filter products using context's selectedFilter (only if not searching)
   const filteredProducts = useMemo(
