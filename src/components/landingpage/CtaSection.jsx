@@ -23,7 +23,14 @@ const CtaSection = () => {
   return (
     <section className="pb-10 w-full text-center">
       <h2 className="text-2xl md:text-3xl font-bebas tracking-wide text-msq-purple-rich mb-6">
-        FOLLOW US ON INSTAGRAM <span className="text-msq-purple-light">@MISQABBIGH</span>
+        <a
+          href="https://www.instagram.com/misqabbigh"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
+          FOLLOW US ON INSTAGRAM <span className="text-msq-purple-light">@MISQABBIGH</span>
+        </a>
       </h2>
 
       <CtaGrid images={images} />
