@@ -1,5 +1,8 @@
-import MsqButton from './MsqButton';
 import { useEffect, useState } from 'react';
+
+import { Link } from 'react-router';
+
+import MsqButton from './MsqButton';
 
 const PreviewBanner = () => {
   const [bgPosition, setBgPosition] = useState('center -100px');
@@ -27,7 +30,9 @@ const PreviewBanner = () => {
           <h1 className="text-[40px] md:text-[128px] font-lato leading-[71px] w-[350px] md:w-[854px]">
             NEW ARRIVAL
           </h1>
-          <MsqButton label="SHOP COLLECTION" variant="gold" className=" md:mt-12 " />
+          <Link to="/shop">
+            <MsqButton label="SHOP COLLECTION" variant="gold" className=" md:mt-12 " />
+          </Link>
         </div>
       </div>
     </div>
