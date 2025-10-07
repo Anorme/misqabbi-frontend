@@ -1,3 +1,5 @@
+import { Link } from 'react-router';
+
 import MsqButton from './MsqButton';
 
 const PreviewSplit = () => {
@@ -9,13 +11,15 @@ const PreviewSplit = () => {
           className="relative w-full h-[422px] md:h-[400px] bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('https://images.unsplash.com/photo-1728402525443-92839fc739ed?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+              "url('https://images.unsplash.com/photo-1756485161657-e005fc9e4393?q=80&w=708&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
           }}
         >
           <div className="absolute bottom-5 inset-x-0 bg-opacity-30 flex items-center justify-center">
             <div className="text-center text-white md:space-y-3">
-              <h2 className="text-[38px] md:text-[64px] font-lato w-[254px]">DENIM</h2>
-              <MsqButton label="SHOP DENIM" variant="gold" />
+              <h2 className="text-[38px] md:text-[64px] font-lato w-[254px]">DRESSES</h2>
+              <Link to="/shop?category=dresses">
+                <MsqButton label="SHOP DRESSES" variant="gold" />
+              </Link>
             </div>
           </div>
         </div>
@@ -25,13 +29,15 @@ const PreviewSplit = () => {
           className="relative w-full h-[422px] md:h-[400px] bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('https://images.unsplash.com/photo-1663044023009-cfdb6dd6b89c?q=80&w=707&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+              "url('https://images.unsplash.com/photo-1713845784488-f81dbf2b1e81?q=80&w=715&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
           }}
         >
           <div className="absolute bottom-5 inset-x-0 bg-opacity-30 flex items-center justify-center">
             <div className="text-center text-white  md:space-y-3">
-              <h2 className="text-[38px] md:text-[64px] font-lato w-[254px]">ANKARA</h2>
-              <MsqButton label="SHOP ANKARA" variant="gold" />
+              <h2 className="text-[38px] md:text-[64px] font-lato w-[254px]">SKIRTS</h2>
+              <Link to="/shop?category=skirts">
+                <MsqButton label="SHOP SKIRTS" variant="gold" />
+              </Link>
             </div>
           </div>
         </div>
