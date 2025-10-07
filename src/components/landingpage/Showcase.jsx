@@ -1,3 +1,5 @@
+import { Link } from 'react-router';
+
 import MsqButton from './MsqButton';
 import CategoryList from './CategoryList';
 import TrendingCollection from './TrendingCollection';
@@ -15,11 +17,13 @@ const Showcase = () => {
       </div>
 
       <div className="flex justify-center mt-[29pt] md:mt-[59px]">
-        <MsqButton
-          label="VIEW THE COLLECTION"
-          variant="gold"
-          className="text-[16px] md:text-[20px]"
-        />
+        <Link to="/shop">
+          <MsqButton
+            label="VIEW THE COLLECTION"
+            variant="gold"
+            className="text-[16px] md:text-[20px]"
+          />
+        </Link>
       </div>
     </section>
   );
