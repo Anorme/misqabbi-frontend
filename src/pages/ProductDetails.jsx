@@ -11,6 +11,7 @@ import SizeSelect from '../components/ui/SizeSelect';
 import ProductInfo from '../components/ui/ProductInfo';
 import GalleryImages from '../components/ui/GalleryImages';
 import QuantitySelector from '../components/ui/QuantitySelector';
+import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 import FavoritesLinkButton from '../components/favorites/FavoritesLinkButton';
 import AuthActionModal from '../components/auth/AuthActionModal';
 import useAuthAction from '../hooks/useAuthAction';
@@ -68,7 +69,12 @@ function ProductDetails() {
     loadProduct();
   }, [slug]);
 
-  if (loading) return <p className="p-4">Loading product...</p>;
+  if (loading)
+    return (
+      <div className="min-h-[40vh] flex items-center justify-center">
+        <LoadingSpinner size={80} color="#cfb484" />
+      </div>
+    );
   if (error) return <p className="p-4 text-red-500">{error}</p>;
   if (!product) return <p className="p-4">No product found.</p>;
 
