@@ -1,6 +1,7 @@
 import { useFavorites } from '../contexts/favorites/useFavorites';
 import { useAuthState } from '../contexts/auth/useAuth';
 import AuthActionModal from '../components/auth/AuthActionModal';
+import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 import useAuthAction from '../hooks/useAuthAction';
 import { useEffect } from 'react';
 
@@ -28,8 +29,8 @@ const Favorites = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-msq-purple-rich mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your favorites...</p>
+          <LoadingSpinner size={48} color="#81298c" />
+          <p className="text-gray-600 mt-4">Loading your favorites...</p>
         </div>
       </div>
     );
