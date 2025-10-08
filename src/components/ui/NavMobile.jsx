@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router';
 import useAuthAction from '../../hooks/useAuthAction';
 
 import AuthActionModal from '../auth/AuthActionModal.jsx';
 import ConnectedSearchBar from './ConnectedSearchBar.jsx';
+import LandingSearchBar from '../landingpage/LandingSearchBar.jsx';
 import NavLogo from './NavLogo.jsx';
 import NavActions from './NavActions.jsx';
 import MenuButton from './MenuButton.jsx';
@@ -10,6 +12,8 @@ import MenuButton from './MenuButton.jsx';
 function NavMobile() {
   const { closeModal, isModalOpen, modalContext } = useAuthAction();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   // Handle search toggle
   const handleSearchToggle = () => {
@@ -74,13 +78,23 @@ function NavMobile() {
           `}
           >
             <div className="pt-4 pb-2">
-              <ConnectedSearchBar
-                variant="mobile"
-                onClose={handleSearchClose}
-                isSearchOpen={isSearchOpen}
-                onSearchSubmit={handleSearchClose}
-                className="w-full"
-              />
+              {isHomePage ? (
+                <LandingSearchBar
+                  variant="mobile"
+                  onClose={handleSearchClose}
+                  isSearchOpen={isSearchOpen}
+                  onSearchSubmit={handleSearchClose}
+                  className="w-full"
+                />
+              ) : (
+                <ConnectedSearchBar
+                  variant="mobile"
+                  onClose={handleSearchClose}
+                  isSearchOpen={isSearchOpen}
+                  onSearchSubmit={handleSearchClose}
+                  className="w-full"
+                />
+              )}
             </div>
           </div>
         </div>
