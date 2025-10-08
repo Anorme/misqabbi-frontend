@@ -1,12 +1,16 @@
+import { useLocation } from 'react-router';
 import useAuthAction from '../../hooks/useAuthAction';
 
 import AuthActionModal from '../auth/AuthActionModal.jsx';
 import ConnectedSearchBar from './ConnectedSearchBar.jsx';
+import LandingSearchBar from '../landingpage/LandingSearchBar.jsx';
 import NavLogo from './NavLogo.jsx';
 import NavActions from './NavActions.jsx';
 
 const NavBar = () => {
   const { closeModal, isModalOpen, modalContext } = useAuthAction();
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
@@ -17,7 +21,7 @@ const NavBar = () => {
 
           {/* Search Bar */}
           <div className="md:block flex-1 max-w-lg mx-8">
-            <ConnectedSearchBar />
+            {isHomePage ? <LandingSearchBar /> : <ConnectedSearchBar />}
           </div>
 
           {/* Right Navigation */}
