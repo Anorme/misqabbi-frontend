@@ -12,6 +12,7 @@ import { setSearchFromURL } from '../contexts/catalog/catalogActions.js';
 
 import { fetchDiscoverableProducts } from '../api/products.js';
 import CategoryNavigation from '../components/layout/CategoryNavigation.jsx';
+import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 
 const ProductList = () => {
   const { products, selectedFilter, productsPerPage, currentPage, searchParams, isSearching } =
@@ -76,9 +77,9 @@ const ProductList = () => {
       <CategoryNavigation />
       <main className="w-full px-4 sm:px-6 lg:px-8 py-8">
         {loading ? (
-          <p className="flex flex-col w-full lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] text-center text-lg text-gray-500">
-            {isSearching ? 'Searching products...' : 'Loading products...'}
-          </p>
+          <div className="flex w-full justify-center items-center lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] py-16">
+            <LoadingSpinner size={100} color="#cfb484" />
+          </div>
         ) : error ? (
           <p className="text-center text-red-500">{error}</p>
         ) : (
