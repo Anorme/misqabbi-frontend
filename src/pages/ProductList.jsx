@@ -64,6 +64,13 @@ const ProductList = () => {
     loadProducts();
   }, [currentPage, catalogDispatch, productsPerPage, searchParams, isInitialSearchSynced]);
 
+  // Scroll to top when loading completes (new results loaded)
+  useEffect(() => {
+    if (!loading && isInitialSearchSynced) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [loading, isInitialSearchSynced]);
+
   // Filter products using context's selectedFilter (only if not searching)
   const filteredProducts = useMemo(
     () => (isSearching ? products : filterProducts(products, selectedFilter)),
