@@ -86,7 +86,10 @@ function CategoryList() {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full flex items-center justify-center ">
+    <div
+      ref={containerRef}
+      className="relative w-full flex items-center justify-center px-12 sm:px-4"
+    >
       {/* Hidden card for measurement */}
       <div className="absolute opacity-0 pointer-events-none" ref={cardRef}>
         <CategoryCard name={categories[0].name} image={categories[0].image} />
@@ -94,7 +97,7 @@ function CategoryList() {
 
       {/* Left arrow */}
       <button
-        className={`sm:hidden z-10 rounded-full shadow p-2 -ml-3 ${isLeftDisabled ? 'opacity-50 cursor-not-allowed' : 'bg-white'}`}
+        className={`sm:hidden z-10 rounded-full shadow p-2 absolute left-2 top-2/3 -translate-y-1/2 ${isLeftDisabled ? 'opacity-50 cursor-not-allowed' : 'bg-white'}`}
         onClick={() => scroll('left')}
         disabled={isLeftDisabled}
       >
@@ -103,7 +106,7 @@ function CategoryList() {
         </svg>
       </button>
 
-      <div className="flex py-2  mx-auto">
+      <div className="flex py-2 mx-auto">
         {visibleCards.map((cat, idx) => (
           <div key={cat.name} ref={idx === 0 ? cardRef : null}>
             <Link to={`/shop?category=${cat.value}`}>
@@ -115,7 +118,7 @@ function CategoryList() {
 
       {/* Right arrow */}
       <button
-        className={`sm:hidden z-10 rounded-full shadow p-2 -mr-3 ${isRightDisabled ? 'opacity-50 cursor-not-allowed' : 'bg-white'}`}
+        className={`sm:hidden z-10 rounded-full shadow p-2 absolute right-2 top-2/3 -translate-y-1/2 ${isRightDisabled ? 'opacity-50 cursor-not-allowed' : 'bg-white'}`}
         onClick={() => scroll('right')}
         disabled={isRightDisabled}
       >
