@@ -97,7 +97,7 @@ function CategoryList() {
 
       {/* Left arrow */}
       <button
-        className={`sm:hidden z-10 rounded-full shadow p-2 absolute left-2 top-2/3 -translate-y-1/2 ${isLeftDisabled ? 'opacity-50 cursor-not-allowed' : 'bg-white'}`}
+        className={`sm:hidden z-10 rounded-full shadow p-1 absolute left-2 top-2/3 -translate-y-1/2 ${isLeftDisabled ? 'opacity-50 cursor-not-allowed' : 'bg-white'}`}
         onClick={() => scroll('left')}
         disabled={isLeftDisabled}
       >
@@ -118,7 +118,7 @@ function CategoryList() {
 
       {/* Right arrow */}
       <button
-        className={`sm:hidden z-10 rounded-full shadow p-2 absolute right-2 top-2/3 -translate-y-1/2 ${isRightDisabled ? 'opacity-50 cursor-not-allowed' : 'bg-white'}`}
+        className={`sm:hidden z-10 rounded-full shadow p-1 absolute right-2 top-2/3 -translate-y-1/2 ${isRightDisabled ? 'opacity-50 cursor-not-allowed' : 'bg-white'}`}
         onClick={() => scroll('right')}
         disabled={isRightDisabled}
       >
