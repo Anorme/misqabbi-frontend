@@ -5,7 +5,7 @@ import { removeFavorite, setFavorites } from '../../contexts/favorites/favorites
 import { removeFavorite as removeFavoriteAPI, fetchFavorites } from '../../api/favorites';
 import { showRemovedFromFavoritesToast, showErrorToast } from '../../utils/showToast';
 
-const FavoriteItem = ({ item }) => {
+const FavoriteItem = ({ item, onClose }) => {
   const { dispatch } = useFavorites();
 
   const handleRemoveFavorite = async () => {
@@ -63,6 +63,7 @@ const FavoriteItem = ({ item }) => {
           to={`/product/${item.slug || item.id}`}
           className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
           title="View product"
+          onClick={onClose}
         >
           <ExternalLink className="w-4 h-4 text-gray-600" />
         </Link>
