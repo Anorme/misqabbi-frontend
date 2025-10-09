@@ -8,21 +8,41 @@ import LandingSearchBar from '../landingpage/LandingSearchBar.jsx';
 import NavLogo from './NavLogo.jsx';
 import NavActions from './NavActions.jsx';
 import MenuButton from './MenuButton.jsx';
+import MobileMenu from './MobileMenu.jsx';
 
 function NavMobile() {
   const { closeModal, isModalOpen, modalContext } = useAuthAction();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
   // Handle search toggle
   const handleSearchToggle = () => {
     setIsSearchOpen(!isSearchOpen);
+    // Close menu when opening search
+    if (!isSearchOpen) {
+      setIsMenuOpen(false);
+    }
   };
 
   // Handle search close
   const handleSearchClose = () => {
     setIsSearchOpen(false);
+  };
+
+  // Handle menu toggle
+  const handleMenuToggle = () => {
+    setIsMenuOpen(!isMenuOpen);
+    // Close search when opening menu
+    if (!isMenuOpen) {
+      setIsSearchOpen(false);
+    }
+  };
+
+  // Handle menu close
+  const handleMenuClose = () => {
+    setIsMenuOpen(false);
   };
 
   // Close search on scroll
@@ -55,19 +75,12 @@ function NavMobile() {
           <div className="flex justify-between items-center pt-6">
             {/* Left Section: Logo */}
             <div className="flex items-center">
-              <MenuButton />
+              <MenuButton onClick={handleMenuToggle} />
               <NavLogo variant="mobile" className="-ml-2" />
             </div>
 
             {/* Right Section: Icons */}
-            <NavActions
-              variant="mobile"
-              onSearchToggle={handleSearchToggle}
-              onMenuClick={() => {
-                // TODO: Implement hamburger menu functionality
-                console.log('Menu clicked - hamburger menu functionality to be implemented');
-              }}
-            />
+            <NavActions variant="mobile" onSearchToggle={handleSearchToggle} />
           </div>
 
           {/* Search Bar - Animated */}
@@ -102,6 +115,9 @@ function NavMobile() {
 
       {/* Auth Action Modal */}
       <AuthActionModal isOpen={isModalOpen} onClose={closeModal} context={modalContext} />
+
+      {/* Mobile Menu */}
+      <MobileMenu isOpen={isMenuOpen} onClose={handleMenuClose} />
     </>
   );
 }
