@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { useAuthState } from '../../contexts/auth/useAuth.js';
-import { User, PackageCheck, X } from 'lucide-react';
+import { UserRound, PackageCheck, X } from 'lucide-react';
 import LoginButton from '../auth/LoginButton.jsx';
 import LogoutButton from '../auth/LogoutButton.jsx';
 
@@ -96,7 +96,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
                   className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors duration-200 text-gray-900"
                 >
                   <div className="p-2 bg-msq-purple-rich text-white rounded-full">
-                    <User size={20} />
+                    <UserRound size={20} />
                   </div>
                   <div>
                     <div className="font-medium">My Profile</div>
