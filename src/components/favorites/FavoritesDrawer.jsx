@@ -42,7 +42,7 @@ const FavoritesDrawer = ({ isOpen, onClose }) => {
           ) : (
             <div className="p-6 space-y-4">
               {favoriteItems.map(item => (
-                <FavoriteItem key={item.id} item={item} />
+                <FavoriteItem key={item.id} item={item} onClose={onClose} />
               ))}
             </div>
           )}
