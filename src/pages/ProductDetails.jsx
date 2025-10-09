@@ -69,6 +69,13 @@ function ProductDetails() {
     loadProduct();
   }, [slug]);
 
+  // Scroll to top when loading completes (new results loaded)
+  useEffect(() => {
+    if (!loading) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [loading]);
+
   if (loading)
     return (
       <div className="min-h-[40vh] flex items-center justify-center">
