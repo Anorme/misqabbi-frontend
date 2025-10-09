@@ -22,7 +22,7 @@ export const initialState = {
     maxPrice: '',
   },
   layout: {
-    mobileColumns: 2,
+    mobileColumns: 1,
     desktopColumns: 4,
   },
 };
