@@ -2,7 +2,7 @@ import { useAuthDispatch } from '../../contexts/auth/useAuth.js';
 import { logoutUser } from '../../contexts/auth/authActions.js';
 import { logoutUser as logoutUserApi } from '../../api/auth.js';
 
-const LogoutButton = () => {
+const LogoutButton = ({ className = '', onClick, ...props }) => {
   const authDispatch = useAuthDispatch();
 
   const handleLogout = async () => {
@@ -11,6 +11,10 @@ const LogoutButton = () => {
       if (success) {
         localStorage.removeItem('isAuthenticated');
         authDispatch(logoutUser());
+        // Call additional onClick if provided
+        if (onClick) {
+          onClick();
+        }
       } else {
         console.error('Logout API call failed');
       }
@@ -22,7 +26,8 @@ const LogoutButton = () => {
   return (
     <button
       onClick={handleLogout}
-      className="text-[#d265ff] hover:text-msq-purple-rich font-medium cursor-pointer"
+      className={`text-msq-purple-light hover:text-msq-purple-rich font-medium cursor-pointer ${className}`}
+      {...props}
     >
       Logout
     </button>
