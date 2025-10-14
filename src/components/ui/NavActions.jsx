@@ -1,7 +1,7 @@
 import { Search } from 'lucide-react';
 import FavoritesButton from './FavoritesButton.jsx';
 import CartButton from './CartButton.jsx';
-import AuthButtons from './AuthButtons.jsx';
+import ProfileDropdown from './ProfileDropdown.jsx';
 
 const NavActions = ({ variant = 'desktop', className = '', onSearchToggle }) => {
   if (variant === 'mobile') {
@@ -25,7 +25,7 @@ const NavActions = ({ variant = 'desktop', className = '', onSearchToggle }) => 
       <FavoritesButton size={20} showCount={true} />
       <CartButton size={20} showCount={true} />
       <div className="">
-        <AuthButtons variant="desktop" />
+        <ProfileDropdown />
       </div>
     </div>
   );
