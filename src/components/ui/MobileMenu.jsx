@@ -99,7 +99,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
                     <UserRound size={20} />
                   </div>
                   <div>
-                    <div className="font-medium">My Profile</div>
+                    <div className="font-medium text-msq-purple-rich">My Profile</div>
                     <div className="text-sm text-gray-500">See your saved details</div>
                   </div>
                 </Link>
@@ -114,7 +114,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
                     <PackageCheck size={20} />
                   </div>
                   <div>
-                    <div className="font-medium">My Orders</div>
+                    <div className="font-medium text-msq-purple-rich">My Orders</div>
                     <div className="text-sm text-gray-500">See what's on its way</div>
                   </div>
                 </Link>
