@@ -15,6 +15,8 @@ import AuthBoundaryModal from './components/auth/AuthBoundaryModal';
 import './App.css';
 import NotFound from './components/ui/NotFound';
 import ProductDetails from './pages/ProductDetails';
+import Orders from './pages/Orders';
+import OrderDetails from './pages/OrderDetails';
 
 const App = () => {
   return (
@@ -25,6 +27,26 @@ const App = () => {
           element={
             <MainLayout>
               <Home />
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path="/orders/:id"
+          element={
+            <MainLayout>
+              <AuthBoundaryModal>
+                <OrderDetails />
+              </AuthBoundaryModal>
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path="/orders"
+          element={
+            <MainLayout>
+              <AuthBoundaryModal>
+                <Orders />
+              </AuthBoundaryModal>
             </MainLayout>
           }
         ></Route>
