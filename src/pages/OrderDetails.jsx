@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-// import { getOrderById } from '../api/orders';
+import { getOrderById } from '../api/orders';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import useMediaQuery from '../hooks/useMediaQuery';
 import ProgressBar from '../components/orders/ProgressBar';
@@ -9,19 +9,16 @@ import { ORDER_STEPS, statusToIndex } from '../components/orders/constants';
 
 const stepsConfig = ORDER_STEPS;
 
-const dummyOrder = {
-  _id: 'dummy123',
-  status: 'enroute_pickup',
-  createdAt: new Date().toISOString(),
-  timeline: {
-    accepted: true,
-    processing: true,
-    ready: true,
-    enroute_pickup: true,
-    picked_up: false,
-    in_transit: false,
-    arrived: false,
-  },
+// Helper to derive timeline from status
+const deriveTimelineFromStatus = status => {
+  const statusIndex = statusToIndex(status);
+  const timeline = {};
+
+  ORDER_STEPS.forEach((step, index) => {
+    timeline[step.key] = index <= statusIndex;
+  });
+
+  return timeline;
 };
 
 const OrderDetails = () => {
@@ -32,26 +29,34 @@ const OrderDetails = () => {
   const isDesktop = useMediaQuery('(min-width: 640px)');
 
   useEffect(() => {
-    // TODO: Re-enable fetch once backend status values match ORDER_STEPS and timeline is provided.
-    // setLoading(true);
-    // setError(null);
-    // try {
-    //   const res = await getOrderById(id);
-    //   setOrder(res?.data);
-    // } catch (e) {
-    //   setOrder(dummyOrder);
-    // } finally {
-    //   setLoading(false);
-    // }
+    const run = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await getOrderById(id);
+        const fetchedOrder = res?.data;
 
-    setLoading(true);
-    setError(null);
-    setOrder(dummyOrder);
-    setLoading(false);
+        if (fetchedOrder) {
+          // Derive timeline if backend doesn't provide one
+          const orderWithTimeline = {
+            ...fetchedOrder,
+            timeline: deriveTimelineFromStatus(fetchedOrder.status),
+          };
+          setOrder(orderWithTimeline);
+        } else {
+          setError('Order not found');
+        }
+      } catch (e) {
+        console.error('Error fetching order:', e);
+        setError('Failed to load order details');
+      } finally {
+        setLoading(false);
+      }
+    };
+    run();
   }, [id]);
 
   // index resolver imported from constants for consistency
-
   const deriveActiveIndex = currentOrder => {
     if (!currentOrder) return 0;
     const timeline = currentOrder.timeline || {};
