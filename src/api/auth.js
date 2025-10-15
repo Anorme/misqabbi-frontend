@@ -92,10 +92,44 @@ const logoutUser = async () => {
   }
 };
 
+const updateUserProfile = async userData => {
+  try {
+    // Placeholder for future backend integration
+    console.log('Updating user profile:', userData);
+
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // For now, just return success
+    return { success: true, message: 'Profile updated successfully' };
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+    throw error;
+  }
+};
+
+const requestPasswordReset = async email => {
+  try {
+    // Placeholder for future backend integration
+    console.log('Requesting password reset for:', email);
+
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // For now, just return success
+    return { success: true, message: 'Password reset link sent to your email' };
+  } catch (error) {
+    console.error('Error requesting password reset:', error);
+    throw error;
+  }
+};
+
 export {
   registerUserWithEmail,
   loginUserWithEmail,
   signInWithGoogleRedirect,
   fetchAuthenticatedUser,
   logoutUser,
+  updateUserProfile,
+  requestPasswordReset,
 };
