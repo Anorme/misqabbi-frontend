@@ -17,6 +17,7 @@ import NotFound from './components/ui/NotFound';
 import ProductDetails from './pages/ProductDetails';
 import Orders from './pages/Orders';
 import OrderDetails from './pages/OrderDetails';
+import Profile from './pages/Profile';
 
 const App = () => {
   return (
@@ -118,6 +119,17 @@ const App = () => {
           element={
             <MainLayout>
               <ProductDetails />
+            </MainLayout>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <MainLayout>
+              <AuthBoundaryModal>
+                <Profile />
+              </AuthBoundaryModal>
             </MainLayout>
           }
         />
