@@ -37,7 +37,7 @@ const OrderDetails = () => {
         const fetchedOrder = res?.data;
 
         if (fetchedOrder) {
-          // Derive timeline if backend doesn't provide one
+          // Derive timeline
           const orderWithTimeline = {
             ...fetchedOrder,
             timeline: deriveTimelineFromStatus(fetchedOrder.status),
