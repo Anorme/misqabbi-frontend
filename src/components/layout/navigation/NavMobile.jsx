@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
-import useAuthAction from '../../hooks/useAuthAction';
+import useAuthAction from '../../../hooks/useAuthAction';
 
-import AuthActionModal from '../auth/AuthActionModal.jsx';
-import ConnectedSearchBar from './ConnectedSearchBar.jsx';
-import LandingSearchBar from '../landingpage/LandingSearchBar.jsx';
+import AuthActionModal from '../../auth/AuthActionModal.jsx';
+import ConnectedSearchBar from '../../search/ConnectedSearchBar.jsx';
+import LandingSearchBar from '../../landingpage/LandingSearchBar.jsx';
 import NavLogo from './NavLogo.jsx';
 import NavActions from './NavActions.jsx';
 import MenuButton from './MenuButton.jsx';

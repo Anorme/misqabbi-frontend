@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ShoppingCart } from 'lucide-react';
 import { useCartState } from '../../contexts/cart/useCart';
 import { getCartItemCount } from '../../contexts/cart/cartSelectors';
-import CartDrawer from '../CartDrawer.jsx';
+import CartDrawer from './CartDrawer.jsx';
 
 const CartButton = ({ className = '', size = 20, showCount = true }) => {
   const cartState = useCartState();

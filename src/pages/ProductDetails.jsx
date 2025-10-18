@@ -7,10 +7,10 @@ import BackButton from '../components/layout/BackButton';
 
 import { fetchProductBySlug } from '../api/products';
 
-import SizeSelect from '../components/ui/SizeSelect';
-import ProductInfo from '../components/ui/ProductInfo';
-import GalleryImages from '../components/ui/GalleryImages';
-import QuantitySelector from '../components/ui/QuantitySelector';
+import SizeSelect from '../components/products/SizeSelect';
+import ProductInfo from '../components/products/ProductInfo';
+import GalleryImages from '../components/products/GalleryImages';
+import QuantitySelector from '../components/products/QuantitySelector';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 import FavoritesLinkButton from '../components/favorites/FavoritesLinkButton';
 import AuthActionModal from '../components/auth/AuthActionModal';

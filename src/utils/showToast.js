@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
-import CartAddedToast from '../components/ui/CartAddedToast';
-import FavoritesAddedToast from '../components/ui/FavoritesAddedToast';
-import FavoritesRemovedToast from '../components/ui/FavoritesRemovedToast';
+import CartAddedToast from '../components/toasts/CartAddedToast';
+import FavoritesAddedToast from '../components/toasts/FavoritesAddedToast';
+import FavoritesRemovedToast from '../components/toasts/FavoritesRemovedToast';
 
 // Generic toast utility for consistent styling
 const showCustomToast = (ToastComponent, ariaLabel) => {

@@ -1,12 +1,12 @@
 import { Link } from 'react-router';
 import { ShoppingBag } from 'lucide-react';
 
-import { useCartDispatch } from '../contexts/cart/useCart';
-import { addToCart } from '../contexts/cart/cartActions';
-import { showAddedToCartToast } from '../utils/showToast';
-import FavoritesLinkButton from './favorites/FavoritesLinkButton';
-import AuthActionModal from './auth/AuthActionModal';
-import useAuthAction from '../hooks/useAuthAction';
+import { useCartDispatch } from '../../contexts/cart/useCart';
+import { addToCart } from '../../contexts/cart/cartActions';
+import { showAddedToCartToast } from '../../utils/showToast';
+import FavoritesLinkButton from '../favorites/FavoritesLinkButton';
+import AuthActionModal from '../auth/AuthActionModal';
+import useAuthAction from '../../hooks/useAuthAction';
 
 const ProductCard = ({ product }) => {
   const dispatch = useCartDispatch();

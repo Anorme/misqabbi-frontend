@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 
-import UserAuthForm from '../components/ui/UserAuthForm';
+import UserAuthForm from '../components/auth/UserAuthForm';
 import PasswordResetModal from '../components/profile/PasswordResetModal';
 
 import loginImg from '../assets/login.png';

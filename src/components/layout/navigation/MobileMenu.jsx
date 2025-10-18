@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
-import { useAuthState } from '../../contexts/auth/useAuth.js';
+import { useAuthState } from '../../../contexts/auth/useAuth.js';
 import { UserRound, PackageCheck, X } from 'lucide-react';
-import LoginButton from '../auth/LoginButton.jsx';
-import LogoutButton from '../auth/LogoutButton.jsx';
+import LoginButton from '../../auth/LoginButton.jsx';
+import LogoutButton from '../../auth/LogoutButton.jsx';
 
 const MobileMenu = ({ isOpen, onClose }) => {
   const { isAuthenticated } = useAuthState();

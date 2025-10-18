@@ -1,4 +1,4 @@
-import { useCatalogState } from '../contexts/catalog/useCatalog.js';
+import { useCatalogState } from '../../contexts/catalog/useCatalog.js';
 
 const ProductGrid = ({ children }) => {
   const { layout } = useCatalogState();
