@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router';
 import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog';
 import {
@@ -6,6 +6,7 @@ import {
   setSearchFromURL,
   clearSearchAndURL,
 } from '../contexts/catalog/catalogActions';
+import { useDebounce } from '../utils/debounce';
 
 export default function useSearchWithRedirect({
   debounceMs = 400,
@@ -18,7 +19,13 @@ export default function useSearchWithRedirect({
   const navigate = useNavigate();
 
   const [local, setLocal] = useState(searchQuery || '');
-  const timeoutRef = useRef(null);
+
+  // Use debounced value for dispatching search query
+  useDebounce(local, debounceMs, value => {
+    if (value !== searchQuery) {
+      dispatch(setSearchQuery(value));
+    }
+  });
 
   // Sync with external searchQuery prop
   useEffect(() => {
@@ -40,19 +47,6 @@ export default function useSearchWithRedirect({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only run on mount
-
-  // Debounced search (for typing feedback)
-  useEffect(() => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => {
-      if (local !== searchQuery) {
-        dispatch(setSearchQuery(local));
-      }
-    }, debounceMs);
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [local, searchQuery, debounceMs, dispatch]);
 
   // Get current search params from context
   const { searchParams: currentSearchParams } = useCatalogState();
