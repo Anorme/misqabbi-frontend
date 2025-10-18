@@ -1,14 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MdPerson, MdEmail, MdLocationOn, MdPhone } from 'react-icons/md';
 import { useAuthState } from '../contexts/auth/useAuth';
 import { updateUserProfile } from '../api/auth';
 import ProfileHeader from '../components/profile/ProfileHeader';
 import ProfileField from '../components/profile/ProfileField';
 import PasswordResetModal from '../components/profile/PasswordResetModal';
+import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 
 const Profile = () => {
   const { currentUser } = useAuthState();
   const [showPasswordReset, setShowPasswordReset] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Show loading briefly while component mounts
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 600);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Show loading spinner immediately to prevent blank white space
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="text-center">
+          <LoadingSpinner size={60} color="var(--color-msq-gold-light)" />
+          <p className="text-gray-600 mt-4 font-lato">Loading profile...</p>
+        </div>
+      </div>
+    );
+  }
 
   // Extract user data with fallbacks
   const userName = currentUser?.name || currentUser?.displayName || '';
