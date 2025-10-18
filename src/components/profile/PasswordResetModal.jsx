@@ -22,6 +22,7 @@ const PasswordResetModal = ({ isOpen, onClose, userEmail }) => {
     setIsLoading(true);
     try {
       await requestPasswordReset(email);
+      localStorage.setItem('passwordResetEmail', email);
       showSuccessToast('Check your inbox! A reset link is on its way');
       onClose();
     } catch (error) {
