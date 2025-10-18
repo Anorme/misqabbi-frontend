@@ -143,7 +143,7 @@ const Footer = () => {
 
           {/*  Subscribe Section */}
 
-          <div className="col-span-2 flex flex-col items-start lg:order-5">
+          <div className="col-span-2 flex flex-col items-start lg:order-3 lg:col-span-1">
             <h3 className="text-white font-semibold text-lg mb-4">Subscribe</h3>
             <form onSubmit={handleSubscribe} className="w-full">
               <div className="flex relative w-full mb-4">
@@ -198,26 +198,25 @@ const Footer = () => {
                 </button>
               </div>
             </form>
-            <p className="text-white/80 text-sm w-3/4 text-start leading-relaxed">
+            <p className="text-white/80 text-sm w-full text-start leading-relaxed w-">
               Be the first to know about new collections, special events and much more
             </p>
-          </div>
+            <div className="flex  items-center justify-between h-full ">
+              {/* Logo */}
+              <img
+                src="/images/Logo.png"
+                alt="Misqabbi Logo"
+                className="w-28 sm:w-40 md:w-56 object-contain"
+              />
 
-          <div className="flex flex-col items-center justify-between lg:order-last lg:col-start-5 h-full ">
-            {/* Logo */}
-            <img
-              src="/images/Logo.png"
-              alt="Misqabbi Logo"
-              className="w-28 sm:w-40 md:w-56 object-contain"
-            />
-
-            {/* Payment Methods */}
-            <div className="flex items-center space-x-3 pt-2">
-              <div className="bg-white rounded px-2 py-1">
-                <span className="text-blue-600 font-bold text-xs">VISA</span>
-              </div>
-              <div className="bg-yellow-400 rounded px-2 py-1">
-                <span className="text-black font-bold text-xs">MTN</span>
+              {/* Payment Methods */}
+              <div className="flex items-center space-x-3 pt-2">
+                <div className="bg-white rounded px-2 py-1">
+                  <span className="text-blue-600 font-bold text-xs">VISA</span>
+                </div>
+                <div className="bg-yellow-400 rounded px-2 py-1">
+                  <span className="text-black font-bold text-xs">MTN</span>
+                </div>
               </div>
             </div>
           </div>
