@@ -1,7 +1,7 @@
 import useMediaQuery from '../../hooks/useMediaQuery.js';
 
-import NavDesktop from '../ui/NavDesktop.jsx';
-import NavMobile from '../ui/NavMobile.jsx';
+import NavDesktop from './navigation/NavDesktop.jsx';
+import NavMobile from './navigation/NavMobile.jsx';
 
 const NavBar = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');

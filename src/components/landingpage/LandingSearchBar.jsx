@@ -1,4 +1,4 @@
-import SearchBar from '../ui/SearchBar.jsx';
+import SearchBar from '../search/SearchBar.jsx';
 import useLandingSearch from '../../hooks/useLandingSearch.js';
 
 const LandingSearchBar = ({ onSearchSubmit, ...props }) => {

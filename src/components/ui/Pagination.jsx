@@ -1,6 +1,6 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog';
-import { setPage } from '../contexts/catalog/catalogActions';
+import { useCatalogState, useCatalogDispatch } from '../../contexts/catalog/useCatalog';
+import { setPage } from '../../contexts/catalog/catalogActions';
 
 const Pagination = () => {
   const { currentPage, totalPages } = useCatalogState();

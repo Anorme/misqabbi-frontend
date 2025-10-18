@@ -6,7 +6,7 @@ import {
   setPriceFilter,
   clearPriceFilter,
 } from '../../contexts/catalog/catalogActions';
-import PriceRangeSlider from './PriceRangeSlider';
+import PriceRangeSlider from '../ui/PriceRangeSlider';
 
 const PriceFilterModal = () => {
   const { isFilterModalOpen, priceFilter } = useCatalogState();

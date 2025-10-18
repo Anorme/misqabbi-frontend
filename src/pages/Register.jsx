@@ -1,4 +1,4 @@
-import UserAuthForm from '../components/ui/UserAuthForm';
+import UserAuthForm from '../components/auth/UserAuthForm';
 import signupImg from '../assets/signup.png';
 import { Link } from 'react-router';
 import useMediaQuery from '../hooks/useMediaQuery';

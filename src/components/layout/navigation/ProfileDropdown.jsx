@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router';
 import { UserRound, PackageCheck, ShoppingBag } from 'lucide-react';
-import { useAuthState } from '../../contexts/auth/useAuth.js';
-import LoginButton from '../auth/LoginButton.jsx';
-import LogoutButton from '../auth/LogoutButton.jsx';
+import { useAuthState } from '../../../contexts/auth/useAuth.js';
+import LoginButton from '../../auth/LoginButton.jsx';
+import LogoutButton from '../../auth/LogoutButton.jsx';
 
 const ProfileDropdown = ({ className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);

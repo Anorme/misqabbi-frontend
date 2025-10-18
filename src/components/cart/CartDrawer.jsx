@@ -1,8 +1,8 @@
-import CartItem from './cart/CartItem';
-import CartSummary from './cart/CartSummary';
-import EmptyCartState from './cart/EmptyCartState';
-import CartDrawerHeader from './cart/CartDrawerHeader';
-import useCartDrawer from '../hooks/useCartDrawer';
+import CartItem from './CartItem';
+import CartSummary from './CartSummary';
+import EmptyCartState from './EmptyCartState';
+import CartDrawerHeader from './CartDrawerHeader';
+import useCartDrawer from '../../hooks/useCartDrawer';
 
 const CartDrawer = ({ isOpen, onClose }) => {
   const {

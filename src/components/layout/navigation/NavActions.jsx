@@ -1,6 +1,6 @@
 import { Search } from 'lucide-react';
-import FavoritesButton from './FavoritesButton.jsx';
-import CartButton from './CartButton.jsx';
+import FavoritesButton from '../../favorites/FavoritesButton.jsx';
+import CartButton from '../../cart/CartButton.jsx';
 import ProfileDropdown from './ProfileDropdown.jsx';
 
 const NavActions = ({ variant = 'desktop', className = '', onSearchToggle }) => {

@@ -1,11 +1,11 @@
 import { Columns4, LayoutGrid } from 'lucide-react';
-import CategoryDropdown from '../ui/CategoryDropdown.jsx';
-import SortDropdown from '../ui/SortDropdown.jsx';
-import FilterDropdown from '../ui/FilterDropdown.jsx';
-import PriceFilterModal from '../ui/PriceFilterModal.jsx';
-import useCategorySelection from '../../hooks/useCategorySelection.js';
-import { useCatalogState, useCatalogDispatch } from '../../contexts/catalog/useCatalog.js';
-import { setSortOption, setDesktopColumns } from '../../contexts/catalog/catalogActions.js';
+import CategoryDropdown from '../../search/CategoryDropdown.jsx';
+import SortDropdown from '../../search/SortDropdown.jsx';
+import FilterDropdown from '../../search/FilterDropdown.jsx';
+import PriceFilterModal from '../../search/PriceFilterModal.jsx';
+import useCategorySelection from '../../../hooks/useCategorySelection.js';
+import { useCatalogState, useCatalogDispatch } from '../../../contexts/catalog/useCatalog.js';
+import { setSortOption, setDesktopColumns } from '../../../contexts/catalog/catalogActions.js';
 
 const CategoryNavigationDesktop = () => {
   const { selectedCategory, selectCategory } = useCategorySelection();

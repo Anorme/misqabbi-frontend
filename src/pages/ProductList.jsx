@@ -1,9 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router';
 
-import Pagination from '../components/Pagination.jsx';
-import ProductGrid from '../components/ProductGrid.jsx';
-import ProductCard from '../components/ProductCard.jsx';
+import Pagination from '../components/ui/Pagination.jsx';
+import ProductGrid from '../components/products/ProductGrid.jsx';
+import ProductCard from '../components/products/ProductCard.jsx';
 import filterProducts from '../utils/filterProducts.js';
 
 import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog.js';
@@ -11,7 +11,7 @@ import { setPage, setTotalPages, setProducts } from '../contexts/catalog/catalog
 import { setSearchFromURL } from '../contexts/catalog/catalogActions.js';
 
 import { fetchDiscoverableProducts } from '../api/products.js';
-import CategoryNavigation from '../components/layout/CategoryNavigation.jsx';
+import CategoryNavigation from '../components/layout/navigation/CategoryNavigation.jsx';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 
 import scrollToTop from '../utils/scrollToTop.js';

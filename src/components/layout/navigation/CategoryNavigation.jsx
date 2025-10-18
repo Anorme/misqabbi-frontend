@@ -1,4 +1,4 @@
-import useMediaQuery from '../../hooks/useMediaQuery.js';
+import useMediaQuery from '../../../hooks/useMediaQuery.js';
 import CategoryNavigationDesktop from './CategoryNavigationDesktop.jsx';
 import CategoryNavigationMobile from './CategoryNavigationMobile.jsx';
 
