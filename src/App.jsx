@@ -18,6 +18,7 @@ import ProductDetails from './pages/ProductDetails';
 import Orders from './pages/Orders';
 import OrderDetails from './pages/OrderDetails';
 import Profile from './pages/Profile';
+import ResetPassword from './pages/ResetPassword';
 
 const App = () => {
   return (
@@ -113,6 +114,15 @@ const App = () => {
         />
 
         <Route path="/auth/callback" element={<AuthCallback />} />
+
+        <Route
+          path="/reset-password/:userId/:token"
+          element={
+            <MainLayout>
+              <ResetPassword />
+            </MainLayout>
+          }
+        />
 
         <Route
           path="/product/:slug"
