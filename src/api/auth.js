@@ -134,7 +134,7 @@ const resetPassword = async (userId, token, newPassword) => {
   try {
     const response = await axios.post(
       `${API_URL}/auth/reset-password/${userId}/${token}`,
-      { password: newPassword },
+      { newPassword },
       { withCredentials: true }
     );
 
