@@ -16,6 +16,7 @@ import FavoritesLinkButton from '../components/favorites/FavoritesLinkButton';
 import AuthActionModal from '../components/auth/AuthActionModal';
 import useAuthAction from '../hooks/useAuthAction';
 
+import scrollToTop from '../utils/scrollToTop';
 import { showAddedToCartToast } from '../utils/showToast';
 
 function ProductDetails() {
@@ -72,7 +73,7 @@ function ProductDetails() {
   // Scroll to top when loading completes (new results loaded)
   useEffect(() => {
     if (!loading) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollToTop();
     }
   }, [loading]);
 
