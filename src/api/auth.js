@@ -110,16 +110,44 @@ const updateUserProfile = async userData => {
 
 const requestPasswordReset = async email => {
   try {
-    // Placeholder for future backend integration
-    console.log('Requesting password reset for:', email);
+    const response = await axios.post(
+      `${API_URL}/auth/forgot-password`,
+      { email },
+      { withCredentials: true }
+    );
 
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const { success, message } = response.data;
 
-    // For now, just return success
-    return { success: true, message: 'Password reset link sent to your email' };
+    if (success) {
+      return { success: true, message: message || 'Password reset link sent to your email' };
+    } else {
+      console.error(message);
+      throw new Error(message || 'Failed to send password reset email');
+    }
   } catch (error) {
     console.error('Error requesting password reset:', error);
+    throw error;
+  }
+};
+
+const resetPassword = async (userId, token, newPassword) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/auth/reset-password/${userId}/${token}`,
+      { password: newPassword },
+      { withCredentials: true }
+    );
+
+    const { success, message, data } = response.data;
+
+    if (success) {
+      return { success: true, message: message || 'Password reset successfully', user: data?.user };
+    } else {
+      console.error(message);
+      throw new Error(message || 'Failed to reset password');
+    }
+  } catch (error) {
+    console.error('Error resetting password:', error);
     throw error;
   }
 };
@@ -132,4 +160,5 @@ export {
   logoutUser,
   updateUserProfile,
   requestPasswordReset,
+  resetPassword,
 };
