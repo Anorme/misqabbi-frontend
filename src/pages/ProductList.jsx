@@ -14,6 +14,8 @@ import { fetchDiscoverableProducts } from '../api/products.js';
 import CategoryNavigation from '../components/layout/CategoryNavigation.jsx';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 
+import scrollToTop from '../utils/scrollToTop.js';
+
 const ProductList = () => {
   const { products, selectedFilter, productsPerPage, currentPage, searchParams, isSearching } =
     useCatalogState();
@@ -67,7 +69,7 @@ const ProductList = () => {
   // Scroll to top when loading completes (new results loaded)
   useEffect(() => {
     if (!loading && isInitialSearchSynced) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollToTop();
     }
   }, [loading, isInitialSearchSynced]);
 
