@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import { Link } from 'react-router';
 
 import UserAuthForm from '../components/ui/UserAuthForm';
+import PasswordResetModal from '../components/profile/PasswordResetModal';
 
 import loginImg from '../assets/login.png';
 import useMediaQuery from '../hooks/useMediaQuery';
 
 const Login = () => {
   const isMdUp = useMediaQuery('(min-width: 768px)');
+  const [showPasswordReset, setShowPasswordReset] = useState(false);
 
   return (
     <div className="min-h-screen w-screen flex md:items-center justify-center bg-white p-0 m-0 font-lato">
@@ -24,11 +27,27 @@ const Login = () => {
 
           <UserAuthForm mode="login" />
 
+          <div className="mt-4 text-center">
+            <button
+              onClick={() => setShowPasswordReset(true)}
+              className="text-msq-purple-rich font-medium hover:underline"
+            >
+              <span className="font-corsiva">Forgot Password?</span>
+            </button>
+          </div>
+
           <Link to="/register" className="text-msq-purple-rich font-medium mt-6 text-center">
             <span className="font-corsiva">Create account?</span>
           </Link>
         </div>
       </div>
+
+      {/* Password Reset Modal */}
+      <PasswordResetModal
+        isOpen={showPasswordReset}
+        onClose={() => setShowPasswordReset(false)}
+        userEmail=""
+      />
     </div>
   );
 };
