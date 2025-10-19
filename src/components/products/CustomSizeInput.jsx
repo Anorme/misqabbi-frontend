@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
 import { getMeasurementConfig } from '../../constants/customSizeMeasurements';
 import { initializeMeasurements } from '../../utils/customSizeValidation';
+import CloseButton from '../ui/CloseButton';
 
 const CustomSizeInput = ({
   category,
@@ -51,14 +51,12 @@ const CustomSizeInput = ({
       <div className="flex items-center justify-between">
         <h2 className="text-2xl px-1">Custom Size</h2>
         {isCustomSizeEnabled && (
-          <button
-            type="button"
-            onClick={() => onToggleCustomSize(false)}
-            className="p-1 transition-colors duration-200"
-            title="Close custom size"
-          >
-            <X size={20} className="text-gray-500 hover:text-red-600 cursor-pointer" />
-          </button>
+          <CloseButton
+            onClose={() => onToggleCustomSize(false)}
+            size={20}
+            className="p-1"
+            ariaLabel="Close custom size"
+          />
         )}
       </div>
 
