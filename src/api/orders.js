@@ -28,28 +28,13 @@ const getOrderById = async id => {
 
 const createOrder = async orderData => {
   try {
-    // TODO: Replace with real API call when backend is ready
-    // const response = await axios.post(`${API_URL}/orders`, orderData, { withCredentials: true });
+    const response = await axios.post(`${API_URL}/checkout`, orderData, { withCredentials: true });
 
-    // Stubbed implementation - simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 800));
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Failed to create order');
+    }
 
-    // Generate mock order ID
-    const mockOrderId = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-
-    // Return mock successful response
-    return {
-      success: true,
-      data: {
-        order: {
-          _id: mockOrderId,
-          ...orderData,
-          status: 'accepted',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-      },
-    };
+    return response.data; // { success, data, message }
   } catch (error) {
     console.error('Error creating order:', error);
     throw error;
