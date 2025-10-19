@@ -92,16 +92,34 @@ const logoutUser = async () => {
   }
 };
 
-const updateUserProfile = async userData => {
+const updateUserProfile = async (userData, currentUser) => {
   try {
-    // Placeholder for future backend integration
-    console.log('Updating user profile:', userData);
+    // Merge userData with currentUser to ensure all required fields are present
+    const updatePayload = {
+      email: userData.email !== undefined ? userData.email : currentUser?.email || '',
+      contact:
+        userData.contact !== undefined
+          ? userData.contact
+          : currentUser?.contact || currentUser?.phoneNumber || '',
+      location: userData.location !== undefined ? userData.location : currentUser?.location || '',
+    };
 
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const response = await axios.patch(`${API_URL}/auth/update-profile`, updatePayload, {
+      withCredentials: true,
+    });
 
-    // For now, just return success
-    return { success: true, message: 'Profile updated successfully' };
+    const { success, message, data } = response.data;
+
+    if (success) {
+      return {
+        success: true,
+        message: message || 'Profile updated successfully',
+        user: data?.user,
+      };
+    } else {
+      console.error(message);
+      throw new Error(message || 'Failed to update profile');
+    }
   } catch (error) {
     console.error('Error updating user profile:', error);
     throw error;
