@@ -17,8 +17,26 @@ const getOrders = async ({ page = 1, limit = 10 } = {}) => {
 
 const getOrderById = async id => {
   try {
-    const response = await axios.get(`${API_URL}/orders/${id}`, { withCredentials: true });
-    if (!response.success) throw new Error('Failed to fetch order');
+    const response = await axios.get(`${API_URL}/orders/${id}`, {
+      withCredentials: true,
+      // Prevent caching to avoid 304 responses
+      headers: {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+      },
+    });
+
+    // Handle 304 responses (cached data)
+    if (response.status === 304) {
+      console.warn('Order data served from cache (304)');
+      // Return cached data if available, otherwise throw error
+      throw new Error('Order data not available');
+    }
+
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Failed to fetch order');
+    }
+
     return response.data; // { success, data }
   } catch (error) {
     console.error('Error fetching order by id:', error);
