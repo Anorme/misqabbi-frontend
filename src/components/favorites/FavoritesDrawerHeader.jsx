@@ -1,4 +1,5 @@
-import { X, Heart } from 'lucide-react';
+import { Heart } from 'lucide-react';
+import CloseButton from '../ui/CloseButton';
 
 const FavoritesTitle = () => {
   return (
@@ -6,17 +7,6 @@ const FavoritesTitle = () => {
       <Heart className="w-6 h-6 text-msq-purple-rich" />
       <h2 className="text-2xl font-bebas text-msq-purple-rich">My Favorites</h2>
     </div>
-  );
-};
-
-const CloseButton = ({ onClose }) => {
-  return (
-    <button
-      onClick={onClose}
-      className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
-    >
-      <X className="w-5 h-5 text-gray-600" />
-    </button>
   );
 };
 
