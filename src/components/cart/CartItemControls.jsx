@@ -5,7 +5,10 @@ const QuantityButton = ({ type, onClick }) => {
   const Icon = type === 'increase' ? Plus : Minus;
   return (
     <button
-      onClick={onClick}
+      onClick={e => {
+        e.stopPropagation();
+        onClick();
+      }}
       className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
     >
       <Icon className="w-4 h-4 text-gray-600" />
@@ -20,7 +23,10 @@ const QuantityDisplay = ({ quantity }) => {
 const RemoveButton = ({ onClick }) => {
   return (
     <button
-      onClick={onClick}
+      onClick={e => {
+        e.stopPropagation();
+        onClick();
+      }}
       className="p-1 hover:bg-red-100 rounded-full transition-colors duration-200 ml-2"
     >
       <Trash2 className="w-4 h-4 text-red-500" />
