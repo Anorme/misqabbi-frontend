@@ -1,4 +1,5 @@
-import { X, ShoppingBag } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
+import CloseButton from '../ui/CloseButton';
 
 const CartTitle = ({ itemCount }) => {
   return (
@@ -11,14 +12,6 @@ const CartTitle = ({ itemCount }) => {
         </span>
       )}
     </div>
-  );
-};
-
-const CloseButton = ({ onClose }) => {
-  return (
-    <button onClick={onClose} className="p-2 transition-colors duration-200">
-      <X className="w-5 h-5 text-gray-600 hover:text-red-600 cursor-pointer transition-colors duration-200 behavior-smooth" />
-    </button>
   );
 };
 
