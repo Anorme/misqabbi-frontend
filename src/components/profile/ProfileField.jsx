@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Pencil, Check, X } from 'lucide-react';
+import { Pencil, Check } from 'lucide-react';
+import CloseButton from '../ui/CloseButton';
 import InputField from '../form/InputField';
 import { isValidEmail } from '../../utils/validation';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
@@ -84,14 +85,12 @@ const ProfileField = ({
           >
             <Check size={20} />
           </button>
-          <button
-            onClick={handleCancel}
-            disabled={isLoading}
+          <CloseButton
+            onClose={handleCancel}
+            size={20}
             className="p-2 text-red-500 hover:text-red-600 transition-colors duration-200 disabled:opacity-50 cursor-pointer"
-            aria-label="Cancel changes"
-          >
-            <X size={20} />
-          </button>
+            ariaLabel="Cancel changes"
+          />
         </div>
       </div>
     );

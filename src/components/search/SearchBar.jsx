@@ -1,4 +1,5 @@
-import { Search, X } from 'lucide-react';
+import { Search } from 'lucide-react';
+import CloseButton from '../ui/CloseButton';
 
 const SearchBar = ({
   className = '',
@@ -23,12 +24,7 @@ const SearchBar = ({
         {showIcon && (
           <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
             {isSearchOpen ? (
-              <button
-                onClick={onClose}
-                className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
-              >
-                <X size={18} className="text-msq-gold-light" />
-              </button>
+              <CloseButton onClose={onClose} size={18} className="p-1" ariaLabel="Close search" />
             ) : (
               <Search size={18} className="text-msq-gold-light" />
             )}
