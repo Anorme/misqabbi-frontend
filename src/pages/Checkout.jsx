@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useAuthState } from '../contexts/auth/useAuth';
 import { useCartState, useCartDispatch } from '../contexts/cart/useCart';
-import { getCartItems, getCartItemCount } from '../contexts/cart/cartSelectors';
+import { getCartItems } from '../contexts/cart/cartSelectors';
 import { clearCart } from '../contexts/cart/cartActions';
 import { createOrder } from '../api/orders';
 import { showOrderPlacedToast, showErrorToast } from '../utils/showToast';
@@ -18,7 +18,6 @@ const Checkout = () => {
   const cartDispatch = useCartDispatch();
 
   const cartItems = getCartItems(cartState);
-  const itemCount = getCartItemCount(cartState);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,8 +32,10 @@ const Checkout = () => {
     setIsLoading(true);
 
     try {
+      const userId = currentUser.userId;
       // Prepare order data
       const orderData = {
+        user: userId,
         items: cartItems.map(item => ({
           product: item.id,
           quantity: item.quantity,
@@ -51,7 +52,6 @@ const Checkout = () => {
           deliveryNotes: formData.deliveryNotes,
         },
         totalPrice: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
-        itemCount: itemCount,
         status: 'accepted',
       };
 
@@ -66,7 +66,7 @@ const Checkout = () => {
         showOrderPlacedToast();
 
         // Redirect to order details
-        navigate(`/orders/${response.data.order._id}`);
+        navigate(`/orders/${response.data._id}`);
       } else {
         throw new Error('Failed to create order');
       }
