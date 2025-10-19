@@ -9,7 +9,11 @@ export const cartReducer = (state, action) => {
 
   switch (type) {
     case CART_ACTION_TYPES.ADD_TO_CART: {
-      const key = `${payload.id}-${payload.size}`;
+      // Create unique key that includes custom size data if present
+      const key = payload.customSize
+        ? `${payload.id}-${payload.size}-${JSON.stringify(payload.customSize)}`
+        : `${payload.id}-${payload.size}`;
+
       const existingItem = state.cartItems[key];
 
       const updatedItem = existingItem
@@ -29,7 +33,11 @@ export const cartReducer = (state, action) => {
     }
 
     case CART_ACTION_TYPES.UPDATE_CART_ITEM: {
-      const key = `${payload.id}-${payload.size}`;
+      // Create unique key that includes custom size data if present
+      const key = payload.customSize
+        ? `${payload.id}-${payload.size}-${JSON.stringify(payload.customSize)}`
+        : `${payload.id}-${payload.size}`;
+
       const itemToUpdate = state.cartItems[key];
 
       if (!itemToUpdate) return state;
@@ -45,8 +53,13 @@ export const cartReducer = (state, action) => {
 
     case CART_ACTION_TYPES.CHANGE_ITEM_SIZE: {
       const { item, newSize } = payload;
-      const oldKey = `${item.id}-${item.size}`;
-      const newKey = `${item.id}-${newSize}`;
+      // Create unique keys that include custom size data if present
+      const oldKey = item.customSize
+        ? `${item.id}-${item.size}-${JSON.stringify(item.customSize)}`
+        : `${item.id}-${item.size}`;
+      const newKey = item.customSize
+        ? `${item.id}-${newSize}-${JSON.stringify(item.customSize)}`
+        : `${item.id}-${newSize}`;
 
       // If size is the same, no change needed
       if (item.size === newSize) return state;
@@ -78,7 +91,11 @@ export const cartReducer = (state, action) => {
     }
 
     case CART_ACTION_TYPES.REMOVE_FROM_CART: {
-      const key = `${payload.id}-${payload.size}`;
+      // Create unique key that includes custom size data if present
+      const key = payload.customSize
+        ? `${payload.id}-${payload.size}-${JSON.stringify(payload.customSize)}`
+        : `${payload.id}-${payload.size}`;
+
       const updatedItems = { ...state.cartItems };
 
       delete updatedItems[key];
