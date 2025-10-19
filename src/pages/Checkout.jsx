@@ -46,6 +46,8 @@ const Checkout = () => {
           quantity: item.quantity,
           size: item.size,
           price: item.price,
+          // Include custom size data if present
+          ...(item.customSize && { customSize: item.customSize }),
         })),
         shippingInfo: {
           fullName: formData.fullName,
