@@ -16,11 +16,8 @@ const CartTitle = ({ itemCount }) => {
 
 const CloseButton = ({ onClose }) => {
   return (
-    <button
-      onClick={onClose}
-      className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
-    >
-      <X className="w-5 h-5 text-gray-600" />
+    <button onClick={onClose} className="p-2 transition-colors duration-200">
+      <X className="w-5 h-5 text-gray-600 hover:text-red-600 cursor-pointer transition-colors duration-200 behavior-smooth" />
     </button>
   );
 };
