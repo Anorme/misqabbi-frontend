@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { X, ChevronUp } from 'lucide-react';
+import { ChevronUp } from 'lucide-react';
+import CloseButton from '../ui/CloseButton';
 import { useCatalogState, useCatalogDispatch } from '../../contexts/catalog/useCatalog';
 import {
   closeFilterModal,
@@ -85,13 +86,12 @@ const PriceFilterModal = () => {
               Price
             </h2>
           </div>
-          <button
-            onClick={handleClose}
+          <CloseButton
+            onClose={handleClose}
+            size={20}
             className="text-gray-400 hover:text-gray-600 transition-colors"
-            aria-label="Close price filter modal"
-          >
-            <X size={20} />
-          </button>
+            ariaLabel="Close price filter modal"
+          />
         </div>
 
         {/* Content */}

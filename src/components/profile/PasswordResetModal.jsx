@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X } from 'lucide-react';
+import CloseButton from '../ui/CloseButton';
 import { MdEmail } from 'react-icons/md';
 import { isValidEmail } from '../../utils/validation';
 import { requestPasswordReset } from '../../api/auth';
@@ -45,14 +45,12 @@ const PasswordResetModal = ({ isOpen, onClose, userEmail }) => {
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50 p-4">
       <div className="bg-white rounded-2xl w-full max-w-md p-6 relative">
         {/* Close Button */}
-        <button
-          onClick={handleClose}
-          disabled={isLoading}
+        <CloseButton
+          onClose={handleClose}
+          size={20}
           className="absolute top-4 right-4 p-2 text-gray-400 hover:text-red-600 transition-colors duration-200 disabled:opacity-50 cursor-pointer"
-          aria-label="Close modal"
-        >
-          <X size={20} />
-        </button>
+          ariaLabel="Close modal"
+        />
 
         {/* Header */}
         <div className="text-center mb-6">

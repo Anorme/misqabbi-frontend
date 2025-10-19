@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X } from 'lucide-react';
+import CloseButton from '../ui/CloseButton';
 
 const SizeSelectorModal = ({ currentSize, onSizeChange, onClose }) => {
   const [selectedSize, setSelectedSize] = useState(currentSize);
@@ -31,12 +31,12 @@ const SizeSelectorModal = ({ currentSize, onSizeChange, onClose }) => {
         {/* Header */}
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-base font-bebas text-msq-purple-rich">Select Size</h3>
-          <button
-            onClick={onClose}
+          <CloseButton
+            onClose={onClose}
+            size={16}
             className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
-          >
-            <X className="w-4 h-4 text-gray-600" />
-          </button>
+            ariaLabel="Close size selector"
+          />
         </div>
 
         {/* Size Options */}
