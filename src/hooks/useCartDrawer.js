@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { useCartState, useCartDispatch } from '../contexts/cart/useCart';
 import { getCartItems, getCartItemCount, getCartSubtotal } from '../contexts/cart/cartSelectors';
 import { clearCart } from '../contexts/cart/cartActions';
@@ -6,6 +7,7 @@ import { clearCart } from '../contexts/cart/cartActions';
 const useCartDrawer = (isOpen, onClose) => {
   const cartState = useCartState();
   const dispatch = useCartDispatch();
+  const navigate = useNavigate();
   const [isAnimating, setIsAnimating] = useState(false);
 
   // Derived state
@@ -41,8 +43,8 @@ const useCartDrawer = (isOpen, onClose) => {
   };
 
   const handleCheckout = () => {
-    // TODO: Implement checkout logic
-    console.log('Proceeding to checkout...');
+    onClose(); // Close the drawer first
+    navigate('/checkout'); // Navigate to checkout
   };
 
   return {
