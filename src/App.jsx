@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import AuthCallback from './pages/auth/AuthCallback';
 import AuthBoundaryModal from './components/auth/AuthBoundaryModal';
+import ScrollToTop from './components/ui/ScrollToTop';
 
 import './App.css';
 import NotFound from './components/ui/NotFound';
@@ -23,6 +24,7 @@ import ResetPassword from './pages/ResetPassword';
 const App = () => {
   return (
     <div>
+      <ScrollToTop />
       <Routes>
         <Route
           path="/"
