@@ -18,7 +18,7 @@ const getOrders = async ({ page = 1, limit = 10 } = {}) => {
 const getOrderById = async id => {
   try {
     const response = await axios.get(`${API_URL}/orders/${id}`, { withCredentials: true });
-    if (!response.data?.success) throw new Error('Failed to fetch order');
+    if (!response.success) throw new Error('Failed to fetch order');
     return response.data; // { success, data }
   } catch (error) {
     console.error('Error fetching order by id:', error);
@@ -28,7 +28,9 @@ const getOrderById = async id => {
 
 const createOrder = async orderData => {
   try {
-    const response = await axios.post(`${API_URL}/checkout`, orderData, { withCredentials: true });
+    const response = await axios.post(`${API_URL}/orders/checkout`, orderData, {
+      withCredentials: true,
+    });
 
     if (!response.data?.success) {
       throw new Error(response.data?.message || 'Failed to create order');
