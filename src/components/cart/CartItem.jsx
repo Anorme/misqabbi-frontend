@@ -5,7 +5,7 @@ import CartItemControls from './CartItemControls';
 import SizeSelectorModal from './SizeSelectorModal';
 import useCartItem from '../../hooks/useCartItem';
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, onClose }) => {
   const navigate = useNavigate();
   const [showSizeModal, setShowSizeModal] = useState(false);
   const { handleSizeChange } = useCartItem(item);
@@ -13,7 +13,8 @@ const CartItem = ({ item }) => {
   const isCustomSize = item.size === 'CUSTOM' && item.customSize;
 
   const handleCardClick = () => {
-    // Navigate to product details
+    // Close the drawer first, then navigate to product details
+    onClose();
     navigate(`/product/${item.slug}`);
   };
 
