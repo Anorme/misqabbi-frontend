@@ -82,17 +82,23 @@ const OrderSummary = () => {
 
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-600 font-lato">Delivery</span>
-            <span className="text-sm font-medium text-gray-900 font-lato">
-              {subtotal > 200 ? 'Free' : 'GHC 15.00'}
+            <span className="text-sm font-medium text-msq-purple-rich font-lato">
+              Calculated by courier
             </span>
+          </div>
+          <div className="text-xs text-gray-500 font-lato mt-1">
+            Your delivery cost will be determined by our trusted courier partner
           </div>
 
           <div className="border-t border-gray-300 pt-3">
             <div className="flex justify-between items-center">
-              <span className="text-lg font-bebas text-gray-900">Total</span>
+              <span className="text-lg font-bebas text-gray-900">Subtotal</span>
               <span className="text-lg font-bebas font-bold text-msq-purple-rich">
-                {formatPrice(subtotal + (subtotal > 200 ? 0 : 15))}
+                {formatPrice(subtotal)}
               </span>
+            </div>
+            <div className="text-xs text-gray-500 font-lato mt-2 text-center">
+              + Delivery charges will be added by our courier partner
             </div>
           </div>
         </div>
