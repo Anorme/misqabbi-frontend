@@ -40,3 +40,15 @@ export function showSuccessToast(message) {
     closeButton: true,
   });
 }
+
+// Order placed toast
+export function showOrderPlacedToast() {
+  toast.success(
+    'Order Placed Successfully! Your order has been confirmed and is being processed.',
+    {
+      className: 'bg-green-500 text-white p-4 rounded-md shadow-lg',
+      closeButton: true,
+      autoClose: 5000,
+    }
+  );
+}
