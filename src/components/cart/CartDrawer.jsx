@@ -54,7 +54,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
           ) : (
             <div className="p-6 space-y-4">
               {cartItems.map(item => (
-                <CartItem key={item.key} item={item} />
+                <CartItem key={item.key} item={item} onClose={onClose} />
               ))}
             </div>
           )}
