@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useCartState, useCartDispatch } from '../contexts/cart/useCart';
-import { getCartItems, getCartItemCount, getCartSubtotal } from '../contexts/cart/cartSelectors';
+import {
+  getCartItemsWithKeys,
+  getCartItemCount,
+  getCartSubtotal,
+} from '../contexts/cart/cartSelectors';
 import { clearCart } from '../contexts/cart/cartActions';
+import useAuthAction from './useAuthAction';
 
 const useCartDrawer = (isOpen, onClose) => {
   const cartState = useCartState();
   const dispatch = useCartDispatch();
   const navigate = useNavigate();
+  const { requireAuth, isModalOpen, modalContext, closeModal } = useAuthAction();
   const [isAnimating, setIsAnimating] = useState(false);
 
   // Derived state
-  const cartItems = getCartItems(cartState);
+  const cartItems = getCartItemsWithKeys(cartState);
   const itemCount = getCartItemCount(cartState);
   const subtotal = getCartSubtotal(cartState);
 
@@ -43,6 +49,11 @@ const useCartDrawer = (isOpen, onClose) => {
   };
 
   const handleCheckout = () => {
+    // Check authentication first
+    if (!requireAuth(() => {}, 'checkout')) {
+      return; // Auth modal will be shown, don't proceed
+    }
+
     onClose(); // Close the drawer first
     navigate('/checkout'); // Navigate to checkout
   };
@@ -58,6 +69,11 @@ const useCartDrawer = (isOpen, onClose) => {
     handleBackdropClick,
     handleClearCart,
     handleCheckout,
+
+    // Auth Modal
+    isModalOpen,
+    modalContext,
+    closeModal,
   };
 };
 
