@@ -4,7 +4,7 @@ const QuantitySelector = ({ quantity, onChange }) => {
 
   return (
     <div className="flex flex-col gap-2">
-      <h2 className="text-2xl px-1">Quantity</h2>
+      <h2 className="text-xl lg:text-2xl px-1">Quantity</h2>
       <div className="flex items-center gap-4 border border-solid p-3 border-[#CFB484]">
         {/* Decrease button */}
         <button

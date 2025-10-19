@@ -184,22 +184,21 @@ function ProductDetails() {
             <ProductInfo product={product}></ProductInfo>
 
             <SizeSelect selected={selectedSize} onChange={setSelectedSize}></SizeSelect>
+            {/* Custom Size Input - Compact inline design */}
+            {supportsCustomSizing(product?.category) && (
+              <div className="flex-1 pb-6">
+                <CustomSizeInput
+                  category={product?.category}
+                  measurements={customMeasurements}
+                  onMeasurementsChange={setCustomMeasurements}
+                  onToggleCustomSize={setIsCustomSizeEnabled}
+                  isCustomSizeEnabled={isCustomSizeEnabled}
+                />
+              </div>
+            )}
 
             <div className="flex items-start gap-4 pb-6">
               <QuantitySelector quantity={selectedQuantity} onChange={setSelectedQuantity} />
-
-              {/* Custom Size Input - Compact inline design */}
-              {supportsCustomSizing(product?.category) && (
-                <div className="flex-1">
-                  <CustomSizeInput
-                    category={product?.category}
-                    measurements={customMeasurements}
-                    onMeasurementsChange={setCustomMeasurements}
-                    onToggleCustomSize={setIsCustomSizeEnabled}
-                    isCustomSizeEnabled={isCustomSizeEnabled}
-                  />
-                </div>
-              )}
             </div>
 
             {/* Product price and CTA */}
