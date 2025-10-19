@@ -30,7 +30,7 @@ const CheckoutButton = ({ onCheckout }) => {
   return (
     <button
       onClick={onCheckout}
-      className="w-full bg-msq-purple-rich text-white py-3 px-4 rounded-lg font-lato font-medium hover:bg-msq-purple transition-colors duration-200 shadow-md hover:shadow-lg"
+      className="w-full bg-msq-purple-rich text-white py-3 px-4 rounded-lg font-lato font-medium hover:bg-msq-purple transition-colors duration-200 shadow-md hover:shadow-lg cursor-pointer"
     >
       Proceed to Checkout
     </button>
