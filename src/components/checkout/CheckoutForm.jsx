@@ -8,7 +8,7 @@ const CheckoutForm = ({ onPlaceOrder, userData, isLoading }) => {
     email: userData?.email || '',
     phone: userData?.contact || userData?.phoneNumber || '',
     countryCode: '+233',
-    deliveryAddress: '',
+    deliveryAddress: userData?.location || '',
     deliveryNotes: '',
   });
 
