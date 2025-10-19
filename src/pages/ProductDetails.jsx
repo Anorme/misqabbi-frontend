@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { addToCart } from '../contexts/cart/cartActions';
 import { useCartDispatch } from '../contexts/cart/useCart';
 
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import BackButton from '../components/layout/BackButton';
 
 import { fetchProductBySlug } from '../api/products';
@@ -21,6 +21,7 @@ import { showAddedToCartToast } from '../utils/showToast';
 
 function ProductDetails() {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const cartDispatch = useCartDispatch();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -47,6 +48,28 @@ function ProductDetails() {
     );
 
     showAddedToCartToast();
+  };
+
+  const handleBuyNow = () => {
+    if (!selectedSize) {
+      alert('Please select a size');
+      return;
+    }
+
+    // Add to cart first
+    cartDispatch(
+      addToCart({
+        id: product._id,
+        name: product.name,
+        price: product.price,
+        images: product.images,
+        size: selectedSize,
+        quantity: selectedQuantity,
+      })
+    );
+
+    // Navigate to checkout
+    navigate('/checkout');
   };
 
   const handleFavoriteClick = () => {
@@ -140,10 +163,20 @@ function ProductDetails() {
                 </h1>
               </div>
               <button
-                className="bg-msq-purple-rich text-lg text-white rounded-md flex-grow max-w-[320px] cursor-pointer"
+                className="bg-msq-purple-rich text-lg text-white rounded-md flex-grow max-w-[320px] cursor-pointer py-3 hover:bg-msq-purple transition-colors duration-200"
                 onClick={handleAddToCart}
               >
                 Add to Cart
+              </button>
+            </div>
+
+            {/* Buy Now Button - Full Width */}
+            <div className="py-4">
+              <button
+                className="bg-msq-purple-rich text-lg text-white rounded-md w-full cursor-pointer py-3 hover:bg-msq-purple transition-colors duration-200"
+                onClick={handleBuyNow}
+              >
+                Buy Now
               </button>
             </div>
           </div>
