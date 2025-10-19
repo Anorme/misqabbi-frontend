@@ -38,10 +38,6 @@ const Checkout = () => {
         items: cartItems.map(item => ({
           product: {
             _id: item.id,
-            name: item.name,
-            price: item.price,
-            images: item.images,
-            slug: item.slug || item.name.toLowerCase().replace(/\s+/g, '-'),
           },
           quantity: item.quantity,
           size: item.size,
@@ -54,13 +50,11 @@ const Checkout = () => {
           email: formData.email,
           phone: `${formData.countryCode}${formData.phone}`,
           deliveryAddress: formData.deliveryAddress,
-          city: 'Accra',
-          region: 'Greater Accra',
           deliveryNotes: formData.deliveryNotes,
         },
-        totalAmount: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+        totalPrice: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
         itemCount: itemCount,
-        status: 'pending',
+        status: 'accepted',
       };
 
       // Create order
