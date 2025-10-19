@@ -36,9 +36,7 @@ const Checkout = () => {
       // Prepare order data
       const orderData = {
         items: cartItems.map(item => ({
-          product: {
-            _id: item.id,
-          },
+          product: item.id,
           quantity: item.quantity,
           size: item.size,
           price: item.price,
