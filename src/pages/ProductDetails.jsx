@@ -11,6 +11,7 @@ import SizeSelect from '../components/products/SizeSelect';
 import ProductInfo from '../components/products/ProductInfo';
 import GalleryImages from '../components/products/GalleryImages';
 import QuantitySelector from '../components/products/QuantitySelector';
+import CustomSizeInput from '../components/products/CustomSizeInput';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 import FavoritesLinkButton from '../components/favorites/FavoritesLinkButton';
 import AuthActionModal from '../components/auth/AuthActionModal';
@@ -18,6 +19,8 @@ import useAuthAction from '../hooks/useAuthAction';
 
 import scrollToTop from '../utils/scrollToTop';
 import { showAddedToCartToast } from '../utils/showToast';
+import { supportsCustomSizing } from '../constants/customSizeMeasurements';
+import { isCustomSizeComplete } from '../utils/customSizeValidation';
 
 function ProductDetails() {
   const { slug } = useParams();
@@ -28,45 +31,77 @@ function ProductDetails() {
   const [error, setError] = useState(null);
   const [selectedSize, setSelectedSize] = useState('M');
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [isCustomSizeEnabled, setIsCustomSizeEnabled] = useState(false);
+  const [customMeasurements, setCustomMeasurements] = useState({});
   const { requireAuth, closeModal, isModalOpen, modalContext } = useAuthAction();
 
   const handleAddToCart = () => {
-    if (!selectedSize) {
+    // Validate custom size if enabled
+    if (isCustomSizeEnabled && !isCustomSizeComplete(customMeasurements, product?.category)) {
+      alert('Please complete all custom measurements');
+      return;
+    }
+
+    // Validate standard size if not using custom size
+    if (!isCustomSizeEnabled && !selectedSize) {
       alert('Please select a size');
       return;
     }
 
-    cartDispatch(
-      addToCart({
-        id: product._id,
-        name: product.name,
-        price: product.price,
-        images: product.images,
-        size: selectedSize,
-        quantity: selectedQuantity,
-      })
-    );
+    const cartItem = {
+      id: product._id,
+      name: product.name,
+      price: product.price,
+      images: product.images,
+      slug: product.slug,
+      size: isCustomSizeEnabled ? 'CUSTOM' : selectedSize,
+      quantity: selectedQuantity,
+    };
 
+    // Add custom measurements if enabled
+    if (isCustomSizeEnabled) {
+      cartItem.customSize = customMeasurements;
+    }
+
+    cartDispatch(addToCart(cartItem));
     showAddedToCartToast();
   };
 
   const handleBuyNow = () => {
-    if (!selectedSize) {
+    // Check authentication first
+    if (!requireAuth(() => {}, 'checkout')) {
+      return; // Auth modal will be shown, don't proceed
+    }
+
+    // Validate custom size if enabled
+    if (isCustomSizeEnabled && !isCustomSizeComplete(customMeasurements, product?.category)) {
+      alert('Please complete all custom measurements');
+      return;
+    }
+
+    // Validate standard size if not using custom size
+    if (!isCustomSizeEnabled && !selectedSize) {
       alert('Please select a size');
       return;
     }
 
+    const cartItem = {
+      id: product._id,
+      name: product.name,
+      price: product.price,
+      images: product.images,
+      slug: product.slug,
+      size: isCustomSizeEnabled ? 'CUSTOM' : selectedSize,
+      quantity: selectedQuantity,
+    };
+
+    // Add custom measurements if enabled
+    if (isCustomSizeEnabled) {
+      cartItem.customSize = customMeasurements;
+    }
+
     // Add to cart first
-    cartDispatch(
-      addToCart({
-        id: product._id,
-        name: product.name,
-        price: product.price,
-        images: product.images,
-        size: selectedSize,
-        quantity: selectedQuantity,
-      })
-    );
+    cartDispatch(addToCart(cartItem));
 
     // Navigate to checkout
     navigate('/checkout');
@@ -150,8 +185,21 @@ function ProductDetails() {
 
             <SizeSelect selected={selectedSize} onChange={setSelectedSize}></SizeSelect>
 
-            <div className="flex justify-between pb-6">
+            <div className="flex items-start gap-4 pb-6">
               <QuantitySelector quantity={selectedQuantity} onChange={setSelectedQuantity} />
+
+              {/* Custom Size Input - Compact inline design */}
+              {supportsCustomSizing(product?.category) && (
+                <div className="flex-1">
+                  <CustomSizeInput
+                    category={product?.category}
+                    measurements={customMeasurements}
+                    onMeasurementsChange={setCustomMeasurements}
+                    onToggleCustomSize={setIsCustomSizeEnabled}
+                    isCustomSizeEnabled={isCustomSizeEnabled}
+                  />
+                </div>
+              )}
             </div>
 
             {/* Product price and CTA */}
