@@ -1,11 +1,15 @@
 import { MdShoppingCart } from 'react-icons/md';
 import { useCartState } from '../../contexts/cart/useCart';
-import { getCartItems, getCartItemCount, getCartSubtotal } from '../../contexts/cart/cartSelectors';
+import {
+  getCartItemsWithKeys,
+  getCartItemCount,
+  getCartSubtotal,
+} from '../../contexts/cart/cartSelectors';
 
 const OrderSummary = () => {
   const cartState = useCartState();
 
-  const cartItems = getCartItems(cartState);
+  const cartItems = getCartItemsWithKeys(cartState);
   const itemCount = getCartItemCount(cartState);
   const subtotal = getCartSubtotal(cartState);
 
@@ -39,7 +43,7 @@ const OrderSummary = () => {
         <div className="space-y-4">
           {cartItems.map(item => (
             <div
-              key={`${item.id}-${item.size}`}
+              key={item.key}
               className="flex items-center space-x-4 py-3 border-b border-gray-100 last:border-b-0"
             >
               {/* Product Image */}

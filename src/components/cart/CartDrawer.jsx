@@ -2,6 +2,7 @@ import CartItem from './CartItem';
 import CartSummary from './CartSummary';
 import EmptyCartState from './EmptyCartState';
 import CartDrawerHeader from './CartDrawerHeader';
+import AuthActionModal from '../auth/AuthActionModal';
 import useCartDrawer from '../../hooks/useCartDrawer';
 
 const CartDrawer = ({ isOpen, onClose }) => {
@@ -13,6 +14,9 @@ const CartDrawer = ({ isOpen, onClose }) => {
     handleBackdropClick,
     handleClearCart,
     handleCheckout,
+    isModalOpen,
+    modalContext,
+    closeModal,
   } = useCartDrawer(isOpen, onClose);
 
   return (
@@ -50,7 +54,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
           ) : (
             <div className="p-6 space-y-4">
               {cartItems.map(item => (
-                <CartItem key={`${item.id}-${item.size}`} item={item} />
+                <CartItem key={item.key} item={item} />
               ))}
             </div>
           )}
@@ -66,6 +70,9 @@ const CartDrawer = ({ isOpen, onClose }) => {
           />
         )}
       </div>
+
+      {/* Auth Action Modal */}
+      <AuthActionModal isOpen={isModalOpen} onClose={closeModal} context={modalContext} />
     </>
   );
 };
