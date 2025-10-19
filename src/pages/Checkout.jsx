@@ -1,7 +1,124 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { useAuthState } from '../contexts/auth/useAuth';
+import { useCartState, useCartDispatch } from '../contexts/cart/useCart';
+import { getCartItems, getCartItemCount } from '../contexts/cart/cartSelectors';
+import { clearCart } from '../contexts/cart/cartActions';
+import { createOrder } from '../api/orders';
+import { showOrderPlacedToast, showErrorToast } from '../utils/showToast';
+import CheckoutHeader from '../components/checkout/CheckoutHeader';
+import CheckoutForm from '../components/checkout/CheckoutForm';
+import OrderSummary from '../components/checkout/OrderSummary';
+import { LoadingSpinner } from '../components/ui/LoadingSpinner';
+
 const Checkout = () => {
+  const navigate = useNavigate();
+  const { currentUser } = useAuthState();
+  const cartState = useCartState();
+  const cartDispatch = useCartDispatch();
+
+  const cartItems = getCartItems(cartState);
+  const itemCount = getCartItemCount(cartState);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Redirect if cart is empty
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      navigate('/shop');
+    }
+  }, [cartItems.length, navigate]);
+
+  const handlePlaceOrder = async formData => {
+    setIsLoading(true);
+
+    try {
+      // Prepare order data
+      const orderData = {
+        items: cartItems.map(item => ({
+          product: {
+            _id: item.id,
+            name: item.name,
+            price: item.price,
+            images: item.images,
+            slug: item.slug || item.name.toLowerCase().replace(/\s+/g, '-'),
+          },
+          quantity: item.quantity,
+          size: item.size,
+          price: item.price,
+        })),
+        shippingInfo: {
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: `${formData.countryCode}${formData.phone}`,
+          deliveryAddress: formData.deliveryAddress,
+          city: 'Accra',
+          region: 'Greater Accra',
+          deliveryNotes: formData.deliveryNotes,
+        },
+        totalAmount: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+        itemCount: itemCount,
+        status: 'pending',
+      };
+
+      // Create order
+      const response = await createOrder(orderData);
+
+      if (response.success) {
+        // Clear cart
+        cartDispatch(clearCart());
+
+        // Show success toast
+        showOrderPlacedToast();
+
+        // Redirect to order details
+        navigate(`/orders/${response.data.order._id}`);
+      } else {
+        throw new Error('Failed to create order');
+      }
+    } catch (error) {
+      console.error('Order creation failed:', error);
+      showErrorToast('Failed to place order. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Show loading if cart is being checked
+  if (cartItems.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="text-center">
+          <LoadingSpinner size={60} color="#cfb484" />
+          <p className="text-gray-600 mt-4 font-lato">Redirecting...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <h1>Checkout</h1>
+    <div className="min-h-screen bg-gray-50 font-lato">
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        {/* Header */}
+        <CheckoutHeader />
+
+        {/* Main Content */}
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left Column - Checkout Form */}
+          <div className="space-y-6">
+            <CheckoutForm
+              onPlaceOrder={handlePlaceOrder}
+              userData={currentUser}
+              isLoading={isLoading}
+            />
+          </div>
+
+          {/* Right Column - Order Summary */}
+          <div className="lg:sticky lg:top-6 lg:self-start">
+            <OrderSummary />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
