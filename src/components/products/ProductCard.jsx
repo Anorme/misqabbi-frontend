@@ -19,6 +19,7 @@ const ProductCard = ({ product }) => {
         name: product.name,
         price: product.price,
         images: product.images,
+        slug: product.slug,
         quantity: 1,
         size: 'M',
       })
