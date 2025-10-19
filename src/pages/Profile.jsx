@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { MdPerson, MdEmail, MdLocationOn, MdPhone } from 'react-icons/md';
-import { useAuthState } from '../contexts/auth/useAuth';
+import { useAuthState, useAuthDispatch } from '../contexts/auth/useAuth';
 import { updateUserProfile } from '../api/auth';
+import { setCurrentUser } from '../contexts/auth/authActions';
 import ProfileHeader from '../components/profile/ProfileHeader';
 import ProfileField from '../components/profile/ProfileField';
 import PasswordResetModal from '../components/profile/PasswordResetModal';
@@ -9,6 +10,7 @@ import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 
 const Profile = () => {
   const { currentUser } = useAuthState();
+  const dispatch = useAuthDispatch();
   const [showPasswordReset, setShowPasswordReset] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -38,7 +40,12 @@ const Profile = () => {
 
   const handleSaveField = async (fieldName, value) => {
     const updateData = { [fieldName]: value };
-    await updateUserProfile(updateData);
+    const result = await updateUserProfile(updateData, currentUser);
+
+    // Update the auth context with the returned user data
+    if (result.success && result.user) {
+      dispatch(setCurrentUser(result.user));
+    }
   };
 
   const handleSaveEmail = value => handleSaveField('email', value);
