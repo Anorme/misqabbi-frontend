@@ -159,7 +159,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
               <Link
                 to="/shop"
                 onClick={onClose}
-                className="block py-3 px-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                className="block py-3 px-3 text-msq-purple-rich hover:bg-gray-100 rounded-lg transition-colors duration-200"
               >
                 <div className="font-medium">Shop</div>
                 <div className="text-sm text-gray-500">Discover pieces that feel like you</div>
@@ -167,7 +167,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
               <Link
                 to="/about-us"
                 onClick={onClose}
-                className="block py-3 px-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                className="block py-3 px-3 text-msq-purple-rich hover:bg-gray-100 rounded-lg transition-colors duration-200"
               >
                 <div>
                   <div className="font-medium">About Misqabbi</div>
@@ -177,7 +177,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
               <Link
                 to="/help"
                 onClick={onClose}
-                className="block py-3 px-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                className="block py-3 px-3 text-msq-purple-rich hover:bg-gray-100 rounded-lg transition-colors duration-200"
               >
                 <div>
                   <div className="font-medium">Customer Care</div>
@@ -187,7 +187,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
               <Link
                 to="/contact-us"
                 onClick={onClose}
-                className="block py-3 px-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                className="block py-3 px-3 text-msq-purple-rich hover:bg-gray-100 rounded-lg transition-colors duration-200"
               >
                 <div>
                   <div className="font-medium">Contact Us</div>
