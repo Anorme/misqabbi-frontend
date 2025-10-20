@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
+
 import { useAuthState } from '../contexts/auth/useAuth';
 import { useCartState, useCartDispatch } from '../contexts/cart/useCart';
 import { getCartItems } from '../contexts/cart/cartSelectors';
 import { clearCart } from '../contexts/cart/cartActions';
+
 import { createOrder } from '../api/orders';
 import { showOrderPlacedToast, showErrorToast } from '../utils/showToast';
+
 import CheckoutHeader from '../components/checkout/CheckoutHeader';
 import CheckoutForm from '../components/checkout/CheckoutForm';
 import OrderSummary from '../components/checkout/OrderSummary';
@@ -32,10 +35,8 @@ const Checkout = () => {
     setIsLoading(true);
 
     try {
-      const userId = currentUser.userId;
       // Prepare order data
       const orderData = {
-        user: userId,
         items: cartItems.map(item => ({
           product: item.id,
           quantity: item.quantity,
@@ -51,8 +52,6 @@ const Checkout = () => {
           deliveryAddress: formData.deliveryAddress,
           deliveryNotes: formData.deliveryNotes,
         },
-        totalPrice: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
-        status: 'accepted',
       };
 
       // Create order
