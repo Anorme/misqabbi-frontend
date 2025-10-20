@@ -20,6 +20,7 @@ import Orders from './pages/Orders';
 import OrderDetails from './pages/OrderDetails';
 import Profile from './pages/Profile';
 import ResetPassword from './pages/ResetPassword';
+import PaymentCallback from './pages/PaymentCallback';
 
 const App = () => {
   return (
@@ -116,6 +117,7 @@ const App = () => {
         />
 
         <Route path="/auth/callback" element={<AuthCallback />} />
+        <Route path="/payment/callback" element={<PaymentCallback />} />
 
         <Route
           path="/reset-password/:userId/:token"
