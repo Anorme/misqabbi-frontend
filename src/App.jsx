@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router';
 
 import MainLayout from './layouts/MainLayout';
+import AdminLayout from './layouts/AdminLayout';
 import Home from './pages/Home';
 import About from './pages/About';
 import FAQs from './pages/FAQs';
@@ -24,6 +25,12 @@ import OrderDetails from './pages/OrderDetails';
 import Profile from './pages/Profile';
 import ResetPassword from './pages/ResetPassword';
 import PaymentCallback from './pages/PaymentCallback';
+
+// Admin pages
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminProducts from './pages/admin/AdminProducts';
+import AdminOrders from './pages/admin/AdminOrders';
+import AdminUsers from './pages/admin/AdminUsers';
 
 const App = () => {
   return (
@@ -174,6 +181,14 @@ const App = () => {
             </MainLayout>
           }
         />
+
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="users" element={<AdminUsers />} />
+        </Route>
 
         <Route
           path="*"
