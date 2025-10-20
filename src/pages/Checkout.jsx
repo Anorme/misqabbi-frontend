@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import { useAuthState } from '../contexts/auth/useAuth';
-import { useCartState, useCartDispatch } from '../contexts/cart/useCart';
+import { useCartState } from '../contexts/cart/useCart';
 import { getCartItems } from '../contexts/cart/cartSelectors';
-import { clearCart } from '../contexts/cart/cartActions';
 
 import { createOrder } from '../api/orders';
-import { showOrderPlacedToast, showErrorToast } from '../utils/showToast';
+import { showErrorToast } from '../utils/showToast';
 
 import CheckoutHeader from '../components/checkout/CheckoutHeader';
 import CheckoutForm from '../components/checkout/CheckoutForm';
@@ -18,18 +17,17 @@ const Checkout = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuthState();
   const cartState = useCartState();
-  const cartDispatch = useCartDispatch();
 
   const cartItems = getCartItems(cartState);
 
   const [isLoading, setIsLoading] = useState(false);
 
-  // Redirect if cart is empty
+  // Redirect if cart is empty (but not during order placement)
   useEffect(() => {
-    if (cartItems.length === 0) {
+    if (cartItems.length === 0 && !isLoading) {
       navigate('/shop');
     }
-  }, [cartItems.length, navigate]);
+  }, [cartItems.length, isLoading, navigate]);
 
   const handlePlaceOrder = async formData => {
     setIsLoading(true);
@@ -58,14 +56,8 @@ const Checkout = () => {
       const response = await createOrder(orderData);
 
       if (response.success) {
-        // Clear cart
-        cartDispatch(clearCart());
-
-        // Show success toast
-        showOrderPlacedToast();
-
-        // Redirect to order details
-        navigate(`/orders/${response.data._id}`);
+        // Redirect to Paystack authorization page (external URL)
+        window.location.href = response.data.authorizationUrl;
       } else {
         throw new Error('Failed to create order');
       }
