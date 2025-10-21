@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { getOrderById } from '../api/orders';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import useMediaQuery from '../hooks/useMediaQuery';
+import { useAuthState } from '../contexts/auth/useAuth';
 import ProgressBar from '../components/orders/ProgressBar';
 import Separator from '../components/orders/Separator';
 import { ORDER_STEPS, statusToIndex } from '../components/orders/constants';
@@ -27,9 +28,13 @@ const OrderDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const isDesktop = useMediaQuery('(min-width: 640px)');
+  const { restoreAuthState } = useAuthState();
 
   useEffect(() => {
     const run = async () => {
+      // Restore auth state before fetching order
+      await restoreAuthState();
+
       setLoading(true);
       setError(null);
       try {
@@ -54,6 +59,7 @@ const OrderDetails = () => {
       }
     };
     run();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   // index resolver imported from constants for consistency
