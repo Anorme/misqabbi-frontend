@@ -9,6 +9,7 @@ import { FormProvider } from './contexts/form/FormProvider.jsx';
 import { CatalogProvider } from './contexts/catalog/CatalogProvider.jsx';
 import { CartProvider } from './contexts/cart/CartProvider.jsx';
 import { FavoritesProvider } from './contexts/favorites/FavoritesProvider.jsx';
+import AuthInterceptorProvider from './components/AuthInterceptorProvider.jsx';
 
 import './index.css';
 import './styles/tailwind.css';
@@ -21,7 +22,9 @@ createRoot(document.getElementById('root')).render(
           <CartProvider>
             <FavoritesProvider>
               <Router>
-                <App />
+                <AuthInterceptorProvider>
+                  <App />
+                </AuthInterceptorProvider>
               </Router>
               <ToastContainer theme={undefined} autoClose={3000} />
             </FavoritesProvider>
