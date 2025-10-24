@@ -83,7 +83,6 @@ const UserAuthForm = ({ mode }) => {
       const userCred = await registerUserWithEmail(email, password, fullName);
       authDispatch(setCurrentUser(userCred));
       authDispatch(setAuthRestored());
-      localStorage.setItem('isAuthenticated', 'true');
       formDispatch(resetForm());
       navigate(redirectPath);
     } catch (err) {
@@ -104,7 +103,6 @@ const UserAuthForm = ({ mode }) => {
       const userCred = await loginUserWithEmail(email, password);
       authDispatch(setCurrentUser(userCred));
       authDispatch(setAuthRestored());
-      localStorage.setItem('isAuthenticated', 'true');
 
       // Small delay to ensure state propagation before navigation
       setTimeout(() => {

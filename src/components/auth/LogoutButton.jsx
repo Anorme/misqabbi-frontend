@@ -9,7 +9,6 @@ const LogoutButton = ({ className = '', onClick, ...props }) => {
     try {
       const success = await logoutUserApi();
       if (success) {
-        localStorage.removeItem('isAuthenticated');
         authDispatch(logoutUser());
         // Call additional onClick if provided
         if (onClick) {
