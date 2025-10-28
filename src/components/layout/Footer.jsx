@@ -35,18 +35,23 @@ const Footer = () => {
   return (
     <div className="w-full bg-msq-purple relative left-0 right-0 bottom-0">
       <footer className="max-w-7xl mx-auto  px-6 sm:px-6 lg:px-8 py-12">
-        {/* Logo - Centered on mobile, left on desktop */}
-        <div className="flex justify-center mb-4">
+        {/* Logo - Centered on mobile, in grid on desktop */}
+        <div className="flex justify-center mb-8 lg:hidden">
           <img
             src="/images/Logo.png"
             alt="Misqabbi Logo"
-            className="w-28 sm:w-40 md:w-56 object-contain"
+            className="w-52 sm:w-40 md:w-56 object-contain"
           />
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 justify-between gap-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 justify-between gap-12">
+          {/* Logo - Desktop only */}
+          <div className="hidden lg:flex items-start w-full">
+            <img src="/images/Logo.png" alt="Misqabbi Logo" className="w-60 object-contain" />
+          </div>
+
           {/* Customer Care */}
-          <div className="space-y-4 min-w-[150px] px-4 text-start lg:order-1">
+          <div className="space-y-4 min-w-[150px] px-4 text-start">
             <h3 className="text-white font-semibold whitespace-nowrap text-lg mb-4">
               Customer Care
             </h3>
@@ -75,7 +80,7 @@ const Footer = () => {
           </div>
 
           {/* Connect */}
-          <div className="space-y-4 min-w-[150px]  text-start lg:order-2">
+          <div className="space-y-4 min-w-[150px]  text-start">
             <h3 className="text-white font-semibold text-lg mb-4">Connect</h3>
             <ul className="space-y-3 ">
               <li>
@@ -123,7 +128,7 @@ const Footer = () => {
 
           {/*  Subscribe Section */}
 
-          <div className="col-span-2 flex flex-col items-start lg:order-3 lg:col-span-1">
+          <div className="col-span-2 flex flex-col items-start lg:col-span-1">
             <h3 className="text-white font-semibold text-lg mb-4">Subscribe</h3>
             <form onSubmit={handleSubscribe} className="w-full">
               <div className="flex relative w-full mb-4">
