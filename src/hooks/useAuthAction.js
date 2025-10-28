@@ -6,13 +6,22 @@ const useAuthAction = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContext, setModalContext] = useState('general');
 
-  const requireAuth = (action, context = 'general') => {
+  const requireAuth = (action, context = 'general', showModalDelay = 0) => {
     if (isAuthenticated) {
+      action();
       return true; // User is authenticated, proceed with action
     } else {
       // User is not authenticated, show modal
       setModalContext(context);
-      setIsModalOpen(true);
+
+      if (showModalDelay > 0) {
+        setTimeout(() => {
+          setIsModalOpen(true);
+        }, showModalDelay);
+      } else {
+        setIsModalOpen(true);
+      }
+
       return false; // Action should not proceed
     }
   };
