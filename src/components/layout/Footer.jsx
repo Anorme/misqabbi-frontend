@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router';
 import { SOCIALS_MAP } from '../../constants/socials';
 import { subscribeToNewsletter } from '../../api/newsletter';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
@@ -42,14 +43,9 @@ const Footer = () => {
             </h3>
             <ul className="space-y-3">
               <li>
-                <a
-                  href="#"
-                  className="text-white/90 hover:text-white"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <Link to="/faqs" className="text-white/90 hover:text-white">
                   FAQs
-                </a>
+                </Link>
               </li>
               <li>
                 <a

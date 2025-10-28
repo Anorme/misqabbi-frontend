@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
 import About from './pages/About';
+import FAQs from './pages/FAQs';
 import Checkout from './pages/Checkout';
 import Favorites from './pages/Favorites';
 import ProductList from './pages/ProductList';
@@ -67,6 +68,14 @@ const App = () => {
           element={
             <MainLayout>
               <About />
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path="/faqs"
+          element={
+            <MainLayout>
+              <FAQs />
             </MainLayout>
           }
         ></Route>
