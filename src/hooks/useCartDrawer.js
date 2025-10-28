@@ -49,13 +49,12 @@ const useCartDrawer = (isOpen, onClose) => {
   };
 
   const handleCheckout = () => {
-    // Check authentication first
-    if (!requireAuth(() => {}, 'checkout')) {
+    onClose(); // Close the drawer first
+
+    // Check authentication
+    if (!requireAuth(() => navigate('/checkout'), 'checkout', 1000)) {
       return; // Auth modal will be shown, don't proceed
     }
-
-    onClose(); // Close the drawer first
-    navigate('/checkout'); // Navigate to checkout
   };
 
   return {
