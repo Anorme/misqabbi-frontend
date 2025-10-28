@@ -12,12 +12,7 @@ import {
 
 import { useFormState, useFormDispatch } from '../../contexts/form/useForm';
 import { useAuthState, useAuthDispatch } from '../../contexts/auth/useAuth';
-import {
-  setAuthLoading,
-  setCurrentUser,
-  setAuthError,
-  setAuthRestored,
-} from '../../contexts/auth/authActions';
+import { setCurrentUser, setAuthError, setAuthRestored } from '../../contexts/auth/authActions';
 import {
   updateField,
   setErrors,
@@ -43,12 +38,12 @@ const UserAuthForm = ({ mode }) => {
   const formDispatch = useFormDispatch();
   const { fullName = '', email = '', password = '' } = values;
 
-  const { isAuthLoading, authError } = useAuthState();
+  const { authError } = useAuthState();
   const authDispatch = useAuthDispatch();
 
   const isFormIncomplete = !email || !password || (mode === 'register' && !fullName);
 
-  const submitLabel = isAuthLoading
+  const submitLabel = isSubmitting
     ? mode === 'register'
       ? 'Registering...'
       : 'Logging in...'
@@ -66,7 +61,6 @@ const UserAuthForm = ({ mode }) => {
     formDispatch(clearErrors());
     formDispatch(startSubmit());
     authDispatch(setAuthError(null));
-    authDispatch(setAuthLoading(true));
 
     const validationErrors = {};
     if (!isValidEmail(email)) validationErrors.email = 'Please enter a valid email';
@@ -75,7 +69,6 @@ const UserAuthForm = ({ mode }) => {
     if (Object.keys(validationErrors).length > 0) {
       formDispatch(setErrors(validationErrors));
       formDispatch(stopSubmit());
-      authDispatch(setAuthLoading(false));
       return;
     }
 
@@ -87,9 +80,7 @@ const UserAuthForm = ({ mode }) => {
       navigate(redirectPath);
     } catch (err) {
       authDispatch(setAuthError(err.message));
-    } finally {
       formDispatch(stopSubmit());
-      authDispatch(setAuthLoading(false));
     }
   };
 
@@ -98,7 +89,7 @@ const UserAuthForm = ({ mode }) => {
     formDispatch(clearErrors());
     formDispatch(startSubmit());
     authDispatch(setAuthError(null));
-    authDispatch(setAuthLoading(true));
+
     try {
       const userCred = await loginUserWithEmail(email, password);
       authDispatch(setCurrentUser(userCred));
@@ -110,21 +101,16 @@ const UserAuthForm = ({ mode }) => {
       }, 100);
     } catch (err) {
       authDispatch(setAuthError(err.message));
-    } finally {
       formDispatch(stopSubmit());
-      authDispatch(setAuthLoading(false));
     }
   };
 
   const handleGoogleSignIn = async () => {
     authDispatch(setAuthError(null));
-    authDispatch(setAuthLoading(true));
     try {
       signInWithGoogleRedirect();
     } catch (err) {
       authDispatch(setAuthError(err.message));
-    } finally {
-      authDispatch(setAuthLoading(false));
     }
   };
 
