@@ -72,14 +72,6 @@ const App = () => {
           }
         ></Route>
         <Route
-          path="/cart"
-          element={
-            <MainLayout>
-              <Cart />
-            </MainLayout>
-          }
-        ></Route>
-        <Route
           path="/favorites"
           element={
             <MainLayout>
