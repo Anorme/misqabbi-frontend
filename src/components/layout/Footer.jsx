@@ -48,14 +48,9 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-white/90 hover:text-white"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <Link to="/return-policy" className="text-white/90 hover:text-white">
                   Return Policy
-                </a>
+                </Link>
               </li>
               <li>
                 <a
