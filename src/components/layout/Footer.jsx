@@ -35,6 +35,15 @@ const Footer = () => {
   return (
     <div className="w-full bg-msq-purple relative left-0 right-0 bottom-0">
       <footer className="max-w-7xl mx-auto  px-6 sm:px-6 lg:px-8 py-12">
+        {/* Logo - Centered on mobile, left on desktop */}
+        <div className="flex justify-center mb-4">
+          <img
+            src="/images/Logo.png"
+            alt="Misqabbi Logo"
+            className="w-28 sm:w-40 md:w-56 object-contain"
+          />
+        </div>
+
         <div className="grid grid-cols-2 lg:grid-cols-3 justify-between gap-12">
           {/* Customer Care */}
           <div className="space-y-4 min-w-[150px] px-4 text-start lg:order-1">
@@ -172,24 +181,6 @@ const Footer = () => {
             <p className="text-white/80 text-sm w-full text-start leading-relaxed w-">
               Be the first to know about new collections, special events and much more
             </p>
-            <div className="flex  items-center justify-between h-full w-full pt-2">
-              {/* Logo */}
-              <img
-                src="/images/Logo.png"
-                alt="Misqabbi Logo"
-                className="w-28 sm:w-40 md:w-56 object-contain"
-              />
-
-              {/* Payment Methods */}
-              <div className="flex items-center space-x-3">
-                <div className="bg-white rounded px-2 py-1">
-                  <span className="text-blue-600 font-bold text-xs">VISA</span>
-                </div>
-                <div className="bg-yellow-400 rounded px-2 py-1">
-                  <span className="text-black font-bold text-xs">MTN</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </footer>
