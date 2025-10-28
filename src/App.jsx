@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import FAQs from './pages/FAQs';
 import ReturnPolicy from './pages/ReturnPolicy';
+import OrderPolicy from './pages/OrderPolicy';
 import SizeGuide from './pages/SizeGuide';
 import Checkout from './pages/Checkout';
 import Favorites from './pages/Favorites';
@@ -86,6 +87,14 @@ const App = () => {
           element={
             <MainLayout>
               <ReturnPolicy />
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path="/order-policy"
+          element={
+            <MainLayout>
+              <OrderPolicy />
             </MainLayout>
           }
         ></Route>
