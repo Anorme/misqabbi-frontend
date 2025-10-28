@@ -63,14 +63,9 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-white/90 hover:text-white"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <Link to="/size-guide" className="text-white/90 hover:text-white">
                   Size Guide
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
