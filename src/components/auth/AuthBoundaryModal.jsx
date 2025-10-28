@@ -1,37 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { useAuthState } from '../../contexts/auth/useAuth';
-import AuthPromptModal from './AuthPromptModal';
-import { useDebounce } from '../../utils/debounce';
 
 const AuthBoundaryModal = ({ children }) => {
-  const { isAuthenticated, isAuthLoading, hasRestoredAuth } = useAuthState();
-  const [showModal, setShowModal] = useState(false);
-
-  // Debounce the modal display to prevent flashing during auth loading
-  const debouncedShowModal = useDebounce(showModal, 600);
+  const { isAuthenticated, isAuthLoading } = useAuthState();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Only set modal state after auth restoration is complete
-    if (hasRestoredAuth && !isAuthLoading) {
-      if (!isAuthenticated) {
-        setShowModal(true);
-      } else {
-        setShowModal(false);
-      }
+    // Redirect if not authenticated (after loading completes)
+    if (!isAuthLoading && !isAuthenticated) {
+      navigate('/shop', { replace: true });
     }
-  }, [isAuthenticated, isAuthLoading, hasRestoredAuth]);
+  }, [isAuthLoading, isAuthenticated, navigate]);
 
-  // Don't render children until auth restoration is complete, but always render modal if needed
-  if (!hasRestoredAuth || isAuthLoading) {
-    return debouncedShowModal ? <AuthPromptModal onClose={() => setShowModal(false)} /> : null;
+  // Show nothing while loading or after triggering redirect
+  if (isAuthLoading || !isAuthenticated) {
+    return null;
   }
 
-  return (
-    <>
-      {isAuthenticated ? children : null}
-      {debouncedShowModal && <AuthPromptModal onClose={() => setShowModal(false)} />}
-    </>
-  );
+  // Only render children if authenticated
+  return <>{children}</>;
 };
 
 export default AuthBoundaryModal;
