@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import FAQs from './pages/FAQs';
 import ReturnPolicy from './pages/ReturnPolicy';
+import SizeGuide from './pages/SizeGuide';
 import Checkout from './pages/Checkout';
 import Favorites from './pages/Favorites';
 import ProductList from './pages/ProductList';
@@ -85,6 +86,14 @@ const App = () => {
           element={
             <MainLayout>
               <ReturnPolicy />
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path="/size-guide"
+          element={
+            <MainLayout>
+              <SizeGuide />
             </MainLayout>
           }
         ></Route>
