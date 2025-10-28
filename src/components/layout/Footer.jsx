@@ -172,7 +172,7 @@ const Footer = () => {
             <p className="text-white/80 text-sm w-full text-start leading-relaxed w-">
               Be the first to know about new collections, special events and much more
             </p>
-            <div className="flex  items-center justify-between h-full ">
+            <div className="flex  items-center justify-between h-full w-full pt-2">
               {/* Logo */}
               <img
                 src="/images/Logo.png"
@@ -181,7 +181,7 @@ const Footer = () => {
               />
 
               {/* Payment Methods */}
-              <div className="flex items-center space-x-3 pt-2">
+              <div className="flex items-center space-x-3">
                 <div className="bg-white rounded px-2 py-1">
                   <span className="text-blue-600 font-bold text-xs">VISA</span>
                 </div>
