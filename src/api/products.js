@@ -61,3 +61,22 @@ const fetchProductBySlug = async slug => {
 };
 
 export { fetchPaginatedProducts, fetchProductBySlug, fetchDiscoverableProducts };
+
+const createAdminProduct = async formData => {
+  try {
+    const response = await axios.post(`${API_URL}/admin/products`, formData, {
+      withCredentials: true,
+    });
+
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Failed to create product');
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error('Error creating product:', error);
+    throw error;
+  }
+};
+
+export { createAdminProduct };
