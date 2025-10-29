@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { mockProducts, generateId } from '../../utils/admin/mockData';
-import { paginateData, formatCurrency } from '../../utils/admin/tableHelpers';
+import { useState, useEffect } from 'react';
+import { generateId } from '../../utils/admin/mockData';
+import { formatCurrency } from '../../utils/admin/tableHelpers';
 import { CATEGORIES } from '../../constants/categories';
 import DataTable from '../../components/admin/DataTable';
 import AdminModal from '../../components/admin/AdminModal';
@@ -9,11 +9,16 @@ import PageHeader from '../../components/admin/PageHeader';
 import { ViewButton, EditButton, DeleteButton } from '../../components/admin/ActionButton';
 import PaginationLocal from '../../components/orders/PaginationLocal';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
-import { createAdminProduct } from '../../api/products';
+import { createAdminProduct, fetchAdminProducts } from '../../api/products';
+import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 const AdminProducts = () => {
-  const [products, setProducts] = useState(mockProducts);
+  const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [limit] = useState(8);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [formData, setFormData] = useState({
@@ -26,9 +31,6 @@ const AdminProducts = () => {
     isPublished: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const itemsPerPage = 8;
-  const { paginatedData, totalPages } = paginateData(products, currentPage, itemsPerPage);
 
   const columns = [
     {
@@ -169,6 +171,18 @@ const AdminProducts = () => {
           images: null,
           isPublished: false,
         });
+        // Refresh current page from server to reflect new data
+        try {
+          setLoading(true);
+          const list = await fetchAdminProducts({ page: currentPage, limit });
+          setProducts(list?.data || []);
+          setTotalPages(list?.totalPages || 1);
+        } catch (e) {
+          // Non-blocking: surface error
+          setError(e?.response?.data?.message || e?.message || 'Failed to refresh products');
+        } finally {
+          setLoading(false);
+        }
         return; // keep mock list unchanged for now
       } catch (e) {
         const msg = e?.response?.data?.message || e?.message || 'Failed to create product';
@@ -223,6 +237,31 @@ const AdminProducts = () => {
     setCurrentPage(page);
   };
 
+  // Fetch products on mount and when page/limit change
+  useEffect(() => {
+    let cancelled = false;
+    const run = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetchAdminProducts({ page: currentPage, limit });
+        if (!cancelled) {
+          setProducts(res?.data || []);
+          setTotalPages(res?.totalPages || 1);
+        }
+      } catch (e) {
+        if (!cancelled)
+          setError(e?.response?.data?.message || e?.message || 'Failed to load products');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [currentPage, limit]);
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -231,7 +270,20 @@ const AdminProducts = () => {
         onAction={handleAddProduct}
       />
 
-      <DataTable columns={columns} data={paginatedData} actions={actions} />
+      {error && <div className="p-3 rounded-md bg-red-50 text-red-600 text-sm">{error}</div>}
+
+      {loading ? (
+        <div className="py-10 flex items-center justify-center">
+          <LoadingSpinner size={40} />
+        </div>
+      ) : (
+        <>
+          <DataTable columns={columns} data={products} actions={actions} />
+          {!error && products.length === 0 && (
+            <div className="text-center text-sm text-gray-500 py-6">No products found.</div>
+          )}
+        </>
+      )}
 
       {totalPages > 1 && (
         <PaginationLocal
