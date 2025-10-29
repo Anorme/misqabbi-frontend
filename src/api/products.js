@@ -24,7 +24,7 @@ const fetchDiscoverableProducts = async (params = {}) => {
       maxPrice = '',
       sort = 'latest',
       page = 1,
-      limit = 10,
+      limit = 12,
     } = params;
 
     const queryParams = new URLSearchParams({
