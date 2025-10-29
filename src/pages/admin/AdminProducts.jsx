@@ -9,6 +9,7 @@ import PageHeader from '../../components/admin/PageHeader';
 import { ViewButton, EditButton, DeleteButton } from '../../components/admin/ActionButton';
 import PaginationLocal from '../../components/orders/PaginationLocal';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
+import { createAdminProduct } from '../../api/products';
 
 const AdminProducts = () => {
   const [products, setProducts] = useState(mockProducts);
@@ -22,7 +23,9 @@ const AdminProducts = () => {
     category: '',
     stock: '',
     images: null,
+    isPublished: false,
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const itemsPerPage = 8;
   const { paginatedData, totalPages } = paginateData(products, currentPage, itemsPerPage);
@@ -97,6 +100,7 @@ const AdminProducts = () => {
       category: '',
       stock: '',
       images: '',
+      isPublished: false,
     });
     setIsModalOpen(true);
   };
@@ -110,6 +114,7 @@ const AdminProducts = () => {
       category: product.category,
       stock: product.stock.toString(),
       images: null, // Reset file input for editing
+      isPublished: Boolean(product.isPublished) || false,
     });
     setIsModalOpen(true);
   };
@@ -128,13 +133,53 @@ const AdminProducts = () => {
     }
   };
 
-  const handleSaveProduct = () => {
+  const handleSaveProduct = async () => {
     if (!formData.name || !formData.price || !formData.category || !formData.stock) {
       showErrorToast('Please fill in all required fields');
       return;
     }
 
-    // Handle file upload (for demo, we'll use placeholder URLs)
+    // If creating a new product, call API with multipart/form-data
+    if (!editingProduct) {
+      try {
+        setIsSubmitting(true);
+        const body = new FormData();
+        body.append('name', formData.name);
+        body.append('description', formData.description || '');
+        body.append('price', formData.price);
+        body.append('category', formData.category);
+        body.append('stock', formData.stock);
+        body.append('isPublished', String(!!formData.isPublished));
+
+        if (formData.images && formData.images.length > 0) {
+          Array.from(formData.images).forEach(file => {
+            body.append('images', file);
+          });
+        }
+
+        const res = await createAdminProduct(body);
+        showSuccessToast(res?.message || 'Product added successfully');
+        setIsModalOpen(false);
+        setFormData({
+          name: '',
+          description: '',
+          price: '',
+          category: '',
+          stock: '',
+          images: null,
+          isPublished: false,
+        });
+        return; // keep mock list unchanged for now
+      } catch (e) {
+        const msg = e?.response?.data?.message || e?.message || 'Failed to create product';
+        showErrorToast(msg);
+        return;
+      } finally {
+        setIsSubmitting(false);
+      }
+    }
+
+    // Below: existing mock update flow for editing only
     const imageUrls =
       formData.images && formData.images.length > 0
         ? Array.from(formData.images).map(file => URL.createObjectURL(file))
@@ -170,6 +215,7 @@ const AdminProducts = () => {
       category: '',
       stock: '',
       images: null,
+      isPublished: false,
     });
   };
 
@@ -248,6 +294,19 @@ const AdminProducts = () => {
             required
           />
 
+          <div className="flex items-center gap-2">
+            <input
+              id="isPublished"
+              type="checkbox"
+              checked={!!formData.isPublished}
+              onChange={e => setFormData({ ...formData, isPublished: e.target.checked })}
+              className="h-4 w-4 text-msq-purple-rich border-gray-300 rounded"
+            />
+            <label htmlFor="isPublished" className="text-sm text-gray-700">
+              Publish immediately
+            </label>
+          </div>
+
           <FormField
             label="Product Images"
             type="file"
@@ -264,9 +323,14 @@ const AdminProducts = () => {
             </button>
             <button
               onClick={handleSaveProduct}
-              className="px-4 py-2 text-sm font-medium text-white bg-msq-purple-rich rounded-md hover:bg-msq-purple-deep transition-colors"
+              disabled={isSubmitting}
+              className={`px-4 py-2 text-sm font-medium text-white rounded-md transition-colors ${
+                isSubmitting
+                  ? 'bg-msq-purple-rich/60 cursor-not-allowed'
+                  : 'bg-msq-purple-rich hover:bg-msq-purple-deep'
+              }`}
             >
-              {editingProduct ? 'Update Product' : 'Add Product'}
+              {isSubmitting ? 'Saving...' : editingProduct ? 'Update Product' : 'Add Product'}
             </button>
           </div>
         </div>
