@@ -15,7 +15,7 @@ import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit] = useState(8);
+  const [limit] = useState(12);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
