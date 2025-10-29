@@ -80,3 +80,22 @@ const createAdminProduct = async formData => {
 };
 
 export { createAdminProduct };
+
+const fetchAdminProducts = async ({ page = 1, limit = 12 } = {}) => {
+  try {
+    const response = await axios.get(`${API_URL}/admin/products?page=${page}&limit=${limit}`, {
+      withCredentials: true,
+    });
+
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Failed to fetch admin products');
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching admin products:', error);
+    throw error;
+  }
+};
+
+export { fetchAdminProducts };
