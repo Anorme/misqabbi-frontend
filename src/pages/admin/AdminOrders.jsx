@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import { mockOrders } from '../../utils/admin/mockData';
-import { paginateData, formatCurrency, getStatusColor } from '../../utils/admin/tableHelpers';
+import { useEffect, useState } from 'react';
+import { formatCurrency, getStatusColor } from '../../utils/admin/tableHelpers';
 import { orderStatuses } from '../../utils/admin/mockData';
 import DataTable from '../../components/admin/DataTable';
 import AdminModal from '../../components/admin/AdminModal';
@@ -9,37 +8,40 @@ import PageHeader from '../../components/admin/PageHeader';
 import { ViewButton, EditButton, DeleteButton } from '../../components/admin/ActionButton';
 import PaginationLocal from '../../components/orders/PaginationLocal';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
+import { fetchAdminOrders, updateAdminOrderStatus } from '../../api/orders';
+import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 const AdminOrders = () => {
-  const [orders, setOrders] = useState(mockOrders);
+  const [orders, setOrders] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [limit] = useState(12);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [statusFilter, setStatusFilter] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingOrder, setEditingOrder] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState('');
 
-  const itemsPerPage = 8;
+  const getCustomerDetail = (order, detail) => order.shippingInfo[detail];
 
-  // Filter orders by status
-  const filteredOrders = statusFilter
-    ? orders.filter(order => order.status === statusFilter)
-    : orders;
-
-  const { paginatedData, totalPages } = paginateData(filteredOrders, currentPage, itemsPerPage);
+  // Optional client-side filter; server pagination remains authoritative
+  const filteredOrders = statusFilter ? orders.filter(o => o.status === statusFilter) : orders;
+  const shortId = order => (order?._id ? `#${order._id.slice(-6)}` : '#');
 
   const columns = [
     {
       key: 'orderNumber',
       label: 'Order #',
-      render: value => <span className="font-medium text-gray-900">{value}</span>,
+      render: (value, order) => <span className="font-medium text-gray-900">{shortId(order)}</span>,
     },
     {
       key: 'customerName',
       label: 'Customer',
       render: (value, order) => (
         <div>
-          <p className="font-medium text-gray-900">{value}</p>
-          <p className="text-sm text-gray-500">{order.customerEmail}</p>
+          <p className="font-medium text-gray-900">{getCustomerDetail(order, 'fullName')}</p>
+          <p className="text-sm text-gray-500">{getCustomerDetail(order, 'email')}</p>
         </div>
       ),
     },
@@ -86,11 +88,6 @@ const AdminOrders = () => {
       onClick: order => handleEditOrder(order),
       title: 'Update Status',
     },
-    {
-      component: DeleteButton,
-      onClick: order => handleDeleteOrder(order),
-      title: 'Delete Order',
-    },
   ];
 
   const handleViewOrder = order => {
@@ -113,29 +110,28 @@ Shipping: ${order.shippingAddress}
     setIsModalOpen(true);
   };
 
-  const handleDeleteOrder = order => {
-    if (window.confirm(`Are you sure you want to delete order "${order.orderNumber}"?`)) {
-      setOrders(orders.filter(o => o.id !== order.id));
-      showSuccessToast('Order deleted successfully');
-    }
-  };
-
-  const handleUpdateStatus = () => {
+  const handleUpdateStatus = async () => {
     if (!selectedStatus) {
       showErrorToast('Please select a status');
       return;
     }
-
-    setOrders(
-      orders.map(order =>
-        order.id === editingOrder.id ? { ...order, status: selectedStatus } : order
-      )
-    );
-
-    showSuccessToast('Order status updated successfully');
-    setIsModalOpen(false);
-    setEditingOrder(null);
-    setSelectedStatus('');
+    try {
+      await updateAdminOrderStatus(editingOrder._id || editingOrder.id, selectedStatus);
+      showSuccessToast('Order status updated successfully');
+      setIsModalOpen(false);
+      setEditingOrder(null);
+      setSelectedStatus('');
+      // Refetch current page to reflect change
+      setLoading(true);
+      const res = await fetchAdminOrders({ page: currentPage, limit });
+      setOrders(res?.data || []);
+      setTotalPages(Number(res?.totalPages) || 1);
+    } catch (e) {
+      const msg = e?.response?.data?.message || e?.message || 'Failed to update order status';
+      showErrorToast(msg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handlePageChange = page => {
@@ -146,6 +142,30 @@ Shipping: ${order.shippingAddress}
     setStatusFilter(status);
     setCurrentPage(1); // Reset to first page when filtering
   };
+
+  useEffect(() => {
+    let cancelled = false;
+    const run = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetchAdminOrders({ page: currentPage, limit });
+        if (!cancelled) {
+          setOrders(res?.data || []);
+          setTotalPages(Number(res?.totalPages) || 1);
+        }
+      } catch (e) {
+        if (!cancelled)
+          setError(e?.response?.data?.message || e?.message || 'Failed to load orders');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [currentPage, limit]);
 
   return (
     <div className="space-y-6">
@@ -173,7 +193,20 @@ Shipping: ${order.shippingAddress}
         </div>
       </div>
 
-      <DataTable columns={columns} data={paginatedData} actions={actions} />
+      {error && <div className="p-3 rounded-md bg-red-50 text-red-600 text-sm">{error}</div>}
+
+      {loading ? (
+        <div className="py-10 flex items-center justify-center">
+          <LoadingSpinner size={40} />
+        </div>
+      ) : (
+        <>
+          <DataTable columns={columns} data={filteredOrders} actions={actions} />
+          {!error && filteredOrders.length === 0 && (
+            <div className="text-center text-sm text-gray-500 py-6">No orders found.</div>
+          )}
+        </>
+      )}
 
       {totalPages > 1 && (
         <PaginationLocal
