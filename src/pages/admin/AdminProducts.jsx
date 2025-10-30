@@ -148,7 +148,7 @@ const AdminProducts = () => {
     if (!deleteTarget) return;
     try {
       setIsDeleting(true);
-      await deleteAdminProduct(deleteTarget._id || deleteTarget.id);
+      await deleteAdminProduct(deleteTarget._id);
       showSuccessToast('Product deleted successfully');
       setIsDeleteModalOpen(false);
       setDeleteTarget(null);
