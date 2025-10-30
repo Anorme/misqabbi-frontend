@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { generateId } from '../../utils/admin/mockData';
 import { formatCurrency } from '../../utils/admin/tableHelpers';
 import { CATEGORIES } from '../../constants/categories';
+import { getPrimaryImageUrl } from '../../utils/productImages';
 import DataTable from '../../components/admin/DataTable';
 import AdminModal from '../../components/admin/AdminModal';
 import FormField from '../../components/admin/FormField';
@@ -39,7 +40,7 @@ const AdminProducts = () => {
       render: (value, product) => (
         <div className="flex items-center">
           <img
-            src={product.images?.[0] || 'https://via.placeholder.com/40x40'}
+            src={getPrimaryImageUrl(product, 'https://via.placeholder.com/40x40')}
             alt={value}
             className="h-10 w-10 rounded-md object-cover mr-3"
           />
