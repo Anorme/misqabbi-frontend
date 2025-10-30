@@ -8,7 +8,7 @@ const getOrders = async ({ page = 1, limit = 10 } = {}) => {
       withCredentials: true,
     });
     if (!response.data?.success) throw new Error('Failed to fetch orders');
-    return response.data; // { success, data, total, totalPages, currentPage }
+    return response.data;
   } catch (error) {
     console.error('Error fetching orders:', error);
     throw error;
@@ -37,7 +37,7 @@ const getOrderById = async id => {
       throw new Error(response.data?.message || 'Failed to fetch order');
     }
 
-    return response.data; // { success, data }
+    return response.data;
   } catch (error) {
     console.error('Error fetching order by id:', error);
     throw error;
@@ -54,11 +54,47 @@ const createOrder = async orderData => {
       throw new Error(response.data?.message || 'Failed to create order');
     }
 
-    return response.data; // { success, data, message }
+    return response.data;
   } catch (error) {
     console.error('Error creating order:', error);
     throw error;
   }
 };
 
-export { getOrders, getOrderById, createOrder };
+const fetchAdminOrders = async ({ page = 1, limit = 12 } = {}) => {
+  try {
+    const response = await axios.get(`${API_URL}/admin/orders?page=${page}&limit=${limit}`, {
+      withCredentials: true,
+    });
+
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Failed to fetch admin orders');
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching admin orders:', error);
+    throw error;
+  }
+};
+
+const updateAdminOrderStatus = async (id, status) => {
+  try {
+    const response = await axios.patch(
+      `${API_URL}/admin/orders/${id}`,
+      { status },
+      { withCredentials: true }
+    );
+
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Failed to update order status');
+    }
+
+    return response.data; // { success, data, message }
+  } catch (error) {
+    console.error('Error updating admin order status:', error);
+    throw error;
+  }
+};
+
+export { getOrders, getOrderById, createOrder, fetchAdminOrders, updateAdminOrderStatus };
