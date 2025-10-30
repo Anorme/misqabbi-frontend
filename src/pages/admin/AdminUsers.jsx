@@ -10,6 +10,7 @@ import { ViewButton, EditButton, DeleteButton } from '../../components/admin/Act
 import PaginationLocal from '../../components/orders/PaginationLocal';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
 import { fetchAdminUsers, updateAdminUserRole, deleteAdminUser } from '../../api/users';
+import { userRoles } from '../../constants/admin';
 
 const AdminUsers = () => {
   const navigate = useNavigate();
@@ -255,6 +256,7 @@ const AdminUsers = () => {
             type="select"
             value={formData.role}
             onChange={value => setFormData({ ...formData, role: value })}
+            options={userRoles}
             required
           />
 
