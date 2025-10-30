@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getRoleColor } from '../../utils/admin/tableHelpers';
-import { userRoles } from '../../utils/admin/mockData';
+
 import DataTable from '../../components/admin/DataTable';
 import AdminModal from '../../components/admin/AdminModal';
 import FormField from '../../components/admin/FormField';
@@ -255,7 +255,6 @@ const AdminUsers = () => {
             type="select"
             value={formData.role}
             onChange={value => setFormData({ ...formData, role: value })}
-            options={userRoles}
             required
           />
 

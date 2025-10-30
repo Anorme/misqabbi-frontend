@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { formatCurrency, getStatusColor } from '../../utils/admin/tableHelpers';
-import { orderStatuses } from '../../utils/admin/mockData';
+
 import DataTable from '../../components/admin/DataTable';
 import AdminModal from '../../components/admin/AdminModal';
 import FormField from '../../components/admin/FormField';
@@ -178,11 +178,6 @@ const AdminOrders = () => {
             className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent"
           >
             <option value="">All Orders</option>
-            {orderStatuses.map(status => (
-              <option key={status.value} value={status.value}>
-                {status.label}
-              </option>
-            ))}
           </select>
           <span className="text-sm text-gray-500">
             Showing {filteredOrders.length} of {orders.length} orders
@@ -232,7 +227,6 @@ const AdminOrders = () => {
             type="select"
             value={selectedStatus}
             onChange={value => setSelectedStatus(value)}
-            options={orderStatuses}
             required
           />
 
