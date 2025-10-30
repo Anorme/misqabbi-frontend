@@ -1,3 +1,5 @@
+import { getImageUrl } from '../../utils/productImages';
+
 function GalleryImages({ product }) {
   const galleryImages = product?.images || [];
 
@@ -7,7 +9,7 @@ function GalleryImages({ product }) {
         {galleryImages.map((img, idx) => (
           <li key={idx}>
             <img
-              src={img}
+              src={getImageUrl(img)}
               alt={`${product?.name} thumbnail ${idx + 1}`}
               className="object-cover h-full w-full rounded-none"
             />

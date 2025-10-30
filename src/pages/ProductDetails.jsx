@@ -21,6 +21,7 @@ import scrollToTop from '../utils/scrollToTop';
 import { showAddedToCartToast } from '../utils/showToast';
 import { supportsCustomSizing } from '../constants/customSizeMeasurements';
 import { isCustomSizeComplete } from '../utils/customSizeValidation';
+import { getPrimaryImageUrl } from '../utils/productImages';
 
 function ProductDetails() {
   const { slug } = useParams();
@@ -158,7 +159,7 @@ function ProductDetails() {
             <div className="relative">
               <img
                 className="h-[25.75rem] lg:h-[40.125rem] w-full object-cover rounded-none"
-                src={product.image || product.images[0]}
+                src={product.image || getPrimaryImageUrl(product)}
                 alt={product?.name}
               />
               <div className="absolute top-3 right-3">

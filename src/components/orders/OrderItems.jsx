@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { ORDERS_CURRENCY } from './constants';
+import { getPrimaryImageUrl } from '../../utils/productImages';
 import CustomSizeDisplay from './CustomSizeDisplay';
 
 const formatCurrency = value => {
@@ -19,7 +20,7 @@ const OrderItems = ({ order }) => {
       <div className="divide-y divide-gray-100">
         {order.items?.map(line => {
           const product = line?.product || {};
-          const imageSrc = product?.images?.[0] || '/images/Logo.png';
+          const imageSrc = getPrimaryImageUrl(product);
           const qty = line?.quantity || 0;
           const unitPrice = product?.price ?? line?.price ?? 0;
           const unit = formatCurrency(unitPrice);

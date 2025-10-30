@@ -4,6 +4,7 @@ import { ShoppingBag } from 'lucide-react';
 import { useCartDispatch } from '../../contexts/cart/useCart';
 import { addToCart } from '../../contexts/cart/cartActions';
 import { showAddedToCartToast } from '../../utils/showToast';
+import { getPrimaryImageUrl } from '../../utils/productImages';
 import FavoritesLinkButton from '../favorites/FavoritesLinkButton';
 import AuthActionModal from '../auth/AuthActionModal';
 import useAuthAction from '../../hooks/useAuthAction';
@@ -38,7 +39,7 @@ const ProductCard = ({ product }) => {
         <Link to={`/product/${product.slug}`} className="block">
           <div className="aspect-[3/4] w-full relative">
             <img
-              src={product.images?.[0] || 'https://via.placeholder.com/150'}
+              src={getPrimaryImageUrl(product)}
               alt={product.name}
               className="absolute inset-0 w-full h-full object-cover"
             />
