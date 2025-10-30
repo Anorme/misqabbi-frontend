@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { generateId } from '../../utils/admin/mockData';
 import { formatCurrency } from '../../utils/admin/tableHelpers';
 import { CATEGORIES } from '../../constants/categories';
 import { getPrimaryImageUrl } from '../../utils/productImages';
@@ -11,7 +10,12 @@ import PageHeader from '../../components/admin/PageHeader';
 import { ViewButton, EditButton, DeleteButton } from '../../components/admin/ActionButton';
 import PaginationLocal from '../../components/orders/PaginationLocal';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
-import { createAdminProduct, fetchAdminProducts } from '../../api/products';
+import {
+  createAdminProduct,
+  fetchAdminProducts,
+  updateAdminProduct,
+  deleteAdminProduct,
+} from '../../api/products';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 const AdminProducts = () => {
@@ -34,6 +38,9 @@ const AdminProducts = () => {
     isPublished: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const columns = [
     {
@@ -91,7 +98,7 @@ const AdminProducts = () => {
     },
     {
       component: DeleteButton,
-      onClick: product => handleDeleteProduct(product),
+      onClick: product => openDeleteModal(product),
       title: 'Delete Product',
     },
   ];
@@ -132,10 +139,29 @@ const AdminProducts = () => {
     navigate(`/product/${product.slug}`);
   };
 
-  const handleDeleteProduct = product => {
-    if (window.confirm(`Are you sure you want to delete "${product.name}"?`)) {
-      setProducts(products.filter(p => p.id !== product.id));
+  const openDeleteModal = product => {
+    setDeleteTarget(product);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!deleteTarget) return;
+    try {
+      setIsDeleting(true);
+      await deleteAdminProduct(deleteTarget._id || deleteTarget.id);
       showSuccessToast('Product deleted successfully');
+      setIsDeleteModalOpen(false);
+      setDeleteTarget(null);
+      setLoading(true);
+      const res = await fetchAdminProducts({ page: currentPage, limit });
+      setProducts(res?.data || []);
+      setTotalPages(res?.totalPages || 1);
+    } catch (e) {
+      const msg = e?.response?.data?.message || e?.message || 'Failed to delete product';
+      showErrorToast(msg);
+    } finally {
+      setIsDeleting(false);
+      setLoading(false);
     }
   };
 
@@ -197,44 +223,63 @@ const AdminProducts = () => {
       }
     }
 
-    // Below: existing mock update flow for editing only
-    const imageUrls =
-      formData.images && formData.images.length > 0
-        ? Array.from(formData.images).map(file => URL.createObjectURL(file))
-        : ['https://via.placeholder.com/300x400'];
+    // Below: update flow via API for editing
+    try {
+      setIsSubmitting(true);
+      let payload;
+      const hasNewImages = formData.images && formData.images.length > 0;
+      if (hasNewImages) {
+        const body = new FormData();
+        body.append('name', formData.name);
+        body.append('description', formData.description || '');
+        body.append('price', formData.price);
+        body.append('category', formData.category);
+        body.append('stock', formData.stock);
+        body.append('isPublished', String(!!formData.isPublished));
+        Array.from(formData.images).forEach(file => body.append('images', file));
+        payload = body;
+      } else {
+        payload = {
+          name: formData.name,
+          description: formData.description || '',
+          price: formData.price,
+          category: formData.category,
+          stock: formData.stock,
+          isPublished: !!formData.isPublished,
+        };
+      }
 
-    const productData = {
-      ...formData,
-      price: parseFloat(formData.price),
-      stock: parseInt(formData.stock),
-      images: imageUrls,
-    };
+      const res = await updateAdminProduct(editingProduct._id, payload);
+      showSuccessToast(res?.message || 'Product updated successfully');
 
-    if (editingProduct) {
-      // Update existing product
-      setProducts(products.map(p => (p.id === editingProduct.id ? { ...p, ...productData } : p)));
-      showSuccessToast('Product updated successfully');
-    } else {
-      // Add new product
-      const newProduct = {
-        id: generateId(),
-        ...productData,
-        createdAt: new Date().toISOString().split('T')[0],
-      };
-      setProducts([newProduct, ...products]);
-      showSuccessToast('Product added successfully');
+      // Refresh list
+      try {
+        setLoading(true);
+        const list = await fetchAdminProducts({ page: currentPage, limit });
+        setProducts(list?.data || []);
+        setTotalPages(list?.totalPages || 1);
+      } catch (e) {
+        setError(e?.response?.data?.message || e?.message || 'Failed to refresh products');
+      } finally {
+        setLoading(false);
+      }
+    } catch (e) {
+      const msg = e?.response?.data?.message || e?.message || 'Failed to update product';
+      showErrorToast(msg);
+      return;
+    } finally {
+      setIsSubmitting(false);
+      setIsModalOpen(false);
+      setFormData({
+        name: '',
+        description: '',
+        price: '',
+        category: '',
+        stock: '',
+        images: null,
+        isPublished: false,
+      });
     }
-
-    setIsModalOpen(false);
-    setFormData({
-      name: '',
-      description: '',
-      price: '',
-      category: '',
-      stock: '',
-      images: null,
-      isPublished: false,
-    });
   };
 
   const handlePageChange = page => {
@@ -387,6 +432,49 @@ const AdminProducts = () => {
               }`}
             >
               {isSubmitting ? 'Saving...' : editingProduct ? 'Update Product' : 'Add Product'}
+            </button>
+          </div>
+        </div>
+      </AdminModal>
+
+      {/* Delete Confirmation Modal */}
+      <AdminModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => {
+          if (!isDeleting) {
+            setIsDeleteModalOpen(false);
+            setDeleteTarget(null);
+          }
+        }}
+        title="Delete Product"
+      >
+        <div className="space-y-4">
+          <p className="text-sm text-gray-600">
+            Are you sure you want to delete
+            <span className="font-medium text-gray-900"> {deleteTarget?.name}</span>? This action
+            cannot be undone.
+          </p>
+          <div className="flex justify-end space-x-3 pt-2">
+            <button
+              onClick={() => {
+                if (!isDeleting) {
+                  setIsDeleteModalOpen(false);
+                  setDeleteTarget(null);
+                }
+              }}
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+              disabled={isDeleting}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleConfirmDelete}
+              disabled={isDeleting}
+              className={`px-4 py-2 text-sm font-medium text-white rounded-md transition-colors ${
+                isDeleting ? 'bg-red-600/70 cursor-not-allowed' : 'bg-red-600 hover:bg-red-700'
+              }`}
+            >
+              {isDeleting ? 'Deleting...' : 'Delete'}
             </button>
           </div>
         </div>
