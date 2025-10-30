@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+
 import { formatCurrency, getStatusColor } from '../../utils/admin/tableHelpers';
 
 import DataTable from '../../components/admin/DataTable';
@@ -7,10 +9,12 @@ import FormField from '../../components/admin/FormField';
 import PageHeader from '../../components/admin/PageHeader';
 import { ViewButton, EditButton, DeleteButton } from '../../components/admin/ActionButton';
 import PaginationLocal from '../../components/orders/PaginationLocal';
+import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
+
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
 import { fetchAdminOrders, updateAdminOrderStatus } from '../../api/orders';
-import { useNavigate } from 'react-router';
-import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
+
+import { orderStatuses } from '../../constants/admin';
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -227,6 +231,7 @@ const AdminOrders = () => {
             type="select"
             value={selectedStatus}
             onChange={value => setSelectedStatus(value)}
+            options={orderStatuses}
             required
           />
 
