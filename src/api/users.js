@@ -20,7 +20,7 @@ const fetchAdminUsers = async ({ page = 1, limit = 12 } = {}) => {
 const updateAdminUserRole = async (id, role) => {
   try {
     const response = await axios.patch(
-      `${API_URL}/admin/users/${id}`,
+      `${API_URL}/admin/users/${id}/role`,
       { role },
       { withCredentials: true }
     );
@@ -55,3 +55,20 @@ const deleteAdminUser = async id => {
 };
 
 export { deleteAdminUser };
+
+const fetchAdminUserAnalytics = async userId => {
+  try {
+    const response = await axios.get(`${API_URL}/admin/analytics/${userId}`, {
+      withCredentials: true,
+    });
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Failed to fetch user analytics');
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching admin user analytics:', error);
+    throw error;
+  }
+};
+
+export { fetchAdminUserAnalytics };
