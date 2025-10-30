@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { generateId } from '../../utils/admin/mockData';
 import { formatCurrency } from '../../utils/admin/tableHelpers';
 import { CATEGORIES } from '../../constants/categories';
@@ -14,6 +15,7 @@ import { createAdminProduct, fetchAdminProducts } from '../../api/products';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 const AdminProducts = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [limit] = useState(12);
@@ -123,10 +125,11 @@ const AdminProducts = () => {
   };
 
   const handleViewProduct = product => {
-    // For demo purposes, just show an alert
-    alert(
-      `Viewing product: ${product.name}\nPrice: ${formatCurrency(product.price)}\nStock: ${product.stock}`
-    );
+    if (!product?.slug) {
+      showErrorToast('Unable to view product: missing slug');
+      return;
+    }
+    navigate(`/product/${product.slug}`);
   };
 
   const handleDeleteProduct = product => {
