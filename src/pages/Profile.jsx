@@ -33,10 +33,10 @@ const Profile = () => {
   }
 
   // Extract user data with fallbacks
-  const userName = currentUser?.name || currentUser?.displayName || '';
+  const userName = currentUser?.displayName || '';
   const userEmail = currentUser?.email || '';
   const userLocation = currentUser?.location || '';
-  const userContact = currentUser?.contact || currentUser?.phoneNumber || '';
+  const userContact = currentUser?.contact || '';
 
   const handleSaveField = async (fieldName, value) => {
     const updateData = { [fieldName]: value };
