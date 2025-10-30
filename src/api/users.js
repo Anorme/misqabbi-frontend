@@ -35,3 +35,23 @@ const updateAdminUserRole = async (id, role) => {
 };
 
 export { fetchAdminUsers, updateAdminUserRole };
+
+const deleteAdminUser = async id => {
+  try {
+    const response = await axios.delete(`${API_URL}/admin/users/${id}`, {
+      withCredentials: true,
+    });
+
+    // 204 No Content is common for deletes
+    if (response.status === 204) return { success: true };
+    if (response.data?.success === false) {
+      throw new Error(response.data?.message || 'Failed to delete user');
+    }
+    return response.data || { success: true };
+  } catch (error) {
+    console.error('Error deleting admin user:', error);
+    throw error;
+  }
+};
+
+export { deleteAdminUser };
