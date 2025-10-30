@@ -90,7 +90,7 @@ const updateAdminOrderStatus = async (id, status) => {
       throw new Error(response.data?.message || 'Failed to update order status');
     }
 
-    return response.data; // { success, data, message }
+    return response.data;
   } catch (error) {
     console.error('Error updating admin order status:', error);
     throw error;
@@ -98,3 +98,20 @@ const updateAdminOrderStatus = async (id, status) => {
 };
 
 export { getOrders, getOrderById, createOrder, fetchAdminOrders, updateAdminOrderStatus };
+
+const fetchAdminOrderById = async id => {
+  try {
+    const response = await axios.get(`${API_URL}/admin/orders/id/${id}`, {
+      withCredentials: true,
+    });
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Failed to fetch order details');
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching admin order by id:', error);
+    throw error;
+  }
+};
+
+export { fetchAdminOrderById };
