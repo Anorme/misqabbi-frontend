@@ -33,6 +33,7 @@ import AdminOrders from './pages/admin/AdminOrders';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminUserDetails from './pages/admin/AdminUserDetails';
 import AdminOrderDetails from './pages/admin/AdminOrderDetails';
+import AdminBoundary from './components/auth/AdminBoundary';
 
 const App = () => {
   return (
@@ -185,7 +186,16 @@ const App = () => {
         />
 
         {/* Admin Routes */}
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route
+          path="/admin"
+          element={
+            <AuthBoundaryModal>
+              <AdminBoundary>
+                <AdminLayout />
+              </AdminBoundary>
+            </AuthBoundaryModal>
+          }
+        >
           <Route index element={<AdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="orders" element={<AdminOrders />} />
