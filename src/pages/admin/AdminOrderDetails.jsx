@@ -127,8 +127,32 @@ const AdminOrderDetails = () => {
                     <span className="text-sm text-gray-700">{formatCurrency(line.price)}</span>
                   </div>
                   <div className="text-xs text-gray-500 mt-1">
-                    Size: {line.size} • Qty: {line.quantity} • Line: {formatCurrency(lineTotal)}
+                    Size: {line.size} • Qty: {line.quantity} • Price: {formatCurrency(lineTotal)}
                   </div>
+                  {line.size === 'CUSTOM' && line.customSize && (
+                    <div className="mt-2 pl-0 sm:pl-1">
+                      <p className="text-xs font-medium text-gray-700 mb-1">Custom measurements</p>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-1 text-xs text-gray-600">
+                        {Object.entries(line.customSize)
+                          .filter(([, value]) => {
+                            if (value === undefined || value === null) return false;
+                            return String(value).trim() !== '';
+                          })
+                          .map(([rawKey, value]) => {
+                            // Turn camelCase keys into readable labels
+                            const readableLabel = rawKey
+                              .replace(/([A-Z])/g, ' $1')
+                              .replace(/^\w/, c => c.toUpperCase());
+                            return (
+                              <div key={rawKey} className="flex items-center gap-1">
+                                <span className="text-gray-500">{readableLabel}:</span>
+                                <span className="text-gray-800">{value}</span>
+                              </div>
+                            );
+                          })}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             );
