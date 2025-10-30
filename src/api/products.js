@@ -99,3 +99,39 @@ const fetchAdminProducts = async ({ page = 1, limit = 12 } = {}) => {
 };
 
 export { fetchAdminProducts };
+
+const updateAdminProduct = async (id, body) => {
+  try {
+    const response = await axios.put(`${API_URL}/admin/products/${id}`, body, {
+      withCredentials: true,
+    });
+
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Failed to update product');
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error('Error updating product:', error);
+    throw error;
+  }
+};
+
+const deleteAdminProduct = async id => {
+  try {
+    const response = await axios.delete(`${API_URL}/admin/products/${id}`, {
+      withCredentials: true,
+    });
+
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Failed to delete product');
+    }
+
+    return response.data; // { success, message }
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    throw error;
+  }
+};
+
+export { updateAdminProduct, deleteAdminProduct };
