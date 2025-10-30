@@ -9,6 +9,7 @@ import { ViewButton, EditButton, DeleteButton } from '../../components/admin/Act
 import PaginationLocal from '../../components/orders/PaginationLocal';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
 import { fetchAdminOrders, updateAdminOrderStatus } from '../../api/orders';
+import { useNavigate } from 'react-router';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 const AdminOrders = () => {
@@ -22,6 +23,7 @@ const AdminOrders = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingOrder, setEditingOrder] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState('');
+  const navigate = useNavigate();
 
   const getCustomerDetail = (order, detail) => order.shippingInfo[detail];
 
@@ -91,17 +93,12 @@ const AdminOrders = () => {
   ];
 
   const handleViewOrder = order => {
-    const orderDetails = `
-Order: ${order.orderNumber}
-Customer: ${order.customerName} (${order.customerEmail})
-Date: ${new Date(order.createdAt).toLocaleDateString()}
-Status: ${order.status}
-Total: ${formatCurrency(order.totalPrice)}
-Items:
-${order.items.map(item => `- ${item.name} x${item.quantity} - ${formatCurrency(item.price)}`).join('\n')}
-Shipping: ${order.shippingAddress}
-    `;
-    alert(orderDetails);
+    const id = order?._id || order?.id;
+    if (!id) {
+      showErrorToast('Unable to view order: missing id');
+      return;
+    }
+    navigate(`/admin/orders/${id}`);
   };
 
   const handleEditOrder = order => {
