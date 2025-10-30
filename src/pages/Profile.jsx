@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { MdPerson, MdEmail, MdLocationOn, MdPhone } from 'react-icons/md';
 import { useAuthState, useAuthDispatch } from '../contexts/auth/useAuth';
 import { updateUserProfile } from '../api/auth';
@@ -10,6 +11,7 @@ import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 
 const Profile = () => {
   const { currentUser } = useAuthState();
+  const navigate = useNavigate();
   const dispatch = useAuthDispatch();
   const [showPasswordReset, setShowPasswordReset] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -58,12 +60,21 @@ const Profile = () => {
         <div className="w-full p-6 sm:p-8 flex flex-col justify-center">
           {/* Profile Header */}
           <ProfileHeader userName={userName} />
-
           {/* Profile Information Section */}
           <div className="space-y-6">
-            <h2 className="font-bebas text-[20px] sm:text-[24px] font-bold uppercase text-msq-purple-rich text-center mb-6">
-              Profile Information
-            </h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-bebas text-[20px] sm:text-[24px] font-bold uppercase text-msq-purple-rich">
+                Profile Information
+              </h2>
+              {currentUser?.role === 'admin' && (
+                <button
+                  onClick={() => navigate('/admin')}
+                  className="px-4 py-2 rounded-md bg-msq-purple-rich text-white text-sm hover:bg-msq-purple cursor-pointer"
+                >
+                  Go to Admin Dashboard
+                </button>
+              )}
+            </div>
 
             {/* Profile Fields */}
             <div className="space-y-4">

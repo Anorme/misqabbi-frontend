@@ -17,12 +17,12 @@ const Sidebar = ({ isOpen, onClose }) => {
         <div className="flex flex-col flex-grow bg-white border-r border-gray-200">
           {/* Logo */}
           <div className="flex items-center px-6 py-4 border-b border-gray-200">
-            <div className="flex items-center">
+            <Link to="/shop" title="Go to Shop" className="flex items-center">
               <div className="w-8 h-8 bg-msq-purple-rich rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">M</span>
               </div>
               <span className="ml-3 text-xl font-bebas text-msq-purple-rich">Misqabbi Admin</span>
-            </div>
+            </Link>
           </div>
 
           {/* Navigation */}
@@ -59,12 +59,12 @@ const Sidebar = ({ isOpen, onClose }) => {
         <div className="flex flex-col h-full">
           {/* Mobile header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-            <div className="flex items-center">
+            <Link to="/shop" title="Go to Shop" className="flex items-center" onClick={onClose}>
               <div className="w-8 h-8 bg-msq-purple-rich rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">M</span>
               </div>
               <span className="ml-3 text-xl font-bebas text-msq-purple-rich">Misqabbi Admin</span>
-            </div>
+            </Link>
             <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
               <X className="h-6 w-6" />
             </button>
