@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { getRoleColor } from '../../utils/admin/tableHelpers';
 import { userRoles } from '../../utils/admin/mockData';
 import DataTable from '../../components/admin/DataTable';
@@ -11,6 +12,7 @@ import { showSuccessToast, showErrorToast } from '../../utils/showToast';
 import { fetchAdminUsers, updateAdminUserRole, deleteAdminUser } from '../../api/users';
 
 const AdminUsers = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [limit] = useState(12);
@@ -89,29 +91,36 @@ const AdminUsers = () => {
     setIsModalOpen(true);
   };
 
-  const handleDeleteUser = async user => {
-    const ok = window.confirm(`Are you sure you want to delete user "${user.displayName}"?`);
-    if (!ok) return;
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDeleteUser = user => {
+    setDeleteTarget(user);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDeleteUser = async () => {
+    if (!deleteTarget?._id) return;
+    setIsDeleting(true);
     try {
-      await deleteAdminUser(user._id);
+      await deleteAdminUser(deleteTarget._id);
       showSuccessToast('User deleted successfully');
-      setLoading(true);
       const res = await fetchAdminUsers({ page: currentPage, limit });
       setUsers(res?.data || []);
       setTotalPages(Number(res?.totalPages) || 1);
+      setIsDeleteModalOpen(false);
+      setDeleteTarget(null);
     } catch (e) {
       const msg = e?.response?.data?.message || e?.message || 'Failed to delete user';
       showErrorToast(msg);
     } finally {
-      setLoading(false);
+      setIsDeleting(false);
     }
   };
 
   const handleViewUser = user => {
-    const joined = user.createdAt ? new Date(user.createdAt).toLocaleDateString() : '-';
-    alert(
-      `User: ${user.displayName || user.name}\nEmail: ${user.email}\nRole: ${user.role}\nJoined: ${joined}`
-    );
+    navigate(`/admin/users/${user._id}`);
   };
 
   const handleSaveUser = async () => {
@@ -262,6 +271,36 @@ const AdminUsers = () => {
               className="px-4 py-2 text-sm font-medium text-white bg-msq-purple-rich rounded-md hover:bg-msq-purple-deep transition-colors"
             >
               {'Update Role'}
+            </button>
+          </div>
+        </div>
+      </AdminModal>
+
+      <AdminModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => (!isDeleting ? setIsDeleteModalOpen(false) : null)}
+        title="Delete User"
+      >
+        <div className="space-y-4">
+          <p className="text-sm text-gray-700">
+            Are you sure you want to delete
+            <span className="font-medium"> {deleteTarget?.displayName}</span>? This action cannot be
+            undone.
+          </p>
+          <div className="flex justify-end gap-3">
+            <button
+              onClick={() => setIsDeleteModalOpen(false)}
+              disabled={isDeleting}
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 disabled:opacity-50"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={confirmDeleteUser}
+              disabled={isDeleting}
+              className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 disabled:opacity-50"
+            >
+              {isDeleting ? 'Deleting…' : 'Delete'}
             </button>
           </div>
         </div>
