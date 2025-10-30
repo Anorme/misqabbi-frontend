@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { ShoppingBag } from 'lucide-react';
+import { getPrimaryImageUrl } from '../../utils/productImages';
 import CartItemControls from './CartItemControls';
 import SizeSelectorModal from './SizeSelectorModal';
 import useCartItem from '../../hooks/useCartItem';
@@ -32,8 +33,12 @@ const CartItem = ({ item, onClose }) => {
     >
       {/* Product Image */}
       <div className="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
-        {item.images?.[0] ? (
-          <img src={item.images?.[0]} alt={item.name} className="w-full h-full object-cover" />
+        {getPrimaryImageUrl(item) ? (
+          <img
+            src={getPrimaryImageUrl(item)}
+            alt={item.name}
+            className="w-full h-full object-cover"
+          />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gray-200">
             <ShoppingBag className="w-6 h-6 text-gray-400" />

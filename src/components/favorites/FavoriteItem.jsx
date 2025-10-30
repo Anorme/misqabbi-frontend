@@ -4,6 +4,7 @@ import { useFavorites } from '../../contexts/favorites/useFavorites';
 import { removeFavorite, setFavorites } from '../../contexts/favorites/favoritesActions';
 import { removeFavorite as removeFavoriteAPI, fetchFavorites } from '../../api/favorites';
 import { showRemovedFromFavoritesToast, showErrorToast } from '../../utils/showToast';
+import { getPrimaryImageUrl } from '../../utils/productImages';
 
 const FavoriteItem = ({ item, onClose }) => {
   const { dispatch } = useFavorites();
@@ -39,8 +40,12 @@ const FavoriteItem = ({ item, onClose }) => {
     <div className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow duration-200">
       {/* Product Image */}
       <div className="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
-        {item.images?.[0] ? (
-          <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover" />
+        {getPrimaryImageUrl(item) ? (
+          <img
+            src={getPrimaryImageUrl(item)}
+            alt={item.name}
+            className="w-full h-full object-cover"
+          />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gray-200">
             <Heart className="w-6 h-6 text-gray-400" />

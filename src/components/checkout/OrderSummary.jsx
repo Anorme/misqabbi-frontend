@@ -5,6 +5,7 @@ import {
   getCartItemCount,
   getCartSubtotal,
 } from '../../contexts/cart/cartSelectors';
+import { getPrimaryImageUrl } from '../../utils/productImages';
 
 const OrderSummary = () => {
   const cartState = useCartState();
@@ -49,7 +50,7 @@ const OrderSummary = () => {
               {/* Product Image */}
               <div className="flex-shrink-0">
                 <img
-                  src={item.images[0] || '/images/Logo.png'}
+                  src={getPrimaryImageUrl(item)}
                   alt={item.name}
                   className="w-16 h-16 object-cover rounded-md bg-gray-100"
                 />

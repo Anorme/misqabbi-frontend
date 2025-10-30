@@ -2,6 +2,7 @@ import { useFavorites } from '../contexts/favorites/useFavorites';
 import { useAuthState } from '../contexts/auth/useAuth';
 import AuthActionModal from '../components/auth/AuthActionModal';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
+import { getPrimaryImageUrl } from '../utils/productImages';
 import useAuthAction from '../hooks/useAuthAction';
 import { useEffect } from 'react';
 
@@ -72,7 +73,7 @@ const Favorites = () => {
               <div key={item.id} className="bg-white rounded-lg shadow-sm overflow-hidden">
                 <div className="aspect-w-1 aspect-h-1">
                   <img
-                    src={item.images?.[0] || 'https://via.placeholder.com/300x300'}
+                    src={getPrimaryImageUrl(item)}
                     alt={item.name}
                     className="w-full h-64 object-cover"
                   />
