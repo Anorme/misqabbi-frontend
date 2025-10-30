@@ -123,11 +123,16 @@ const deleteAdminProduct = async id => {
       withCredentials: true,
     });
 
-    if (!response.data?.success) {
+    // 204 No Content is success
+    if (response.status === 204) {
+      return { success: true };
+    }
+
+    if (response.data?.success === false) {
       throw new Error(response.data?.message || 'Failed to delete product');
     }
 
-    return response.data; // { success, message }
+    return response.data || { success: true };
   } catch (error) {
     console.error('Error deleting product:', error);
     throw error;
