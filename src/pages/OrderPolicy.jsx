@@ -1,8 +1,14 @@
 import { Clock, Calendar, CreditCard, Truck } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const OrderPolicy = () => {
   return (
     <main className="w-full px-4 sm:px-6 lg:px-8 py-12 max-w-4xl mx-auto font-lato">
+      <SEO
+        title="Order Policy"
+        description="Learn about Misqabbi's ordering process, payment options, and delivery policies."
+        canonicalPath="/order-policy"
+      />
       {/* Header */}
       <header className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bebas text-msq-purple-rich mb-4">Order Policy</h1>
