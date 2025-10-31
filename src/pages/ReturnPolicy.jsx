@@ -7,7 +7,7 @@ const ReturnPolicy = () => {
       <SEO
         title="Return Policy"
         description="Understand Misqabbi's return policy for made-to-measure fashion pieces."
-        canonicalPath="/return-policy"
+        robots="noindex,nofollow"
       />
       {/* Header */}
       <header className="text-center mb-12">
