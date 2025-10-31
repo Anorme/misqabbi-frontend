@@ -43,9 +43,9 @@ const FAQs = () => {
   return (
     <main className="w-full px-4 sm:px-6 lg:px-8 py-12 max-w-4xl mx-auto">
       <SEO
-        title="FAQs"
+        title="Frequently Asked Questions"
         description="Find answers to common questions about ordering, delivery, returns, and payment options at Misqabbi."
-        robots="noindex,nofollow"
+        canonicalPath="/faqs"
       />
       {/* Header */}
       <header className="text-center mb-12">

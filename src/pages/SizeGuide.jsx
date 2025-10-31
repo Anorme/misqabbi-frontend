@@ -27,7 +27,7 @@ const SizeGuide = () => {
       <SEO
         title="Size Guide"
         description="Find your perfect fit with Misqabbi's comprehensive size chart and measuring tips."
-        robots="noindex,nofollow"
+        canonicalPath="/size-guide"
       />
       {/* Header */}
       <header className="text-center mb-12">
