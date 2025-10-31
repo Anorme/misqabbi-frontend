@@ -6,6 +6,7 @@ import useMediaQuery from '../hooks/useMediaQuery';
 import ProgressBar from '../components/orders/ProgressBar';
 import Separator from '../components/orders/Separator';
 import { ORDER_STEPS, statusToIndex } from '../components/orders/constants';
+import SEO from '../components/SEO';
 
 const stepsConfig = ORDER_STEPS;
 
@@ -74,6 +75,11 @@ const OrderDetails = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <SEO
+        title="Order Details"
+        description="Track the progress of your Misqabbi order from acceptance to delivery."
+        robots="noindex,nofollow"
+      />
       <h1 className="text-2xl font-semibold text-msq-purple-rich">Order progress</h1>
       <Separator />
 

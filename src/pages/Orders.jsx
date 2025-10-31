@@ -5,6 +5,7 @@ import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import OrderList from '../components/orders/OrderList';
 import PaginationLocal from '../components/orders/PaginationLocal';
 import Separator from '../components/orders/Separator';
+import SEO from '../components/SEO';
 
 const Orders = () => {
   const navigate = useNavigate();
@@ -56,6 +57,11 @@ const Orders = () => {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <SEO
+        title="My Orders"
+        description="View and track all your Misqabbi orders in one place."
+        robots="noindex,nofollow"
+      />
       <h1 className="text-2xl font-semibold text-msq-purple-rich">My Orders</h1>
       <Separator />
 
