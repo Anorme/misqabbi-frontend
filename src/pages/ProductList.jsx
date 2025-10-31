@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router';
 import Pagination from '../components/ui/Pagination.jsx';
 import ProductGrid from '../components/products/ProductGrid.jsx';
 import ProductCard from '../components/products/ProductCard.jsx';
+import SEO from '../components/SEO';
 
 import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog.js';
 import { setPage, setTotalPages, setProducts } from '../contexts/catalog/catalogActions.js';
@@ -73,6 +74,11 @@ const ProductList = () => {
 
   return (
     <>
+      <SEO
+        title="Shop"
+        description="Discover Misqabbi&rsquo;s curated lounge and casual wear. Soft, elegant, and made to empower her."
+        canonicalPath="/shop"
+      />
       <CategoryNavigation />
       <main className="w-full px-4 sm:px-6 lg:px-8 pt-12 pb-8 lg:my-8">
         {loading ? (
