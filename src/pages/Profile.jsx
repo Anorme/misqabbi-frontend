@@ -8,6 +8,7 @@ import ProfileHeader from '../components/profile/ProfileHeader';
 import ProfileField from '../components/profile/ProfileField';
 import PasswordResetModal from '../components/profile/PasswordResetModal';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
+import SEO from '../components/SEO';
 
 const Profile = () => {
   const { currentUser } = useAuthState();
@@ -56,6 +57,11 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen w-screen flex md:items-center justify-center bg-white p-0 m-0 font-lato">
+      <SEO
+        title="Profile"
+        description="Manage your Misqabbi account information, preferences, and settings."
+        robots="noindex,nofollow"
+      />
       <div className="w-full flex bg-white rounded-none md:rounded-2xl overflow-visible md:overflow-hidden mx-0 md:mx-4 my-0 md:my-16 min-h-screen md:min-h-0">
         <div className="w-full p-6 sm:p-8 flex flex-col justify-center">
           {/* Profile Header */}
