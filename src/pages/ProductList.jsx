@@ -1,10 +1,9 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router';
 
 import Pagination from '../components/ui/Pagination.jsx';
 import ProductGrid from '../components/products/ProductGrid.jsx';
 import ProductCard from '../components/products/ProductCard.jsx';
-import filterProducts from '../utils/filterProducts.js';
 
 import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog.js';
 import { setPage, setTotalPages, setProducts } from '../contexts/catalog/catalogActions.js';
@@ -17,8 +16,7 @@ import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 import scrollToTop from '../utils/scrollToTop.js';
 
 const ProductList = () => {
-  const { products, selectedFilter, productsPerPage, currentPage, searchParams, isSearching } =
-    useCatalogState();
+  const { products, productsPerPage, currentPage, searchParams, isSearching } = useCatalogState();
   const catalogDispatch = useCatalogDispatch();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -73,14 +71,6 @@ const ProductList = () => {
     }
   }, [loading, isInitialSearchSynced]);
 
-  // Filter products using context's selectedFilter (only if not searching)
-  const filteredProducts = useMemo(
-    () => (isSearching ? products : filterProducts(products, selectedFilter)),
-    [products, selectedFilter, isSearching]
-  );
-
-  const currentProducts = filteredProducts;
-
   return (
     <>
       <CategoryNavigation />
@@ -96,13 +86,13 @@ const ProductList = () => {
             {isSearching && (
               <div className="mb-4 text-center">
                 <p className="text-gray-600">
-                  {currentProducts.length} result{currentProducts.length !== 1 ? 's' : ''} found
+                  {products.length} result{products.length !== 1 ? 's' : ''} found
                   {searchParams.q && ` for "${searchParams.q}"`}
                 </p>
               </div>
             )}
             <ProductGrid>
-              {currentProducts.map(product => (
+              {products.map(product => (
                 <ProductCard key={product._id} product={product} />
               ))}
             </ProductGrid>
