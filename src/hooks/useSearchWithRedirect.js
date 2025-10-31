@@ -38,7 +38,6 @@ export default function useSearchWithRedirect({
       q: searchParams.get('q') || '',
       minPrice: searchParams.get('minPrice') || '',
       maxPrice: searchParams.get('maxPrice') || '',
-      category: searchParams.get('category') || '',
     };
 
     // Only update if URL has search params and they're different from current state
@@ -72,12 +71,6 @@ export default function useSearchWithRedirect({
       newParams.set('maxPrice', currentSearchParams.maxPrice);
     } else {
       newParams.delete('maxPrice');
-    }
-
-    if (currentSearchParams.category) {
-      newParams.set('category', currentSearchParams.category);
-    } else {
-      newParams.delete('category');
     }
 
     // Only update URL if params actually changed
@@ -117,9 +110,14 @@ export default function useSearchWithRedirect({
       customOnSearchSubmit();
     }
 
-    // Redirect to /shop if not already there
+    // Redirect to /shop with query parameter if not already there
     if (location.pathname !== '/shop') {
-      navigate('/shop');
+      navigate(`/shop?q=${encodeURIComponent(trimmedQuery)}`);
+    } else {
+      // If already on /shop, just update the URL params
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set('q', trimmedQuery);
+      setSearchParams(newParams, { replace: true });
     }
   };
 
