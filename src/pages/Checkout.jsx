@@ -12,6 +12,7 @@ import CheckoutHeader from '../components/checkout/CheckoutHeader';
 import CheckoutForm from '../components/checkout/CheckoutForm';
 import OrderSummary from '../components/checkout/OrderSummary';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
+import SEO from '../components/SEO';
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -83,6 +84,11 @@ const Checkout = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 font-lato">
+      <SEO
+        title="Checkout"
+        description="Complete your Misqabbi order with secure payment and delivery information."
+        robots="noindex,nofollow"
+      />
       <div className="max-w-7xl mx-auto px-4 py-6">
         {/* Header */}
         <CheckoutHeader />
