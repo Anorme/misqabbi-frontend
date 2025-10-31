@@ -1,5 +1,6 @@
 import { Ruler, Lightbulb, Users, Heart } from 'lucide-react';
 import sizeChartImage from '../assets/size chart (inches).jpg';
+import SEO from '../components/SEO';
 
 const SizeGuide = () => {
   const measuringTips = [
@@ -23,6 +24,11 @@ const SizeGuide = () => {
 
   return (
     <main className="w-full px-4 sm:px-6 lg:px-8 py-12 max-w-6xl mx-auto font-lato">
+      <SEO
+        title="Size Guide"
+        description="Find your perfect fit with Misqabbi's comprehensive size chart and measuring tips."
+        canonicalPath="/size-guide"
+      />
       {/* Header */}
       <header className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bebas text-msq-purple-rich mb-4">Size Guide</h1>
