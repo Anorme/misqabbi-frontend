@@ -16,6 +16,7 @@ import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 import FavoritesLinkButton from '../components/favorites/FavoritesLinkButton';
 import AuthActionModal from '../components/auth/AuthActionModal';
 import useAuthAction from '../hooks/useAuthAction';
+import SEO from '../components/SEO';
 
 import scrollToTop from '../utils/scrollToTop';
 import { showAddedToCartToast } from '../utils/showToast';
@@ -147,6 +148,15 @@ function ProductDetails() {
 
   return (
     <div className="font-lato px-4 py-4 lg:py-8 bg-white">
+      {product && (
+        <SEO
+          title={product.name}
+          description={product.description || `Shop ${product.name} at Misqabbi.`}
+          canonicalPath={`/product/${product.slug}`}
+          image={product.image || getPrimaryImageUrl(product)}
+          type="product"
+        />
+      )}
       <header className="flex relative items-center justify-center">
         <BackButton />
         <p className="lg:hidden">Product Details</p>
