@@ -1,0 +1,28 @@
+# robots.txt for misqabbigh.com
+
+User-agent: *
+Allow: /
+Allow: /shop
+Allow: /category/
+Allow: /product/
+Allow: /about-us
+Allow: /return-policy
+Allow: /order-policy
+Allow: /size-guide
+
+# Disallow private/user-specific pages
+Disallow: /admin
+Disallow: /profile
+Disallow: /orders
+Disallow: /checkout
+Disallow: /favorites
+Disallow: /login
+Disallow: /register
+Disallow: /auth/
+Disallow: /payment/
+Disallow: /reset-password/
+Disallow: /faqs
+
+# Sitemap location
+Sitemap: https://misqabbigh.com/sitemap.xml
+
