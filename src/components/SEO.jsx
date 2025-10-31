@@ -17,7 +17,7 @@ export default function SEO({
     return `${t} | Misqabbi`;
   };
   const fullTitle = formatTitle(title);
-  const canonical = canonicalPath ? `${BASE_URL}${canonicalPath}` : BASE_URL;
+  const canonical = canonicalPath ? `${BASE_URL}${canonicalPath}` : undefined;
   const ogImage = image || `${BASE_URL}/images/Logo.png`;
 
   return (
@@ -26,12 +26,12 @@ export default function SEO({
       <meta name="description" content={description} />
       {robots && <meta name="robots" content={robots} />}
 
-      <link rel="canonical" href={canonical} />
+      {canonical && <link rel="canonical" href={canonical} />}
 
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content={type} />
-      <meta property="og:url" content={canonical} />
+      {canonical && <meta property="og:url" content={canonical} />}
       <meta property="og:image" content={ogImage} />
 
       <meta name="twitter:card" content="summary_large_image" />
