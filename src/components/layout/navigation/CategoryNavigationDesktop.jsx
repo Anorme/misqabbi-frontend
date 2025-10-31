@@ -8,7 +8,7 @@ import { useCatalogState, useCatalogDispatch } from '../../../contexts/catalog/u
 import { setSortOption, setDesktopColumns } from '../../../contexts/catalog/catalogActions.js';
 
 const CategoryNavigationDesktop = () => {
-  const { selectedCategory, selectCategory } = useCategorySelection();
+  const { selectedCategory } = useCategorySelection();
   const { sortOption, layout } = useCatalogState();
   const catalogDispatch = useCatalogDispatch();
 
@@ -24,11 +24,7 @@ const CategoryNavigationDesktop = () => {
             {/* Left: Category Filters */}
             <div className="flex items-center h-full">
               <div className="flex items-center px-4 border-r border-r-[#949396] h-full">
-                <CategoryDropdown
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={selectCategory}
-                  variant="desktop"
-                />
+                <CategoryDropdown selectedCategory={selectedCategory} variant="desktop" />
               </div>
             </div>
 

@@ -1,13 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { Triangle } from 'lucide-react';
 import { CATEGORIES, getCategoryLabel } from '../../constants/categories';
 
-const CategoryDropdown = ({
-  selectedCategory = '',
-  onCategorySelect,
-  variant = 'desktop',
-  className = '',
-}) => {
+const CategoryDropdown = ({ selectedCategory = '', variant = 'desktop', className = '' }) => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const triggerRef = useRef(null);
@@ -34,8 +31,14 @@ const CategoryDropdown = ({
     }
   };
 
-  const handleCategoryClick = category => {
-    onCategorySelect(category);
+  const handleCategoryClick = categoryValue => {
+    // If category value is empty ("All"), navigate to /shop
+    if (!categoryValue || categoryValue === '') {
+      navigate('/shop');
+    } else {
+      // Navigate to category route using category value directly
+      navigate(`/category/${categoryValue}`);
+    }
     setIsOpen(false);
     triggerRef.current?.focus();
   };
