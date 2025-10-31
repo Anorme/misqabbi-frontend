@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router';
 
 import Pagination from '../components/ui/Pagination.jsx';
 import ProductGrid from '../components/products/ProductGrid.jsx';
@@ -22,22 +22,7 @@ const ProductList = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [urlSearchParams] = useSearchParams();
-  const navigate = useNavigate();
   const [isInitialSearchSynced, setIsInitialSearchSynced] = useState(false);
-
-  // Backward compatibility: redirect /shop?category=X to /category/X
-  useEffect(() => {
-    const categoryParam = urlSearchParams.get('category');
-    if (categoryParam) {
-      // Remove category from query params and redirect to category route
-      const newParams = new URLSearchParams(urlSearchParams);
-      newParams.delete('category');
-      const remainingParams = newParams.toString();
-      const redirectUrl = `/category/${categoryParam}${remainingParams ? `?${remainingParams}` : ''}`;
-      navigate(redirectUrl, { replace: true });
-      return;
-    }
-  }, [urlSearchParams, navigate]);
 
   // Initialize catalog search state from URL when /shop mounts (category handled by routes)
   useEffect(() => {
