@@ -8,7 +8,7 @@ import { useCatalogState, useCatalogDispatch } from '../../../contexts/catalog/u
 import { setSortOption, setMobileColumns } from '../../../contexts/catalog/catalogActions.js';
 
 const CategoryNavigationMobile = () => {
-  const { selectedCategory, selectCategory } = useCategorySelection();
+  const { selectedCategory } = useCategorySelection();
   const { sortOption, layout } = useCatalogState();
   const catalogDispatch = useCatalogDispatch();
 
@@ -24,11 +24,7 @@ const CategoryNavigationMobile = () => {
             {/* Left: Category Dropdown*/}
             <div className="flex items-center h-full">
               <div className="flex items-center">
-                <CategoryDropdown
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={selectCategory}
-                  variant="mobile"
-                />
+                <CategoryDropdown selectedCategory={selectedCategory} variant="mobile" />
               </div>
             </div>
 
