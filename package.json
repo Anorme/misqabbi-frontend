@@ -46,6 +46,7 @@
     ]
   },
   "dependencies": {
+    "@dr.pogodin/react-helmet": "^3.0.4",
     "@tailwindcss/vite": "^4.1.10",
     "axios": "^1.12.0",
     "firebase": "^11.9.1",
