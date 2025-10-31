@@ -109,7 +109,7 @@ function CategoryList() {
       <div className="flex py-2 mx-auto">
         {visibleCards.map((cat, idx) => (
           <div key={cat.name} ref={idx === 0 ? cardRef : null}>
-            <Link to={`/shop?category=${cat.value}`}>
+            <Link to={`/category/${cat.value}`}>
               <CategoryCard name={cat.name} image={cat.image} />
             </Link>
           </div>

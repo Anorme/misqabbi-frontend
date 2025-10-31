@@ -17,7 +17,7 @@ const PreviewSplit = () => {
           <div className="absolute bottom-5 inset-x-0 bg-opacity-30 flex items-center justify-center">
             <div className="text-center text-white md:space-y-3">
               <h2 className="text-[38px] md:text-[64px] font-lato w-[254px]">DRESSES</h2>
-              <Link to="/shop?category=dresses">
+              <Link to="/category/dresses">
                 <MsqButton label="SHOP DRESSES" variant="gold" />
               </Link>
             </div>
@@ -35,7 +35,7 @@ const PreviewSplit = () => {
           <div className="absolute bottom-5 inset-x-0 bg-opacity-30 flex items-center justify-center">
             <div className="text-center text-white  md:space-y-3">
               <h2 className="text-[38px] md:text-[64px] font-lato w-[254px]">SKIRTS</h2>
-              <Link to="/shop?category=skirts">
+              <Link to="/category/skirts">
                 <MsqButton label="SHOP SKIRTS" variant="gold" />
               </Link>
             </div>
