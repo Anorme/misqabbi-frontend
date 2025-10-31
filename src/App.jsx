@@ -11,6 +11,7 @@ import SizeGuide from './pages/SizeGuide';
 import Checkout from './pages/Checkout';
 import Favorites from './pages/Favorites';
 import ProductList from './pages/ProductList';
+import CategoryPage from './pages/CategoryPage';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import AuthCallback from './pages/auth/AuthCallback';
@@ -65,6 +66,14 @@ const App = () => {
               <AuthBoundaryModal>
                 <Orders />
               </AuthBoundaryModal>
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path="/category/:category"
+          element={
+            <MainLayout>
+              <CategoryPage />
             </MainLayout>
           }
         ></Route>
