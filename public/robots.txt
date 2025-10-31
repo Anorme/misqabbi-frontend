@@ -9,6 +9,7 @@ Allow: /about-us
 Allow: /return-policy
 Allow: /order-policy
 Allow: /size-guide
+Allow: /faqs
 
 # Disallow private/user-specific pages
 Disallow: /admin
@@ -21,7 +22,6 @@ Disallow: /register
 Disallow: /auth/
 Disallow: /payment/
 Disallow: /reset-password/
-Disallow: /faqs
 
 # Sitemap location
 Sitemap: https://misqabbigh.com/sitemap.xml
