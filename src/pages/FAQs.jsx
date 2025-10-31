@@ -45,7 +45,7 @@ const FAQs = () => {
       <SEO
         title="FAQs"
         description="Find answers to common questions about ordering, delivery, returns, and payment options at Misqabbi."
-        canonicalPath="/faqs"
+        robots="noindex,nofollow"
       />
       {/* Header */}
       <header className="text-center mb-12">
