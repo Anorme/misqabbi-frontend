@@ -17,8 +17,8 @@ const CategoryNavigationMobile = () => {
   };
 
   return (
-    <div className="w-full pt-4">
-      <nav className="w-full bg-white" aria-label="Category Navigation">
+    <div className="fixed top-[72px] left-0 right-0 z-40 w-full border-t border-b border-[#949396] bg-white">
+      <nav className="w-full" aria-label="Category Navigation">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-12">
             {/* Left: Category Dropdown*/}
@@ -32,6 +32,9 @@ const CategoryNavigationMobile = () => {
               </div>
             </div>
 
+            {/* Divider */}
+            <div className="h-full w-px bg-[#949396] mx-2" />
+
             {/* Middle: Sort Dropdown */}
             <div className="flex items-center">
               <SortDropdown
@@ -41,10 +44,16 @@ const CategoryNavigationMobile = () => {
               />
             </div>
 
+            {/* Divider */}
+            <div className="h-full w-px bg-[#949396] mx-2" />
+
             {/* Filter Dropdown */}
             <div className="flex items-center">
               <FilterDropdown variant="mobile" />
             </div>
+
+            {/* Divider */}
+            <div className="h-full w-px bg-[#949396] mx-2" />
 
             {/* Right: View Toggle Icons */}
             <div className="flex items-center h-full space-x-2">
