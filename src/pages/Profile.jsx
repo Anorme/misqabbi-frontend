@@ -62,18 +62,10 @@ const Profile = () => {
           <ProfileHeader userName={userName} />
           {/* Profile Information Section */}
           <div className="space-y-6">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-center mb-4">
               <h2 className="font-bebas text-[20px] sm:text-[24px] font-bold uppercase text-msq-purple-rich">
                 Profile Information
               </h2>
-              {currentUser?.role === 'admin' && (
-                <button
-                  onClick={() => navigate('/admin')}
-                  className="px-4 py-2 rounded-md bg-msq-purple-rich text-white text-sm hover:bg-msq-purple cursor-pointer"
-                >
-                  Go to Admin Dashboard
-                </button>
-              )}
             </div>
 
             {/* Profile Fields */}
@@ -121,14 +113,23 @@ const Profile = () => {
               />
             </div>
 
-            {/* Password Reset Button */}
             <div className="pt-6 border-t border-gray-200">
-              <button
-                onClick={() => setShowPasswordReset(true)}
-                className="w-full sm:w-[60%] mx-auto bg-msq-purple-rich text-white py-3 font-semibold rounded-[18px] hover:bg-msq-purple-light transition-colors duration-200 cursor-pointer"
-              >
-                Reset Your Password
-              </button>
+              <div className="flex flex-col sm:flex-row sm:justify-center sm:gap-6 gap-4">
+                {currentUser?.role === 'admin' && (
+                  <button
+                    onClick={() => navigate('/admin')}
+                    className="w-full sm:w-auto bg-msq-purple-rich text-white py-3 px-6 font-semibold rounded-[18px] hover:bg-msq-purple-light transition-colors duration-200 cursor-pointer"
+                  >
+                    Go to Admin Dashboard
+                  </button>
+                )}
+                <button
+                  onClick={() => setShowPasswordReset(true)}
+                  className="w-full sm:w-auto bg-msq-purple-rich text-white py-3 px-6 font-semibold rounded-[18px] hover:bg-msq-purple-light transition-colors duration-200 cursor-pointer"
+                >
+                  Reset Your Password
+                </button>
+              </div>
             </div>
           </div>
         </div>
