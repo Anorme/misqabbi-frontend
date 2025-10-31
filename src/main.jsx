@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router';
 import { ToastContainer } from 'react-toastify';
+import { HelmetProvider } from '@dr.pogodin/react-helmet';
 
 import App from './App.jsx';
 import { AuthProvider } from './contexts/auth/AuthProvider.jsx';
@@ -16,21 +17,23 @@ import './styles/tailwind.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AuthProvider>
-      <FormProvider>
-        <CatalogProvider>
-          <CartProvider>
-            <FavoritesProvider>
-              <Router>
-                <AuthInterceptorProvider>
-                  <App />
-                </AuthInterceptorProvider>
-              </Router>
-              <ToastContainer theme={undefined} autoClose={3000} />
-            </FavoritesProvider>
-          </CartProvider>
-        </CatalogProvider>
-      </FormProvider>
-    </AuthProvider>
+    <HelmetProvider>
+      <AuthProvider>
+        <FormProvider>
+          <CatalogProvider>
+            <CartProvider>
+              <FavoritesProvider>
+                <Router>
+                  <AuthInterceptorProvider>
+                    <App />
+                  </AuthInterceptorProvider>
+                </Router>
+                <ToastContainer theme={undefined} autoClose={3000} />
+              </FavoritesProvider>
+            </CartProvider>
+          </CatalogProvider>
+        </FormProvider>
+      </AuthProvider>
+    </HelmetProvider>
   </StrictMode>
 );
