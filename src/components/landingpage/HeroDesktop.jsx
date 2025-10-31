@@ -5,7 +5,7 @@ const HeroDesktop = () => (
     className="w-full h-[600px] max-w-screen-6xl mx-auto md:h-[700px] bg-center bg-cover"
     style={{
       backgroundImage:
-        "url('https://images.unsplash.com/photo-1546536133-d1b07a9c768e?q=80&w=986&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+        "url('https://res.cloudinary.com/dyciw970t/image/upload/v1761952396/misqabbi/products/CSI_0053_sqkfoq.jpg')",
       // replace with actual image path
     }}
   >
