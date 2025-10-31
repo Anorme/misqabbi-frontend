@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router';
 import Sidebar from '../components/admin/Sidebar';
+import SEO from '../components/SEO';
 
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEO title="Admin" robots="noindex,nofollow" />
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div
