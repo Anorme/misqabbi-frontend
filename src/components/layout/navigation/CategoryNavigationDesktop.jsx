@@ -17,8 +17,8 @@ const CategoryNavigationDesktop = () => {
   };
 
   return (
-    <div className="w-full border-t border-b border-[#949396]">
-      <nav className="w-full bg-white" aria-label="Category Navigation">
+    <div className="fixed top-24 left-0 right-0 z-40 w-full border-t border-b border-[#949396] bg-white">
+      <nav className="w-full" aria-label="Category Navigation">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-12">
             {/* Left: Category Filters */}
