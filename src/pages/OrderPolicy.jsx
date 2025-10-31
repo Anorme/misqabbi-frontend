@@ -7,7 +7,7 @@ const OrderPolicy = () => {
       <SEO
         title="Order Policy"
         description="Learn about Misqabbi's ordering process, payment options, and delivery policies."
-        canonicalPath="/order-policy"
+        robots="noindex,nofollow"
       />
       {/* Header */}
       <header className="text-center mb-12">
