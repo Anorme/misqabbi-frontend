@@ -1,31 +1,15 @@
-import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog';
-import { setSearchParams } from '../contexts/catalog/catalogActions';
+import { useLocation, useParams } from 'react-router';
 
 export default function useCategorySelection() {
-  const { searchParams } = useCatalogState();
-  const dispatch = useCatalogDispatch();
+  const location = useLocation();
+  const params = useParams();
 
-  const selectedCategory = searchParams.category || '';
-
-  const selectCategory = categoryValue => {
-    // Update search params with new category
-    dispatch(
-      setSearchParams({
-        ...searchParams,
-        category: categoryValue,
-      })
-    );
-  };
-
-  const clearCategory = () => {
-    // Remove category from search params
-    const { category: _category, ...otherParams } = searchParams;
-    dispatch(setSearchParams(otherParams));
-  };
+  // Get selected category from route if on category page
+  // Category dropdown handles navigation directly via useNavigate
+  const isCategoryPage = location.pathname.startsWith('/category/');
+  const selectedCategory = isCategoryPage ? params.category || '' : '';
 
   return {
     selectedCategory,
-    selectCategory,
-    clearCategory,
   };
 }
