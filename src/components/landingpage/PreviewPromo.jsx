@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 
 const PreviewPromo = () => {
-  const [bgPosition, setBgPosition] = useState('center -100px');
+  const [bgPosition, setBgPosition] = useState('center top');
 
   useEffect(() => {
     const handleResize = () => {
-      setBgPosition(window.innerWidth < 768 ? 'center -100px' : 'center -340px');
+      // Position from bottom to ensure full height coverage
+      setBgPosition(window.innerWidth < 768 ? 'center bottom' : 'center bottom');
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -14,17 +15,15 @@ const PreviewPromo = () => {
 
   return (
     <div
-      className="relative w-full h-[122px] md:h-[417px] bg-cover bg-top md:bg-center"
+      className="relative w-full h-[120px] md:h-[450px] bg-cover bg-no-repeat"
       style={{
         backgroundPosition: bgPosition,
         backgroundImage:
-          "url('https://images.unsplash.com/photo-1648322032206-888c91d99616?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+          "url('https://res.cloudinary.com/dyciw970t/image/upload/v1761961275/misqabbi/products/CSI_9996_poumla_df0276.jpg')",
       }}
     >
       <div className=" bg-opacity-40 flex items-center justify-center absolute top-5 md:top-10 inset-x-0">
-        <h2 className=" text-[25px] md:text-[96px] w-[220px] font-lato text-white md:w-[743px] md:h-[154px]">
-          Spring Collection 30% OFF
-        </h2>
+        <h2 className=" text-[25px] md:text-[96px] w-[220px] font-lato text-white md:w-[743px] md:h-[154px]"></h2>
       </div>
     </div>
   );
