@@ -13,7 +13,7 @@ export default function MsqButton({ label, variant = 'gold', className = '', onC
       'text-msq-purple-light border-msq-purple-light hover:bg-msq-purple-light hover:text-white';
   } else if (variant === 'purple-rich') {
     variantClasses =
-      'text-msq-purple-rich border-msq-purple-rich hover:bg-msq-purple-rich hover:text-white';
+      'text-white border-msq-purple-rich bg-msq-purple-rich hover:bg-transparent hover:text-msq-purple-rich transition-all duration-300';
   }
 
   const baseClasses =
