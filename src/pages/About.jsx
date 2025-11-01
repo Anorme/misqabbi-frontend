@@ -1,5 +1,7 @@
+import AboutUs from '../components/landingpage/AboutUs';
+
 const About = () => {
-  return <div>About</div>;
+  return <AboutUs />;
 };
 
 export default About;
