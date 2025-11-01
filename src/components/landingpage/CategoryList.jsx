@@ -10,37 +10,19 @@ const categories = [
     name: 'Dresses',
     value: 'dresses',
     image:
-      'https://images.unsplash.com/photo-1631233999975-3d559f0526e1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-  {
-    name: 'Dungarees',
-    value: 'dungarees',
-    image:
-      'https://plus.unsplash.com/premium_photo-1671748710834-fd02d65ca400?q=80&w=626&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://res.cloudinary.com/dyciw970t/image/upload/v1761957954/misqabbi/landing-page/CSI_0042_rlk5qt.jpg',
   },
   {
     name: 'Pants',
     value: 'pants',
     image:
-      'https://images.unsplash.com/photo-1714729382668-7bc3bb261662?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-  {
-    name: 'Shorts',
-    value: 'shorts',
-    image:
-      'https://plus.unsplash.com/premium_photo-1689536143095-eaa89c407aa7?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://res.cloudinary.com/dyciw970t/image/upload/v1761957953/misqabbi/landing-page/CSI_9965_z6dikk.jpg',
   },
   {
     name: 'Skirts',
     value: 'skirts',
     image:
-      'https://images.unsplash.com/photo-1752836094974-630711fb07c7?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-  {
-    name: 'Tops',
-    value: 'tops',
-    image:
-      'https://plus.unsplash.com/premium_photo-1690820318448-f2f7e938cb58?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://res.cloudinary.com/dyciw970t/image/upload/v1761963218/misqabbi/landing-page/CSI_9918_tf8mxm.jpg',
   },
 ];
 
