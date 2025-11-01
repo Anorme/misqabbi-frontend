@@ -6,17 +6,17 @@ function SizeSelect({ selected, onChange }) {
   }
 
   return (
-    <div className="flex flex-col gap-2 pb-6">
-      <h2 className="text-xl lg:text-2xl ">Size</h2>
+    <div className="flex flex-col gap-2 pb-4 sm:pb-6">
+      <h2 className="text-base sm:text-lg lg:text-2xl">Size</h2>
       <ul className="flex gap-2 justify-around flex-wrap">
         {sizes.map(size => (
           <li
             key={size}
             onClick={() => handleSizeSelect(size)}
-            className={`cursor-pointer border px-4 py-2 rounded-md transition 
+            className={`cursor-pointer border px-3 sm:px-4 py-1.5 sm:py-2 rounded-md transition text-sm sm:text-base
               ${
                 selected === size
-                  ? 'bg-[#cfb484] text-white border[#cfb484]'
+                  ? 'bg-msq-gold-light text-white border-msq-gold-light'
                   : 'bg-gray-100 border-0 hover:bg-gray-200'
               }`}
           >
