@@ -31,7 +31,7 @@ const PreviewBanner = () => {
             NEW ARRIVAL
           </h1>
           <Link to="/shop">
-            <MsqButton label="SHOP COLLECTION" variant="gold" className=" md:mt-12 " />
+            <MsqButton label="SHOP COLLECTION" variant="purple-rich" className=" md:mt-12  " />
           </Link>
         </div>
       </div>
