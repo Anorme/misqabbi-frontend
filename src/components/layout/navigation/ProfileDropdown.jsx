@@ -103,24 +103,6 @@ const ProfileDropdown = ({ className = '' }) => {
                     </div>
                   </Link>
 
-                  {/* Shop */}
-                  <Link
-                    to="/shop"
-                    onClick={closeDropdown}
-                    className="flex items-center gap-3 p-3 mx-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors duration-200 text-gray-900"
-                    role="menuitem"
-                  >
-                    <div className="p-2 bg-msq-purple-rich text-white rounded-full">
-                      <ShoppingBag size={16} />
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm text-msq-purple-rich">Shop</div>
-                      <div className="text-xs text-gray-500">
-                        Discover pieces that feel like you
-                      </div>
-                    </div>
-                  </Link>
-
                   {/* Logout Button */}
                   <div className="pt-2 border-t border-gray-200 mx-2">
                     <LogoutButton
