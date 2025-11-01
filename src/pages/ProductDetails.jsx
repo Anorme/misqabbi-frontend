@@ -148,7 +148,7 @@ function ProductDetails() {
   if (!product) return <p className="p-4">No product found.</p>;
 
   return (
-    <div className="font-lato px-4 py-4 lg:py-8 bg-white">
+    <div className="font-lato px-3 sm:px-4 py-4 lg:py-8 bg-white">
       {product && (
         <>
           <SEO
@@ -175,13 +175,13 @@ function ProductDetails() {
       )}
       <header className="flex relative items-center justify-center">
         <BackButton />
-        <p className="lg:hidden">Product Details</p>
+        <p className="lg:hidden text-sm md:text-base">Product Details</p>
       </header>
 
       <main className="overflow-hidden text-start flex flex-col gap-2">
-        <div className="max-w-screen-xl mx-auto flex flex-col lg:grid lg:grid-cols-2 lg:gap-5 gap-5 py-6">
+        <div className="max-w-screen-xl mx-auto flex flex-col lg:grid lg:grid-cols-2 lg:gap-5 gap-4 sm:gap-5 py-4 sm:py-6">
           {/* Images Section */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-3 sm:gap-4 lg:gap-5">
             <div className="relative">
               <img
                 className="h-[25.75rem] lg:h-[40.125rem] w-full object-cover rounded-none"
@@ -207,7 +207,7 @@ function ProductDetails() {
           </div>
 
           {/* Product Info Section */}
-          <div className="divide-y-2 divide-gray-300 max-w-[534px] lg:pt-4">
+          <div className="divide-y-2 divide-gray-300 lg:pt-4">
             <ProductInfo product={product}></ProductInfo>
 
             <SizeSelect selected={selectedSize} onChange={setSelectedSize}></SizeSelect>
@@ -224,30 +224,30 @@ function ProductDetails() {
               </div>
             )}
 
-            <div className="flex items-start gap-4 pb-6">
+            <div className="flex items-start gap-4 pb-4 sm:pb-6">
               <QuantitySelector quantity={selectedQuantity} onChange={setSelectedQuantity} />
             </div>
 
             {/* Product price and CTA */}
-            <div className="flex py-6 space-x-5 justify-between">
-              <div className="w-1/2 px-3 py-2 bg-[#EEE5E5] rounded-md flex flex-col max-w-[190px]">
-                <p className="text-sm text-[#B1B2B2]">Total price:</p>
-                <h1 className="text-2xl font-extrabold text-msq-purple-deep">
+            <div className="flex py-4 sm:py-6 space-x-3 sm:space-x-5 justify-between">
+              <div className="w-1/2 px-2 sm:px-3 py-2 bg-[#EEE5E5] rounded-md flex flex-col max-w-[190px]">
+                <p className="text-xs sm:text-sm text-[#B1B2B2]">Total price:</p>
+                <h1 className="text-sm sm:text-base md:text-lg lg:text-2xl font-extrabold text-msq-purple-deep">
                   GHC {(product?.price * selectedQuantity).toFixed(2)}
                 </h1>
               </div>
               <button
-                className="bg-msq-purple-rich text-lg text-white rounded-md flex-grow max-w-[320px] cursor-pointer py-3 hover:bg-msq-purple transition-colors duration-200"
+                className="bg-msq-purple-rich text-xs sm:text-sm md:text-base lg:text-lg text-white rounded-md flex-grow max-w-[320px] cursor-pointer py-2 sm:py-3 hover:bg-msq-purple transition-colors duration-200"
                 onClick={handleAddToCart}
               >
                 Add to Cart
               </button>
             </div>
 
-            {/* Buy Now Button - Full Width */}
-            <div className="py-4">
+            {/* Buy Now Button*/}
+            <div className="py-3 sm:py-4">
               <button
-                className="bg-msq-purple-rich text-lg text-white rounded-md w-full cursor-pointer py-3 hover:bg-msq-purple transition-colors duration-200"
+                className="bg-msq-purple-rich font-bold text-sm sm:text-base md:text-lg lg:text-xl text-white rounded-md w-full cursor-pointer h-[52px] py-2 sm:py-3 hover:bg-msq-purple transition-colors duration-200"
                 onClick={handleBuyNow}
               >
                 Buy Now
