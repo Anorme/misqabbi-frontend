@@ -3,20 +3,20 @@ import CtaGrid from './CtaGrid';
 const CtaSection = () => {
   const images = [
     {
-      src: 'https://images.unsplash.com/photo-1695298802594-f1459207ddb2?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      alt: 'White ruffled top',
+      src: 'https://res.cloudinary.com/dyciw970t/image/upload/v1761957971/misqabbi/landing-page/CSI_0021_cafnkk.jpg',
+      alt: 'African print boubou',
     },
     {
-      src: 'https://images.unsplash.com/photo-1619785292489-043ea2cc700c?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      alt: 'Red Amour tee',
+      src: 'https://res.cloudinary.com/dyciw970t/image/upload/v1761957940/misqabbi/landing-page/CSI_9931_yswr5p.jpg',
+      alt: 'African print skirt',
     },
     {
-      src: 'https://images.unsplash.com/photo-1602185948056-7a517148a391?q=80&w=757&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      alt: 'Pink and blue dress',
+      src: 'https://res.cloudinary.com/dyciw970t/image/upload/v1761957970/misqabbi/landing-page/CSI_0017_xfkeyp.jpg',
+      alt: 'African print boubou',
     },
     {
-      src: 'https://images.unsplash.com/photo-1619785292559-a15caa28bde6?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      alt: 'Metallic cutout outfit',
+      src: 'https://res.cloudinary.com/dyciw970t/image/upload/v1761957944/misqabbi/landing-page/CSI_9950_axm5vx.jpg',
+      alt: 'African print skirt',
     },
   ];
 
