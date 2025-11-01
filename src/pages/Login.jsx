@@ -5,7 +5,6 @@ import UserAuthForm from '../components/auth/UserAuthForm';
 import PasswordResetModal from '../components/profile/PasswordResetModal';
 import SEO from '../components/SEO';
 
-import loginImg from '../assets/login.png';
 import useMediaQuery from '../hooks/useMediaQuery';
 
 const Login = () => {
@@ -22,7 +21,11 @@ const Login = () => {
       <div className="w-full max-w-md sm:max-w-lg md:max-w-4xl lg:max-w-5xl flex bg-white rounded-none md:rounded-2xl overflow-visible md:overflow-hidden md:shadow-lg mx-0 md:mx-4 my-0 md:my-16 min-h-screen md:min-h-0">
         {isMdUp && (
           <div className="w-[45%] hidden md:flex items-stretch">
-            <img src={loginImg} alt="Visual" className="object-cover w-full h-full" />
+            <img
+              src="https://res.cloudinary.com/dyciw970t/image/upload/v1762028288/IMG_0017_copy_hpuavv.jpg"
+              alt="Visual"
+              className="object-cover w-full h-full"
+            />
           </div>
         )}
 

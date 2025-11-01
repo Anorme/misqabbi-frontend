@@ -1,5 +1,4 @@
 import UserAuthForm from '../components/auth/UserAuthForm';
-import signupImg from '../assets/signup.png';
 import { Link } from 'react-router';
 import useMediaQuery from '../hooks/useMediaQuery';
 import SEO from '../components/SEO';
@@ -17,7 +16,11 @@ const Register = () => {
       <div className="w-full max-w-md sm:max-w-lg md:max-w-4xl lg:max-w-5xl flex bg-white rounded-none md:rounded-2xl overflow-visible md:overflow-hidden md:shadow-lg mx-0 md:mx-4 my-0 md:my-16 min-h-screen md:min-h-0">
         {isMdUp && (
           <div className="w-[45%] hidden md:flex items-stretch">
-            <img src={signupImg} alt="Visual" className="object-cover w-full h-full" />
+            <img
+              src="https://res.cloudinary.com/dyciw970t/image/upload/v1762028288/IMG_0058_copy_p7tquy.jpg"
+              alt="Visual"
+              className="object-cover w-full h-full"
+            />
           </div>
         )}
         <div className="w-full md:w-[55%] p-6 sm:p-8 flex flex-col justify-center">
