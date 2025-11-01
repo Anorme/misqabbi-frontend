@@ -38,7 +38,7 @@ function TrendingCollection() {
           Shine bright with this week's must-have trend selections.
         </p>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-6 mb-12">
         {items.map(item => (
           <TrendingItemCard key={item.name} {...item} />
         ))}
