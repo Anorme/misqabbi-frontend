@@ -4,6 +4,7 @@ import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
 import Home from './pages/Home';
 import About from './pages/About';
+import Contact from './pages/Contact';
 import FAQs from './pages/FAQs';
 import ReturnPolicy from './pages/ReturnPolicy';
 import OrderPolicy from './pages/OrderPolicy';
@@ -90,6 +91,14 @@ const App = () => {
           element={
             <MainLayout>
               <About />
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path="/contact-us"
+          element={
+            <MainLayout>
+              <Contact />
             </MainLayout>
           }
         ></Route>
