@@ -1,5 +1,5 @@
 export const CATEGORIES = [
-  { value: '', label: 'All' },
+  { value: '', label: 'ALL' },
   { value: 'pants', label: 'PANTS' },
   { value: 'shorts', label: 'SHORTS' },
   { value: 'skirts', label: 'SKIRTS' },
