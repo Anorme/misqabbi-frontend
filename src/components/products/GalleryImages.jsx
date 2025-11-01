@@ -5,7 +5,7 @@ function GalleryImages({ product }) {
 
   return (
     <>
-      <ul className="grid grid-cols-5 gap-2 sm:gap-3 lg:gap-4 h-20 sm:h-24 lg:h-28 px-2 sm:px-3 lg:px-4 mx-auto">
+      <ul className="grid grid-cols-5 gap-2 sm:gap-3 lg:gap-4 h-full px-2 sm:px-3 lg:px-4 w-full">
         {galleryImages.map((img, idx) => (
           <li key={idx}>
             <img
