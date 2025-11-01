@@ -13,6 +13,18 @@ const SearchBar = ({
   value = '',
   ...props
 }) => {
+  // Handle close button - clear query and close search
+  const handleClose = () => {
+    // Clear query if it exists
+    if (value && onClear) {
+      onClear();
+    }
+    // Close search bar
+    if (onClose) {
+      onClose();
+    }
+  };
+
   if (variant === 'mobile') {
     return (
       <div className={`relative ${className}`}>
@@ -27,7 +39,12 @@ const SearchBar = ({
         {showIcon && (
           <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
             {isSearchOpen ? (
-              <CloseButton onClose={onClose} size={18} className="p-1" ariaLabel="Close search" />
+              <CloseButton
+                onClose={handleClose}
+                size={18}
+                className="p-1"
+                ariaLabel="Close search"
+              />
             ) : value && onClear ? (
               <button type="button" onClick={onClear} className="p-1" aria-label="Clear search">
                 <X size={18} className="text-msq-gold-light" />
@@ -55,7 +72,7 @@ const SearchBar = ({
       {showIcon && (
         <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
           {isSearchOpen && onClose ? (
-            <CloseButton onClose={onClose} size={18} className="p-1" ariaLabel="Close search" />
+            <CloseButton onClose={handleClose} size={18} className="p-1" ariaLabel="Close search" />
           ) : value && onClear ? (
             <button type="button" onClick={onClear} className="p-1" aria-label="Clear search">
               <X
