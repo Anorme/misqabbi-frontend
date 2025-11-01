@@ -85,7 +85,7 @@ const SortDropdown = ({
               }`}
               role="menuitem"
             >
-              {option.label}
+              {option.label?.toUpperCase()}
             </button>
           ))}
         </div>
