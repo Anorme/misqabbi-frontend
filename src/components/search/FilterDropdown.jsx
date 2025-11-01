@@ -83,7 +83,7 @@ const FilterDropdown = ({ variant = 'desktop', className = '' }) => {
             className="w-full text-left px-4 py-2 text-sm transition-colors duration-200 cursor-pointer text-msq-purple-deep hover:bg-msq-gold-light/10 hover:text-msq-purple-rich"
             role="menuitem"
           >
-            Price
+            PRICE
           </button>
         </div>
       )}
