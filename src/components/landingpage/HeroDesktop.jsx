@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 
 const HeroDesktop = () => (
   <section
-    className="w-full h-[600px] max-w-screen-6xl mx-auto md:h-[700px] bg-center bg-cover"
+    className="w-full h-screen max-w-screen-6xl mx-auto bg-center bg-cover"
     style={{
       backgroundImage:
         "url('https://res.cloudinary.com/dyciw970t/image/upload/v1761952396/misqabbi/products/CSI_0053_sqkfoq.jpg')",
