@@ -22,6 +22,7 @@ export default function SEO({
 
   return (
     <Helmet>
+      <link rel="icon" type="image/x-icon" href="/favicon.ico" />
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       {robots && <meta name="robots" content={robots} />}
