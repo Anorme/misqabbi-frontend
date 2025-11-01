@@ -54,7 +54,9 @@ const SearchBar = ({
       />
       {showIcon && (
         <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-          {value && onClear ? (
+          {isSearchOpen && onClose ? (
+            <CloseButton onClose={onClose} size={18} className="p-1" ariaLabel="Close search" />
+          ) : value && onClear ? (
             <button type="button" onClick={onClear} className="p-1" aria-label="Clear search">
               <X
                 size={18}
