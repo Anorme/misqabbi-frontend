@@ -178,13 +178,13 @@ function ProductDetails() {
         <p className="lg:hidden text-sm md:text-base">Product Details</p>
       </header>
 
-      <main className="overflow-hidden text-start flex flex-col gap-2">
-        <div className="max-w-screen-xl mx-auto flex flex-col lg:grid lg:grid-cols-2 lg:gap-5 gap-4 sm:gap-5 py-4 sm:py-6">
+      <main className="text-start flex flex-col gap-2">
+        <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 py-4 sm:py-6 items-start">
           {/* Images Section */}
           <div className="flex flex-col gap-3 sm:gap-4 lg:gap-5">
             <div className="relative">
               <img
-                className="h-[25.75rem] lg:h-[40.125rem] w-full object-cover rounded-none"
+                className="h-[3/4] w-full object-cover rounded-none"
                 src={product.image || getPrimaryImageUrl(product)}
                 alt={product?.name}
               />
