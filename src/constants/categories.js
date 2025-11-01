@@ -1,16 +1,16 @@
 export const CATEGORIES = [
   { value: '', label: 'All' },
-  { value: 'pants', label: 'Pants' },
-  { value: 'shorts', label: 'Shorts' },
-  { value: 'skirts', label: 'Skirts' },
-  { value: 'dresses', label: 'Dresses' },
-  { value: 'tops', label: 'Tops' },
-  { value: 'dungarees', label: 'Dungarees' },
+  { value: 'pants', label: 'PANTS' },
+  { value: 'shorts', label: 'SHORTS' },
+  { value: 'skirts', label: 'SKIRTS' },
+  { value: 'dresses', label: 'DRESSES' },
+  { value: 'tops', label: 'TOPS' },
+  { value: 'dungarees', label: 'DUNGARREES' },
 ];
 
 export const getCategoryLabel = value => {
   const category = CATEGORIES.find(cat => cat.value === value);
-  return category ? category.label : 'All Categories';
+  return category ? category.label : 'ALL CATEGORIES';
 };
 
 export const getCategoryValue = label => {
