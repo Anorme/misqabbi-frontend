@@ -21,7 +21,7 @@ const Showcase = () => {
           <MsqButton
             label="VIEW THE COLLECTION"
             variant="purple-rich"
-            className="text-[16px] md:text-[20px]"
+            className="text-[12px] md:text-[16px] lg:text-[18px]"
           />
         </Link>
       </div>
