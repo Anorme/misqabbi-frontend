@@ -59,16 +59,16 @@ const ProductCard = ({ product }) => {
         </div>
       </div>
       <div className="px-4 py-2">
-        <h3 className="text-sm md:text-[20px] font-medium text-msq-purple uppercase text-left tracking-wide mb-2">
+        <h3 className="text-xs md:text-sm lg:text-lg font-medium text-msq-purple uppercase text-left tracking-wide">
           {product.name}
         </h3>
         <div className="flex items-center justify-between">
-          <span className="text-xl md:text-[20px] font-bold text-msq-purple-deep">
+          <span className="text-sm md:text-base lg:text-xl font-bold text-msq-purple-deep">
             GHC {product.price}
           </span>
           <button type="button" aria-label="Add to cart" onClick={handleAddToCart}>
             {/* Shopping Cart SVG icon */}
-            <ShoppingBag className="text-msq-gold-light cursor-pointer" size={30} />
+            <ShoppingBag className="text-msq-gold-light cursor-pointer w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 mt-[-2px]" />
           </button>
         </div>
       </div>
