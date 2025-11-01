@@ -87,7 +87,7 @@ const CategoryPage = () => {
         canonicalPath={`/category/${category.value}`}
       />
       <CategoryNavigation />
-      <main className="w-full px-4 sm:px-6 lg:px-8 py-8">
+      <main className="w-full mt-6 lg:mt-12 px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6">
           <h1 className="text-2xl font-bebas text-msq-purple-rich"> {category.label}</h1>
           <p className="text-gray-600 mt-2">{categoryDescription}</p>
