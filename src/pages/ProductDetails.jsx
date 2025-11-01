@@ -173,7 +173,7 @@ function ProductDetails() {
           />
         </>
       )}
-      <header className="flex relative items-center justify-center">
+      <header className="flex relative items-center justify-center md:mt-8">
         <BackButton />
         <p className="lg:hidden text-sm md:text-base">Product Details</p>
       </header>
