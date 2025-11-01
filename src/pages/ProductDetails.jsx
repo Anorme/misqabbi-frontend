@@ -184,7 +184,7 @@ function ProductDetails() {
           <div className="flex flex-col gap-3 sm:gap-4 lg:gap-5">
             <div className="relative">
               <img
-                className="h-[3/4] w-full object-cover rounded-none"
+                className="aspect-[3/4] w-full object-cover rounded-none"
                 src={product.image || getPrimaryImageUrl(product)}
                 alt={product?.name}
               />
