@@ -20,7 +20,7 @@ const CategoryNavigationMobile = () => {
     <div className="fixed top-[72px] left-0 right-0 z-40 w-full border-t border-b border-[#949396] bg-white">
       <nav className="w-full" aria-label="Category Navigation">
         <div className="max-w-7xl mx-auto px-2 sm:px-4">
-          <div className="flex items-center justify-between h-12 overflow-hidden">
+          <div className="flex items-center justify-between h-12">
             {/* Left: Category Dropdown*/}
             <div className="flex items-center h-full flex-1 min-w-0">
               <CategoryDropdown selectedCategory={selectedCategory} variant="mobile" />
