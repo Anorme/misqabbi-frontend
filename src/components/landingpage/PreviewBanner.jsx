@@ -5,11 +5,11 @@ import { Link } from 'react-router';
 import MsqButton from './MsqButton';
 
 const PreviewBanner = () => {
-  const [bgPosition, setBgPosition] = useState('center -100px');
+  const [bgPosition, setBgPosition] = useState('center top');
 
   useEffect(() => {
     const handleResize = () => {
-      setBgPosition(window.innerWidth < 768 ? 'center -100px' : 'center -340px');
+      setBgPosition(window.innerWidth < 768 ? 'center top' : 'center top');
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -18,11 +18,11 @@ const PreviewBanner = () => {
 
   return (
     <div
-      className="relative w-full h-[122px] md:h-[500px] bg-cover bg-top md:bg-center "
+      className="relative w-full h-[120px] md:h-[450px] bg-cover"
       style={{
         backgroundPosition: bgPosition,
         backgroundImage:
-          "url('https://images.unsplash.com/photo-1648322032202-73cb85f354be?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'",
+          "url('https://res.cloudinary.com/dyciw970t/image/upload/v1761961275/misqabbi/products/CSI_9996_poumla_df0276.jpg')",
       }}
     >
       <div className="absolute inset-0 flex items-center justify-center">

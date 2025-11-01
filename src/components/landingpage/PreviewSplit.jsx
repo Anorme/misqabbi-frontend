@@ -8,10 +8,10 @@ const PreviewSplit = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 ">
         {/* Denim Section */}
         <div
-          className="relative w-full h-[422px] md:h-[400px] bg-cover bg-center"
+          className="relative w-full h-[200px] md:h-[500px] bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('https://images.unsplash.com/photo-1756485161657-e005fc9e4393?q=80&w=708&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+              "url('https://res.cloudinary.com/dyciw970t/image/upload/v1761957976/misqabbi/products/CSI_0103_z9fxdo.jpg')",
           }}
         >
           <div className="absolute bottom-5 inset-x-0 bg-opacity-30 flex items-center justify-center">
@@ -26,10 +26,10 @@ const PreviewSplit = () => {
 
         {/* Ankara Section */}
         <div
-          className="relative w-full h-[422px] md:h-[400px] bg-cover bg-center"
+          className="relative w-full h-[200px] md:h-[500px] bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('https://images.unsplash.com/photo-1713845784488-f81dbf2b1e81?q=80&w=715&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+              "url('https://res.cloudinary.com/dyciw970t/image/upload/v1761963749/misqabbi/landing-page/CSI_9913_lvhkas_62433c.jpg')",
           }}
         >
           <div className="absolute bottom-5 inset-x-0 bg-opacity-30 flex items-center justify-center">
