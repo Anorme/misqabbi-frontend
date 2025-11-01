@@ -175,7 +175,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
                 </div>
               </Link>
               <Link
-                to="/help"
+                to="/faqs"
                 onClick={onClose}
                 className="block py-3 px-3 text-msq-purple-rich hover:bg-gray-100 rounded-lg transition-colors duration-200"
               >
