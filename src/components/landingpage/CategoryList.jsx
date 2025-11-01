@@ -13,6 +13,12 @@ const categories = [
       'https://res.cloudinary.com/dyciw970t/image/upload/v1761957954/misqabbi/landing-page/CSI_0042_rlk5qt.jpg',
   },
   {
+    name: 'Dungarees',
+    value: 'dungarees',
+    image:
+      'https://res.cloudinary.com/dyciw970t/image/upload/v1762026828/jpeg-optimizer_IMG_0004_copy_zzlpvt.jpg',
+  },
+  {
     name: 'Pants',
     value: 'pants',
     image:
