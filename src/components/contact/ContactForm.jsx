@@ -306,7 +306,7 @@ const ContactForm = () => {
                     Email
                   </h3>
                   <p className="text-white/80 text-sm font-lato group-hover:text-white/90 transition-colors break-all">
-                    support@misqabbigh.com
+                    info@misqabbigh.com
                   </p>
                 </div>
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
