@@ -22,6 +22,13 @@ const NavActions = ({ variant = 'desktop', className = '', onSearchToggle }) => 
   // Desktop variant
   return (
     <div className={`flex items-center space-x-2 ${className}`}>
+      <button
+        onClick={onSearchToggle}
+        className="p-2 text-msq-gold-light cursor-pointer hover:text-msq-gold transition-colors duration-200"
+        aria-label="Toggle search"
+      >
+        <Search size={20} />
+      </button>
       <FavoritesButton size={20} showCount={true} />
       <CartButton size={20} showCount={true} />
       <div className="">
