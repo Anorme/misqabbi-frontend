@@ -20,7 +20,7 @@ const Showcase = () => {
         <Link to="/shop">
           <MsqButton
             label="VIEW THE COLLECTION"
-            variant="gold"
+            variant="purple-rich"
             className="text-[16px] md:text-[20px]"
           />
         </Link>
