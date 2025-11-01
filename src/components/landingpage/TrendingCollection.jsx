@@ -2,27 +2,27 @@ import TrendingItemCard from './TrendingItemCard';
 
 const items = [
   {
-    name: 'HIGH WAIST PANT',
+    name: 'Ileme Dress',
     image:
-      'https://images.unsplash.com/photo-1681638413089-0d2232195ad1?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://res.cloudinary.com/dyciw970t/image/upload/v1761965676/misqabbi/landing-page/CSI_0041_n1o6cm.jpg',
     price: 300,
   },
   {
-    name: 'CLASSIC BLACK BLAZER',
+    name: 'Missy J Boubou',
     image:
-      'https://images.unsplash.com/photo-1748290880592-6ca12f3628e0?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://res.cloudinary.com/dyciw970t/image/upload/v1761965808/misqabbi/landing-page/CSI_0093_ila3wb.jpg',
     price: 300,
   },
   {
-    name: 'FLORAL MINI DRESS',
+    name: 'Mayah Skirt',
     image:
-      'https://images.unsplash.com/photo-1689553119681-61493fd2515f?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://res.cloudinary.com/dyciw970t/image/upload/v1761965680/misqabbi/landing-page/CSI_9944_dsvzfv.jpg',
     price: 300,
   },
   {
-    name: 'LAYLA MIDI DRESS',
+    name: 'Belle Pants',
     image:
-      'https://images.unsplash.com/photo-1649200769400-09c1f6292bbd?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://res.cloudinary.com/dyciw970t/image/upload/v1761957952/misqabbi/landing-page/CSI_9971_yqxnkp.jpg',
     price: 300,
   },
 ];
