@@ -1,34 +1,22 @@
 import { Link } from 'react-router';
-import { useEffect, useState } from 'react';
 import { Package, ShoppingCart, Users, TrendingUp } from 'lucide-react';
 import StatCard from '../../components/admin/StatCard';
-import { fetchAdminDashboard } from '../../api/admin';
+import { useAdminDashboard } from '../../hooks/queries/useAdmin';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 const AdminDashboard = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // Use TanStack Query for dashboard fetching with caching
+  const {
+    data: dashboardData,
+    isLoading: loading,
+    isError,
+    error: queryError,
+  } = useAdminDashboard();
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await fetchAdminDashboard();
-        if (!cancelled) setData(res?.data || null);
-      } catch (e) {
-        if (!cancelled)
-          setError(e?.response?.data?.message || e?.message || 'Failed to load dashboard');
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const data = dashboardData?.data || null;
+  const error = isError
+    ? queryError?.response?.data?.message || queryError?.message || 'Failed to load dashboard'
+    : null;
 
   const totalProducts = data?.totals?.products ?? 0;
   const totalOrders = data?.totals?.orders ?? 0;
