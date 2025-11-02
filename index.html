@@ -15,12 +15,21 @@
       name="description"
       content="Discover Misqabbi, a women's wear brand that's all about the girlies. Explore curated lounge and casual pieces made to empower her. Soft, elegant and uniquely crafted for her."
     />
-    <!-- Preload critical hero image for faster LCP -->
+    <!-- Preload critical hero image for faster LCP - mobile first -->
+    <link
+      rel="preload"
+      as="image"
+      href="https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_800,c_limit/v1761952396/misqabbi/products/CSI_0053_sqkfoq.jpg"
+      fetchpriority="high"
+      media="(max-width: 768px)"
+    />
+    <!-- Preload desktop hero image -->
     <link
       rel="preload"
       as="image"
       href="https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_1920,c_limit/v1761952396/misqabbi/products/CSI_0053_sqkfoq.jpg"
       fetchpriority="high"
+      media="(min-width: 769px)"
     />
   </head>
   <body>
