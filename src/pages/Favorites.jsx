@@ -1,4 +1,4 @@
-import { useFavorites } from '../contexts/favorites/useFavorites';
+import { useFavorites as useFavoritesQuery } from '../hooks/queries/useFavorites';
 import { useAuthState } from '../contexts/auth/useAuth';
 import AuthActionModal from '../components/auth/AuthActionModal';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
@@ -7,16 +7,25 @@ import useAuthAction from '../hooks/useAuthAction';
 import { useEffect } from 'react';
 
 const Favorites = () => {
-  const { favoriteItems, isLoading } = useFavorites();
-  const { isAuthenticated } = useAuthState();
+  const { isAuthenticated, isAuthLoading } = useAuthState();
   const { requireAuth, closeModal, isModalOpen, modalContext } = useAuthAction();
+
+  // Use TanStack Query for favorites fetching with caching
+  const {
+    data: favoriteItems = [],
+    isLoading,
+    isError,
+    error,
+  } = useFavoritesQuery({
+    enabled: isAuthenticated && !isAuthLoading, // Only fetch if authenticated
+  });
 
   // Check authentication on component mount
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated && !isAuthLoading) {
       requireAuth(() => {}, 'favorites');
     }
-  }, [isAuthenticated, requireAuth]);
+  }, [isAuthenticated, isAuthLoading, requireAuth]);
 
   if (!isAuthenticated) {
     return (
@@ -26,12 +35,22 @@ const Favorites = () => {
     );
   }
 
-  if (isLoading) {
+  if (isLoading || isAuthLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <LoadingSpinner size={48} color="#81298c" />
           <p className="text-gray-600 mt-4">Loading your favorites...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">{error?.message || 'Failed to load favorites'}</p>
         </div>
       </div>
     );
@@ -70,7 +89,10 @@ const Favorites = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {favoriteItems.map(item => (
-              <div key={item.id} className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div
+                key={item.id || item.productId || item._id}
+                className="bg-white rounded-lg shadow-sm overflow-hidden"
+              >
                 <div className="aspect-w-1 aspect-h-1">
                   <img
                     src={getPrimaryImageUrl(item)}
