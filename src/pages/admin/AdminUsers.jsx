@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getRoleColor } from '../../utils/admin/tableHelpers';
 
@@ -9,23 +9,38 @@ import PageHeader from '../../components/admin/PageHeader';
 import { ViewButton, EditButton, DeleteButton } from '../../components/admin/ActionButton';
 import PaginationLocal from '../../components/orders/PaginationLocal';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
-import { fetchAdminUsers, updateAdminUserRole, deleteAdminUser } from '../../api/users';
+import { useAdminUsers } from '../../hooks/queries/useAdmin';
+import { useUpdateUserRole, useDeleteUser } from '../../hooks/mutations/useUserMutations';
 import { userRoles } from '../../constants/admin';
 
 const AdminUsers = () => {
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [limit] = useState(12);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [formData, setFormData] = useState({
     role: '',
   });
+
+  // Use TanStack Query for users fetching with caching
+  const {
+    data: usersData,
+    isLoading: loading,
+    isError,
+    error: queryError,
+  } = useAdminUsers({ page: currentPage, limit });
+
+  const users = usersData?.data || [];
+  const totalPages = usersData?.totalPages || 1;
+  const error = isError
+    ? queryError?.response?.data?.message || queryError?.message || 'Failed to load users'
+    : null;
+
+  // Mutation hooks
+  const updateUserRoleMutation = useUpdateUserRole();
+  const deleteUserMutation = useDeleteUser();
 
   // Filter users by search term
   const filteredUsers = searchTerm
@@ -105,11 +120,8 @@ const AdminUsers = () => {
     if (!deleteTarget?._id) return;
     setIsDeleting(true);
     try {
-      await deleteAdminUser(deleteTarget._id);
+      await deleteUserMutation.mutateAsync(deleteTarget._id);
       showSuccessToast('User deleted successfully');
-      const res = await fetchAdminUsers({ page: currentPage, limit });
-      setUsers(res?.data || []);
-      setTotalPages(Number(res?.totalPages) || 1);
       setIsDeleteModalOpen(false);
       setDeleteTarget(null);
     } catch (e) {
@@ -130,20 +142,16 @@ const AdminUsers = () => {
       return;
     }
     try {
-      await updateAdminUserRole(editingUser._id || editingUser.id, formData.role);
+      await updateUserRoleMutation.mutateAsync({
+        id: editingUser._id || editingUser.id,
+        role: formData.role,
+      });
       showSuccessToast('User role updated successfully');
       setIsModalOpen(false);
-      // Refetch current page
-      setLoading(true);
-      const res = await fetchAdminUsers({ page: currentPage, limit });
-      setUsers(res?.data || []);
-      setTotalPages(Number(res?.totalPages) || 1);
+      setFormData({ role: '' });
     } catch (e) {
       const msg = e?.response?.data?.message || e?.message || 'Failed to update user role';
       showErrorToast(msg);
-    } finally {
-      setLoading(false);
-      setFormData({ role: '' });
     }
   };
 
@@ -155,30 +163,6 @@ const AdminUsers = () => {
     setSearchTerm(e.target.value);
     setCurrentPage(1); // Reset to first page when searching
   };
-
-  useEffect(() => {
-    let cancelled = false;
-    const run = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await fetchAdminUsers({ page: currentPage, limit });
-        if (!cancelled) {
-          setUsers(res?.data || []);
-          setTotalPages(Number(res?.totalPages) || 1);
-        }
-      } catch (e) {
-        if (!cancelled)
-          setError(e?.response?.data?.message || e?.message || 'Failed to load users');
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    };
-    run();
-    return () => {
-      cancelled = true;
-    };
-  }, [currentPage, limit]);
 
   return (
     <div className="space-y-6">
