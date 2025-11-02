@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { formatCurrency, getStatusColor } from '../../utils/admin/tableHelpers';
@@ -12,22 +12,36 @@ import PaginationLocal from '../../components/orders/PaginationLocal';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
-import { fetchAdminOrders, updateAdminOrderStatus } from '../../api/orders';
+import { useAdminOrders } from '../../hooks/queries/useAdmin';
+import { useUpdateOrderStatus } from '../../hooks/mutations/useOrderMutations';
 
 import { orderStatuses } from '../../constants/admin';
 
 const AdminOrders = () => {
-  const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [limit] = useState(12);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [statusFilter, setStatusFilter] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingOrder, setEditingOrder] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState('');
-  const navigate = useNavigate();
+
+  // Use TanStack Query for orders fetching with caching
+  const {
+    data: ordersData,
+    isLoading: loading,
+    isError,
+    error: queryError,
+  } = useAdminOrders({ page: currentPage, limit });
+
+  const orders = ordersData?.data || [];
+  const totalPages = ordersData?.totalPages || 1;
+  const error = isError
+    ? queryError?.response?.data?.message || queryError?.message || 'Failed to load orders'
+    : null;
+
+  // Mutation hook
+  const updateOrderStatusMutation = useUpdateOrderStatus();
 
   const getCustomerDetail = (order, detail) => order.shippingInfo[detail];
 
@@ -117,21 +131,17 @@ const AdminOrders = () => {
       return;
     }
     try {
-      await updateAdminOrderStatus(editingOrder._id || editingOrder.id, selectedStatus);
+      await updateOrderStatusMutation.mutateAsync({
+        id: editingOrder._id || editingOrder.id,
+        status: selectedStatus,
+      });
       showSuccessToast('Order status updated successfully');
       setIsModalOpen(false);
       setEditingOrder(null);
       setSelectedStatus('');
-      // Refetch current page to reflect change
-      setLoading(true);
-      const res = await fetchAdminOrders({ page: currentPage, limit });
-      setOrders(res?.data || []);
-      setTotalPages(Number(res?.totalPages) || 1);
     } catch (e) {
       const msg = e?.response?.data?.message || e?.message || 'Failed to update order status';
       showErrorToast(msg);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -143,30 +153,6 @@ const AdminOrders = () => {
     setStatusFilter(status);
     setCurrentPage(1); // Reset to first page when filtering
   };
-
-  useEffect(() => {
-    let cancelled = false;
-    const run = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await fetchAdminOrders({ page: currentPage, limit });
-        if (!cancelled) {
-          setOrders(res?.data || []);
-          setTotalPages(Number(res?.totalPages) || 1);
-        }
-      } catch (e) {
-        if (!cancelled)
-          setError(e?.response?.data?.message || e?.message || 'Failed to load orders');
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    };
-    run();
-    return () => {
-      cancelled = true;
-    };
-  }, [currentPage, limit]);
 
   return (
     <div className="space-y-6">
