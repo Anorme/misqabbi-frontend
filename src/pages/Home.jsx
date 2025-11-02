@@ -1,10 +1,13 @@
-import CtaSection from '../components/landingpage/CtaSection';
+import { lazy, Suspense } from 'react';
 import HeroSection from '../components/landingpage/HeroSection';
-import Preview from '../components/landingpage/Preview';
-import Showcase from '../components/landingpage/Showcase';
 import SectionWrapper from '../components/landingpage/SectionWrapper';
 import SEO from '../components/SEO';
 import StructuredData from '../components/seo/StructuredData';
+
+// Lazy load below-the-fold components to reduce initial bundle size
+const Showcase = lazy(() => import('../components/landingpage/Showcase'));
+const Preview = lazy(() => import('../components/landingpage/Preview'));
+const CtaSection = lazy(() => import('../components/landingpage/CtaSection'));
 
 const Home = () => {
   return (
@@ -34,13 +37,19 @@ const Home = () => {
       />
       <HeroSection />
       <SectionWrapper>
-        <Showcase />
+        <Suspense fallback={null}>
+          <Showcase />
+        </Suspense>
       </SectionWrapper>
       <SectionWrapper>
-        <Preview />
+        <Suspense fallback={null}>
+          <Preview />
+        </Suspense>
       </SectionWrapper>
       <SectionWrapper>
-        <CtaSection />
+        <Suspense fallback={null}>
+          <CtaSection />
+        </Suspense>
       </SectionWrapper>
     </div>
   );
