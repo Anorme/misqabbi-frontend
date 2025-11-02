@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router';
 
 import MainLayout from './layouts/MainLayout';
-import AdminLayout from './layouts/AdminLayout';
 import AuthBoundaryModal from './components/auth/AuthBoundaryModal';
 import ScrollToTop from './components/ui/ScrollToTop';
 import PageLoader from './components/ui/PageLoader';
@@ -13,8 +12,6 @@ import './App.css';
 // Critical routes - keep eager for initial load
 import Home from './pages/Home';
 import ProductList from './pages/ProductList';
-import ProductDetails from './pages/ProductDetails';
-import CategoryPage from './pages/CategoryPage';
 import NotFound from './components/ui/NotFound';
 
 // Secondary routes
@@ -29,6 +26,8 @@ const Favorites = lazy(() => import('./pages/Favorites'));
 const Register = lazy(() => import('./pages/Register'));
 const Login = lazy(() => import('./pages/Login'));
 const AuthCallback = lazy(() => import('./pages/auth/AuthCallback'));
+const CategoryPage = lazy(() => import('./pages/CategoryPage'));
+const ProductDetails = lazy(() => import('./pages/ProductDetails'));
 const Orders = lazy(() => import('./pages/Orders'));
 const OrderDetails = lazy(() => import('./pages/OrderDetails'));
 const Profile = lazy(() => import('./pages/Profile'));
@@ -36,6 +35,7 @@ const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 const PaymentCallback = lazy(() => import('./pages/PaymentCallback'));
 
 // Admin pages
+const AdminLayout = lazy(() => import('./layouts/AdminLayout'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'));
 const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'));
@@ -233,7 +233,9 @@ const App = () => {
           path="/product/:slug"
           element={
             <MainLayout>
-              <ProductDetails />
+              <Suspense fallback={<PageLoader />}>
+                <ProductDetails />
+              </Suspense>
             </MainLayout>
           }
         />
@@ -257,7 +259,9 @@ const App = () => {
           element={
             <AuthBoundaryModal>
               <AdminBoundary>
-                <AdminLayout />
+                <Suspense fallback={<PageLoader />}>
+                  <AdminLayout />
+                </Suspense>
               </AdminBoundary>
             </AuthBoundaryModal>
           }
