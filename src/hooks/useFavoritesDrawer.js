@@ -1,9 +1,19 @@
 import { useState, useEffect } from 'react';
-import { useFavorites } from '../contexts/favorites/useFavorites';
-import { clearFavorites } from '../contexts/favorites/favoritesActions';
+import { useFavorites as useFavoritesQuery } from '../hooks/queries/useFavorites';
+import { useRemoveFavorite } from '../hooks/mutations/useFavoriteMutations';
+import { useAuthState } from '../contexts/auth/useAuth';
 
 const useFavoritesDrawer = (isOpen, onClose) => {
-  const { favoriteItems, dispatch } = useFavorites();
+  const { isAuthenticated, isAuthLoading } = useAuthState();
+
+  // Use TanStack Query for favorites data
+  const { data: favoriteItems = [] } = useFavoritesQuery({
+    enabled: isAuthenticated && !isAuthLoading,
+  });
+
+  // Mutation hook - must be called at top level
+  const removeFavoriteMutation = useRemoveFavorite();
+
   const [isAnimating, setIsAnimating] = useState(false);
 
   // Handle animation states and body scroll
@@ -29,9 +39,17 @@ const useFavoritesDrawer = (isOpen, onClose) => {
     }
   };
 
-  const handleClearFavorites = () => {
+  const handleClearFavorites = async () => {
     if (window.confirm('Are you sure you want to clear all favorites?')) {
-      dispatch(clearFavorites());
+      try {
+        // Remove each favorite - use productId if available, otherwise fall back to id
+        await Promise.all(
+          favoriteItems.map(item => removeFavoriteMutation.mutateAsync(item.productId || item.id))
+        );
+        // Query will automatically refetch after mutations invalidate it
+      } catch (error) {
+        console.error('Error clearing favorites:', error);
+      }
     }
   };
 
