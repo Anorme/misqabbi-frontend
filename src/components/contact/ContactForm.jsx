@@ -77,52 +77,49 @@ const ContactForm = () => {
   };
 
   const inputClasses =
-    'w-full px-4 py-3.5 pl-12 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-msq-purple-rich focus:ring-2 focus:ring-msq-purple-rich/20 focus:outline-none transition-all duration-300 font-lato text-gray-900 placeholder:text-gray-400';
-  const textareaClasses = `${inputClasses} min-h-[140px] resize-none pt-3.5`;
-  const errorClasses = 'text-red-500 text-sm mt-1.5 font-lato flex items-center gap-1';
-  const labelClasses = 'block text-sm font-medium text-gray-700 mb-2.5 font-lato';
+    'w-full px-2.5 sm:px-3 py-2 sm:py-2.5 pl-9 sm:pl-10 text-sm border border-gray-200 rounded-lg bg-gray-50/50 focus:bg-white focus:border-msq-purple-rich focus:ring-1 focus:ring-msq-purple-rich/20 focus:outline-none transition-all duration-300 font-lato text-gray-900 placeholder:text-gray-400';
+  const textareaClasses = `${inputClasses} min-h-[80px] sm:min-h-[100px] resize-none pt-2`;
+  const errorClasses = 'text-red-500 text-xs mt-0.5 font-lato flex items-center gap-1';
+  const labelClasses = 'block text-left text-xs font-medium text-gray-700 mb-1 sm:mb-1.5 font-lato';
 
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-8 py-16 bg-gradient-to-b from-gray-50/30 to-white">
-      <div className="max-w-7xl mx-auto">
+    <div className="w-full px-2 sm:px-3 lg:px-6 py-4 sm:py-6 lg:py-10 bg-gradient-to-b from-gray-50/30 to-white">
+      <div className="max-w-6xl mx-auto">
         {/* Header Section */}
-        <div className="text-center mb-16">
-          <div className="inline-block mb-6">
-            <div className="w-16 h-1 bg-msq-purple-rich mx-auto mb-4"></div>
+        <div className="text-center mb-4 sm:mb-6 lg:mb-8">
+          <div className="inline-block mb-2 sm:mb-3 sm:block">
+            <div className="w-10 sm:w-12 h-0.5 bg-msq-purple-rich mx-auto mb-1.5 sm:mb-2"></div>
           </div>
-          <h1 className="font-bebas text-5xl md:text-6xl lg:text-7xl text-msq-purple-rich uppercase tracking-wider mb-6 leading-tight">
+          <h1 className="font-bebas text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-msq-purple-rich uppercase tracking-wider mb-2 sm:mb-3 leading-tight">
             Get in Touch
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto font-lato leading-relaxed font-light">
-            We're here to help you feel confident, beautiful, and uniquely you. Whether you have a
-            question about our made-to-measure pieces, need styling advice, or simply want to
-            connect, we'd love to hear from you.
+          <p className="text-xs sm:text-sm lg:text-base text-gray-600 max-w-2xl mx-auto font-lato leading-relaxed font-light px-2 hidden sm:block">
+            We're here to help you feel confident, beautiful, and uniquely you.
           </p>
         </div>
 
         {/* Two Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
           {/* Left Column - Contact Form */}
-          <div className="bg-white rounded-2xl shadow-xl p-10 lg:p-12 border border-gray-100">
-            <div className="mb-8">
-              <h2 className="font-bebas text-3xl md:text-4xl text-msq-purple-rich uppercase tracking-wide mb-3">
+          <div className="bg-white rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl p-3 sm:p-4 lg:p-6 border border-gray-100">
+            <div className="mb-3 sm:mb-4">
+              <h2 className="font-bebas text-xl sm:text-2xl lg:text-3xl text-msq-purple-rich uppercase tracking-wide mb-1.5 sm:mb-2">
                 Send us a Message
               </h2>
-              <p className="text-gray-600 font-lato leading-relaxed text-base">
-                Fill out the form below and we'll get back to you as soon as possible. Your voice
-                matters to us.
+              <p className="text-xs md:text-base text-gray-600 font-lato leading-snug hidden sm:block">
+                Fill out the form below and we'll get back to you as soon as possible.
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-7">
+            <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 text-left">
               {/* Name Field */}
               <div className="group">
                 <label htmlFor="name" className={labelClasses}>
                   Name <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-msq-purple-rich transition-colors duration-300">
-                    <User size={20} strokeWidth={1.5} />
+                  <div className="absolute left-2.5 sm:left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-msq-purple-rich transition-colors duration-300">
+                    <User size={14} strokeWidth={1.5} className="sm:w-4 sm:h-4" />
                   </div>
                   <input
                     id="name"
@@ -150,8 +147,8 @@ const ContactForm = () => {
                   Email <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-msq-purple-rich transition-colors duration-300">
-                    <Mail size={20} strokeWidth={1.5} />
+                  <div className="absolute left-2.5 sm:left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-msq-purple-rich transition-colors duration-300">
+                    <Mail size={14} strokeWidth={1.5} className="sm:w-4 sm:h-4" />
                   </div>
                   <input
                     id="email"
@@ -179,8 +176,8 @@ const ContactForm = () => {
                   Message <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <div className="absolute left-4 top-4 text-gray-400 group-focus-within:text-msq-purple-rich transition-colors duration-300">
-                    <MessageSquare size={20} strokeWidth={1.5} />
+                  <div className="absolute left-2.5 sm:left-3 top-2 sm:top-2.5 text-gray-400 group-focus-within:text-msq-purple-rich transition-colors duration-300">
+                    <MessageSquare size={14} strokeWidth={1.5} className="sm:w-4 sm:h-4" />
                   </div>
                   <textarea
                     id="message"
@@ -202,24 +199,24 @@ const ContactForm = () => {
               </div>
 
               {/* Submit Button */}
-              <div className="pt-2">
+              <div className="pt-0.5 sm:pt-1">
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full cursor-pointer bg-gradient-to-r from-msq-purple-rich to-msq-purple text-white py-4 px-8 rounded-xl font-lato font-semibold text-base tracking-wide hover:shadow-xl hover:shadow-msq-purple-rich/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none group relative overflow-hidden"
+                  className="w-full cursor-pointer bg-gradient-to-r from-msq-purple-rich to-msq-purple text-white py-2 sm:py-2.5 lg:py-3 px-5 sm:px-6 rounded-lg font-lato font-semibold text-sm tracking-wide hover:shadow-lg hover:shadow-msq-purple-rich/30 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none group relative overflow-hidden"
                   aria-label={isLoading ? 'Sending message...' : 'Send message'}
                 >
-                  <span className="relative z-10 flex items-center justify-center gap-2">
+                  <span className="relative z-10 flex items-center justify-center gap-1.5">
                     {isLoading ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        <span>Sending Message...</span>
+                        <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span>Sending...</span>
                       </>
                     ) : (
                       <>
                         <span>Send Message</span>
                         <svg
-                          className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
+                          className="w-3.5 h-3.5 sm:w-4 sm:h-4 transform group-hover:translate-x-0.5 transition-transform duration-300"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -243,42 +240,42 @@ const ContactForm = () => {
           </div>
 
           {/* Right Column - Get in Touch Section */}
-          <div className="bg-gradient-to-br from-msq-purple-rich to-msq-purple-deep rounded-2xl shadow-2xl p-10 lg:p-12 text-white flex flex-col border border-msq-purple-rich/20">
-            <div className="mb-10">
-              <div className="inline-block mb-4">
-                <div className="w-12 h-1 bg-white/40"></div>
-              </div>
-              <h2 className="font-bebas text-3xl md:text-4xl uppercase tracking-wide mb-4">
+          <div className="bg-gradient-to-br from-msq-purple-rich to-msq-purple-deep rounded-lg sm:rounded-xl shadow-xl sm:shadow-2xl p-3 sm:p-4 lg:p-6 text-white flex flex-col border border-msq-purple-rich/20">
+            <div className="mb-4 sm:mb-5">
+              <h2 className="font-bebas text-xl sm:text-2xl lg:text-3xl uppercase tracking-wide mb-1.5 sm:mb-2">
                 Connect with Us
               </h2>
-              <p className="text-white/90 text-base font-lato leading-relaxed font-light">
-                Prefer a more direct conversation? Reach out to us through any of these channels.
-                We're always here to support you on your style journey.
+              <p className="text-white/90 text-xs md:text-base font-lato leading-snug font-light hidden sm:block">
+                Prefer a more direct conversation? Reach out through any of these channels.
               </p>
             </div>
 
-            <div className="space-y-4 flex-1">
+            <div className="space-y-1.5 sm:space-y-2 lg:space-y-3 flex-1">
               {/* WhatsApp */}
               <a
                 href="https://wa.me/233507226511"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-5 p-5 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-xl transition-all duration-300 group border border-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-white/10 hover:scale-[1.02] active:scale-[0.98]"
+                className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-lg transition-all duration-300 group border border-white/10 hover:border-white/20 hover:shadow-md hover:shadow-white/10 hover:scale-[1.01] active:scale-[0.99]"
               >
-                <div className="flex-shrink-0 w-14 h-14 bg-white/15 rounded-xl flex items-center justify-center group-hover:bg-white/25 group-hover:scale-110 transition-all duration-300 shadow-lg">
-                  <MessageCircle size={26} className="text-white" strokeWidth={1.5} />
+                <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-white/15 rounded-lg flex items-center justify-center group-hover:bg-white/25 group-hover:scale-110 transition-all duration-300 shadow-md">
+                  <MessageCircle
+                    size={16}
+                    className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6"
+                    strokeWidth={1.5}
+                  />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-lg mb-1 font-lato group-hover:text-white transition-colors">
+                  <h3 className="font-semibold text-xs sm:text-sm lg:text-base mb-0.5 font-lato group-hover:text-white transition-colors">
                     WhatsApp
                   </h3>
-                  <p className="text-white/80 text-sm font-lato group-hover:text-white/90 transition-colors">
+                  <p className="text-white/80 text-xs font-lato group-hover:text-white/90 transition-colors">
                     +233 50 722 6511
                   </p>
                 </div>
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <svg
-                    className="w-5 h-5 text-white/60"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/60"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -296,22 +293,26 @@ const ContactForm = () => {
               {/* Email */}
               <a
                 href="mailto:support@misqabbigh.com"
-                className="flex items-center gap-5 p-5 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-xl transition-all duration-300 group border border-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-white/10 hover:scale-[1.02] active:scale-[0.98]"
+                className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-lg transition-all duration-300 group border border-white/10 hover:border-white/20 hover:shadow-md hover:shadow-white/10 hover:scale-[1.01] active:scale-[0.99]"
               >
-                <div className="flex-shrink-0 w-14 h-14 bg-white/15 rounded-xl flex items-center justify-center group-hover:bg-white/25 group-hover:scale-110 transition-all duration-300 shadow-lg">
-                  <Mail size={26} className="text-white" strokeWidth={1.5} />
+                <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-white/15 rounded-lg flex items-center justify-center group-hover:bg-white/25 group-hover:scale-110 transition-all duration-300 shadow-md">
+                  <Mail
+                    size={16}
+                    className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6"
+                    strokeWidth={1.5}
+                  />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-lg mb-1 font-lato group-hover:text-white transition-colors">
+                  <h3 className="font-semibold text-xs sm:text-sm lg:text-base mb-0.5 font-lato group-hover:text-white transition-colors">
                     Email
                   </h3>
-                  <p className="text-white/80 text-sm font-lato group-hover:text-white/90 transition-colors break-all">
+                  <p className="text-white/80 text-xs font-lato group-hover:text-white/90 transition-colors break-all">
                     info@misqabbigh.com
                   </p>
                 </div>
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <svg
-                    className="w-5 h-5 text-white/60"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/60"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -329,22 +330,26 @@ const ContactForm = () => {
               {/* Phone */}
               <a
                 href="tel:+233507226511"
-                className="flex items-center gap-5 p-5 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-xl transition-all duration-300 group border border-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-white/10 hover:scale-[1.02] active:scale-[0.98]"
+                className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-lg transition-all duration-300 group border border-white/10 hover:border-white/20 hover:shadow-md hover:shadow-white/10 hover:scale-[1.01] active:scale-[0.99]"
               >
-                <div className="flex-shrink-0 w-14 h-14 bg-white/15 rounded-xl flex items-center justify-center group-hover:bg-white/25 group-hover:scale-110 transition-all duration-300 shadow-lg">
-                  <Phone size={26} className="text-white" strokeWidth={1.5} />
+                <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-white/15 rounded-lg flex items-center justify-center group-hover:bg-white/25 group-hover:scale-110 transition-all duration-300 shadow-md">
+                  <Phone
+                    size={16}
+                    className="text-white sm:w-5 sm:h-5 lg:w-6 lg:h-6"
+                    strokeWidth={1.5}
+                  />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-lg mb-1 font-lato group-hover:text-white transition-colors">
+                  <h3 className="font-semibold text-xs sm:text-sm lg:text-base mb-0.5 font-lato group-hover:text-white transition-colors">
                     Phone
                   </h3>
-                  <p className="text-white/80 text-sm font-lato group-hover:text-white/90 transition-colors">
+                  <p className="text-white/80 text-xs font-lato group-hover:text-white/90 transition-colors">
                     +233 50 722 6511
                   </p>
                 </div>
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <svg
-                    className="w-5 h-5 text-white/60"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/60"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -361,8 +366,8 @@ const ContactForm = () => {
             </div>
 
             {/* Closing Message */}
-            <div className="mt-10 pt-8 border-t border-white/20">
-              <p className="text-white/90 italic font-lato text-center leading-relaxed text-base">
+            <div className="mt-4 sm:mt-5 lg:mt-6 pt-3 sm:pt-4 lg:pt-5 border-t border-white/20">
+              <p className="text-white/90 italic font-lato text-center leading-snug text-xs sm:text-sm">
                 "Made with love, made for you."
               </p>
             </div>
