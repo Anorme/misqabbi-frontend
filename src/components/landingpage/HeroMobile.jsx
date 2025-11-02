@@ -3,9 +3,11 @@ import { Link } from 'react-router';
 const HeroMobile = () => (
   <section className="w-full h-full md:h-[700px]">
     <img
-      src="https://res.cloudinary.com/dyciw970t/image/upload/v1761952396/misqabbi/products/CSI_0053_sqkfoq.jpg"
+      src="https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_800,c_limit/v1761952396/misqabbi/products/CSI_0053_sqkfoq.jpg"
       alt="Hero Image"
       className="w-full max-w-full h-full mx-auto object-cover"
+      fetchPriority="high"
+      loading="eager"
     />
 
     <div className=" px-6 py-8 text-center">
