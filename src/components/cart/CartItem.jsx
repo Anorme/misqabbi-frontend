@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { useNavigate } from 'react-router';
 import { ShoppingBag } from 'lucide-react';
 import { getPrimaryImageUrl } from '../../utils/productImages';
@@ -82,4 +82,4 @@ const CartItem = ({ item, onClose }) => {
   );
 };
 
-export default CartItem;
+export default memo(CartItem);
