@@ -1,9 +1,9 @@
 import { useReducer, useEffect } from 'react';
 import { favoritesReducer, initialFavoritesState } from './favoritesReducer';
 import { FavoritesContextState, FavoritesContextDispatch } from './favoritesContext';
-import { fetchFavorites } from '../../api/favorites';
 import { useAuthState } from '../auth/useAuth';
 import { setFavorites, setLoading, setError } from './favoritesActions';
+import { useFavorites as useFavoritesQuery } from '../../hooks/queries/useFavorites';
 
 const getHydratedState = () => {
   // In the future, we can add localStorage persistence like the cart
@@ -14,32 +14,39 @@ export const FavoritesProvider = ({ children }) => {
   const [state, dispatch] = useReducer(favoritesReducer, getHydratedState());
   const { isAuthenticated, isAuthLoading } = useAuthState();
 
-  // Load favorites when user becomes authenticated
-  useEffect(() => {
-    const loadFavorites = async () => {
-      if (!isAuthenticated || isAuthLoading) return;
+  // Use TanStack Query for favorites fetching with caching
+  const {
+    data: favorites,
+    isLoading: queryLoading,
+    isError: queryError,
+    error: queryErrorObj,
+  } = useFavoritesQuery({
+    enabled: isAuthenticated && !isAuthLoading, // Only fetch if authenticated
+  });
 
-      try {
-        dispatch(setLoading(true));
-        const favorites = await fetchFavorites();
-        dispatch(setFavorites(favorites));
-      } catch (error) {
-        console.error('Error loading favorites:', error);
-        dispatch(setError(error.message || 'Failed to load favorites'));
-      } finally {
-        dispatch(setLoading(false));
+  // Sync query data and loading state to context
+  useEffect(() => {
+    if (!isAuthenticated || isAuthLoading) {
+      if (!isAuthenticated && !isAuthLoading) {
+        // Clear favorites when user logs out
+        dispatch(setFavorites([]));
       }
-    };
-
-    loadFavorites();
-  }, [isAuthenticated, isAuthLoading]);
-
-  // Clear favorites when user logs out
-  useEffect(() => {
-    if (!isAuthenticated && !isAuthLoading) {
-      dispatch(setFavorites([]));
+      return;
     }
-  }, [isAuthenticated, isAuthLoading]);
+
+    if (queryLoading) {
+      dispatch(setLoading(true));
+    } else {
+      dispatch(setLoading(false));
+    }
+
+    if (queryError) {
+      dispatch(setError(queryErrorObj?.message || 'Failed to load favorites'));
+    } else if (favorites) {
+      dispatch(setFavorites(favorites));
+      dispatch(setError(null));
+    }
+  }, [isAuthenticated, isAuthLoading, favorites, queryLoading, queryError, queryErrorObj]);
 
   return (
     <FavoritesContextState.Provider value={state}>
