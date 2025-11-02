@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router';
 
 import Pagination from '../components/ui/Pagination.jsx';
@@ -10,7 +10,7 @@ import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCata
 import { setPage, setTotalPages, setProducts } from '../contexts/catalog/catalogActions.js';
 import { setSearchFromURL } from '../contexts/catalog/catalogActions.js';
 
-import { fetchDiscoverableProducts } from '../api/products.js';
+import { useProducts } from '../hooks/queries/useProducts.js';
 import CategoryNavigation from '../components/layout/navigation/CategoryNavigation.jsx';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 
@@ -19,10 +19,7 @@ import scrollToTop from '../utils/scrollToTop.js';
 const ProductList = () => {
   const { products, productsPerPage, currentPage, searchParams, isSearching } = useCatalogState();
   const catalogDispatch = useCatalogDispatch();
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [urlSearchParams] = useSearchParams();
-  const [isInitialSearchSynced, setIsInitialSearchSynced] = useState(false);
 
   // Initialize catalog search state from URL when /shop mounts (category handled by routes)
   useEffect(() => {
@@ -36,40 +33,36 @@ const ProductList = () => {
     if (hasAnyParam) {
       catalogDispatch(setSearchFromURL(urlParams));
     }
-    // Mark initial sync complete (if there were params, state will update before next effect run)
-    setIsInitialSearchSynced(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Use TanStack Query for product fetching with caching
+  const {
+    data: productsData,
+    isLoading: loading,
+    isError,
+    error,
+  } = useProducts({
+    page: currentPage,
+    limit: productsPerPage,
+    ...searchParams,
+  });
+
+  // Sync query data back to catalog context for consistency
   useEffect(() => {
-    if (!isInitialSearchSynced) return;
-    const loadProducts = async () => {
-      try {
-        setLoading(true);
-        const { data, totalPages } = await fetchDiscoverableProducts({
-          page: currentPage,
-          limit: productsPerPage,
-          ...searchParams,
-        });
-        catalogDispatch(setProducts(data));
-        catalogDispatch(setPage(currentPage));
-        catalogDispatch(setTotalPages(totalPages));
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadProducts();
-  }, [currentPage, catalogDispatch, productsPerPage, searchParams, isInitialSearchSynced]);
+    if (productsData?.data && productsData?.totalPages !== undefined) {
+      catalogDispatch(setProducts(productsData.data));
+      catalogDispatch(setPage(currentPage));
+      catalogDispatch(setTotalPages(productsData.totalPages));
+    }
+  }, [productsData, currentPage, catalogDispatch]);
 
   // Scroll to top when loading completes (new results loaded)
   useEffect(() => {
-    if (!loading && isInitialSearchSynced) {
+    if (!loading && productsData) {
       scrollToTop();
     }
-  }, [loading, isInitialSearchSynced]);
+  }, [loading, productsData]);
 
   const productList = useMemo(() => {
     return products.map(product => <ProductCard key={product._id} product={product} />);
@@ -88,8 +81,8 @@ const ProductList = () => {
           <div className="flex w-full justify-center items-center lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] py-16">
             <LoadingSpinner size={100} color="#cfb484" />
           </div>
-        ) : error ? (
-          <p className="text-center text-red-500">{error}</p>
+        ) : isError ? (
+          <p className="text-center text-red-500">{error?.message || 'Failed to load products'}</p>
         ) : (
           <>
             {isSearching && (
