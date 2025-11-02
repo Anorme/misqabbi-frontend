@@ -1,31 +1,19 @@
-import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { fetchAdminOrderById } from '../../api/orders';
+import { useAdminOrder } from '../../hooks/queries/useAdmin';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import { formatCurrency, getStatusColor } from '../../utils/admin/tableHelpers';
 
 const AdminOrderDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [order, setOrder] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const run = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await fetchAdminOrderById(id);
-        setOrder(res?.data || null);
-      } catch (e) {
-        setError(e?.response?.data?.message || e?.message || 'Failed to load order');
-      } finally {
-        setLoading(false);
-      }
-    };
-    run();
-  }, [id]);
+  // Use TanStack Query for order fetching with caching
+  const { data: orderData, isLoading: loading, isError, error: queryError } = useAdminOrder(id);
+
+  const order = orderData?.data || null;
+  const error = isError
+    ? queryError?.response?.data?.message || queryError?.message || 'Failed to load order'
+    : null;
 
   if (loading)
     return (
