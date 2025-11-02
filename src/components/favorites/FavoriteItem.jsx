@@ -1,39 +1,22 @@
 import { memo } from 'react';
 import { Heart, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router';
-import { useFavorites } from '../../contexts/favorites/useFavorites';
-import { removeFavorite, setFavorites } from '../../contexts/favorites/favoritesActions';
-import { removeFavorite as removeFavoriteAPI, fetchFavorites } from '../../api/favorites';
+import { useRemoveFavorite } from '../../hooks/mutations/useFavoriteMutations';
 import { showRemovedFromFavoritesToast, showErrorToast } from '../../utils/showToast';
 import { getPrimaryImageUrl } from '../../utils/productImages';
 
 const FavoriteItem = ({ item, onClose }) => {
-  const { dispatch } = useFavorites();
+  // Use mutation hook for removing favorites
+  const removeFavoriteMutation = useRemoveFavorite();
 
   const handleRemoveFavorite = async () => {
     try {
-      // Optimistic update
-      dispatch(removeFavorite(item.id));
-
-      // API call
-      await removeFavoriteAPI(item.id);
-
-      // Always refetch to ensure state matches server after mutation
-      const latestFavorites = await fetchFavorites();
-      dispatch(setFavorites(latestFavorites));
-
+      const productId = item.productId;
+      await removeFavoriteMutation.mutateAsync(productId);
       showRemovedFromFavoritesToast();
     } catch (error) {
       console.error('Error removing favorite:', error);
       showErrorToast('Failed to remove from favorites');
-
-      // Revert optimistic update by syncing with server state
-      try {
-        const latestFavorites = await fetchFavorites();
-        dispatch(setFavorites(latestFavorites));
-      } catch (refetchError) {
-        console.error('Error refetching favorites after failure:', refetchError);
-      }
     }
   };
 
@@ -66,7 +49,7 @@ const FavoriteItem = ({ item, onClose }) => {
       <div className="flex items-center space-x-2">
         {/* View Product Link */}
         <Link
-          to={`/product/${item.slug || item.id}`}
+          to={`/product/${item.slug}`}
           className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
           title="View product"
           onClick={onClose}
