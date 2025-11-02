@@ -1,41 +1,47 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router';
 
 import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
-import Home from './pages/Home';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import FAQs from './pages/FAQs';
-import ReturnPolicy from './pages/ReturnPolicy';
-import OrderPolicy from './pages/OrderPolicy';
-import SizeGuide from './pages/SizeGuide';
-import Checkout from './pages/Checkout';
-import Favorites from './pages/Favorites';
-import ProductList from './pages/ProductList';
-import CategoryPage from './pages/CategoryPage';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import AuthCallback from './pages/auth/AuthCallback';
 import AuthBoundaryModal from './components/auth/AuthBoundaryModal';
 import ScrollToTop from './components/ui/ScrollToTop';
+import PageLoader from './components/ui/PageLoader';
+import AdminBoundary from './components/auth/AdminBoundary';
 
 import './App.css';
-import NotFound from './components/ui/NotFound';
+
+// Critical routes - keep eager for initial load
+import Home from './pages/Home';
+import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
-import Orders from './pages/Orders';
-import OrderDetails from './pages/OrderDetails';
-import Profile from './pages/Profile';
-import ResetPassword from './pages/ResetPassword';
-import PaymentCallback from './pages/PaymentCallback';
+import CategoryPage from './pages/CategoryPage';
+import NotFound from './components/ui/NotFound';
+
+// Secondary routes
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+const FAQs = lazy(() => import('./pages/FAQs'));
+const ReturnPolicy = lazy(() => import('./pages/ReturnPolicy'));
+const OrderPolicy = lazy(() => import('./pages/OrderPolicy'));
+const SizeGuide = lazy(() => import('./pages/SizeGuide'));
+const Checkout = lazy(() => import('./pages/Checkout'));
+const Favorites = lazy(() => import('./pages/Favorites'));
+const Register = lazy(() => import('./pages/Register'));
+const Login = lazy(() => import('./pages/Login'));
+const AuthCallback = lazy(() => import('./pages/auth/AuthCallback'));
+const Orders = lazy(() => import('./pages/Orders'));
+const OrderDetails = lazy(() => import('./pages/OrderDetails'));
+const Profile = lazy(() => import('./pages/Profile'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
+const PaymentCallback = lazy(() => import('./pages/PaymentCallback'));
 
 // Admin pages
-import AdminDashboard from './pages/admin/AdminDashboard';
-import AdminProducts from './pages/admin/AdminProducts';
-import AdminOrders from './pages/admin/AdminOrders';
-import AdminUsers from './pages/admin/AdminUsers';
-import AdminUserDetails from './pages/admin/AdminUserDetails';
-import AdminOrderDetails from './pages/admin/AdminOrderDetails';
-import AdminBoundary from './components/auth/AdminBoundary';
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
+const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'));
+const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'));
+const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'));
+const AdminUserDetails = lazy(() => import('./pages/admin/AdminUserDetails'));
+const AdminOrderDetails = lazy(() => import('./pages/admin/AdminOrderDetails'));
 
 const App = () => {
   return (
@@ -55,7 +61,9 @@ const App = () => {
           element={
             <MainLayout>
               <AuthBoundaryModal>
-                <OrderDetails />
+                <Suspense fallback={<PageLoader />}>
+                  <OrderDetails />
+                </Suspense>
               </AuthBoundaryModal>
             </MainLayout>
           }
@@ -65,7 +73,9 @@ const App = () => {
           element={
             <MainLayout>
               <AuthBoundaryModal>
-                <Orders />
+                <Suspense fallback={<PageLoader />}>
+                  <Orders />
+                </Suspense>
               </AuthBoundaryModal>
             </MainLayout>
           }
@@ -90,7 +100,9 @@ const App = () => {
           path="/about-us"
           element={
             <MainLayout>
-              <About />
+              <Suspense fallback={<PageLoader />}>
+                <About />
+              </Suspense>
             </MainLayout>
           }
         ></Route>
@@ -98,7 +110,9 @@ const App = () => {
           path="/contact-us"
           element={
             <MainLayout>
-              <Contact />
+              <Suspense fallback={<PageLoader />}>
+                <Contact />
+              </Suspense>
             </MainLayout>
           }
         ></Route>
@@ -106,7 +120,9 @@ const App = () => {
           path="/faqs"
           element={
             <MainLayout>
-              <FAQs />
+              <Suspense fallback={<PageLoader />}>
+                <FAQs />
+              </Suspense>
             </MainLayout>
           }
         ></Route>
@@ -114,7 +130,9 @@ const App = () => {
           path="/return-policy"
           element={
             <MainLayout>
-              <ReturnPolicy />
+              <Suspense fallback={<PageLoader />}>
+                <ReturnPolicy />
+              </Suspense>
             </MainLayout>
           }
         ></Route>
@@ -122,7 +140,9 @@ const App = () => {
           path="/order-policy"
           element={
             <MainLayout>
-              <OrderPolicy />
+              <Suspense fallback={<PageLoader />}>
+                <OrderPolicy />
+              </Suspense>
             </MainLayout>
           }
         ></Route>
@@ -130,7 +150,9 @@ const App = () => {
           path="/size-guide"
           element={
             <MainLayout>
-              <SizeGuide />
+              <Suspense fallback={<PageLoader />}>
+                <SizeGuide />
+              </Suspense>
             </MainLayout>
           }
         ></Route>
@@ -138,7 +160,9 @@ const App = () => {
           path="/favorites"
           element={
             <MainLayout>
-              <Favorites />
+              <Suspense fallback={<PageLoader />}>
+                <Favorites />
+              </Suspense>
             </MainLayout>
           }
         ></Route>
@@ -147,7 +171,9 @@ const App = () => {
           element={
             <MainLayout>
               <AuthBoundaryModal>
-                <Checkout />
+                <Suspense fallback={<PageLoader />}>
+                  <Checkout />
+                </Suspense>
               </AuthBoundaryModal>
             </MainLayout>
           }
@@ -157,7 +183,9 @@ const App = () => {
           path="/register"
           element={
             <MainLayout>
-              <Register />
+              <Suspense fallback={<PageLoader />}>
+                <Register />
+              </Suspense>
             </MainLayout>
           }
         />
@@ -166,19 +194,37 @@ const App = () => {
           path="/login"
           element={
             <MainLayout>
-              <Login />
+              <Suspense fallback={<PageLoader />}>
+                <Login />
+              </Suspense>
             </MainLayout>
           }
         />
 
-        <Route path="/auth/callback" element={<AuthCallback />} />
-        <Route path="/payment/callback" element={<PaymentCallback />} />
+        <Route
+          path="/auth/callback"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <AuthCallback />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/payment/callback"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <PaymentCallback />
+            </Suspense>
+          }
+        />
 
         <Route
           path="/reset-password/:userId/:token"
           element={
             <MainLayout>
-              <ResetPassword />
+              <Suspense fallback={<PageLoader />}>
+                <ResetPassword />
+              </Suspense>
             </MainLayout>
           }
         />
@@ -197,7 +243,9 @@ const App = () => {
           element={
             <MainLayout>
               <AuthBoundaryModal>
-                <Profile />
+                <Suspense fallback={<PageLoader />}>
+                  <Profile />
+                </Suspense>
               </AuthBoundaryModal>
             </MainLayout>
           }
@@ -214,12 +262,54 @@ const App = () => {
             </AuthBoundaryModal>
           }
         >
-          <Route index element={<AdminDashboard />} />
-          <Route path="products" element={<AdminProducts />} />
-          <Route path="orders" element={<AdminOrders />} />
-          <Route path="orders/:id" element={<AdminOrderDetails />} />
-          <Route path="users" element={<AdminUsers />} />
-          <Route path="users/:id" element={<AdminUserDetails />} />
+          <Route
+            index
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AdminDashboard />
+              </Suspense>
+            }
+          />
+          <Route
+            path="products"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AdminProducts />
+              </Suspense>
+            }
+          />
+          <Route
+            path="orders"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AdminOrders />
+              </Suspense>
+            }
+          />
+          <Route
+            path="orders/:id"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AdminOrderDetails />
+              </Suspense>
+            }
+          />
+          <Route
+            path="users"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AdminUsers />
+              </Suspense>
+            }
+          />
+          <Route
+            path="users/:id"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AdminUserDetails />
+              </Suspense>
+            }
+          />
         </Route>
 
         <Route
