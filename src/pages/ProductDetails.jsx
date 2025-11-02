@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router';
 import BackButton from '../components/layout/BackButton';
 
 import { useProduct } from '../hooks/queries/useProducts';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 import SizeSelect from '../components/products/SizeSelect';
 import ProductInfo from '../components/products/ProductInfo';
@@ -23,7 +24,7 @@ import scrollToTop from '../utils/scrollToTop';
 import { showAddedToCartToast } from '../utils/showToast';
 import { supportsCustomSizing } from '../constants/customSizeMeasurements';
 import { isCustomSizeComplete } from '../utils/customSizeValidation';
-import { getPrimaryImageUrl } from '../utils/productImages';
+import { getPrimaryImageUrl, getImageUrl } from '../utils/productImages';
 
 function ProductDetails() {
   const { slug } = useParams();
@@ -33,6 +34,7 @@ function ProductDetails() {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [isCustomSizeEnabled, setIsCustomSizeEnabled] = useState(false);
   const [customMeasurements, setCustomMeasurements] = useState({});
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { requireAuth, closeModal, isModalOpen, modalContext } = useAuthAction();
 
   // Use TanStack Query for product fetching with caching
@@ -121,6 +123,23 @@ function ProductDetails() {
     }
   }, [loading, product]);
 
+  // Reset selected image index when product changes
+  useEffect(() => {
+    if (product) {
+      setSelectedImageIndex(0);
+    }
+  }, [product]);
+
+  // Get the currently selected image
+  const getSelectedImageUrl = () => {
+    const productImages = product?.images || [];
+    if (productImages.length > 0 && selectedImageIndex < productImages.length) {
+      return getImageUrl(productImages[selectedImageIndex]);
+    }
+    // Fallback to product.image or primary image
+    return product?.image || getPrimaryImageUrl(product);
+  };
+
   if (loading)
     return (
       <div className="min-h-[40vh] flex items-center justify-center">
@@ -170,13 +189,29 @@ function ProductDetails() {
         <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 py-4 sm:py-6 items-start">
           {/* Images Section */}
           <div className="flex flex-col gap-3 sm:gap-4 lg:gap-5">
-            <div className="relative">
-              <img
-                className="aspect-[3/4] w-full object-cover rounded-none"
-                src={product.image || getPrimaryImageUrl(product)}
-                alt={product?.name}
-              />
-              <div className="absolute top-3 right-3">
+            <div className="relative aspect-[3/4] w-full overflow-hidden">
+              <TransformWrapper
+                key={selectedImageIndex}
+                initialScale={1}
+                minScale={1}
+                maxScale={3}
+                doubleClick={{ disabled: false, step: 1.5 }}
+                pan={{ disabled: false }}
+                wheel={{ step: 0.1 }}
+                pinch={{ step: 5 }}
+                centerOnInit={true}
+                wrapperClass="!w-full !h-full"
+                contentClass="!w-full !h-full"
+              >
+                <TransformComponent wrapperClass="!w-full !h-full flex items-center justify-center">
+                  <img
+                    className="aspect-[3/4] w-full object-cover rounded-none cursor-zoom-in"
+                    src={getSelectedImageUrl()}
+                    alt={product?.name}
+                  />
+                </TransformComponent>
+              </TransformWrapper>
+              <div className="absolute top-3 right-3 z-10">
                 <FavoritesLinkButton
                   product={{
                     id: product._id,
@@ -191,7 +226,11 @@ function ProductDetails() {
             </div>
 
             {/* Image Gallery */}
-            <GalleryImages product={product}></GalleryImages>
+            <GalleryImages
+              product={product}
+              selectedIndex={selectedImageIndex}
+              onImageSelect={setSelectedImageIndex}
+            />
           </div>
 
           {/* Product Info Section */}
