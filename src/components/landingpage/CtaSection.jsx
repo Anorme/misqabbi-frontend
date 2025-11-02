@@ -3,19 +3,19 @@ import CtaGrid from './CtaGrid';
 const CtaSection = () => {
   const images = [
     {
-      src: 'https://res.cloudinary.com/dyciw970t/image/upload/v1761957971/misqabbi/landing-page/CSI_0021_cafnkk.jpg',
+      src: 'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_400,c_limit/v1761957971/misqabbi/landing-page/CSI_0021_cafnkk.jpg',
       alt: 'African print boubou',
     },
     {
-      src: 'https://res.cloudinary.com/dyciw970t/image/upload/v1761957940/misqabbi/landing-page/CSI_9931_yswr5p.jpg',
+      src: 'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_400,c_limit/v1761957940/misqabbi/landing-page/CSI_9931_yswr5p.jpg',
       alt: 'African print skirt',
     },
     {
-      src: 'https://res.cloudinary.com/dyciw970t/image/upload/v1761957970/misqabbi/landing-page/CSI_0017_xfkeyp.jpg',
+      src: 'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_400,c_limit/v1761957970/misqabbi/landing-page/CSI_0017_xfkeyp.jpg',
       alt: 'African print boubou',
     },
     {
-      src: 'https://res.cloudinary.com/dyciw970t/image/upload/v1761957944/misqabbi/landing-page/CSI_9950_axm5vx.jpg',
+      src: 'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_400,c_limit/v1761957944/misqabbi/landing-page/CSI_9950_axm5vx.jpg',
       alt: 'African print skirt',
     },
   ];
