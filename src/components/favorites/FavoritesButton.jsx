@@ -1,14 +1,20 @@
 import { useState } from 'react';
 import { Heart } from 'lucide-react';
-import { useFavorites } from '../../contexts/favorites/useFavorites';
+import { useFavorites as useFavoritesQuery } from '../../hooks/queries/useFavorites';
+import { useAuthState } from '../../contexts/auth/useAuth';
 import useAuthAction from '../../hooks/useAuthAction';
 import FavoritesDrawer from '../favorites/FavoritesDrawer.jsx';
 import AuthActionModal from '../auth/AuthActionModal.jsx';
 
 const FavoritesButton = ({ className = '', size = 20, showCount = true }) => {
-  const { favoriteItems } = useFavorites();
+  const { isAuthenticated, isAuthLoading } = useAuthState();
   const { requireAuth, closeModal, isModalOpen, modalContext } = useAuthAction();
   const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
+
+  // Use TanStack Query for favorites data
+  const { data: favoriteItems = [] } = useFavoritesQuery({
+    enabled: isAuthenticated && !isAuthLoading,
+  });
 
   const favoritesCount = favoriteItems.length;
 
