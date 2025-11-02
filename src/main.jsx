@@ -1,8 +1,7 @@
-import { StrictMode } from 'react';
+import { StrictMode, lazy, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ToastContainer } from 'react-toastify';
 import { HelmetProvider } from '@dr.pogodin/react-helmet';
 
 import App from './App.jsx';
@@ -14,6 +13,11 @@ import AuthInterceptorProvider from './components/auth/AuthInterceptorProvider.j
 
 import './index.css';
 import './styles/tailwind.css';
+
+// Lazy load ToastContainer since it's not critical for initial render
+const ToastContainer = lazy(() =>
+  import('react-toastify').then(module => ({ default: module.ToastContainer }))
+);
 
 // Configure TanStack Query
 const queryClient = new QueryClient({
@@ -41,7 +45,9 @@ createRoot(document.getElementById('root')).render(
                     <App />
                   </AuthInterceptorProvider>
                 </Router>
-                <ToastContainer theme={undefined} autoClose={3000} />
+                <Suspense fallback={null}>
+                  <ToastContainer theme={undefined} autoClose={3000} />
+                </Suspense>
               </CartProvider>
             </CatalogProvider>
           </FormProvider>
