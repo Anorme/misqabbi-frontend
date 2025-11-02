@@ -10,25 +10,25 @@ const categories = [
     name: 'Dresses',
     value: 'dresses',
     image:
-      'https://res.cloudinary.com/dyciw970t/image/upload/v1761957954/misqabbi/landing-page/CSI_0042_rlk5qt.jpg',
+      'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_400,c_limit/v1761957954/misqabbi/landing-page/CSI_0042_rlk5qt.jpg',
   },
   {
     name: 'Dungarees',
     value: 'dungarees',
     image:
-      'https://res.cloudinary.com/dyciw970t/image/upload/v1762026828/jpeg-optimizer_IMG_0004_copy_zzlpvt.jpg',
+      'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_400,c_limit/v1762026828/jpeg-optimizer_IMG_0004_copy_zzlpvt.jpg',
   },
   {
     name: 'Pants',
     value: 'pants',
     image:
-      'https://res.cloudinary.com/dyciw970t/image/upload/v1761957953/misqabbi/landing-page/CSI_9965_z6dikk.jpg',
+      'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_400,c_limit/v1761957953/misqabbi/landing-page/CSI_9965_z6dikk.jpg',
   },
   {
     name: 'Skirts',
     value: 'skirts',
     image:
-      'https://res.cloudinary.com/dyciw970t/image/upload/v1761963218/misqabbi/landing-page/CSI_9918_tf8mxm.jpg',
+      'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_400,c_limit/v1761963218/misqabbi/landing-page/CSI_9918_tf8mxm.jpg',
   },
 ];
 
