@@ -40,9 +40,11 @@ const removeFavorite = async productId => {
 
 const toggleFavorite = async productId => {
   try {
-    const { data } = await axios.patch(`${API_URL}/favorites/${productId}`, {
-      withCredentials: true,
-    });
+    const { data } = await axios.patch(
+      `${API_URL}/favorites/toggle/${productId}`,
+      {}, // Empty data object to prevent withCredentials being treated as a request body
+      { withCredentials: true }
+    );
     return data.data;
   } catch (error) {
     console.error('Error toggling favorite:', error);
