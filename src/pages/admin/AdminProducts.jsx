@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { formatCurrency } from '../../utils/admin/tableHelpers';
 import { CATEGORIES } from '../../constants/categories';
@@ -10,22 +10,18 @@ import PageHeader from '../../components/admin/PageHeader';
 import { ViewButton, EditButton, DeleteButton } from '../../components/admin/ActionButton';
 import PaginationLocal from '../../components/orders/PaginationLocal';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
+import { useAdminProducts } from '../../hooks/queries/useAdmin';
 import {
-  createAdminProduct,
-  fetchAdminProducts,
-  updateAdminProduct,
-  deleteAdminProduct,
-} from '../../api/products';
+  useCreateProduct,
+  useUpdateProduct,
+  useDeleteProduct,
+} from '../../hooks/mutations/useProductMutations';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 const AdminProducts = () => {
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [limit] = useState(12);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [formData, setFormData] = useState({
@@ -41,6 +37,25 @@ const AdminProducts = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Use TanStack Query for products fetching with caching
+  const {
+    data: productsData,
+    isLoading: loading,
+    isError,
+    error: queryError,
+  } = useAdminProducts({ page: currentPage, limit });
+
+  const products = productsData?.data || [];
+  const totalPages = productsData?.totalPages || 1;
+  const error = isError
+    ? queryError?.response?.data?.message || queryError?.message || 'Failed to load products'
+    : null;
+
+  // Mutation hooks
+  const createProductMutation = useCreateProduct();
+  const updateProductMutation = useUpdateProduct();
+  const deleteProductMutation = useDeleteProduct();
 
   const columns = [
     {
@@ -148,20 +163,15 @@ const AdminProducts = () => {
     if (!deleteTarget) return;
     try {
       setIsDeleting(true);
-      await deleteAdminProduct(deleteTarget._id);
+      await deleteProductMutation.mutateAsync(deleteTarget._id);
       showSuccessToast('Product deleted successfully');
       setIsDeleteModalOpen(false);
       setDeleteTarget(null);
-      setLoading(true);
-      const res = await fetchAdminProducts({ page: currentPage, limit });
-      setProducts(res?.data || []);
-      setTotalPages(res?.totalPages || 1);
     } catch (e) {
       const msg = e?.response?.data?.message || e?.message || 'Failed to delete product';
       showErrorToast(msg);
     } finally {
       setIsDeleting(false);
-      setLoading(false);
     }
   };
 
@@ -189,7 +199,7 @@ const AdminProducts = () => {
           });
         }
 
-        const res = await createAdminProduct(body);
+        const res = await createProductMutation.mutateAsync(body);
         showSuccessToast(res?.message || 'Product added successfully');
         setIsModalOpen(false);
         setFormData({
@@ -201,19 +211,7 @@ const AdminProducts = () => {
           images: null,
           isPublished: false,
         });
-        // Refresh current page from server to reflect new data
-        try {
-          setLoading(true);
-          const list = await fetchAdminProducts({ page: currentPage, limit });
-          setProducts(list?.data || []);
-          setTotalPages(list?.totalPages || 1);
-        } catch (e) {
-          // Non-blocking: surface error
-          setError(e?.response?.data?.message || e?.message || 'Failed to refresh products');
-        } finally {
-          setLoading(false);
-        }
-        return; // keep mock list unchanged for now
+        return;
       } catch (e) {
         const msg = e?.response?.data?.message || e?.message || 'Failed to create product';
         showErrorToast(msg);
@@ -249,20 +247,11 @@ const AdminProducts = () => {
         };
       }
 
-      const res = await updateAdminProduct(editingProduct._id, payload);
+      const res = await updateProductMutation.mutateAsync({
+        id: editingProduct._id,
+        body: payload,
+      });
       showSuccessToast(res?.message || 'Product updated successfully');
-
-      // Refresh list
-      try {
-        setLoading(true);
-        const list = await fetchAdminProducts({ page: currentPage, limit });
-        setProducts(list?.data || []);
-        setTotalPages(list?.totalPages || 1);
-      } catch (e) {
-        setError(e?.response?.data?.message || e?.message || 'Failed to refresh products');
-      } finally {
-        setLoading(false);
-      }
     } catch (e) {
       const msg = e?.response?.data?.message || e?.message || 'Failed to update product';
       showErrorToast(msg);
@@ -285,31 +274,6 @@ const AdminProducts = () => {
   const handlePageChange = page => {
     setCurrentPage(page);
   };
-
-  // Fetch products on mount and when page/limit change
-  useEffect(() => {
-    let cancelled = false;
-    const run = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await fetchAdminProducts({ page: currentPage, limit });
-        if (!cancelled) {
-          setProducts(res?.data || []);
-          setTotalPages(res?.totalPages || 1);
-        }
-      } catch (e) {
-        if (!cancelled)
-          setError(e?.response?.data?.message || e?.message || 'Failed to load products');
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    };
-    run();
-    return () => {
-      cancelled = true;
-    };
-  }, [currentPage, limit]);
 
   return (
     <div className="space-y-6">
