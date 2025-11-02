@@ -5,7 +5,7 @@ import { useCartDispatch } from '../contexts/cart/useCart';
 import { useParams, useNavigate } from 'react-router';
 import BackButton from '../components/layout/BackButton';
 
-import { fetchProductBySlug } from '../api/products';
+import { useProduct } from '../hooks/queries/useProducts';
 
 import SizeSelect from '../components/products/SizeSelect';
 import ProductInfo from '../components/products/ProductInfo';
@@ -29,14 +29,14 @@ function ProductDetails() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const cartDispatch = useCartDispatch();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [selectedSize, setSelectedSize] = useState('M');
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [isCustomSizeEnabled, setIsCustomSizeEnabled] = useState(false);
   const [customMeasurements, setCustomMeasurements] = useState({});
   const { requireAuth, closeModal, isModalOpen, modalContext } = useAuthAction();
+
+  // Use TanStack Query for product fetching with caching
+  const { data: product, isLoading: loading, isError, error: queryError } = useProduct(slug);
 
   const handleAddToCart = () => {
     // Validate custom size if enabled
@@ -114,29 +114,12 @@ function ProductDetails() {
     requireAuth(() => {}, 'favorites');
   };
 
-  useEffect(() => {
-    const loadProduct = async () => {
-      try {
-        setLoading(true);
-        const response = await fetchProductBySlug(slug);
-        setProduct(response);
-      } catch (err) {
-        console.error('Failed to load product:', err);
-        setError('Something went wrong while loading the product.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadProduct();
-  }, [slug]);
-
   // Scroll to top when loading completes (new results loaded)
   useEffect(() => {
-    if (!loading) {
+    if (!loading && product) {
       scrollToTop();
     }
-  }, [loading]);
+  }, [loading, product]);
 
   if (loading)
     return (
@@ -144,7 +127,12 @@ function ProductDetails() {
         <LoadingSpinner size={80} color="#cfb484" />
       </div>
     );
-  if (error) return <p className="p-4 text-red-500">{error}</p>;
+  if (isError)
+    return (
+      <p className="p-4 text-red-500">
+        {queryError?.message || 'Something went wrong while loading the product.'}
+      </p>
+    );
   if (!product) return <p className="p-4">No product found.</p>;
 
   return (
