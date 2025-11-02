@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router';
 
 import Pagination from '../components/ui/Pagination.jsx';
@@ -71,6 +71,10 @@ const ProductList = () => {
     }
   }, [loading, isInitialSearchSynced]);
 
+  const productList = useMemo(() => {
+    return products.map(product => <ProductCard key={product._id} product={product} />);
+  }, [products]);
+
   return (
     <>
       <SEO
@@ -96,11 +100,7 @@ const ProductList = () => {
                 </p>
               </div>
             )}
-            <ProductGrid>
-              {products.map(product => (
-                <ProductCard key={product._id} product={product} />
-              ))}
-            </ProductGrid>
+            <ProductGrid>{productList}</ProductGrid>
             <Pagination />
           </>
         )}
