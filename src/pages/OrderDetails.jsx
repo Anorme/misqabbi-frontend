@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { getOrderById } from '../api/orders';
+import { useOrder } from '../hooks/queries/useOrders';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import useMediaQuery from '../hooks/useMediaQuery';
 import ProgressBar from '../components/orders/ProgressBar';
@@ -24,38 +23,24 @@ const deriveTimelineFromStatus = status => {
 
 const OrderDetails = () => {
   const { id } = useParams();
-  const [order, setOrder] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const isDesktop = useMediaQuery('(min-width: 640px)');
 
-  useEffect(() => {
-    const run = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await getOrderById(id);
-        const fetchedOrder = res?.data;
+  // Use TanStack Query for order fetching with caching
+  const { data: orderData, isLoading: loading, isError, error: queryError } = useOrder(id);
 
-        if (fetchedOrder) {
-          // Derive timeline
-          const orderWithTimeline = {
-            ...fetchedOrder,
-            timeline: deriveTimelineFromStatus(fetchedOrder.status),
-          };
-          setOrder(orderWithTimeline);
-        } else {
-          setError('Order not found');
-        }
-      } catch (e) {
-        console.error('Error fetching order:', e);
-        setError('Failed to load order details');
-      } finally {
-        setLoading(false);
+  // Derive timeline from order status
+  const order = orderData?.data
+    ? {
+        ...orderData.data,
+        timeline: deriveTimelineFromStatus(orderData.data.status),
       }
-    };
-    run();
-  }, [id]);
+    : null;
+
+  const error = isError
+    ? queryError?.message || 'Failed to load order details'
+    : orderData?.data
+      ? null
+      : 'Order not found';
 
   // index resolver imported from constants for consistency
   const deriveActiveIndex = currentOrder => {
