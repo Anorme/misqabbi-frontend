@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router';
 
 import Pagination from '../components/ui/Pagination.jsx';
@@ -71,6 +71,10 @@ const CategoryPage = () => {
     loadProducts();
   }, [category, currentPage, catalogDispatch, productsPerPage, searchParams]);
 
+  const productList = useMemo(() => {
+    return products.map(product => <ProductCard key={product._id} product={product} />);
+  }, [products]);
+
   if (!category) {
     return null; // Will redirect
   }
@@ -107,11 +111,7 @@ const CategoryPage = () => {
               </div>
             ) : (
               <>
-                <ProductGrid>
-                  {products.map(product => (
-                    <ProductCard key={product._id} product={product} />
-                  ))}
-                </ProductGrid>
+                <ProductGrid>{productList}</ProductGrid>
                 <Pagination />
               </>
             )}
