@@ -4,25 +4,25 @@ const items = [
   {
     name: 'Ileme Dress',
     image:
-      'https://res.cloudinary.com/dyciw970t/image/upload/v1761965676/misqabbi/landing-page/CSI_0041_n1o6cm.jpg',
+      'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_600,c_limit/v1761965676/misqabbi/landing-page/CSI_0041_n1o6cm.jpg',
     price: 300,
   },
   {
     name: 'Missy J Boubou',
     image:
-      'https://res.cloudinary.com/dyciw970t/image/upload/v1761965808/misqabbi/landing-page/CSI_0093_ila3wb.jpg',
+      'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_600,c_limit/v1761965808/misqabbi/landing-page/CSI_0093_ila3wb.jpg',
     price: 300,
   },
   {
     name: 'Mayah Skirt',
     image:
-      'https://res.cloudinary.com/dyciw970t/image/upload/v1761965680/misqabbi/landing-page/CSI_9944_dsvzfv.jpg',
+      'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_600,c_limit/v1761965680/misqabbi/landing-page/CSI_9944_dsvzfv.jpg',
     price: 300,
   },
   {
     name: 'Belle Pants',
     image:
-      'https://res.cloudinary.com/dyciw970t/image/upload/v1761957952/misqabbi/landing-page/CSI_9971_yqxnkp.jpg',
+      'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_600,c_limit/v1761957952/misqabbi/landing-page/CSI_9971_yqxnkp.jpg',
     price: 300,
   },
 ];
