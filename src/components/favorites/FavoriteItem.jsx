@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Heart, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router';
 import { useFavorites } from '../../contexts/favorites/useFavorites';
@@ -85,4 +86,4 @@ const FavoriteItem = ({ item, onClose }) => {
   );
 };
 
-export default FavoriteItem;
+export default memo(FavoriteItem);
