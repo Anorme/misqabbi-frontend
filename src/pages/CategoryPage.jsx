@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router';
 
 import Pagination from '../components/ui/Pagination.jsx';
@@ -11,7 +11,7 @@ import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog.js';
 import { setPage, setTotalPages, setProducts } from '../contexts/catalog/catalogActions.js';
 
-import { fetchDiscoverableProducts } from '../api/products.js';
+import { useProducts } from '../hooks/queries/useProducts.js';
 import { CATEGORIES } from '../constants/categories.js';
 
 // Category descriptions for SEO
@@ -30,8 +30,6 @@ const CategoryPage = () => {
   const navigate = useNavigate();
   const { products, productsPerPage, currentPage, searchParams } = useCatalogState();
   const catalogDispatch = useCatalogDispatch();
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   // Find category by value
   const category = CATEGORIES.find(cat => cat.value === categoryValue);
@@ -43,33 +41,34 @@ const CategoryPage = () => {
     }
   }, [category, categoryValue, navigate]);
 
-  // Fetch products for category
-  useEffect(() => {
-    if (!category) return;
+  // Use TanStack Query for product fetching with caching
+  // Category comes from route param, exclude category from searchParams to ensure route value is used
+  const { category: _category, ...otherSearchParams } = searchParams;
+  const {
+    data: productsData,
+    isLoading: loading,
+    isError,
+    error,
+  } = useProducts(
+    {
+      page: currentPage,
+      limit: productsPerPage,
+      category: category?.value || '', // Always from route param - required for API filtering
+      ...otherSearchParams, // Filters (q, minPrice, maxPrice, sort)
+    },
+    {
+      enabled: !!category, // Only fetch if category exists
+    }
+  );
 
-    const loadProducts = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        // Category comes from route param, exclude category from searchParams to ensure route value is used
-        const { category: _category, ...otherSearchParams } = searchParams;
-        const { data, totalPages } = await fetchDiscoverableProducts({
-          page: currentPage,
-          limit: productsPerPage,
-          category: category.value, // Always from route param - required for API filtering
-          ...otherSearchParams, // Filters (q, minPrice, maxPrice, sort)
-        });
-        catalogDispatch(setProducts(data));
-        catalogDispatch(setPage(currentPage));
-        catalogDispatch(setTotalPages(totalPages));
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-    loadProducts();
-  }, [category, currentPage, catalogDispatch, productsPerPage, searchParams]);
+  // Sync query data back to catalog context for consistency
+  useEffect(() => {
+    if (productsData?.data && productsData?.totalPages !== undefined) {
+      catalogDispatch(setProducts(productsData.data));
+      catalogDispatch(setPage(currentPage));
+      catalogDispatch(setTotalPages(productsData.totalPages));
+    }
+  }, [productsData, currentPage, catalogDispatch]);
 
   const productList = useMemo(() => {
     return products.map(product => <ProductCard key={product._id} product={product} />);
@@ -101,8 +100,8 @@ const CategoryPage = () => {
           <div className="flex w-full justify-center items-center lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] py-16">
             <LoadingSpinner size={100} color="#cfb484" />
           </div>
-        ) : error ? (
-          <p className="text-center text-red-500">{error}</p>
+        ) : isError ? (
+          <p className="text-center text-red-500">{error?.message || 'Failed to load products'}</p>
         ) : (
           <>
             {products.length === 0 ? (
