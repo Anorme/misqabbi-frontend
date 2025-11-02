@@ -1,10 +1,6 @@
 import { Heart } from 'lucide-react';
-import { useFavorites } from '../../contexts/favorites/useFavorites';
-import { addFavorite, removeFavorite } from '../../contexts/favorites/favoritesActions';
-import {
-  addFavorite as addFavoriteAPI,
-  removeFavorite as removeFavoriteAPI,
-} from '../../api/favorites';
+import { useFavorites as useFavoritesQuery } from '../../hooks/queries/useFavorites';
+import { useToggleFavorite } from '../../hooks/mutations/useFavoriteMutations';
 import {
   showAddedToFavoritesToast,
   showRemovedFromFavoritesToast,
@@ -13,9 +9,16 @@ import {
 import useAuthAction from '../../hooks/useAuthAction';
 
 const FavoritesLinkButton = ({ product, className = '', showText = false, onAuthRequired }) => {
-  const { isFavorite, dispatch } = useFavorites();
   const { requireAuth } = useAuthAction();
-  const isProductFavorite = isFavorite(product.id);
+
+  // Use TanStack Query for favorites data
+  const { data: favorites = [] } = useFavoritesQuery();
+  const isProductFavorite = favorites.some(
+    fav => fav.id === product.id || fav.productId === product.id
+  );
+
+  // Use mutation hook
+  const toggleFavoriteMutation = useToggleFavorite();
 
   const handleToggleFavorite = async () => {
     // Check if user is authenticated before proceeding
@@ -28,15 +31,10 @@ const FavoritesLinkButton = ({ product, className = '', showText = false, onAuth
     }
 
     try {
+      await toggleFavoriteMutation.mutateAsync(product.id);
       if (isProductFavorite) {
-        // Remove from favorites
-        dispatch(removeFavorite(product.id));
-        await removeFavoriteAPI(product.id);
         showRemovedFromFavoritesToast();
       } else {
-        // Add to favorites
-        dispatch(addFavorite(product));
-        await addFavoriteAPI(product.id);
         showAddedToFavoritesToast();
       }
     } catch (error) {
