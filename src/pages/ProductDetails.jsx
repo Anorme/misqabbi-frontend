@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { addToCart } from '../contexts/cart/cartActions';
 import { useCartDispatch } from '../contexts/cart/useCart';
 
@@ -8,11 +8,11 @@ import BackButton from '../components/layout/BackButton';
 import { useProduct } from '../hooks/queries/useProducts';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
-import SizeSelect from '../components/products/SizeSelect';
-import ProductInfo from '../components/products/ProductInfo';
-import GalleryImages from '../components/products/GalleryImages';
-import QuantitySelector from '../components/products/QuantitySelector';
-import CustomSizeInput from '../components/products/CustomSizeInput';
+const SizeSelect = lazy(() => import('../components/products/SizeSelect'));
+const ProductInfo = lazy(() => import('../components/products/ProductInfo'));
+const GalleryImages = lazy(() => import('../components/products/GalleryImages'));
+const QuantitySelector = lazy(() => import('../components/products/QuantitySelector'));
+const CustomSizeInput = lazy(() => import('../components/products/CustomSizeInput'));
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 import FavoritesLinkButton from '../components/favorites/FavoritesLinkButton';
 import AuthActionModal from '../components/auth/AuthActionModal';
@@ -229,33 +229,43 @@ function ProductDetails() {
             </div>
 
             {/* Image Gallery */}
-            <GalleryImages
-              product={product}
-              selectedIndex={selectedImageIndex}
-              onImageSelect={setSelectedImageIndex}
-            />
+            <Suspense fallback={null}>
+              <GalleryImages
+                product={product}
+                selectedIndex={selectedImageIndex}
+                onImageSelect={setSelectedImageIndex}
+              />
+            </Suspense>
           </div>
 
           {/* Product Info Section */}
           <div className="divide-y-2 divide-gray-300 lg:pt-4">
-            <ProductInfo product={product}></ProductInfo>
+            <Suspense fallback={null}>
+              <ProductInfo product={product}></ProductInfo>
+            </Suspense>
 
-            <SizeSelect selected={selectedSize} onChange={setSelectedSize}></SizeSelect>
+            <Suspense fallback={null}>
+              <SizeSelect selected={selectedSize} onChange={setSelectedSize}></SizeSelect>
+            </Suspense>
             {/* Custom Size Input - Compact inline design */}
             {supportsCustomSizing(product?.category) && (
               <div className="flex-1 pb-6">
-                <CustomSizeInput
-                  category={product?.category}
-                  measurements={customMeasurements}
-                  onMeasurementsChange={setCustomMeasurements}
-                  onToggleCustomSize={setIsCustomSizeEnabled}
-                  isCustomSizeEnabled={isCustomSizeEnabled}
-                />
+                <Suspense fallback={null}>
+                  <CustomSizeInput
+                    category={product?.category}
+                    measurements={customMeasurements}
+                    onMeasurementsChange={setCustomMeasurements}
+                    onToggleCustomSize={setIsCustomSizeEnabled}
+                    isCustomSizeEnabled={isCustomSizeEnabled}
+                  />
+                </Suspense>
               </div>
             )}
 
             <div className="flex items-start gap-4 pb-4 sm:pb-6">
-              <QuantitySelector quantity={selectedQuantity} onChange={setSelectedQuantity} />
+              <Suspense fallback={null}>
+                <QuantitySelector quantity={selectedQuantity} onChange={setSelectedQuantity} />
+              </Suspense>
             </div>
 
             {/* Product price and CTA */}
