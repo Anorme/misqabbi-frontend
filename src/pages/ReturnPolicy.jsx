@@ -11,23 +11,25 @@ const ReturnPolicy = () => {
       />
       {/* Header */}
       <header className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bebas text-msq-purple-rich mb-4">Return Policy</h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <h1 className="font-bebas text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-msq-purple-rich mb-4">
+          Return Policy
+        </h1>
+        <p className="text-xs sm:text-sm lg:text-base text-gray-600 max-w-2xl mx-auto">
           Understand our policies to ensure you have the best experience with Misqabbi.
         </p>
       </header>
 
       {/* Made-to-Measure Introduction */}
-      <section className="mb-12 p-8 bg-gradient-to-br from-msq-purple-light/10 to-msq-purple-rich/10 rounded-xl border border-msq-purple-light/20">
+      <section className="mb-12 p-4 md:p-8 bg-gradient-to-br from-msq-purple-light/10 to-msq-purple-rich/10 rounded-xl border border-msq-purple-light/20">
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0">
-            <Package className="w-10 h-10 text-msq-purple-rich" />
+            <Package className="w-8 h-8 sm:w-10 sm:h-10 text-msq-purple-rich" />
           </div>
           <div>
-            <h2 className="text-2xl font-bebas text-msq-purple-rich mb-3">
+            <h2 className="text-lg md:text-xl lg:text-2xl font-bebas text-msq-purple-rich mb-2 md:mb-3">
               Made-to-Measure Excellence
             </h2>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-xs sm:text-sm lg:text-base text-gray-700 leading-relaxed">
               All Misqabbi pieces are made-to-measure, crafted specifically for you. Each garment is
               designed and tailored to your unique measurements, ensuring a perfect fit that
               celebrates your individual style.
@@ -40,26 +42,30 @@ const ReturnPolicy = () => {
       <section className="mb-12">
         <div className="space-y-6">
           {/* Policy 1 */}
-          <div className="flex items-start gap-4 p-6 bg-white border-2 border-gray-100 rounded-lg hover:border-msq-purple-light transition-colors">
+          <div className="flex items-start gap-4 p-4 md:p-6 bg-white border-2 border-gray-100 rounded-lg hover:border-msq-purple-light transition-colors">
             <div className="flex-shrink-0">
-              <ShieldCheck className="w-8 h-8 text-msq-purple-rich" />
+              <ShieldCheck className="w-6 h-6 sm:w-8 sm:h-8 text-msq-purple-rich" />
             </div>
             <div>
-              <h3 className="text-xl font-bebas text-msq-purple-rich mb-2">Our Return Policy</h3>
-              <p className="text-gray-700 leading-relaxed">
+              <h3 className="text-base sm:text-lg md:text-xl font-bebas text-msq-purple-rich mb-2">
+                Our Return Policy
+              </h3>
+              <p className="text-xs sm:text-sm lg:text-base text-gray-700 leading-relaxed">
                 We do not accept returns or issue refunds unless the item is defective or incorrect.
               </p>
             </div>
           </div>
 
           {/* Policy 2 */}
-          <div className="flex items-start gap-4 p-6 bg-white border-2 border-gray-100 rounded-lg hover:border-msq-purple-light transition-colors">
+          <div className="flex items-start gap-4 p-4 md:p-6 bg-white border-2 border-gray-100 rounded-lg hover:border-msq-purple-light transition-colors">
             <div className="flex-shrink-0">
-              <AlertCircle className="w-8 h-8 text-msq-purple-rich" />
+              <AlertCircle className="w-6 h-6 sm:w-8 sm:h-8 text-msq-purple-rich" />
             </div>
             <div>
-              <h3 className="text-xl font-bebas text-msq-purple-rich mb-2">Inspect Your Order</h3>
-              <p className="text-gray-700 leading-relaxed">
+              <h3 className="text-base sm:text-lg md:text-xl font-bebas text-msq-purple-rich mb-2">
+                Inspect Your Order
+              </h3>
+              <p className="text-xs sm:text-sm lg:text-base text-gray-700 leading-relaxed">
                 Please inspect your order upon delivery to ensure everything meets your
                 expectations.
               </p>
@@ -67,13 +73,15 @@ const ReturnPolicy = () => {
           </div>
 
           {/* Policy 3 */}
-          <div className="flex items-start gap-4 p-6 bg-white border-2 border-gray-100 rounded-lg hover:border-msq-purple-light transition-colors">
+          <div className="flex items-start gap-4 p-4 md:p-6 bg-white border-2 border-gray-100 rounded-lg hover:border-msq-purple-light transition-colors">
             <div className="flex-shrink-0">
-              <Phone className="w-8 h-8 text-msq-purple-rich" />
+              <Phone className="w-6 h-6 sm:w-8 sm:h-8 text-msq-purple-rich" />
             </div>
             <div>
-              <h3 className="text-xl font-bebas text-msq-purple-rich mb-2">Need Assistance?</h3>
-              <p className="text-gray-700 leading-relaxed mb-3">
+              <h3 className="text-base sm:text-lg md:text-xl font-bebas text-msq-purple-rich mb-2">
+                Need Assistance?
+              </h3>
+              <p className="text-xs sm:text-sm lg:text-base text-gray-700 leading-relaxed mb-2 md:mb-3">
                 If there's an issue, contact us immediately at{' '}
                 <a
                   href="tel:+233507226511"
@@ -82,7 +90,7 @@ const ReturnPolicy = () => {
                   +233 50 722 6511
                 </a>
               </p>
-              <p className="text-gray-600 text-sm">
+              <p className="text-xs sm:text-sm text-gray-600">
                 We'll work with you to resolve any concerns promptly.
               </p>
             </div>
@@ -91,14 +99,16 @@ const ReturnPolicy = () => {
       </section>
 
       {/* Closing Commitment */}
-      <section className="mb-12 p-8 bg-msq-purple-rich rounded-xl text-white">
+      <section className="mb-12 p-4 md:p-8 bg-msq-purple-rich rounded-xl text-white">
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0">
-            <CheckCircle className="w-10 h-10 text-white" />
+            <CheckCircle className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
           </div>
           <div>
-            <h2 className="text-2xl font-bebas mb-3">Our Commitment to You</h2>
-            <p className="leading-relaxed text-white/95">
+            <h2 className="text-lg md:text-xl lg:text-2xl font-bebas mb-2 md:mb-3">
+              Our Commitment to You
+            </h2>
+            <p className="text-xs sm:text-sm lg:text-base leading-relaxed text-white/95">
               We're committed to making things right if something's not as expected. Your confidence
               in Misqabbi is important to us, and we stand behind the quality of every piece we
               create.
@@ -108,31 +118,31 @@ const ReturnPolicy = () => {
       </section>
 
       {/* Contact Support CTA */}
-      <section className="p-8 bg-gray-50 rounded-lg border border-gray-200">
-        <h3 className="text-2xl font-bebas text-msq-purple-rich mb-4 text-center">
+      <section className="p-4 md:p-8 bg-gray-50 rounded-lg border border-gray-200">
+        <h3 className="text-lg md:text-xl lg:text-2xl font-bebas text-msq-purple-rich mb-2 md:mb-4 text-center">
           Have Questions or Concerns?
         </h3>
-        <p className="text-gray-700 text-center mb-6">
+        <p className="text-xs sm:text-sm lg:text-base text-gray-700 text-center mb-4 md:mb-6">
           Our support team is here to help you every step of the way.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-2 md:gap-4 justify-center">
           <a
             href="https://wa.me/233507226511"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-msq-purple-rich text-white px-6 py-3 rounded-lg font-semibold hover:bg-msq-purple-deep transition-colors text-center"
+            className="text-xs sm:text-sm lg:text-base bg-msq-purple-rich text-white px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold hover:bg-msq-purple-deep transition-colors text-center"
           >
             WhatsApp Support
           </a>
           <a
             href="tel:+233507226511"
-            className="bg-transparent border-2 border-msq-purple-rich text-msq-purple-rich px-6 py-3 rounded-lg font-semibold hover:bg-msq-purple-rich hover:text-white transition-colors text-center"
+            className="text-xs sm:text-sm lg:text-base bg-transparent border-2 border-msq-purple-rich text-msq-purple-rich px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold hover:bg-msq-purple-rich hover:text-white transition-colors text-center"
           >
             Call Us Now
           </a>
           <a
-            href="mailto:support@misqabbigh.com"
-            className="bg-transparent border-2 border-msq-purple-rich text-msq-purple-rich px-6 py-3 rounded-lg font-semibold hover:bg-msq-purple-rich hover:text-white transition-colors text-center"
+            href="mailto:info@misqabbigh.com"
+            className="text-xs sm:text-sm lg:text-base bg-transparent border-2 border-msq-purple-rich text-msq-purple-rich px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold hover:bg-msq-purple-rich hover:text-white transition-colors text-center"
           >
             Email Support
           </a>
