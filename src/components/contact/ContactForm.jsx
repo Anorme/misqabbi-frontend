@@ -87,9 +87,6 @@ const ContactForm = () => {
       <div className="max-w-6xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-4 sm:mb-6 lg:mb-8">
-          <div className="inline-block mb-2 sm:mb-3 sm:block">
-            <div className="w-10 sm:w-12 h-0.5 bg-msq-purple-rich mx-auto mb-1.5 sm:mb-2"></div>
-          </div>
           <h1 className="font-bebas text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-msq-purple-rich uppercase tracking-wider mb-2 sm:mb-3 leading-tight">
             Get in Touch
           </h1>
