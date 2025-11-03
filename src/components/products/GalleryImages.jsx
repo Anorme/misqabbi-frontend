@@ -29,6 +29,8 @@ function GalleryImages({ product, selectedIndex = 0, onImageSelect }) {
             <img
               src={getImageUrl(img)}
               alt={`${product?.name} thumbnail ${idx + 1}`}
+              loading="lazy"
+              decoding="async"
               className="object-cover h-full w-full rounded-none"
             />
           </li>
