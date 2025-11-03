@@ -36,6 +36,8 @@ function ProductDetails() {
   const [customMeasurements, setCustomMeasurements] = useState({});
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { requireAuth, closeModal, isModalOpen, modalContext } = useAuthAction();
+  const [isImageZoomed, setIsImageZoomed] = useState(false);
+  const EPS = 0.05;
 
   // Use TanStack Query for product fetching with caching
   const { data: product, isLoading: loading, isError, error: queryError } = useProduct(slug);
@@ -195,13 +197,14 @@ function ProductDetails() {
                 initialScale={1}
                 minScale={1}
                 maxScale={3}
-                doubleClick={{ disabled: false, step: 1.5 }}
-                pan={{ disabled: false }}
-                wheel={{ step: 0.1 }}
+                doubleClick={{ disabled: false, mode: 'toggle' }}
+                panning={{ disabled: !isImageZoomed }}
+                wheel={{ disabled: true }}
                 pinch={{ step: 5 }}
                 centerOnInit={true}
-                wrapperClass="!w-full !h-full"
-                contentClass="!w-full !h-full"
+                onPinchingStart={() => setIsImageZoomed(true)}
+                onPinchingStop={({ state }) => setIsImageZoomed(state.scale > 1 + EPS)}
+                onZoomStop={({ state }) => setIsImageZoomed(state.scale > 1 + EPS)}
               >
                 <TransformComponent wrapperClass="!w-full !h-full flex items-center justify-center">
                   <img
