@@ -49,10 +49,10 @@ const FAQs = () => {
       />
       {/* Header */}
       <header className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bebas text-msq-purple-rich mb-4">
+        <h1 className="font-bebas text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-msq-purple-rich mb-4">
           Frequently Asked Questions
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-xs sm:text-sm lg:text-base text-gray-600 max-w-2xl mx-auto">
           Find answers to common questions about ordering, delivery, and returns.
         </p>
       </header>
@@ -71,23 +71,25 @@ const FAQs = () => {
       </div>
 
       {/* Additional Help Section */}
-      <section className="mt-16 p-8 bg-msq-purple-rich rounded-lg text-white">
-        <h2 className="text-2xl font-bebas mb-4">Still have questions?</h2>
-        <p className="mb-4">
+      <section className="mt-16 p-4 md:p-8 bg-msq-purple-rich rounded-lg text-white">
+        <h2 className="text-lg md:text-xl lg:text-2xl font-bebas mb-2 md:mb-4">
+          Still have questions?
+        </h2>
+        <p className=" text-xs sm:text-sm lg:text-base mb-2 md:mb-4">
           Can't find the answer you're looking for? Please reach out to our friendly support team.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-2 md:gap-4">
           <a
             href="https://wa.me/233507226511"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-white text-msq-purple-rich px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center"
+            className="text-xs sm:text-sm lg:text-base bg-white text-msq-purple-rich px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center"
           >
             WhatsApp Us
           </a>
           <a
             href="mailto:support@misqabbigh.com"
-            className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors text-center"
+            className="text-xs sm:text-sm lg:text-base bg-transparent border-2 border-white text-white px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors text-center"
           >
             Email Us
           </a>
