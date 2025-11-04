@@ -64,7 +64,7 @@ const ProductCard = ({ product }) => {
           {product.name}
         </h3>
         <div className="flex items-center justify-between">
-          <span className="text-xs sm:text-xs md:text-sm lg:text-xl font-semibold text-msq-purple-deep">
+          <span className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-msq-purple-deep">
             GHC {product.price}
           </span>
           <button type="button" aria-label="Add to cart" onClick={handleAddToCart}>
