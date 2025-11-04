@@ -12,7 +12,7 @@ const NavLinks = ({ className = '' }) => {
 
   const getLinkClasses = pathname => {
     const isActive = location.pathname === pathname;
-    return `px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+    return `px-1 py-2 text-sm font-medium transition-colors duration-200 ${
       isActive
         ? 'text-msq-purple-rich border-b-2 border-msq-purple-rich'
         : 'text-msq-purple-deep hover:text-msq-purple-rich'
@@ -20,7 +20,7 @@ const NavLinks = ({ className = '' }) => {
   };
 
   return (
-    <nav className={`flex items-center gap-2 ${className}`} aria-label="Main navigation">
+    <nav className={`flex items-center gap-1 sm:gap-2 ${className}`} aria-label="Main navigation">
       {links.map(link => (
         <Link key={link.to} to={link.to} className={getLinkClasses(link.to)}>
           {link.label}
