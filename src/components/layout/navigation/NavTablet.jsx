@@ -59,7 +59,7 @@ const NavTablet = () => {
           {/* Top Row: Logo, Nav Links, and Icons */}
           <div className="flex justify-between items-center h-14">
             {/* Left Section: Logo and Nav Links */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-0">
               <NavLogo variant="desktop" />
               <NavLinks />
             </div>
