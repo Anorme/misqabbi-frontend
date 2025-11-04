@@ -69,10 +69,10 @@ function NavMobile() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm pt-2">
         <div className="max-w-screen-2xl px-2 lg:px-8">
           {/* Top Row: Logo and Icons */}
-          <div className="flex justify-between items-center pt-6">
+          <div className="flex justify-between items-center">
             {/* Left Section: Logo */}
             <div className="flex items-center space-x-2">
               <MenuButton onClick={handleMenuToggle} />
