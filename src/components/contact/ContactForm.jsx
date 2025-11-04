@@ -289,7 +289,7 @@ const ContactForm = () => {
 
               {/* Email */}
               <a
-                href="mailto:support@misqabbigh.com"
+                href="mailto:info@misqabbigh.com"
                 className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-lg transition-all duration-300 group border border-white/10 hover:border-white/20 hover:shadow-md hover:shadow-white/10 hover:scale-[1.01] active:scale-[0.99]"
               >
                 <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-white/15 rounded-lg flex items-center justify-center group-hover:bg-white/25 group-hover:scale-110 transition-all duration-300 shadow-md">
