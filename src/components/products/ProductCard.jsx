@@ -60,11 +60,11 @@ const ProductCard = ({ product }) => {
         </div>
       </div>
       <div className="px-4 py-2">
-        <h3 className="text-xs md:text-sm lg:text-lg font-medium text-msq-purple uppercase text-left tracking-wide">
+        <h3 className="text-xs sm:text-xs md:text-sm lg:text-lg font-medium text-msq-purple uppercase text-left tracking-wide">
           {product.name}
         </h3>
         <div className="flex items-center justify-between">
-          <span className="text-sm md:text-base lg:text-xl font-bold text-msq-purple-deep">
+          <span className="text-xs sm:text-xs md:text-sm lg:text-xl font-semibold text-msq-purple-deep">
             GHC {product.price}
           </span>
           <button type="button" aria-label="Add to cart" onClick={handleAddToCart}>
