@@ -5,7 +5,7 @@ const MainLayout = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen justify-between">
       <NavBar />
-      <div className="">{children}</div>
+      <div className="pt-18">{children}</div>
       <Footer />
     </div>
   );
