@@ -36,7 +36,7 @@ const FAQs = () => {
     {
       question: 'How do I contact support?',
       answer:
-        'Call or WhatsApp +233 50 722 6511 or send an email to support@misqabbigh.com and we will help you out',
+        'Call or WhatsApp +233 50 722 6511 or send an email to info@misqabbigh.com and we will help you out',
     },
   ];
 
@@ -88,7 +88,7 @@ const FAQs = () => {
             WhatsApp Us
           </a>
           <a
-            href="mailto:support@misqabbigh.com"
+            href="mailto:info@misqabbigh.com"
             className="text-xs sm:text-sm lg:text-base bg-transparent border-2 border-white text-white px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors text-center"
           >
             Email Us
