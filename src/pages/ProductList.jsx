@@ -76,7 +76,7 @@ const ProductList = () => {
         canonicalPath="/shop"
       />
       <CategoryNavigation />
-      <main className="w-full px-4 sm:px-6 lg:px-8 pt-12 pb-8 lg:my-8">
+      <main className="w-full px-4 sm:px-6 lg:px-8 pt-12 pb-8">
         {loading ? (
           <div className="flex w-full justify-center items-center lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] py-16">
             <LoadingSpinner size={100} color="#cfb484" />
