@@ -3,10 +3,10 @@ import { Link } from 'react-router';
 const NavLogo = ({ variant = 'desktop', className = '' }) => {
   const getLogoClasses = () => {
     if (variant === 'mobile') {
-      return 'w-36 sm:w-40 md:w-56 object-contain h-full cursor-pointer';
+      return 'w-24 sm:w-32 md:w-36 object-contain h-full cursor-pointer';
     }
     // Desktop variant
-    return 'w-28 sm:w-40 md:w-56 object-contain cursor-pointer';
+    return 'w-24 sm:w-32 md:w-36 object-contain cursor-pointer';
   };
 
   const getContainerClasses = () => {
