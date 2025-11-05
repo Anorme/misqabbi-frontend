@@ -47,9 +47,9 @@ const CustomSizeInput = ({
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-0">
       <div className="flex items-center justify-between">
-        <h2 className="text-base sm:text-lg lg:text-2xl px-1">Custom Size (Inches)</h2>
+        <h2 className="text-base sm:text-lg lg:text-xl p-1">Custom Size (Inches)</h2>
         {isCustomSizeEnabled && (
           <CloseButton
             onClose={() => onToggleCustomSize(false)}
@@ -64,7 +64,7 @@ const CustomSizeInput = ({
         <button
           type="button"
           onClick={() => onToggleCustomSize(true)}
-          className="w-full py-2 sm:py-3 px-3 sm:px-4 bg-gray-100 hover:bg-gray-200 text-msq-purple-rich rounded-md border-2 border-dashed border-gray-300 hover:border-gray-400 transition-colors duration-200 text-sm sm:text-base font-medium cursor-pointer"
+          className="w-full py-2 bg-gray-100 hover:bg-gray-200 text-msq-purple-rich rounded-md border-2 border-dashed border-gray-300 hover:border-gray-400 transition-colors duration-200 text-sm sm:text-base font-medium cursor-pointer"
         >
           Use Custom Size
         </button>
