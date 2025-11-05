@@ -248,7 +248,7 @@ function ProductDetails() {
             </Suspense>
             {/* Custom Size Input - Compact inline design */}
             {supportsCustomSizing(product?.category) && (
-              <div className="flex-1 pb-6">
+              <div className="flex-1 pb-4 sm:pb-6">
                 <Suspense fallback={null}>
                   <CustomSizeInput
                     category={product?.category}
@@ -261,14 +261,14 @@ function ProductDetails() {
               </div>
             )}
 
-            <div className="flex items-start gap-4 pb-4 sm:pb-6">
+            <div className="flex items-start gap-0 pb-4 sm:pb-6">
               <Suspense fallback={null}>
                 <QuantitySelector quantity={selectedQuantity} onChange={setSelectedQuantity} />
               </Suspense>
             </div>
 
             {/* Product price and CTA */}
-            <div className="flex py-4 sm:py-6 space-x-3 sm:space-x-5 justify-between">
+            <div className="flex py-4 sm:pb-6 space-x-3 sm:space-x-5 justify-between">
               <div className="w-1/2 px-2 sm:px-3 py-2 bg-[#EEE5E5] rounded-md flex flex-col max-w-[190px]">
                 <p className="text-xs sm:text-sm text-[#B1B2B2]">Total price:</p>
                 <h1 className="text-sm sm:text-base md:text-lg lg:text-2xl font-extrabold text-msq-purple-deep">
@@ -286,7 +286,7 @@ function ProductDetails() {
             {/* Buy Now Button*/}
             <div className="py-3 sm:py-4">
               <button
-                className="bg-msq-purple-rich font-bold text-sm sm:text-base md:text-lg lg:text-xl text-white rounded-md w-full cursor-pointer h-[52px] py-2 sm:py-3 hover:bg-msq-purple transition-colors duration-200"
+                className="bg-msq-purple-rich font-bold text-sm sm:text-base md:text-lg lg:text-xl text-white rounded-md w-full cursor-pointer py-4 hover:bg-msq-purple transition-colors duration-200"
                 onClick={handleBuyNow}
               >
                 Buy Now
