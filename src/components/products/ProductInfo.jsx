@@ -8,7 +8,9 @@ function ProductInfo({ product }) {
         GHC {product?.price}
       </p>
       <h2 className="text-lg sm:text-xl lg:text-2xl">Details</h2>
-      <p className="text-base sm:text-lg leading-loose">{product?.description}</p>
+      <p className="text-base sm:text-lg leading-relaxed md:leading-loose">
+        {product?.description}
+      </p>
     </div>
   );
 }
