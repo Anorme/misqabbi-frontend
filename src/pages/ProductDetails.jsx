@@ -190,7 +190,7 @@ function ProductDetails() {
         <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 py-4 sm:py-6 items-start">
           {/* Images Section */}
           <div className="flex flex-col gap-3 sm:gap-4 lg:gap-5">
-            <div className="relative aspect-[3/4] w-full overflow-hidden">
+            <div className="relative aspect-[4/5] w-full overflow-hidden">
               <TransformWrapper
                 key={selectedImageIndex}
                 initialScale={1}
@@ -207,7 +207,7 @@ function ProductDetails() {
               >
                 <TransformComponent wrapperClass="!w-full !h-full flex items-center justify-center">
                   <img
-                    className="aspect-[3/4] w-full object-cover rounded-none cursor-zoom-in"
+                    className="aspect-[4/5] w-full object-cover rounded-none cursor-zoom-in"
                     src={getSelectedImageUrl()}
                     alt={product?.name}
                   />
