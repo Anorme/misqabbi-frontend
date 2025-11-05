@@ -15,12 +15,12 @@ function GalleryImages({ product, selectedIndex = 0, onImageSelect }) {
 
   return (
     <>
-      <ul className="grid grid-cols-5 gap-2 sm:gap-3 lg:gap-4 h-full px-2 sm:px-3 lg:px-4 w-full">
+      <ul className="grid grid-cols-5 gap-2 sm:gap-3 lg:gap-4 py-2 sm:py-3 lg:py-4 w-full">
         {galleryImages.map((img, idx) => (
           <li
             key={idx}
             onClick={() => handleThumbnailClick(idx)}
-            className={`cursor-pointer transition-all duration-200 ${
+            className={`cursor-pointer transition-all duration-200 aspect-[3/4] overflow-hidden ${
               selectedIndex === idx
                 ? 'ring-2 ring-msq-purple-rich ring-offset-2'
                 : 'opacity-70 hover:opacity-100'
@@ -31,7 +31,7 @@ function GalleryImages({ product, selectedIndex = 0, onImageSelect }) {
               alt={`${product?.name} thumbnail ${idx + 1}`}
               loading="lazy"
               decoding="async"
-              className="object-cover h-full w-full rounded-none"
+              className="object-cover w-full h-full rounded-none"
             />
           </li>
         ))}
