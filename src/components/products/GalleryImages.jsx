@@ -15,7 +15,7 @@ function GalleryImages({ product, selectedIndex = 0, onImageSelect }) {
 
   return (
     <>
-      <ul className="grid grid-cols-5 gap-2 sm:gap-3 lg:gap-4 py-2 sm:py-3 lg:py-4 w-full">
+      <ul className="grid grid-cols-5 gap-2 sm:gap-3 lg:gap-4 py-2 sm:py-3 lg:py-4 px-2 sm:px-3 lg:px-4 w-full">
         {galleryImages.map((img, idx) => (
           <li
             key={idx}
