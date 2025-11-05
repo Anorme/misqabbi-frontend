@@ -6,14 +6,14 @@ function SizeSelect({ selected, onChange }) {
   }
 
   return (
-    <div className="flex flex-col gap-2 pb-4 sm:pb-6">
-      <h2 className="text-base sm:text-lg lg:text-2xl">Size</h2>
+    <div className="flex flex-col gap-0 pb-4">
+      <h2 className="text-base sm:text-lg lg:text-xl">Size</h2>
       <ul className="flex gap-2 justify-around flex-wrap">
         {sizes.map(size => (
           <li
             key={size}
             onClick={() => handleSizeSelect(size)}
-            className={`cursor-pointer border px-3 sm:px-4 py-1.5 sm:py-2 rounded-md transition text-sm sm:text-base
+            className={`cursor-pointer border px-3 sm:px-4 py-1 rounded-md transition text-sm sm:text-base
               ${
                 selected === size
                   ? 'bg-msq-gold-light text-white border-msq-gold-light'
