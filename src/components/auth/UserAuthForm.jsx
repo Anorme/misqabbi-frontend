@@ -2,22 +2,12 @@ import { FcGoogle } from 'react-icons/fc';
 import { MdPerson, MdEmail } from 'react-icons/md';
 
 import { isValidEmail, isStrongPassword } from '../../utils/validation';
-import {
-  registerUserWithEmail,
-  loginUserWithEmail,
-  signInWithGoogleRedirect,
-} from '../../api/auth';
+import { signInWithGoogleRedirect } from '../../api/auth';
 
 import { useFormState, useFormDispatch } from '../../contexts/form/useForm';
 import { useAuthState, useAuthDispatch } from '../../contexts/auth/useAuth';
 import { setAuthError } from '../../contexts/auth/authActions';
-import {
-  updateField,
-  setErrors,
-  clearErrors,
-  startSubmit,
-  stopSubmit,
-} from '../../contexts/form/formActions';
+import { updateField, setErrors, clearErrors } from '../../contexts/form/formActions';
 
 import InputField from '../form/InputField';
 import PasswordInput from '../form/PasswordInput';
@@ -26,8 +16,10 @@ import SubmitButton from '../form/SubmitButton';
 import Divider from '../form/Divider';
 import SocialButton from '../form/SocialButton';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const UserAuthForm = ({ mode }) => {
-  const { values, errors, isSubmitting } = useFormState();
+  const { values, errors } = useFormState();
   const formDispatch = useFormDispatch();
   const { fullName = '', email = '', password = '' } = values;
 
@@ -36,57 +28,34 @@ const UserAuthForm = ({ mode }) => {
 
   const isFormIncomplete = !email || !password || (mode === 'register' && !fullName);
 
-  const submitLabel = isSubmitting
-    ? mode === 'register'
-      ? 'Registering...'
-      : 'Logging in...'
-    : mode === 'register'
-      ? 'Create Account'
-      : 'Login';
+  const submitLabel = mode === 'register' ? 'Create Account' : 'Login';
 
   const handleChange = e => {
     const { name, value } = e.target;
-    formDispatch(updateField(name, value));
+    // Map displayName (form field) to fullName (state)
+    const fieldName = name === 'displayName' ? 'fullName' : name;
+    formDispatch(updateField(fieldName, value));
   };
 
-  const handleRegister = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
     formDispatch(clearErrors());
-    formDispatch(startSubmit());
     authDispatch(setAuthError(null));
 
     const validationErrors = {};
     if (!isValidEmail(email)) validationErrors.email = 'Please enter a valid email';
-    if (!isStrongPassword(password)) validationErrors.password = 'Please use a stronger password';
+    if (mode === 'register' && !isStrongPassword(password)) {
+      validationErrors.password = 'Please use a stronger password';
+    }
 
     if (Object.keys(validationErrors).length > 0) {
       formDispatch(setErrors(validationErrors));
-      formDispatch(stopSubmit());
       return;
     }
 
-    try {
-      await registerUserWithEmail(email, password, fullName);
-      // Backend will redirect to /auth/callback
-    } catch (err) {
-      authDispatch(setAuthError(err.message));
-      formDispatch(stopSubmit());
-    }
-  };
-
-  const handleLogin = async e => {
-    e.preventDefault();
-    formDispatch(clearErrors());
-    formDispatch(startSubmit());
-    authDispatch(setAuthError(null));
-
-    try {
-      await loginUserWithEmail(email, password);
-      // Backend will redirect to /auth/callback
-    } catch (err) {
-      authDispatch(setAuthError(err.message));
-      formDispatch(stopSubmit());
-    }
+    // If validation passes, let the form submit naturally
+    // The form's action and method will handle the submission
+    e.target.submit();
   };
 
   const handleGoogleSignIn = async () => {
@@ -98,13 +67,15 @@ const UserAuthForm = ({ mode }) => {
     }
   };
 
+  const formAction = mode === 'register' ? `${API_URL}/auth/signup` : `${API_URL}/auth/login`;
+
   return (
-    <form onSubmit={mode === 'register' ? handleRegister : handleLogin} className="space-y-4">
+    <form action={formAction} method="POST" onSubmit={handleSubmit} className="space-y-4">
       {mode === 'register' && (
         <InputField
           label="Full Name"
           type="text"
-          name="fullName"
+          name="displayName"
           value={fullName}
           onChange={handleChange}
           placeholder="Enter your name"
@@ -125,13 +96,14 @@ const UserAuthForm = ({ mode }) => {
       />
 
       <PasswordInput
+        name="password"
         value={password}
         onChange={handleChange}
         error={errors.password}
         showStrength={mode === 'register'}
       />
 
-      <SubmitButton label={submitLabel} disabled={isFormIncomplete || isSubmitting} />
+      <SubmitButton label={submitLabel} disabled={isFormIncomplete} />
 
       {authError && <ErrorMessage error={authError} />}
 
