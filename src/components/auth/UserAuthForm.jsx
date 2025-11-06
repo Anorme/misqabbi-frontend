@@ -1,5 +1,3 @@
-import { useNavigate, useLocation } from 'react-router';
-
 import { FcGoogle } from 'react-icons/fc';
 import { MdPerson, MdEmail } from 'react-icons/md';
 
@@ -12,14 +10,13 @@ import {
 
 import { useFormState, useFormDispatch } from '../../contexts/form/useForm';
 import { useAuthState, useAuthDispatch } from '../../contexts/auth/useAuth';
-import { setCurrentUser, setAuthError, setAuthRestored } from '../../contexts/auth/authActions';
+import { setAuthError } from '../../contexts/auth/authActions';
 import {
   updateField,
   setErrors,
   clearErrors,
   startSubmit,
   stopSubmit,
-  resetForm,
 } from '../../contexts/form/formActions';
 
 import InputField from '../form/InputField';
@@ -30,10 +27,6 @@ import Divider from '../form/Divider';
 import SocialButton from '../form/SocialButton';
 
 const UserAuthForm = ({ mode }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const redirectPath = location.state?.from || '/shop';
-
   const { values, errors, isSubmitting } = useFormState();
   const formDispatch = useFormDispatch();
   const { fullName = '', email = '', password = '' } = values;
@@ -73,11 +66,8 @@ const UserAuthForm = ({ mode }) => {
     }
 
     try {
-      const userCred = await registerUserWithEmail(email, password, fullName);
-      authDispatch(setCurrentUser(userCred));
-      authDispatch(setAuthRestored());
-      formDispatch(resetForm());
-      navigate(redirectPath);
+      await registerUserWithEmail(email, password, fullName);
+      // Backend will redirect to /auth/callback
     } catch (err) {
       authDispatch(setAuthError(err.message));
       formDispatch(stopSubmit());
@@ -91,14 +81,8 @@ const UserAuthForm = ({ mode }) => {
     authDispatch(setAuthError(null));
 
     try {
-      const userCred = await loginUserWithEmail(email, password);
-      authDispatch(setCurrentUser(userCred));
-      authDispatch(setAuthRestored());
-
-      // Small delay to ensure state propagation before navigation
-      setTimeout(() => {
-        navigate(redirectPath);
-      }, 500);
+      await loginUserWithEmail(email, password);
+      // Backend will redirect to /auth/callback
     } catch (err) {
       authDispatch(setAuthError(err.message));
       formDispatch(stopSubmit());
