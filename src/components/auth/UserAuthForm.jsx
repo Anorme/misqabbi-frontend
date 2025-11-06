@@ -98,7 +98,7 @@ const UserAuthForm = ({ mode }) => {
       // Small delay to ensure state propagation before navigation
       setTimeout(() => {
         navigate(redirectPath);
-      }, 100);
+      }, 500);
     } catch (err) {
       authDispatch(setAuthError(err.message));
       formDispatch(stopSubmit());
