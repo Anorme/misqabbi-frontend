@@ -2,10 +2,8 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 
 import { isStrongPassword } from '../utils/validation';
-import { resetPassword, loginUserWithEmail } from '../api/auth';
+import { resetPassword } from '../api/auth';
 import { useFormState, useFormDispatch } from '../contexts/form/useForm';
-import { useAuthDispatch } from '../contexts/auth/useAuth';
-import { setCurrentUser, setAuthRestored } from '../contexts/auth/authActions';
 import { showSuccessToast } from '../utils/showToast';
 import {
   updateField,
@@ -28,7 +26,6 @@ const ResetPassword = () => {
 
   const { values, errors, isSubmitting } = useFormState();
   const formDispatch = useFormDispatch();
-  const authDispatch = useAuthDispatch();
 
   const { password = '', confirmPassword = '' } = values;
   const [authError, setAuthError] = useState(null);
@@ -68,25 +65,13 @@ const ResetPassword = () => {
       const result = await resetPassword(userId, token, password);
 
       if (result.success) {
-        // Get the email from localStorage and auto-login the user
-        const email = localStorage.getItem('passwordResetEmail');
-        if (email) {
-          const user = await loginUserWithEmail(email, password);
-          authDispatch(setCurrentUser(user));
-          authDispatch(setAuthRestored());
-          localStorage.removeItem('passwordResetEmail');
-          formDispatch(resetForm());
+        formDispatch(resetForm());
+        showSuccessToast('Password reset successful! Redirecting to login...');
 
-          showSuccessToast('Password reset successful! Redirecting...');
-
-          // Small delay to ensure state propagation before navigation
-          setTimeout(() => {
-            navigate('/shop');
-          }, 100);
-        } else {
-          // Fallback if email not found in localStorage
-          setAuthError('Password reset successful. Please log in with your new password.');
-        }
+        // Redirect to login page after a short delay
+        setTimeout(() => {
+          navigate('/login');
+        }, 1000);
       }
     } catch (error) {
       console.error('Password reset error:', error);
