@@ -36,18 +36,20 @@ const Login = () => {
 
           <UserAuthForm mode="login" />
 
-          <div className="mt-4 text-center">
+          <div className="text-center justify-between space-x-3">
             <button
               onClick={() => setShowPasswordReset(true)}
-              className="text-msq-purple-rich font-medium hover:underline"
+              className="text-msq-purple-rich font-medium hover:underline py-3 text-center cursor-pointer"
             >
               <span className="font-corsiva">Forgot Password?</span>
             </button>
+            <Link
+              to="/register"
+              className="text-msq-purple-rich font-medium hover:underline py-3 text-center cursor-pointer"
+            >
+              <span className="font-corsiva">Create account?</span>
+            </Link>
           </div>
-
-          <Link to="/register" className="text-msq-purple-rich font-medium mt-6 text-center">
-            <span className="font-corsiva">Create account?</span>
-          </Link>
         </div>
       </div>
 
