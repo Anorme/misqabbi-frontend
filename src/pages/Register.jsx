@@ -28,7 +28,7 @@ const Register = () => {
             Create your account
           </h2>
           <UserAuthForm mode="register" />
-          <p className="text-center mt-6">
+          <p className="text-center py-3">
             <span className="font-corsiva">Have an account?</span>{' '}
             <Link to="/login" className="text-msq-purple-rich font-medium">
               <span className="font-corsiva">Log in</span>
