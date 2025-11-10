@@ -9,6 +9,7 @@ import { getPrimaryImageUrl } from '../../utils/productImages';
 import FavoritesLinkButton from '../favorites/FavoritesLinkButton';
 import AuthActionModal from '../auth/AuthActionModal';
 import useAuthAction from '../../hooks/useAuthAction';
+import StockBadge from './StockBadge';
 
 const ProductCard = ({ product }) => {
   const dispatch = useCartDispatch();
@@ -44,6 +45,8 @@ const ProductCard = ({ product }) => {
               alt={product.name}
               className="absolute inset-0 w-full h-full object-cover"
             />
+            {/* Stock Badge */}
+            <StockBadge stock={product.stock} />
           </div>
         </Link>
         <div className="absolute top-3 right-3">
