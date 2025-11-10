@@ -63,7 +63,6 @@ const Checkout = () => {
         throw new Error('Failed to create order');
       }
     } catch (error) {
-      console.error('Order creation failed:', error);
       showErrorToast('Failed to place order.  ' + error.response.data.message);
     } finally {
       setIsLoading(false);
