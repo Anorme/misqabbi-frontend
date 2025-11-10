@@ -1,8 +1,10 @@
+import { useState, useRef } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { MdPerson, MdEmail } from 'react-icons/md';
 
 import { isValidEmail, isStrongPassword } from '../../utils/validation';
 import { signInWithGoogleRedirect } from '../../api/auth';
+import detectWebView from '../../utils/detectWebView';
 
 import { useFormState, useFormDispatch } from '../../contexts/form/useForm';
 import { useAuthState, useAuthDispatch } from '../../contexts/auth/useAuth';
@@ -15,6 +17,7 @@ import ErrorMessage from '../form/ErrorMessage';
 import SubmitButton from '../form/SubmitButton';
 import Divider from '../form/Divider';
 import SocialButton from '../form/SocialButton';
+import WebViewWarningModal from './WebViewWarningModal';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -25,6 +28,9 @@ const UserAuthForm = ({ mode }) => {
 
   const { authError } = useAuthState();
   const authDispatch = useAuthDispatch();
+
+  const [showWebViewModal, setShowWebViewModal] = useState(false);
+  const emailInputRef = useRef(null);
 
   const isFormIncomplete = !email || !password || (mode === 'register' && !fullName);
 
@@ -60,10 +66,24 @@ const UserAuthForm = ({ mode }) => {
 
   const handleGoogleSignIn = async () => {
     authDispatch(setAuthError(null));
+
+    // Check if we're in a WebView environment
+    if (detectWebView()) {
+      setShowWebViewModal(true);
+      return;
+    }
+
+    // Proceed with normal Google sign-in flow
     try {
       signInWithGoogleRedirect();
     } catch (err) {
       authDispatch(setAuthError(err.message));
+    }
+  };
+
+  const handleFocusEmailInput = () => {
+    if (emailInputRef.current) {
+      emailInputRef.current.focus();
     }
   };
 
@@ -85,6 +105,7 @@ const UserAuthForm = ({ mode }) => {
       )}
 
       <InputField
+        ref={emailInputRef}
         label="Email"
         type="email"
         name="email"
@@ -113,6 +134,13 @@ const UserAuthForm = ({ mode }) => {
         icon={<FcGoogle size={20} />}
         text="Sign in with Google"
         onClick={handleGoogleSignIn}
+      />
+
+      {/* WebView Warning Modal */}
+      <WebViewWarningModal
+        isOpen={showWebViewModal}
+        onClose={() => setShowWebViewModal(false)}
+        onUseEmailLogin={handleFocusEmailInput}
       />
     </form>
   );
