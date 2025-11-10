@@ -47,13 +47,6 @@ const WebViewWarningModal = ({ isOpen, onClose, onUseEmailLogin }) => {
           >
             Use Email Login
           </button>
-
-          <button
-            onClick={handleClose}
-            className="w-full bg-white text-msq-purple-rich py-3.5 px-6 rounded-xl font-lato font-semibold border-2 border-msq-purple-rich hover:bg-msq-purple-rich hover:text-white transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 cursor-pointer"
-          >
-            Close
-          </button>
         </div>
       </div>
     </div>
