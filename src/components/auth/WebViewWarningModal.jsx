@@ -43,14 +43,14 @@ const WebViewWarningModal = ({ isOpen, onClose, onUseEmailLogin }) => {
         <div className="space-y-3">
           <button
             onClick={handleUseEmailLogin}
-            className="w-full bg-msq-purple-rich text-white py-3.5 px-6 rounded-xl font-lato font-semibold hover:bg-msq-purple transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            className="w-full bg-msq-purple-rich text-white py-3.5 px-6 rounded-xl font-lato font-semibold hover:bg-msq-purple transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 cursor-pointer"
           >
             Use Email Login
           </button>
 
           <button
             onClick={handleClose}
-            className="w-full bg-white text-msq-purple-rich py-3.5 px-6 rounded-xl font-lato font-semibold border-2 border-msq-purple-rich hover:bg-msq-purple-rich hover:text-white transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            className="w-full bg-white text-msq-purple-rich py-3.5 px-6 rounded-xl font-lato font-semibold border-2 border-msq-purple-rich hover:bg-msq-purple-rich hover:text-white transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 cursor-pointer"
           >
             Close
           </button>
