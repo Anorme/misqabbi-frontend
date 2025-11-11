@@ -14,6 +14,7 @@ const GalleryImages = lazy(() => import('../components/products/GalleryImages'))
 const QuantitySelector = lazy(() => import('../components/products/QuantitySelector'));
 const CustomSizeInput = lazy(() => import('../components/products/CustomSizeInput'));
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
+import ProductCard from '../components/products/ProductCard';
 import FavoritesLinkButton from '../components/favorites/FavoritesLinkButton';
 import AuthActionModal from '../components/auth/AuthActionModal';
 import useAuthAction from '../hooks/useAuthAction';
@@ -41,6 +42,9 @@ function ProductDetails() {
 
   // Use TanStack Query for product fetching with caching
   const { data: product, isLoading: loading, isError, error: queryError } = useProduct(slug);
+
+  // Extract related products from the product data
+  const relatedProducts = product?.relatedProducts || [];
 
   const handleAddToCart = () => {
     // Validate custom size if enabled
@@ -294,6 +298,20 @@ function ProductDetails() {
             </div>
           </div>
         </div>
+
+        {/* Related Products Section */}
+        {!loading && relatedProducts && relatedProducts.length > 0 && (
+          <div className="w-full mx-auto mt-8 sm:mt-12 lg:mt-16 py-4 sm:py-6">
+            <h2 className="text-msq-purple-deep font-lato text-xl sm:text-2xl md:text-3xl mb-4 sm:mb-6 lg:mb-8">
+              Related Products
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+              {relatedProducts.map(relatedProduct => (
+                <ProductCard key={relatedProduct._id} product={relatedProduct} />
+              ))}
+            </div>
+          </div>
+        )}
       </main>
       <AuthActionModal isOpen={isModalOpen} onClose={closeModal} context={modalContext} />
     </div>
