@@ -52,7 +52,9 @@ const fetchDiscoverableProducts = async (params = {}) => {
 
 const fetchProductBySlug = async slug => {
   try {
-    const response = await axios.get(`${API_URL}/products/${slug}`, { withCredentials: true });
+    const response = await axios.get(`${API_URL}/products/${slug}?includeRelated=true`, {
+      withCredentials: true,
+    });
     return response.data.data;
   } catch (error) {
     console.error('Error fetching product:', error);
