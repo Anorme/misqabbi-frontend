@@ -1,4 +1,7 @@
 import { Search, X } from 'lucide-react';
+
+import { sanitizeSearchQuery } from '../../utils/sanitization';
+
 import CloseButton from '../ui/CloseButton';
 
 const SearchBar = ({
@@ -11,6 +14,7 @@ const SearchBar = ({
   onKeyDown,
   onClear,
   value = '',
+  onChange,
   ...props
 }) => {
   // Handle close button - clear query and close search
@@ -25,6 +29,25 @@ const SearchBar = ({
     }
   };
 
+  // Sanitize search query on blur
+  const handleBlur = e => {
+    const sanitizedValue = sanitizeSearchQuery(e.target.value);
+    if (sanitizedValue !== e.target.value && onChange) {
+      const syntheticEvent = {
+        ...e,
+        target: {
+          ...e.target,
+          value: sanitizedValue,
+        },
+      };
+      onChange(syntheticEvent);
+    }
+    // Call original onBlur if provided
+    if (props.onBlur) {
+      props.onBlur(e);
+    }
+  };
+
   if (variant === 'mobile') {
     return (
       <div className={`relative ${className}`}>
@@ -34,6 +57,8 @@ const SearchBar = ({
           value={value}
           className="w-full px-4 py-2 border border-msq-gold-light text-msq-gold-light rounded-full focus:outline-none focus:ring-2 focus:ring-msq-gold focus:border-transparent"
           onKeyDown={onKeyDown}
+          onChange={onChange}
+          onBlur={handleBlur}
           {...props}
         />
         {showIcon && (
@@ -67,6 +92,8 @@ const SearchBar = ({
         value={value}
         className="w-full px-4 py-2 border border-msq-gold-light text-msq-gold-light rounded-full focus:outline-none focus:ring-2 focus:ring-msq-gold focus:border-transparent"
         onKeyDown={onKeyDown}
+        onChange={onChange}
+        onBlur={handleBlur}
         {...props}
       />
       {showIcon && (
