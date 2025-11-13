@@ -1,4 +1,14 @@
+import DOMPurify from 'dompurify';
+
 function ProductInfo({ product }) {
+  // Sanitize and render description as HTML
+  const sanitizedDescription = product?.description
+    ? DOMPurify.sanitize(product.description, {
+        ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'p', 'br', 'ul', 'ol', 'li', 'h1', 'h2', 'h3'],
+        ALLOWED_ATTR: [],
+      })
+    : '';
+
   return (
     <div className="flex flex-col gap-2 pb-4 sm:pb-6">
       <h1 className="font-extrabold text-lg sm:text-xl md:text-2xl tracking-tight text-msq-purple">
@@ -8,9 +18,10 @@ function ProductInfo({ product }) {
         GHC {product?.price}
       </p>
       <h2 className="text-lg sm:text-xl lg:text-2xl">Details</h2>
-      <p className="text-base sm:text-lg leading-relaxed md:leading-loose">
-        {product?.description}
-      </p>
+      <div
+        className="text-sm md:text-base leading-snug md:leading-normal"
+        dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
+      />
     </div>
   );
 }
