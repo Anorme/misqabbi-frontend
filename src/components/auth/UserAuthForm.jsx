@@ -2,7 +2,12 @@ import { useState, useRef } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { MdPerson, MdEmail } from 'react-icons/md';
 
-import { isValidEmail, isStrongPassword, getPasswordStrengthError } from '../../utils/validation';
+import {
+  isValidEmail,
+  isValidFullName,
+  isStrongPassword,
+  getPasswordStrengthError,
+} from '../../utils/validation';
 import { signInWithGoogleRedirect } from '../../api/auth';
 import detectWebView from '../../utils/detectWebView';
 
@@ -79,6 +84,9 @@ const UserAuthForm = ({ mode }) => {
     authDispatch(setAuthError(null));
 
     const validationErrors = {};
+    if (mode === 'register' && !isValidFullName(fullName)) {
+      validationErrors.fullName = 'Full name must be more than 3 characters';
+    }
     if (!isValidEmail(email)) validationErrors.email = 'Please enter a valid email';
     if (mode === 'register' && !isStrongPassword(password)) {
       validationErrors.password = getPasswordStrengthError(password);
