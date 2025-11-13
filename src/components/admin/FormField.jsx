@@ -1,3 +1,5 @@
+import InputField from '../form/InputField';
+
 const FormField = ({
   label,
   type = 'text',
@@ -7,9 +9,16 @@ const FormField = ({
   error,
   required = false,
   options = [],
-  rows = 3,
+  sanitizeType,
+  ...rest
 }) => {
   const inputId = `field-${label.toLowerCase().replace(/\s+/g, '-')}`;
+  const name = label.toLowerCase().replace(/\s+/g, '-');
+
+  // Convert FormField's onChange(value) to InputField's onChange(event)
+  const handleInputChange = e => {
+    onChange(e.target.value);
+  };
 
   const renderInput = () => {
     switch (type) {
@@ -30,20 +39,6 @@ const FormField = ({
               </option>
             ))}
           </select>
-        );
-
-      case 'textarea':
-        return (
-          <textarea
-            id={inputId}
-            value={value}
-            onChange={e => onChange(e.target.value)}
-            placeholder={placeholder}
-            rows={rows}
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent ${
-              error ? 'border-red-300' : 'border-gray-300'
-            }`}
-          />
         );
 
       case 'file':
@@ -108,17 +103,38 @@ const FormField = ({
           </div>
         );
 
+      case 'textarea':
+        return (
+          <InputField
+            label=""
+            as="textarea"
+            name={name}
+            value={value}
+            onChange={handleInputChange}
+            placeholder={placeholder}
+            error={error}
+            required={required}
+            sanitizeType={sanitizeType}
+            className="rounded-md focus:ring-msq-purple-rich"
+            labelClassName=""
+            {...rest}
+          />
+        );
+
       default:
         return (
-          <input
-            id={inputId}
+          <InputField
+            label=""
             type={type}
+            name={name}
             value={value}
-            onChange={e => onChange(e.target.value)}
+            onChange={handleInputChange}
             placeholder={placeholder}
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent ${
-              error ? 'border-red-300' : 'border-gray-300'
-            }`}
+            error={error}
+            required={required}
+            sanitizeType={sanitizeType}
+            className="rounded-md focus:ring-msq-purple-rich"
+            labelClassName=""
           />
         );
     }
