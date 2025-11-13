@@ -286,7 +286,7 @@ export const sanitizeMessage = message => {
 export const sanitizeDescription = description => {
   return sanitizeTextarea(description, {
     maxLength: 5000,
-    allowHTML: false, // Set to true if you want to allow basic HTML formatting
+    allowHTML: true, // Allow basic HTML formatting for better readability
   });
 };
 
