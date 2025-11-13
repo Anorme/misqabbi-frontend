@@ -3,6 +3,7 @@ import { User, Mail, MessageSquare, Phone, MessageCircle } from 'lucide-react';
 import { submitContactForm } from '../../api/contact';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
 import { isValidEmail } from '../../utils/validation';
+import { sanitizeName, sanitizeEmail, sanitizeMessage } from '../../utils/sanitization';
 import InputField from '../form/InputField';
 
 const ContactForm = () => {
@@ -11,6 +12,7 @@ const ContactForm = () => {
     email: '',
     message: '',
   });
+  const { name, email, message } = formData;
 
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -32,21 +34,21 @@ const ContactForm = () => {
     const newErrors = {};
 
     // Validate name
-    if (!formData.name.trim()) {
+    if (!name.trim()) {
       newErrors.name = 'Name is required';
     }
 
     // Validate email
-    if (!formData.email.trim()) {
+    if (!email.trim()) {
       newErrors.email = 'Email is required';
-    } else if (!isValidEmail(formData.email)) {
+    } else if (!isValidEmail(email)) {
       newErrors.email = 'Please enter a valid email address';
     }
 
     // Validate message
-    if (!formData.message.trim()) {
+    if (!message.trim()) {
       newErrors.message = 'Message is required';
-    } else if (formData.message.trim().length < 10) {
+    } else if (message.trim().length < 10) {
       newErrors.message = 'Message must be at least 10 characters long';
     }
 
@@ -65,10 +67,11 @@ const ContactForm = () => {
 
     setIsLoading(true);
     try {
+      // Sanitize data before submission (InputField already sanitizes on blur, but this is a safety measure)
       await submitContactForm({
-        name: formData.name.trim(),
-        email: formData.email.trim(),
-        message: formData.message.trim(),
+        name: sanitizeName(name),
+        email: sanitizeEmail(email),
+        message: sanitizeMessage(message),
       });
 
       showSuccessToast('Thank you for reaching out! We will get back to you soon.');
@@ -124,13 +127,14 @@ const ContactForm = () => {
                   }
                   type="text"
                   name="name"
-                  value={formData.name}
+                  value={name}
                   onChange={handleInputChange}
                   placeholder="Your name"
                   icon={<User size={14} strokeWidth={1.5} className="sm:w-4 sm:h-4" />}
                   iconPosition="left"
                   error={errors.name}
                   required
+                  sanitizeType="name"
                   className={customInputClasses}
                   labelClassName="text-xs font-medium text-gray-700 mb-1 sm:mb-1.5"
                   aria-required="true"
@@ -149,13 +153,14 @@ const ContactForm = () => {
                   }
                   type="email"
                   name="email"
-                  value={formData.email}
+                  value={email}
                   onChange={handleInputChange}
                   placeholder="your.email@example.com"
                   icon={<Mail size={14} strokeWidth={1.5} className="sm:w-4 sm:h-4" />}
                   iconPosition="left"
                   error={errors.email}
                   required
+                  sanitizeType="email"
                   className={customInputClasses}
                   labelClassName="text-xs font-medium text-gray-700 mb-1 sm:mb-1.5"
                   aria-required="true"
@@ -173,7 +178,7 @@ const ContactForm = () => {
                     </>
                   }
                   name="message"
-                  value={formData.message}
+                  value={message}
                   onChange={handleInputChange}
                   placeholder="Tell us how we can help you..."
                   icon={<MessageSquare size={14} strokeWidth={1.5} className="sm:w-4 sm:h-4" />}
@@ -181,6 +186,7 @@ const ContactForm = () => {
                   error={errors.message}
                   required
                   as="textarea"
+                  sanitizeType="message"
                   className={customTextareaClasses}
                   labelClassName="text-xs font-medium text-gray-700 mb-1 sm:mb-1.5"
                   aria-required="true"
