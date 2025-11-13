@@ -107,14 +107,14 @@ const Profile = () => {
                 onSave={handleSaveLocation}
               />
 
-              {/* Contact - Editable */}
+              {/* Phone Number - Editable */}
               <ProfileField
-                label="Contact Number"
+                label="Phone Number"
                 value={userContact}
                 icon={<MdPhone size={20} />}
                 editable={true}
                 type="tel"
-                placeholder="Add your contact number for order updates"
+                placeholder="Add your phone number for order updates"
                 onSave={handleSaveContact}
               />
             </div>
