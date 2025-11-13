@@ -41,3 +41,40 @@ export const getPasswordStrengthError = password => {
 
   return `Password must contain ${requirementsText}.`;
 };
+
+/**
+ * Validates a phone number for Ghana (+233)
+ * Returns an error message if invalid, or null if valid
+ */
+export const getPhoneNumberError = (phone, countryCode = '+233') => {
+  if (!phone || phone.trim() === '') {
+    return 'Phone number is required';
+  }
+
+  const cleanPhone = phone.replace(/\s+/g, '');
+
+  // Basic validation - should be numeric
+  if (!/^\d+$/.test(cleanPhone)) {
+    return 'Phone number should contain only numbers';
+  }
+
+  // Length validation based on country code
+  const lengthValidation = {
+    '+233': { min: 9, max: 9 }, // Ghana
+  };
+
+  const validation = lengthValidation[countryCode] || { min: 7, max: 15 };
+
+  if (cleanPhone.length < validation.min || cleanPhone.length > validation.max) {
+    return `Phone number should be ${validation.min} digits for ${countryCode}`;
+  }
+
+  return null; // Valid
+};
+
+/**
+ * Simple boolean check for phone number validity
+ */
+export const isValidPhoneNumber = (phone, countryCode = '+233') => {
+  return getPhoneNumberError(phone, countryCode) === null;
+};
