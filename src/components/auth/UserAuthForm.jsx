@@ -139,6 +139,7 @@ const UserAuthForm = ({ mode }) => {
           placeholder="Enter your name"
           icon={<MdPerson size={20} />}
           error={errors.fullName}
+          sanitizeType="name"
         />
       )}
 
@@ -152,6 +153,7 @@ const UserAuthForm = ({ mode }) => {
         placeholder="Enter your email address"
         icon={<MdEmail size={20} />}
         error={errors.email}
+        sanitizeType="email"
       />
 
       <PasswordInput
