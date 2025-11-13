@@ -319,6 +319,7 @@ const AdminProducts = () => {
             onChange={value => setFormData({ ...formData, name: value })}
             placeholder="Enter product name"
             required
+            sanitizeType="name"
           />
 
           <FormField
@@ -328,6 +329,7 @@ const AdminProducts = () => {
             onChange={value => setFormData({ ...formData, description: value })}
             placeholder="Enter product description"
             rows={3}
+            sanitizeType="description"
           />
 
           <div className="grid grid-cols-2 gap-4">
@@ -338,6 +340,7 @@ const AdminProducts = () => {
               onChange={value => setFormData({ ...formData, price: value })}
               placeholder="0.00"
               required
+              sanitizeType="price"
             />
 
             <FormField
