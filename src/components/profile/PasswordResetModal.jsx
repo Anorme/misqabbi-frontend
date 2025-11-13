@@ -70,6 +70,7 @@ const PasswordResetModal = ({ isOpen, onClose, userEmail }) => {
             onChange={e => setEmail(e.target.value)}
             placeholder="Enter your email address"
             icon={<MdEmail size={20} />}
+            sanitizeType="email"
           />
 
           <div className="text-center">
