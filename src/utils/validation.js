@@ -78,3 +78,14 @@ export const getPhoneNumberError = (phone, countryCode = '+233') => {
 export const isValidPhoneNumber = (phone, countryCode = '+233') => {
   return getPhoneNumberError(phone, countryCode) === null;
 };
+
+/**
+ * Formats a phone number for storage by removing leading 0 if present
+ * This is common in Ghana where numbers like 0241234567 should become 241234567
+ */
+export const formatPhoneNumberForStorage = phone => {
+  if (!phone) return phone;
+  const trimmed = phone.trim();
+  // Remove leading 0 if present
+  return trimmed.startsWith('0') ? trimmed.substring(1) : trimmed;
+};
