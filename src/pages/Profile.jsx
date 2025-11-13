@@ -83,6 +83,7 @@ const Profile = () => {
                 icon={<MdPerson size={20} />}
                 editable={false}
                 placeholder="Your name"
+                sanitizeType="name"
               />
 
               {/* Email - Editable */}
@@ -94,6 +95,7 @@ const Profile = () => {
                 type="email"
                 placeholder="Add your email address"
                 onSave={handleSaveEmail}
+                sanitizeType="email"
               />
 
               {/* Location - Editable */}
@@ -105,6 +107,7 @@ const Profile = () => {
                 type="text"
                 placeholder="Add your location to personalize your experience"
                 onSave={handleSaveLocation}
+                sanitizeType="address"
               />
 
               {/* Phone Number - Editable */}
