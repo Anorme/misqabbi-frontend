@@ -305,9 +305,28 @@ function ProductDetails() {
             <h2 className="text-msq-purple-deep font-lato text-xl sm:text-2xl md:text-3xl mb-4 sm:mb-6 lg:mb-8">
               Related Products
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div
+              className={
+                relatedProducts.length < 4
+                  ? // Center cards when less than 4 products with fixed widths
+                    'flex flex-wrap justify-center gap-4 sm:gap-6'
+                  : // Grid layout for 4 products
+                    'grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6'
+              }
+            >
               {relatedProducts.map(relatedProduct => (
-                <ProductCard key={relatedProduct._id} product={relatedProduct} />
+                <div
+                  key={relatedProduct._id}
+                  className={
+                    relatedProducts.length < 4
+                      ? // Fixed widths at various breakpoints to prevent excessive shrinking and ensure full card display
+                        'w-[160px] sm:w-[180px] md:w-[350px] lg:w-[360px] xl:w-[450px] max-w-full flex-shrink-0'
+                      : // Full width for grid items
+                        'w-full'
+                  }
+                >
+                  <ProductCard product={relatedProduct} />
+                </div>
               ))}
             </div>
           </div>
