@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import { getSanitizer } from '../../utils/getSanitizer';
 
 const InputField = forwardRef(
   (
@@ -10,7 +11,7 @@ const InputField = forwardRef(
       onChange,
       error,
       icon,
-      iconPosition = 'right', // 'left' or 'right'
+      iconPosition = 'right',
       adornment,
       placeholder,
       strength,
@@ -18,6 +19,9 @@ const InputField = forwardRef(
       className = '',
       labelClassName = '',
       required,
+      sanitize = true,
+      sanitizeType,
+      onBlur: originalOnBlur,
       ...rest
     },
     ref
@@ -33,6 +37,67 @@ const InputField = forwardRef(
     const textareaClasses = isTextarea ? 'min-h-[80px] resize-none' : '';
 
     const InputComponent = isTextarea ? 'textarea' : 'input';
+
+    // Sanitize value on blur
+    const handleBlur = e => {
+      if (!sanitize) {
+        if (originalOnBlur) {
+          originalOnBlur(e);
+        }
+        return;
+      }
+
+      // Skip sanitization for password and number inputs
+      // Passwords: must preserve exact characters
+      // Numbers: handled in onChange for real-time feedback
+      if (type === 'password' || type === 'number') {
+        if (originalOnBlur) {
+          originalOnBlur(e);
+        }
+        return;
+      }
+
+      const sanitizer = getSanitizer(sanitizeType, type, isTextarea);
+      const sanitizedValue = sanitizer(e.target.value);
+
+      if (sanitizedValue !== e.target.value) {
+        onChange({
+          ...e,
+          target: {
+            ...e.target,
+            name,
+            value: sanitizedValue,
+          },
+        });
+      }
+
+      if (originalOnBlur) {
+        originalOnBlur(e);
+      }
+    };
+
+    // Handle number input changes with sanitization
+    const handleChange = e => {
+      if (type === 'number' && sanitize) {
+        const sanitizer = getSanitizer(sanitizeType, type, isTextarea);
+        const sanitizedValue = sanitizer(e.target.value);
+
+        if (sanitizedValue !== e.target.value) {
+          onChange({
+            ...e,
+            target: {
+              ...e.target,
+              name,
+              value: sanitizedValue,
+            },
+          });
+          return;
+        }
+      }
+
+      // For other types, call onChange directly
+      onChange(e);
+    };
 
     return (
       <div className={label !== '' ? 'mb-4' : ''}>
@@ -51,7 +116,8 @@ const InputField = forwardRef(
             name={name}
             id={name}
             value={value}
-            onChange={onChange}
+            onChange={handleChange}
+            onBlur={handleBlur}
             placeholder={placeholder}
             className={`${baseInputClasses} ${textareaClasses}`}
             required={required}
