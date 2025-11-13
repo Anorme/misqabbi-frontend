@@ -40,6 +40,7 @@ function CategoryList() {
   const visibleCards = categories.slice(currentIndex, currentIndex + visibleCount);
   const isLeftDisabled = currentIndex === 0;
   const isRightDisabled = currentIndex + visibleCount >= categories.length;
+  const showArrows = categories.length > visibleCount;
 
   const handleResize = () => {
     const containerWidth = containerRef.current?.offsetWidth;
@@ -84,15 +85,17 @@ function CategoryList() {
       </div>
 
       {/* Left arrow */}
-      <button
-        className={`sm:hidden z-10 rounded-full shadow p-1 absolute left-2 top-2/3 -translate-y-1/2 ${isLeftDisabled ? 'opacity-50 cursor-not-allowed' : 'bg-white'}`}
-        onClick={() => scroll('left')}
-        disabled={isLeftDisabled}
-      >
-        <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
+      {showArrows && (
+        <button
+          className={`sm:hidden z-10 rounded-full shadow p-1 absolute left-2 top-2/3 -translate-y-1/2 ${isLeftDisabled ? 'opacity-50 cursor-not-allowed' : 'bg-white'}`}
+          onClick={() => scroll('left')}
+          disabled={isLeftDisabled}
+        >
+          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+      )}
 
       <div className="flex py-2 mx-auto">
         {visibleCards.map((cat, idx) => (
@@ -105,15 +108,17 @@ function CategoryList() {
       </div>
 
       {/* Right arrow */}
-      <button
-        className={`sm:hidden z-10 rounded-full shadow p-1 absolute right-2 top-2/3 -translate-y-1/2 ${isRightDisabled ? 'opacity-50 cursor-not-allowed' : 'bg-white'}`}
-        onClick={() => scroll('right')}
-        disabled={isRightDisabled}
-      >
-        <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
+      {showArrows && (
+        <button
+          className={`sm:hidden z-10 rounded-full shadow p-1 absolute right-2 top-2/3 -translate-y-1/2 ${isRightDisabled ? 'opacity-50 cursor-not-allowed' : 'bg-white'}`}
+          onClick={() => scroll('right')}
+          disabled={isRightDisabled}
+        >
+          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      )}
     </div>
   );
 }
