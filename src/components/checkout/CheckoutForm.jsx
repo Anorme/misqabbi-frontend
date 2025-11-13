@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { MdPerson, MdEmail, MdPhone, MdLocationOn, MdNotes } from 'react-icons/md';
 import { validateCheckoutForm } from '../../utils/checkoutValidation';
 import InputField from '../form/InputField';
+import PhoneNumberField from '../form/PhoneNumberField';
 
 const CheckoutForm = ({ onPlaceOrder, userData, isLoading }) => {
   const [formData, setFormData] = useState({
@@ -83,38 +84,19 @@ const CheckoutForm = ({ onPlaceOrder, userData, isLoading }) => {
         />
 
         {/* Phone Number */}
-        <div className="mb-4">
-          <label className="block mb-1 text-left text-sm font-semibold">
-            Phone Number <span className="text-red-500">*</span>
-          </label>
-          <div className="flex">
-            <select
-              className="px-3 py-3 border border-gray-300 border-r-0 rounded-l-lg focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent transition-colors duration-200 font-lato cursor-pointer bg-gray-50"
-              value={formData.countryCode || '+233'}
-              onChange={handleInputChange}
-              name="countryCode"
-            >
-              <option value="+233">🇬🇭 +233</option>
-            </select>
-            <div className="relative flex-1">
-              <InputField
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder="241234567"
-                icon={<MdPhone size={20} />}
-                iconPosition="left"
-                required
-                className="rounded-l-none border-l-0 rounded-r-lg focus:ring-msq-purple-rich mb-0"
-                pattern="[0-9]*"
-                inputMode="numeric"
-                label=""
-              />
-            </div>
-          </div>
-          {errors.phone && <p className="text-red-500 text-sm mt-1 font-lato">{errors.phone}</p>}
-        </div>
+        <PhoneNumberField
+          label={
+            <>
+              Phone Number <span className="text-red-500">*</span>
+            </>
+          }
+          name="phone"
+          value={formData.phone}
+          onChange={handleInputChange}
+          icon={<MdPhone size={20} />}
+          error={errors.phone}
+          required
+        />
 
         {/* Delivery Address */}
         <InputField
