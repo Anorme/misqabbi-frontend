@@ -3,16 +3,7 @@ import { useParams, useNavigate } from 'react-router';
 
 import { isStrongPassword, getPasswordStrengthError } from '../utils/validation';
 import { resetPassword } from '../api/auth';
-import { useFormState, useFormDispatch } from '../contexts/form/useForm';
 import { showSuccessToast } from '../utils/showToast';
-import {
-  updateField,
-  setErrors,
-  clearErrors,
-  startSubmit,
-  stopSubmit,
-  resetForm,
-} from '../contexts/form/formActions';
 
 import PasswordInput from '../components/form/PasswordInput';
 import ErrorMessage from '../components/form/ErrorMessage';
@@ -24,39 +15,53 @@ const ResetPassword = () => {
   const navigate = useNavigate();
   const isMdUp = useMediaQuery('(min-width: 768px)');
 
-  const { values, errors, isSubmitting } = useFormState();
-  const formDispatch = useFormDispatch();
-
-  const { password = '', confirmPassword = '' } = values;
+  const [formData, setFormData] = useState({
+    password: '',
+    confirmPassword: '',
+  });
+  const { password, confirmPassword } = formData;
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [authError, setAuthError] = useState(null);
 
   const isFormIncomplete = !password || !confirmPassword;
 
   const handleChange = e => {
     const { name, value } = e.target;
-    formDispatch(updateField(name, value));
+
+    // Update formData dynamically
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // Clear field error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => {
+        const { [name]: _, ...rest } = prev;
+        return rest;
+      });
+    }
 
     // Real-time password validation
     if (name === 'password') {
       // Only show error if password has content and is not strong
       if (value && !isStrongPassword(value)) {
-        formDispatch(setErrors({ ...errors, password: getPasswordStrengthError(value) }));
-      } else if (value && isStrongPassword(value)) {
-        // Clear password error if password becomes valid
-        const { password: _, ...restErrors } = errors;
-        formDispatch(setErrors(restErrors));
+        setErrors(prev => ({ ...prev, password: getPasswordStrengthError(value) }));
       } else {
-        // Clear error if field is empty
-        const { password: _, ...restErrors } = errors;
-        formDispatch(setErrors(restErrors));
+        // Clear password error if password becomes valid or is empty
+        setErrors(prev => {
+          const { password: _, ...rest } = prev;
+          return rest;
+        });
       }
     }
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
-    formDispatch(clearErrors());
-    formDispatch(startSubmit());
+    setErrors({});
+    setIsSubmitting(true);
     setAuthError(null);
 
     const validationErrors = {};
@@ -72,8 +77,8 @@ const ResetPassword = () => {
     }
 
     if (Object.keys(validationErrors).length > 0) {
-      formDispatch(setErrors(validationErrors));
-      formDispatch(stopSubmit());
+      setErrors(validationErrors);
+      setIsSubmitting(false);
       return;
     }
 
@@ -81,7 +86,12 @@ const ResetPassword = () => {
       const result = await resetPassword(userId, token, password);
 
       if (result.success) {
-        formDispatch(resetForm());
+        // Reset form state
+        setFormData({
+          password: '',
+          confirmPassword: '',
+        });
+        setErrors({});
         showSuccessToast('Password reset successful! Redirecting to login...');
 
         // Redirect to login page after a short delay
@@ -99,7 +109,7 @@ const ResetPassword = () => {
         setAuthError('Unable to reset password. Please try again.');
       }
     } finally {
-      formDispatch(stopSubmit());
+      setIsSubmitting(false);
     }
   };
 
@@ -123,6 +133,7 @@ const ResetPassword = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <PasswordInput
+              name="password"
               value={password}
               onChange={handleChange}
               error={errors.password}
