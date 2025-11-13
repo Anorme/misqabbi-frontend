@@ -6,24 +6,28 @@ const items = [
     image:
       'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_600,c_limit/v1761965676/misqabbi/landing-page/CSI_0041_n1o6cm.jpg',
     price: 210,
+    url: '/product/ileme',
   },
   {
     name: 'MJ Boubou',
     image:
       'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_600,c_limit/v1761965808/misqabbi/landing-page/CSI_0093_ila3wb.jpg',
     price: 270,
+    url: '/product/mj',
   },
   {
     name: 'Mayah Skirt',
     image:
       'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_600,c_limit/v1761965680/misqabbi/landing-page/CSI_9944_dsvzfv.jpg',
     price: 200,
+    url: '/product/the-og-mayah',
   },
   {
     name: 'Belle Pants',
     image:
       'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_600,c_limit/v1761957952/misqabbi/landing-page/CSI_9971_yqxnkp.jpg',
     price: 290,
+    url: '/product/belle',
   },
 ];
 
@@ -40,7 +44,7 @@ function TrendingCollection() {
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-6">
         {items.map(item => (
-          <TrendingItemCard key={item.name} {...item} />
+          <TrendingItemCard key={item.name} {...item} url={item.url} />
         ))}
       </div>
     </section>
