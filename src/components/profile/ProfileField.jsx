@@ -3,7 +3,11 @@ import { Pencil, Check } from 'lucide-react';
 import CloseButton from '../ui/CloseButton';
 import InputField from '../form/InputField';
 import PhoneNumberField from '../form/PhoneNumberField';
-import { isValidEmail, getPhoneNumberError } from '../../utils/validation';
+import {
+  isValidEmail,
+  getPhoneNumberError,
+  formatPhoneNumberForStorage,
+} from '../../utils/validation';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
 
 const ProfileField = ({
@@ -42,7 +46,12 @@ const ProfileField = ({
   const handleSave = async () => {
     if (!editable) return;
 
-    const valueToSave = editValue.trim();
+    let valueToSave = editValue.trim();
+
+    // Format phone number before validation (remove leading 0 if present)
+    if (type === 'tel' && valueToSave) {
+      valueToSave = formatPhoneNumberForStorage(valueToSave);
+    }
 
     // Validate email if it's an email field
     if (type === 'email' && valueToSave && !isValidEmail(valueToSave)) {
