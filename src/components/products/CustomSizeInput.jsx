@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
+
 import { getMeasurementConfig } from '../../constants/customSizeMeasurements';
 import { initializeMeasurements } from '../../utils/customSizeValidation';
+import { sanitizeMeasurement } from '../../utils/sanitization';
+
 import CloseButton from '../ui/CloseButton';
 
 const CustomSizeInput = ({
@@ -31,12 +34,14 @@ const CustomSizeInput = ({
   }, [measurements]);
 
   const handleInputChange = (fieldKey, value) => {
-    const newMeasurements = { ...localMeasurements, [fieldKey]: value };
+    // Sanitize measurement value
+    const sanitizedValue = sanitizeMeasurement(value);
+    const newMeasurements = { ...localMeasurements, [fieldKey]: sanitizedValue };
     setLocalMeasurements(newMeasurements);
     onMeasurementsChange(newMeasurements);
 
     // Enable custom sizing when user starts entering measurements
-    if (!isCustomSizeEnabled && value && value.trim() !== '') {
+    if (!isCustomSizeEnabled && sanitizedValue && String(sanitizedValue).trim() !== '') {
       onToggleCustomSize(true);
     }
   };
