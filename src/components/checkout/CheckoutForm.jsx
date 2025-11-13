@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { MdPerson, MdEmail, MdPhone, MdLocationOn, MdNotes } from 'react-icons/md';
 import { validateCheckoutForm } from '../../utils/checkoutValidation';
+import InputField from '../form/InputField';
 
 const CheckoutForm = ({ onPlaceOrder, userData, isLoading }) => {
   const [formData, setFormData] = useState({
@@ -14,12 +15,16 @@ const CheckoutForm = ({ onPlaceOrder, userData, isLoading }) => {
 
   const [errors, setErrors] = useState({});
 
-  const handleInputChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
 
     // Clear error when user starts typing
-    if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: '' }));
+    if (errors[name]) {
+      setErrors(prev => {
+        const { [name]: _, ...rest } = prev;
+        return rest;
+      });
     }
   };
 
@@ -37,10 +42,6 @@ const CheckoutForm = ({ onPlaceOrder, userData, isLoading }) => {
     onPlaceOrder(formData);
   };
 
-  const inputClasses =
-    'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent transition-colors duration-200 font-lato';
-  const errorClasses = 'text-red-500 text-sm mt-1 font-lato';
-
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-4">
@@ -49,114 +50,103 @@ const CheckoutForm = ({ onPlaceOrder, userData, isLoading }) => {
         </h2>
 
         {/* Full Name */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2 font-lato">
-            Full Name
-          </label>
-          <div className="relative">
-            <MdPerson
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-              size={20}
-            />
-            <input
-              type="text"
-              value={formData.fullName}
-              onChange={e => handleInputChange('fullName', e.target.value)}
-              className={`${inputClasses} pl-10`}
-              placeholder="Enter your full name"
-            />
-          </div>
-          {errors.fullName && <p className={errorClasses}>{errors.fullName}</p>}
-        </div>
+        <InputField
+          label="Full Name"
+          type="text"
+          name="fullName"
+          value={formData.fullName}
+          onChange={handleInputChange}
+          placeholder="Enter your full name"
+          icon={<MdPerson size={20} />}
+          iconPosition="left"
+          error={errors.fullName}
+          className="rounded-lg focus:ring-msq-purple-rich"
+        />
 
         {/* Email */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2 font-lato">
-            Email Address <span className="text-red-500">*</span>
-          </label>
-          <div className="relative">
-            <MdEmail
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-              size={20}
-            />
-            <input
-              type="email"
-              value={formData.email}
-              onChange={e => handleInputChange('email', e.target.value)}
-              className={`${inputClasses} pl-10`}
-              placeholder="Enter your email address"
-              required
-            />
-          </div>
-          {errors.email && <p className={errorClasses}>{errors.email}</p>}
-        </div>
+        <InputField
+          label={
+            <>
+              Email Address <span className="text-red-500">*</span>
+            </>
+          }
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          placeholder="Enter your email address"
+          icon={<MdEmail size={20} />}
+          iconPosition="left"
+          error={errors.email}
+          required
+          className="rounded-lg focus:ring-msq-purple-rich"
+        />
 
         {/* Phone Number */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2 font-lato">
+        <div className="mb-4">
+          <label className="block mb-1 text-left text-sm font-semibold">
             Phone Number <span className="text-red-500">*</span>
           </label>
           <div className="flex">
             <select
               className="px-3 py-3 border border-gray-300 border-r-0 rounded-l-lg focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent transition-colors duration-200 font-lato cursor-pointer bg-gray-50"
               value={formData.countryCode || '+233'}
-              onChange={e => handleInputChange('countryCode', e.target.value)}
+              onChange={handleInputChange}
+              name="countryCode"
             >
               <option value="+233">🇬🇭 +233</option>
             </select>
             <div className="relative flex-1">
-              <MdPhone
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                size={20}
-              />
-              <input
+              <InputField
                 type="tel"
+                name="phone"
                 value={formData.phone}
-                onChange={e => handleInputChange('phone', e.target.value)}
-                className={`${inputClasses} pl-10 rounded-l-none border-l-0`}
+                onChange={handleInputChange}
                 placeholder="241234567"
+                icon={<MdPhone size={20} />}
+                iconPosition="left"
+                required
+                className="rounded-l-none border-l-0 rounded-r-lg focus:ring-msq-purple-rich mb-0"
                 pattern="[0-9]*"
                 inputMode="numeric"
-                required
+                label=""
               />
             </div>
           </div>
-          {errors.phone && <p className={errorClasses}>{errors.phone}</p>}
+          {errors.phone && <p className="text-red-500 text-sm mt-1 font-lato">{errors.phone}</p>}
         </div>
 
         {/* Delivery Address */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2 font-lato">
-            Delivery Address <span className="text-red-500">*</span>
-          </label>
-          <div className="relative">
-            <MdLocationOn className="absolute left-3 top-3 text-gray-400" size={20} />
-            <textarea
-              value={formData.deliveryAddress}
-              onChange={e => handleInputChange('deliveryAddress', e.target.value)}
-              className={`${inputClasses} pl-10 min-h-[80px] resize-none`}
-              placeholder="Enter your complete delivery address"
-              required
-            />
-          </div>
-          {errors.deliveryAddress && <p className={errorClasses}>{errors.deliveryAddress}</p>}
-        </div>
+        <InputField
+          label={
+            <>
+              Delivery Address <span className="text-red-500">*</span>
+            </>
+          }
+          name="deliveryAddress"
+          value={formData.deliveryAddress}
+          onChange={handleInputChange}
+          placeholder="Enter your complete delivery address"
+          icon={<MdLocationOn size={20} />}
+          iconPosition="left"
+          error={errors.deliveryAddress}
+          required
+          as="textarea"
+          className="rounded-lg focus:ring-msq-purple-rich"
+        />
 
         {/* Delivery Notes */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2 font-lato">
-            Delivery Instructions (Optional)
-          </label>
-          <div className="relative">
-            <MdNotes className="absolute left-3 top-3 text-gray-400" size={20} />
-            <textarea
-              value={formData.deliveryNotes}
-              onChange={e => handleInputChange('deliveryNotes', e.target.value)}
-              className={`${inputClasses} pl-10 min-h-[80px] resize-none`}
-              placeholder="Any special delivery instructions or notes..."
-            />
-          </div>
-        </div>
+        <InputField
+          label="Delivery Instructions (Optional)"
+          name="deliveryNotes"
+          value={formData.deliveryNotes}
+          onChange={handleInputChange}
+          placeholder="Any special delivery instructions or notes..."
+          icon={<MdNotes size={20} />}
+          iconPosition="left"
+          as="textarea"
+          className="rounded-lg focus:ring-msq-purple-rich"
+        />
       </div>
 
       {/* Submit Button */}
