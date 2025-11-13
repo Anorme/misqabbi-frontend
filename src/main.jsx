@@ -6,7 +6,6 @@ import { HelmetProvider } from '@dr.pogodin/react-helmet';
 
 import App from './App.jsx';
 import { AuthProvider } from './contexts/auth/AuthProvider.jsx';
-import { FormProvider } from './contexts/form/FormProvider.jsx';
 import { CatalogProvider } from './contexts/catalog/CatalogProvider.jsx';
 import { CartProvider } from './contexts/cart/CartProvider.jsx';
 import AuthInterceptorProvider from './components/auth/AuthInterceptorProvider.jsx';
@@ -37,20 +36,18 @@ createRoot(document.getElementById('root')).render(
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
         <AuthProvider>
-          <FormProvider>
-            <CatalogProvider>
-              <CartProvider>
-                <Router>
-                  <AuthInterceptorProvider>
-                    <App />
-                  </AuthInterceptorProvider>
-                </Router>
-                <Suspense fallback={null}>
-                  <ToastContainer theme={undefined} autoClose={3000} />
-                </Suspense>
-              </CartProvider>
-            </CatalogProvider>
-          </FormProvider>
+          <CatalogProvider>
+            <CartProvider>
+              <Router>
+                <AuthInterceptorProvider>
+                  <App />
+                </AuthInterceptorProvider>
+              </Router>
+              <Suspense fallback={null}>
+                <ToastContainer theme={undefined} autoClose={3000} />
+              </Suspense>
+            </CartProvider>
+          </CatalogProvider>
         </AuthProvider>
       </HelmetProvider>
     </QueryClientProvider>
