@@ -6,10 +6,8 @@ import { isValidEmail, isStrongPassword, getPasswordStrengthError } from '../../
 import { signInWithGoogleRedirect } from '../../api/auth';
 import detectWebView from '../../utils/detectWebView';
 
-import { useFormState, useFormDispatch } from '../../contexts/form/useForm';
 import { useAuthState, useAuthDispatch } from '../../contexts/auth/useAuth';
 import { setAuthError } from '../../contexts/auth/authActions';
-import { updateField, setErrors, clearErrors } from '../../contexts/form/formActions';
 
 import InputField from '../form/InputField';
 import PasswordInput from '../form/PasswordInput';
@@ -22,9 +20,13 @@ import WebViewWarningModal from './WebViewWarningModal';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const UserAuthForm = ({ mode }) => {
-  const { values, errors } = useFormState();
-  const formDispatch = useFormDispatch();
-  const { fullName = '', email = '', password = '' } = values;
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+  });
+  const { fullName, email, password } = formData;
+  const [errors, setErrors] = useState({});
 
   const { authError } = useAuthState();
   const authDispatch = useAuthDispatch();
@@ -38,30 +40,42 @@ const UserAuthForm = ({ mode }) => {
 
   const handleChange = e => {
     const { name, value } = e.target;
+
     // Map displayName (form field) to fullName (state)
     const fieldName = name === 'displayName' ? 'fullName' : name;
-    formDispatch(updateField(fieldName, value));
+
+    // Update formData dynamically
+    setFormData(prev => ({
+      ...prev,
+      [fieldName]: value,
+    }));
+
+    // Clear field error when user starts typing
+    if (errors[fieldName]) {
+      setErrors(prev => {
+        const { [fieldName]: _, ...rest } = prev;
+        return rest;
+      });
+    }
 
     // Real-time password validation for register mode
     if (mode === 'register' && fieldName === 'password') {
       // Only show error if password has content and is not strong
       if (value && !isStrongPassword(value)) {
-        formDispatch(setErrors({ ...errors, password: getPasswordStrengthError(value) }));
-      } else if (value && isStrongPassword(value)) {
-        // Clear password error if password becomes valid
-        const { password: _, ...restErrors } = errors;
-        formDispatch(setErrors(restErrors));
+        setErrors(prev => ({ ...prev, password: getPasswordStrengthError(value) }));
       } else {
-        // Clear error if field is empty
-        const { password: _, ...restErrors } = errors;
-        formDispatch(setErrors(restErrors));
+        // Clear password error if password becomes valid or is empty
+        setErrors(prev => {
+          const { password: _, ...rest } = prev;
+          return rest;
+        });
       }
     }
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    formDispatch(clearErrors());
+    setErrors({});
     authDispatch(setAuthError(null));
 
     const validationErrors = {};
@@ -71,7 +85,7 @@ const UserAuthForm = ({ mode }) => {
     }
 
     if (Object.keys(validationErrors).length > 0) {
-      formDispatch(setErrors(validationErrors));
+      setErrors(validationErrors);
       return;
     }
 
