@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 import { ChevronUp } from 'lucide-react';
-import CloseButton from '../ui/CloseButton';
-import { useCatalogState, useCatalogDispatch } from '../../contexts/catalog/useCatalog';
+
 import {
   closeFilterModal,
   setPriceFilter,
   clearPriceFilter,
 } from '../../contexts/catalog/catalogActions';
+import { useCatalogState, useCatalogDispatch } from '../../contexts/catalog/useCatalog';
+
+import { sanitizePrice } from '../../utils/sanitization';
+
+import CloseButton from '../ui/CloseButton';
 import PriceRangeSlider from '../ui/PriceRangeSlider';
 
 const PriceFilterModal = () => {
@@ -120,7 +124,10 @@ const PriceFilterModal = () => {
                   min="0"
                   max="5000"
                   value={localMinPrice}
-                  onChange={e => setLocalMinPrice(parseInt(e.target.value) || 0)}
+                  onChange={e => {
+                    const sanitized = sanitizePrice(e.target.value);
+                    setLocalMinPrice(sanitized || 0);
+                  }}
                   className="w-full pl-12 pr-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-msq-gold-light focus:border-transparent text-sm"
                 />
               </div>
@@ -138,7 +145,10 @@ const PriceFilterModal = () => {
                   min="0"
                   max="5000"
                   value={localMaxPrice}
-                  onChange={e => setLocalMaxPrice(parseInt(e.target.value) || 5000)}
+                  onChange={e => {
+                    const sanitized = sanitizePrice(e.target.value);
+                    setLocalMaxPrice(sanitized || 5000);
+                  }}
                   className="w-full pl-12 pr-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-msq-gold-light focus:border-transparent text-sm"
                 />
               </div>
