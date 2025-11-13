@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 
-import { isStrongPassword } from '../utils/validation';
+import { isStrongPassword, getPasswordStrengthError } from '../utils/validation';
 import { resetPassword } from '../api/auth';
 import { useFormState, useFormDispatch } from '../contexts/form/useForm';
 import { showSuccessToast } from '../utils/showToast';
@@ -35,6 +35,22 @@ const ResetPassword = () => {
   const handleChange = e => {
     const { name, value } = e.target;
     formDispatch(updateField(name, value));
+
+    // Real-time password validation
+    if (name === 'password') {
+      // Only show error if password has content and is not strong
+      if (value && !isStrongPassword(value)) {
+        formDispatch(setErrors({ ...errors, password: getPasswordStrengthError(value) }));
+      } else if (value && isStrongPassword(value)) {
+        // Clear password error if password becomes valid
+        const { password: _, ...restErrors } = errors;
+        formDispatch(setErrors(restErrors));
+      } else {
+        // Clear error if field is empty
+        const { password: _, ...restErrors } = errors;
+        formDispatch(setErrors(restErrors));
+      }
+    }
   };
 
   const handleSubmit = async e => {
@@ -47,7 +63,7 @@ const ResetPassword = () => {
 
     // Validate password strength
     if (!isStrongPassword(password)) {
-      validationErrors.password = 'Please use a stronger password';
+      validationErrors.password = getPasswordStrengthError(password);
     }
 
     // Validate password confirmation
