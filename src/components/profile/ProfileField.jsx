@@ -18,6 +18,7 @@ const ProfileField = ({
   type = 'text',
   placeholder,
   onSave,
+  sanitizeType,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(value || '');
@@ -141,6 +142,7 @@ const ProfileField = ({
               onChange={e => setEditValue(e.target.value)}
               placeholder={placeholder}
               icon={icon}
+              sanitizeType={sanitizeType}
               onKeyDown={handleKeyPress}
             />
           </div>
