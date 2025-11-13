@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { MdPerson, MdEmail, MdPhone, MdLocationOn, MdNotes } from 'react-icons/md';
+
 import { validateCheckoutForm } from '../../utils/checkoutValidation';
+
 import InputField from '../form/InputField';
 import PhoneNumberField from '../form/PhoneNumberField';
 
@@ -61,6 +63,7 @@ const CheckoutForm = ({ onPlaceOrder, userData, isLoading }) => {
           icon={<MdPerson size={20} />}
           iconPosition="left"
           error={errors.fullName}
+          sanitizeType="name"
           className="rounded-lg focus:ring-msq-purple-rich"
         />
 
@@ -80,6 +83,7 @@ const CheckoutForm = ({ onPlaceOrder, userData, isLoading }) => {
           iconPosition="left"
           error={errors.email}
           required
+          sanitizeType="email"
           className="rounded-lg focus:ring-msq-purple-rich"
         />
 
@@ -114,6 +118,7 @@ const CheckoutForm = ({ onPlaceOrder, userData, isLoading }) => {
           error={errors.deliveryAddress}
           required
           as="textarea"
+          sanitizeType="address"
           className="rounded-lg focus:ring-msq-purple-rich"
         />
 
@@ -127,6 +132,7 @@ const CheckoutForm = ({ onPlaceOrder, userData, isLoading }) => {
           icon={<MdNotes size={20} />}
           iconPosition="left"
           as="textarea"
+          sanitizeType="textarea"
           className="rounded-lg focus:ring-msq-purple-rich"
         />
       </div>
