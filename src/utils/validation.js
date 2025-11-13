@@ -1,5 +1,7 @@
 export const isValidEmail = email => /\S+@\S+\.\S+/.test(email);
 
+export const isValidFullName = fullName => fullName.trim().length > 3;
+
 export const isStrongPassword = password =>
   password.length >= 8 &&
   /[A-Z]/.test(password) &&
