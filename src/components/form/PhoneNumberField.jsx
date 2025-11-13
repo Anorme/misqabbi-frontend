@@ -1,8 +1,33 @@
 import { forwardRef } from 'react';
 import InputField from './InputField';
+import { formatPhoneNumberForStorage } from '../../utils/validation';
 
 const PhoneNumberField = forwardRef(
-  ({ label, name, value, onChange, error, icon, required, className = '', ...rest }, ref) => {
+  (
+    { label, name, value, onChange, error, icon, required, className = '', onBlur, ...rest },
+    ref
+  ) => {
+    const handleBlur = e => {
+      // Format phone number on blur (remove leading 0 if present)
+      const formattedValue = formatPhoneNumberForStorage(e.target.value);
+      if (formattedValue !== e.target.value) {
+        // Create a synthetic event with the formatted value
+        const syntheticEvent = {
+          ...e,
+          target: {
+            ...e.target,
+            name,
+            value: formattedValue,
+          },
+        };
+        onChange(syntheticEvent);
+      }
+      // Call original onBlur if provided
+      if (onBlur) {
+        onBlur(e);
+      }
+    };
+
     return (
       <div className={label ? 'mb-4' : ''}>
         {label && <label className="block mb-1 text-left text-sm font-semibold">{label}</label>}
@@ -21,6 +46,7 @@ const PhoneNumberField = forwardRef(
               name={name}
               value={value}
               onChange={onChange}
+              onBlur={handleBlur}
               placeholder="241234567"
               icon={icon}
               iconPosition="left"
