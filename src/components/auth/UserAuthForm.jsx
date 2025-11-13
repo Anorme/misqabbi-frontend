@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { MdPerson, MdEmail } from 'react-icons/md';
 
-import { isValidEmail, isStrongPassword } from '../../utils/validation';
+import { isValidEmail, isStrongPassword, getPasswordStrengthError } from '../../utils/validation';
 import { signInWithGoogleRedirect } from '../../api/auth';
 import detectWebView from '../../utils/detectWebView';
 
@@ -41,6 +41,22 @@ const UserAuthForm = ({ mode }) => {
     // Map displayName (form field) to fullName (state)
     const fieldName = name === 'displayName' ? 'fullName' : name;
     formDispatch(updateField(fieldName, value));
+
+    // Real-time password validation for register mode
+    if (mode === 'register' && fieldName === 'password') {
+      // Only show error if password has content and is not strong
+      if (value && !isStrongPassword(value)) {
+        formDispatch(setErrors({ ...errors, password: getPasswordStrengthError(value) }));
+      } else if (value && isStrongPassword(value)) {
+        // Clear password error if password becomes valid
+        const { password: _, ...restErrors } = errors;
+        formDispatch(setErrors(restErrors));
+      } else {
+        // Clear error if field is empty
+        const { password: _, ...restErrors } = errors;
+        formDispatch(setErrors(restErrors));
+      }
+    }
   };
 
   const handleSubmit = e => {
@@ -51,7 +67,7 @@ const UserAuthForm = ({ mode }) => {
     const validationErrors = {};
     if (!isValidEmail(email)) validationErrors.email = 'Please enter a valid email';
     if (mode === 'register' && !isStrongPassword(password)) {
-      validationErrors.password = 'Please use a stronger password';
+      validationErrors.password = getPasswordStrengthError(password);
     }
 
     if (Object.keys(validationErrors).length > 0) {
