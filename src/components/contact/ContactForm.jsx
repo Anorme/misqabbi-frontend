@@ -3,6 +3,7 @@ import { User, Mail, MessageSquare, Phone, MessageCircle } from 'lucide-react';
 import { submitContactForm } from '../../api/contact';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
 import { isValidEmail } from '../../utils/validation';
+import InputField from '../form/InputField';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -14,12 +15,16 @@ const ContactForm = () => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleInputChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
 
     // Clear error when user starts typing
-    if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: '' }));
+    if (errors[name]) {
+      setErrors(prev => {
+        const { [name]: _, ...rest } = prev;
+        return rest;
+      });
     }
   };
 
@@ -76,11 +81,11 @@ const ContactForm = () => {
     }
   };
 
-  const inputClasses =
-    'w-full px-2.5 sm:px-3 py-2 sm:py-2.5 pl-9 sm:pl-10 text-sm border border-gray-200 rounded-lg bg-gray-50/50 focus:bg-white focus:border-msq-purple-rich focus:ring-1 focus:ring-msq-purple-rich/20 focus:outline-none transition-all duration-300 font-lato text-gray-900 placeholder:text-gray-400';
-  const textareaClasses = `${inputClasses} min-h-[80px] sm:min-h-[100px] resize-none pt-2`;
-  const errorClasses = 'text-red-500 text-xs mt-0.5 font-lato flex items-center gap-1';
-  const labelClasses = 'block text-left text-xs font-medium text-gray-700 mb-1 sm:mb-1.5 font-lato';
+  // Custom styling classes for ContactForm inputs
+  // Note: Don't include horizontal padding (px/pl/pr) here - InputField handles it based on icon position
+  const customInputClasses =
+    'py-2 sm:py-2.5 text-sm border-gray-200 rounded-lg bg-gray-50/50 focus:bg-white focus:border-msq-purple-rich focus:ring-1 focus:ring-msq-purple-rich/20 text-gray-900 placeholder:text-gray-400';
+  const customTextareaClasses = `${customInputClasses} min-h-[80px] sm:min-h-[100px]`;
 
   return (
     <div className="w-full px-2 sm:px-3 lg:px-6 py-4 sm:py-6 lg:py-10 bg-gradient-to-b from-gray-50/30 to-white">
@@ -111,88 +116,77 @@ const ContactForm = () => {
             <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 text-left">
               {/* Name Field */}
               <div className="group">
-                <label htmlFor="name" className={labelClasses}>
-                  Name <span className="text-red-500">*</span>
-                </label>
-                <div className="relative">
-                  <div className="absolute left-2.5 sm:left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-msq-purple-rich transition-colors duration-300">
-                    <User size={14} strokeWidth={1.5} className="sm:w-4 sm:h-4" />
-                  </div>
-                  <input
-                    id="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={e => handleInputChange('name', e.target.value)}
-                    className={inputClasses}
-                    placeholder="Your name"
-                    aria-required="true"
-                    aria-invalid={errors.name ? 'true' : 'false'}
-                    aria-describedby={errors.name ? 'name-error' : undefined}
-                  />
-                </div>
-                {errors.name && (
-                  <p id="name-error" className={errorClasses} role="alert">
-                    <span className="text-red-500">•</span>
-                    {errors.name}
-                  </p>
-                )}
+                <InputField
+                  label={
+                    <>
+                      Name <span className="text-red-500">*</span>
+                    </>
+                  }
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  placeholder="Your name"
+                  icon={<User size={14} strokeWidth={1.5} className="sm:w-4 sm:h-4" />}
+                  iconPosition="left"
+                  error={errors.name}
+                  required
+                  className={customInputClasses}
+                  labelClassName="text-xs font-medium text-gray-700 mb-1 sm:mb-1.5"
+                  aria-required="true"
+                  aria-invalid={errors.name ? 'true' : 'false'}
+                  aria-describedby={errors.name ? 'name-error' : undefined}
+                />
               </div>
 
               {/* Email Field */}
               <div className="group">
-                <label htmlFor="email" className={labelClasses}>
-                  Email <span className="text-red-500">*</span>
-                </label>
-                <div className="relative">
-                  <div className="absolute left-2.5 sm:left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-msq-purple-rich transition-colors duration-300">
-                    <Mail size={14} strokeWidth={1.5} className="sm:w-4 sm:h-4" />
-                  </div>
-                  <input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={e => handleInputChange('email', e.target.value)}
-                    className={inputClasses}
-                    placeholder="your.email@example.com"
-                    aria-required="true"
-                    aria-invalid={errors.email ? 'true' : 'false'}
-                    aria-describedby={errors.email ? 'email-error' : undefined}
-                  />
-                </div>
-                {errors.email && (
-                  <p id="email-error" className={errorClasses} role="alert">
-                    <span className="text-red-500">•</span>
-                    {errors.email}
-                  </p>
-                )}
+                <InputField
+                  label={
+                    <>
+                      Email <span className="text-red-500">*</span>
+                    </>
+                  }
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="your.email@example.com"
+                  icon={<Mail size={14} strokeWidth={1.5} className="sm:w-4 sm:h-4" />}
+                  iconPosition="left"
+                  error={errors.email}
+                  required
+                  className={customInputClasses}
+                  labelClassName="text-xs font-medium text-gray-700 mb-1 sm:mb-1.5"
+                  aria-required="true"
+                  aria-invalid={errors.email ? 'true' : 'false'}
+                  aria-describedby={errors.email ? 'email-error' : undefined}
+                />
               </div>
 
               {/* Message Field */}
               <div className="group">
-                <label htmlFor="message" className={labelClasses}>
-                  Message <span className="text-red-500">*</span>
-                </label>
-                <div className="relative">
-                  <div className="absolute left-2.5 sm:left-3 top-2 sm:top-2.5 text-gray-400 group-focus-within:text-msq-purple-rich transition-colors duration-300">
-                    <MessageSquare size={14} strokeWidth={1.5} className="sm:w-4 sm:h-4" />
-                  </div>
-                  <textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={e => handleInputChange('message', e.target.value)}
-                    className={textareaClasses}
-                    placeholder="Tell us how we can help you..."
-                    aria-required="true"
-                    aria-invalid={errors.message ? 'true' : 'false'}
-                    aria-describedby={errors.message ? 'message-error' : undefined}
-                  />
-                </div>
-                {errors.message && (
-                  <p id="message-error" className={errorClasses} role="alert">
-                    <span className="text-red-500">•</span>
-                    {errors.message}
-                  </p>
-                )}
+                <InputField
+                  label={
+                    <>
+                      Message <span className="text-red-500">*</span>
+                    </>
+                  }
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  placeholder="Tell us how we can help you..."
+                  icon={<MessageSquare size={14} strokeWidth={1.5} className="sm:w-4 sm:h-4" />}
+                  iconPosition="left"
+                  error={errors.message}
+                  required
+                  as="textarea"
+                  className={customTextareaClasses}
+                  labelClassName="text-xs font-medium text-gray-700 mb-1 sm:mb-1.5"
+                  aria-required="true"
+                  aria-invalid={errors.message ? 'true' : 'false'}
+                  aria-describedby={errors.message ? 'message-error' : undefined}
+                />
               </div>
 
               {/* Submit Button */}
