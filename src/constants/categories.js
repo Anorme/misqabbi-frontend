@@ -1,10 +1,8 @@
 export const CATEGORIES = [
   { value: '', label: 'ALL' },
   { value: 'pants', label: 'PANTS' },
-  { value: 'shorts', label: 'SHORTS' },
   { value: 'skirts', label: 'SKIRTS' },
   { value: 'dresses', label: 'DRESSES' },
-  { value: 'tops', label: 'TOPS' },
   { value: 'dungarees', label: 'DUNGARREES' },
 ];
 
