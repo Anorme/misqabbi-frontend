@@ -3,7 +3,7 @@ import { Pencil, Check } from 'lucide-react';
 import CloseButton from '../ui/CloseButton';
 import InputField from '../form/InputField';
 import PhoneNumberField from '../form/PhoneNumberField';
-import { isValidEmail } from '../../utils/validation';
+import { isValidEmail, getPhoneNumberError } from '../../utils/validation';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
 
 const ProfileField = ({
@@ -17,40 +17,46 @@ const ProfileField = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(value || '');
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  // Helper to extract phone number from value (remove +233 if present)
+  const extractPhoneNumber = val => {
+    if (type === 'tel' && val) {
+      return val.startsWith('+233') ? val.substring(4) : val;
+    }
+    return val || '';
+  };
 
   const handleEdit = () => {
     if (editable) {
       setIsEditing(true);
-      if (type === 'tel') {
-        // Extract phone number from value (remove +233 if present)
-        const phone = value && value.startsWith('+233') ? value.substring(4) : value || '';
-        setPhoneNumber(phone);
-      } else {
-        setEditValue(value || '');
-      }
+      setEditValue(extractPhoneNumber(value));
     }
   };
 
   const handleCancel = () => {
     setIsEditing(false);
-    setEditValue(value || '');
-    if (type === 'tel') {
-      const phone = value && value.startsWith('+233') ? value.substring(4) : value || '';
-      setPhoneNumber(phone);
-    }
+    setEditValue(extractPhoneNumber(value));
   };
 
   const handleSave = async () => {
     if (!editable) return;
 
-    let valueToSave = type === 'tel' ? phoneNumber.trim() : editValue;
+    const valueToSave = editValue.trim();
 
     // Validate email if it's an email field
     if (type === 'email' && valueToSave && !isValidEmail(valueToSave)) {
       showErrorToast('Please enter a valid email address');
       return;
+    }
+
+    // Validate phone number if it's a tel field
+    if (type === 'tel' && valueToSave) {
+      const phoneError = getPhoneNumberError(valueToSave);
+      if (phoneError) {
+        showErrorToast(phoneError);
+        return;
+      }
     }
 
     setIsLoading(true);
@@ -86,8 +92,8 @@ const ProfileField = ({
             <div className="flex-1">
               <PhoneNumberField
                 name="phone"
-                value={phoneNumber}
-                onChange={e => setPhoneNumber(e.target.value)}
+                value={editValue}
+                onChange={e => setEditValue(e.target.value)}
                 icon={icon}
                 onKeyDown={handleKeyPress}
                 label=""
