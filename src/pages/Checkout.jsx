@@ -22,6 +22,7 @@ const Checkout = () => {
   const cartItems = getCartItems(cartState);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isExpressService, setIsExpressService] = useState(false);
 
   // Redirect if cart is empty (but not during order placement)
   useEffect(() => {
@@ -53,8 +54,8 @@ const Checkout = () => {
         },
       };
 
-      // Create order
-      const response = await createOrder(orderData);
+      // Create order with expressService query parameter
+      const response = await createOrder(orderData, isExpressService);
 
       if (response.success) {
         // Redirect to Paystack authorization page (external URL)
@@ -105,7 +106,7 @@ const Checkout = () => {
 
           {/* Right Column - Order Summary */}
           <div className="lg:sticky lg:top-6 lg:self-start">
-            <OrderSummary />
+            <OrderSummary onExpressServiceChange={setIsExpressService} />
           </div>
         </div>
       </div>
