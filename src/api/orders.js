@@ -44,9 +44,15 @@ const getOrderById = async id => {
   }
 };
 
-const createOrder = async orderData => {
+const createOrder = async (orderData, expressService = false) => {
   try {
-    const response = await axios.post(`${API_URL}/orders/checkout`, orderData, {
+    // Build URL with expressService query parameter
+    const url = new URL(`${API_URL}/orders/checkout`);
+    if (expressService) {
+      url.searchParams.append('expressService', 'true');
+    }
+
+    const response = await axios.post(url.toString(), orderData, {
       withCredentials: true,
     });
 
