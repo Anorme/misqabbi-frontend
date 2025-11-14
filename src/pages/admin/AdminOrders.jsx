@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { MdFlashOn } from 'react-icons/md';
 
 import { formatCurrency, getStatusColor } from '../../utils/admin/tableHelpers';
 
@@ -80,6 +81,19 @@ const AdminOrders = () => {
           {value}
         </span>
       ),
+    },
+    {
+      key: 'expressService',
+      label: 'Service',
+      render: (value, order) =>
+        order.expressService ? (
+          <span className="inline-flex items-center space-x-1 px-2 py-1 text-xs font-semibold bg-msq-purple-rich/10 text-msq-purple-rich rounded-full">
+            <MdFlashOn size={14} />
+            <span>Express</span>
+          </span>
+        ) : (
+          <span className="text-xs text-gray-500">Standard</span>
+        ),
     },
     {
       key: 'totalPrice',
