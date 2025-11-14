@@ -1,4 +1,5 @@
 import InputField from '../form/InputField';
+import RichTextEditor from './RichTextEditor';
 
 const FormField = ({
   label,
@@ -104,6 +105,19 @@ const FormField = ({
         );
 
       case 'textarea':
+        // Use RichTextEditor for descriptions, regular textarea for others
+        if (sanitizeType === 'description') {
+          return (
+            <RichTextEditor
+              value={value}
+              onChange={onChange}
+              placeholder={placeholder}
+              error={error}
+              required={required}
+            />
+          );
+        }
+
         return (
           <InputField
             label=""
