@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from 'react-router';
+import { MdFlashOn } from 'react-icons/md';
 import { useAdminOrder } from '../../hooks/queries/useAdmin';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import { formatCurrency, getStatusColor } from '../../utils/admin/tableHelpers';
@@ -88,6 +89,21 @@ const AdminOrderDetails = () => {
         <h3 className="font-medium text-gray-900 mb-3">Payment</h3>
         <p className="text-sm text-gray-700 capitalize">Status: {order.paymentStatus}</p>
         <p className="text-sm text-gray-500 break-all">Reference: {order.paymentReference}</p>
+        {order.expressService && (
+          <div className="mt-3 pt-3 border-t border-gray-200">
+            <div className="flex items-center space-x-2">
+              <MdFlashOn className="text-msq-purple-rich" size={18} />
+              <span className="text-sm font-semibold text-msq-purple-rich">
+                Express Service Order
+              </span>
+            </div>
+            {order.expressFee && (
+              <p className="text-sm text-gray-700 mt-1 ml-7">
+                Express Fee: {formatCurrency(order.expressFee)}
+              </p>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="bg-white rounded-lg border border-gray-200 p-4">
@@ -152,6 +168,19 @@ const AdminOrderDetails = () => {
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <h3 className="font-medium text-gray-900 mb-2">Totals</h3>
           <p className="text-sm text-gray-700">Total Price: {formatCurrency(order.totalPrice)}</p>
+          {order.expressService && order.expressFee && (
+            <div className="mt-2 pt-2 border-t border-gray-200">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-600 flex items-center space-x-1">
+                  <MdFlashOn className="text-msq-purple-rich" size={14} />
+                  <span>Express Service Fee:</span>
+                </span>
+                <span className="text-xs font-medium text-msq-purple-rich">
+                  {formatCurrency(order.expressFee)}
+                </span>
+              </div>
+            </div>
+          )}
         </div>
         <div className="bg-white rounded-lg border border-gray-200 p-4 text-sm text-gray-500">
           <p>Created: {new Date(order.createdAt).toLocaleString()}</p>
