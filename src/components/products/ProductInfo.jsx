@@ -19,7 +19,7 @@ function ProductInfo({ product }) {
       </p>
       <h2 className="text-lg sm:text-xl lg:text-2xl">Details</h2>
       <div
-        className="text-sm md:text-base leading-snug md:leading-normal"
+        className="text-sm md:text-base leading-snug md:leading-normal product-description"
         dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
       />
     </div>
