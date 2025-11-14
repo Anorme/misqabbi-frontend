@@ -42,3 +42,113 @@ body,
     scrollbar-color: #9ca3af transparent; /* thumb color + track color */
   }
 }
+
+/* Tiptap Editor Styles */
+.ProseMirror {
+  outline: none;
+}
+
+.ProseMirror p {
+  margin: 0.5rem 0;
+}
+
+.ProseMirror p:first-child {
+  margin-top: 0;
+}
+
+.ProseMirror p:last-child {
+  margin-bottom: 0;
+}
+
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3 {
+  font-weight: bold;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.ProseMirror h1 {
+  font-size: 1.5rem;
+}
+
+.ProseMirror h2 {
+  font-size: 1.25rem;
+}
+
+.ProseMirror h3 {
+  font-size: 1.125rem;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.ProseMirror li {
+  margin: 0.25rem 0;
+}
+
+.ProseMirror a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.ProseMirror a:hover {
+  color: #1d4ed8;
+}
+
+.ProseMirror strong {
+  font-weight: bold;
+}
+
+.ProseMirror em {
+  font-style: italic;
+}
+
+/* Product Description Rendering Styles */
+.product-description p {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+}
+
+.product-description p:first-child {
+  margin-top: 0;
+}
+
+.product-description p:last-child {
+  margin-bottom: 0;
+}
+
+.product-description br {
+  line-height: 1.6;
+}
+
+.product-description h1,
+.product-description h2,
+.product-description h3 {
+  font-weight: bold;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.product-description h1 {
+  font-size: 1.5rem;
+}
+
+.product-description h2 {
+  font-size: 1.25rem;
+}
+
+.product-description h3 {
+  font-size: 1.125rem;
+}
+
+.product-description ul,
+.product-description ol {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+}
+
+.product-description li {
+  margin: 0.25rem 0;
+}
