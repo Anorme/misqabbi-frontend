@@ -1,4 +1,8 @@
+import { useState } from 'react';
+import SizeGuideModal from './SizeGuideModal';
+
 function SizeSelect({ selected, onChange }) {
+  const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
   function handleSizeSelect(size) {
@@ -7,7 +11,17 @@ function SizeSelect({ selected, onChange }) {
 
   return (
     <div className="flex flex-col gap-0 pb-4">
-      <h2 className="text-base sm:text-lg lg:text-xl">Size</h2>
+      <div className="flex items-baseline gap-2 mb-2">
+        <h2 className="text-base sm:text-lg lg:text-xl">Size</h2>
+        <button onClick={() => setIsSizeGuideOpen(true)} className="text-xs sm:text-sm">
+          <span className="mr-1">(</span>
+          <span className="underline cursor-pointer hover:text-msq-purple-rich transition-colors duration-200">
+            View Size Guide
+          </span>
+          <span className="ml-1">)</span>
+        </button>
+      </div>
+
       <ul className="flex gap-2 justify-around flex-wrap">
         {sizes.map(size => (
           <li
@@ -24,6 +38,8 @@ function SizeSelect({ selected, onChange }) {
           </li>
         ))}
       </ul>
+
+      <SizeGuideModal isOpen={isSizeGuideOpen} onClose={() => setIsSizeGuideOpen(false)} />
     </div>
   );
 }
