@@ -13,6 +13,7 @@ const ProductInfo = lazy(() => import('../components/products/ProductInfo'));
 const GalleryImages = lazy(() => import('../components/products/GalleryImages'));
 const QuantitySelector = lazy(() => import('../components/products/QuantitySelector'));
 const CustomSizeInput = lazy(() => import('../components/products/CustomSizeInput'));
+const VariantSelector = lazy(() => import('../components/products/VariantSelector'));
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 import ProductCard from '../components/products/ProductCard';
 import FavoritesLinkButton from '../components/favorites/FavoritesLinkButton';
@@ -36,6 +37,7 @@ function ProductDetails() {
   const [isCustomSizeEnabled, setIsCustomSizeEnabled] = useState(false);
   const [customMeasurements, setCustomMeasurements] = useState({});
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [selectedVariant, setSelectedVariant] = useState(null);
   const { requireAuth, closeModal, isModalOpen, modalContext } = useAuthAction();
   const [isImageZoomed, setIsImageZoomed] = useState(false);
   const EPS = 0.05;
@@ -45,6 +47,9 @@ function ProductDetails() {
 
   // Extract related products from the product data
   const relatedProducts = product?.relatedProducts || [];
+
+  // Get the active product (variant if selected, otherwise base product)
+  const activeProduct = selectedVariant || product;
 
   const handleAddToCart = () => {
     // Validate custom size if enabled
@@ -60,11 +65,11 @@ function ProductDetails() {
     }
 
     const cartItem = {
-      id: product._id,
-      name: product.name,
-      price: product.price,
-      images: product.images,
-      slug: product.slug,
+      id: activeProduct._id,
+      name: activeProduct.name,
+      price: activeProduct.price,
+      images: activeProduct.images || product.images,
+      slug: activeProduct.slug || product.slug,
       size: isCustomSizeEnabled ? 'CUSTOM' : selectedSize,
       quantity: selectedQuantity,
     };
@@ -97,11 +102,11 @@ function ProductDetails() {
     }
 
     const cartItem = {
-      id: product._id,
-      name: product.name,
-      price: product.price,
-      images: product.images,
-      slug: product.slug,
+      id: activeProduct._id,
+      name: activeProduct.name,
+      price: activeProduct.price,
+      images: activeProduct.images || product.images,
+      slug: activeProduct.slug || product.slug,
       size: isCustomSizeEnabled ? 'CUSTOM' : selectedSize,
       quantity: selectedQuantity,
     };
@@ -129,21 +134,28 @@ function ProductDetails() {
     }
   }, [loading, product]);
 
-  // Reset selected image index when product changes
+  // Reset selected image index and variant when product changes
   useEffect(() => {
     if (product) {
       setSelectedImageIndex(0);
+      setSelectedVariant(null);
     }
   }, [product]);
 
   // Get the currently selected image
   const getSelectedImageUrl = () => {
-    const productImages = product?.images || [];
+    const productImages = activeProduct?.images || product?.images || [];
     if (productImages.length > 0 && selectedImageIndex < productImages.length) {
       return getImageUrl(productImages[selectedImageIndex]);
     }
     // Fallback to product.image or primary image
-    return product?.image || getPrimaryImageUrl(product);
+    return activeProduct?.image || product?.image || getPrimaryImageUrl(activeProduct || product);
+  };
+
+  // Handle variant selection
+  const handleVariantSelect = variant => {
+    setSelectedVariant(variant);
+    setSelectedImageIndex(0); // Reset to first image when variant changes
   };
 
   if (loading)
@@ -234,7 +246,7 @@ function ProductDetails() {
             {/* Image Gallery */}
             <Suspense fallback={null}>
               <GalleryImages
-                product={product}
+                product={activeProduct || product}
                 selectedIndex={selectedImageIndex}
                 onImageSelect={setSelectedImageIndex}
               />
@@ -250,6 +262,7 @@ function ProductDetails() {
             <Suspense fallback={null}>
               <SizeSelect selected={selectedSize} onChange={setSelectedSize}></SizeSelect>
             </Suspense>
+
             {/* Custom Size Input - Compact inline design */}
             {supportsCustomSizing(product?.category) && (
               <div className="flex-1 pb-4 sm:pb-6">
@@ -265,7 +278,16 @@ function ProductDetails() {
               </div>
             )}
 
-            <div className="flex items-start gap-0 pb-4 sm:pb-6">
+            {/* Variant Selector and Quantity Selector - Side by side */}
+            <div className="flex items-start justify-between  pb-4 sm:pb-6 px-4 md:px-8 flex-wrap">
+              <Suspense fallback={null}>
+                <VariantSelector
+                  baseProduct={product}
+                  variants={product?.variants || []}
+                  selectedVariant={selectedVariant}
+                  onSelect={handleVariantSelect}
+                />
+              </Suspense>
               <Suspense fallback={null}>
                 <QuantitySelector quantity={selectedQuantity} onChange={setSelectedQuantity} />
               </Suspense>
@@ -276,7 +298,7 @@ function ProductDetails() {
               <div className="w-1/2 px-2 sm:px-3 py-2 bg-[#EEE5E5] rounded-md flex flex-col max-w-[190px]">
                 <p className="text-xs sm:text-sm text-[#B1B2B2]">Total price:</p>
                 <h1 className="text-sm sm:text-base md:text-lg lg:text-2xl font-extrabold text-msq-purple-deep">
-                  GHC {(product?.price * selectedQuantity).toFixed(2)}
+                  GHC {((activeProduct?.price || product?.price) * selectedQuantity).toFixed(2)}
                 </h1>
               </div>
               <button
