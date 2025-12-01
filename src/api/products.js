@@ -142,3 +142,114 @@ const deleteAdminProduct = async id => {
 };
 
 export { updateAdminProduct, deleteAdminProduct };
+
+// Variant API functions
+const createVariant = async (baseProductId, formData) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/admin/products/${baseProductId}/variants`,
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Failed to create variant');
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error('Error creating variant:', error);
+    throw error;
+  }
+};
+
+const updateVariantSwatchImage = async (baseProductId, variantId, formData) => {
+  try {
+    const response = await axios.put(
+      `${API_URL}/admin/products/${baseProductId}/variants/${variantId}/swatch-image`,
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Failed to update variant swatch image');
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error('Error updating variant swatch image:', error);
+    throw error;
+  }
+};
+
+const deleteVariant = async (baseProductId, variantId) => {
+  try {
+    const response = await axios.delete(
+      `${API_URL}/admin/products/${baseProductId}/variants/${variantId}`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    // 204 No Content is success
+    if (response.status === 204) {
+      return { success: true };
+    }
+
+    if (response.data?.success === false) {
+      throw new Error(response.data?.message || 'Failed to delete variant');
+    }
+
+    return response.data || { success: true };
+  } catch (error) {
+    console.error('Error deleting variant:', error);
+    throw error;
+  }
+};
+
+const fetchProductVariants = async productId => {
+  try {
+    const response = await axios.get(`${API_URL}/admin/products/${productId}/variants`, {
+      withCredentials: true,
+    });
+
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Failed to fetch product variants');
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching product variants:', error);
+    throw error;
+  }
+};
+
+export { createVariant, updateVariantSwatchImage, deleteVariant, fetchProductVariants };
+
+// Base product swatch image update
+const updateProductSwatchImage = async (productId, formData) => {
+  try {
+    const response = await axios.put(
+      `${API_URL}/admin/products/${productId}/swatch-image`,
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Failed to update product swatch image');
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error('Error updating product swatch image:', error);
+    throw error;
+  }
+};
+
+export { updateProductSwatchImage };
