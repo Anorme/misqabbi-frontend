@@ -1,5 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createAdminProduct, updateAdminProduct, deleteAdminProduct } from '../../api/products';
+import {
+  createAdminProduct,
+  updateAdminProduct,
+  deleteAdminProduct,
+  updateProductSwatchImage,
+} from '../../api/products';
 
 /**
  * Mutation hook for creating a product
@@ -56,6 +61,24 @@ export const useDeleteProduct = () => {
       // Invalidate relevant queries
       queryClient.invalidateQueries({ queryKey: ['admin', 'products'] });
       queryClient.invalidateQueries({ queryKey: ['products'] }); // Invalidate public product list
+      queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] }); // Update dashboard stats
+    },
+  });
+};
+
+/**
+ * Mutation hook for updating a product's swatch image
+ */
+export const useUpdateProductSwatchImage = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ productId, formData }) => updateProductSwatchImage(productId, formData),
+    onSuccess: () => {
+      // Invalidate relevant queries
+      queryClient.invalidateQueries({ queryKey: ['admin', 'products'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] }); // Invalidate public product list
+      queryClient.invalidateQueries({ queryKey: ['products', 'slug'] });
       queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] }); // Update dashboard stats
     },
   });
