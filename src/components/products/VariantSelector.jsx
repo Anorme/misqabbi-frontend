@@ -31,9 +31,9 @@ function VariantSelector({ baseProduct, variants = [], selectedVariant, onSelect
   const isBaseSelected = selectedVariant === null;
 
   return (
-    <div className="flex flex-col gap-0">
+    <div className="block w-full">
       <h2 className="text-base sm:text-lg lg:text-xl p-1">{variantTypeTitle}</h2>
-      <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+      <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-start">
         {/* Base Product Swatch - Show first if it exists */}
         {hasBaseSwatch && (
           <button
