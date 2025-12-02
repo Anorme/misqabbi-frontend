@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { formatCurrency } from '../../utils/admin/tableHelpers';
-import { CATEGORIES } from '../../constants/categories';
 import { getPrimaryImageUrl } from '../../utils/productImages';
 import DataTable from '../../components/admin/DataTable';
-import AdminModal from '../../components/admin/AdminModal';
 import SlidingPane from '../../components/admin/SlidingPane';
-import FormField from '../../components/admin/FormField';
+import ProductForm from '../../components/admin/ProductForm';
+import ProductFormActions from '../../components/admin/ProductFormActions';
+import DeleteProductModal from '../../components/admin/DeleteProductModal';
+import UpdateSwatchModal from '../../components/admin/UpdateSwatchModal';
 import PageHeader from '../../components/admin/PageHeader';
 import { ViewButton, EditButton, DeleteButton } from '../../components/admin/ActionButton';
 import PaginationLocal from '../../components/orders/PaginationLocal';
@@ -54,8 +55,8 @@ const AdminProducts = () => {
   } = useAdminProducts({ page: currentPage, limit });
 
   // Filter out variant products - only show base products
-  const allProducts = productsData?.data || [];
-  const products = allProducts.filter(product => !product.isVariant);
+  const products = productsData?.data || [];
+
   const totalPages = productsData?.totalPages || 1;
   const error = isError
     ? queryError?.response?.data?.message || queryError?.message || 'Failed to load products'
@@ -353,185 +354,32 @@ const AdminProducts = () => {
         }}
         title={editingProduct ? 'Edit Product' : 'Add New Product'}
       >
-        <div className="space-y-6">
-          <FormField
-            label="Product Name"
-            value={formData.name}
-            onChange={value => setFormData({ ...formData, name: value })}
-            placeholder="Enter product name"
-            required
-            sanitizeType="name"
-          />
-
-          <FormField
-            label="Description"
-            type="textarea"
-            value={formData.description}
-            onChange={value => setFormData({ ...formData, description: value })}
-            placeholder="Enter product description"
-            rows={3}
-            sanitizeType="description"
-          />
-
-          <div className="grid grid-cols-2 gap-4">
-            <FormField
-              label="Price"
-              type="number"
-              value={formData.price}
-              onChange={value => setFormData({ ...formData, price: value })}
-              placeholder="0.00"
-              required
-              sanitizeType="price"
-            />
-
-            <FormField
-              label="Stock"
-              type="number"
-              value={formData.stock}
-              onChange={value => setFormData({ ...formData, stock: value })}
-              placeholder="0"
-              required
-            />
-          </div>
-
-          <FormField
-            label="Category"
-            type="select"
-            value={formData.category}
-            onChange={value => setFormData({ ...formData, category: value })}
-            options={CATEGORIES.filter(cat => cat.value !== '')}
-            required
-          />
-
-          <div className="flex items-center gap-2">
-            <input
-              id="isPublished"
-              type="checkbox"
-              checked={!!formData.isPublished}
-              onChange={e => setFormData({ ...formData, isPublished: e.target.checked })}
-              className="h-4 w-4 text-msq-purple-rich border-gray-300 rounded"
-            />
-            <label htmlFor="isPublished" className="text-sm text-gray-700">
-              Publish immediately
-            </label>
-          </div>
-
-          <FormField
-            label="Swatch Image (Optional)"
-            type="file"
-            value={formData.swatchImage}
-            onChange={files => setFormData({ ...formData, swatchImage: files })}
-          />
-          <p className="text-xs text-gray-500 -mt-2 mb-2">
-            A small preview image used for variant selection. Optional for base products.
-          </p>
-
-          <FormField
-            label="Product Images"
-            type="file"
-            value={formData.images}
-            onChange={files => setFormData({ ...formData, images: files })}
-          />
-
-          {/* Variant Management Section - Only show when editing */}
-          {editingProduct && (
-            <div className="border-t border-gray-200 pt-4 mt-4">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-semibold text-gray-900">Product Variants</h3>
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setIsUpdateSwatchModalOpen(true)}
-                    className="inline-flex items-center px-3 py-1.5 bg-msq-gold-light text-white text-sm font-medium rounded-md hover:bg-msq-gold transition-colors"
-                  >
-                    Update Swatch
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setIsVariantModalOpen(true)}
-                    className="inline-flex items-center px-3 py-1.5 bg-msq-purple-rich text-white text-sm font-medium rounded-md hover:bg-msq-purple-deep transition-colors"
-                  >
-                    Manage Variants
-                  </button>
-                </div>
-              </div>
-              {editingProduct.variants && editingProduct.variants.length > 0 ? (
-                <p className="text-xs text-gray-500">
-                  {editingProduct.variants.length} variant
-                  {editingProduct.variants.length !== 1 ? 's' : ''} available
-                </p>
-              ) : (
-                <p className="text-xs text-gray-500">
-                  No variants yet. Click "Manage Variants" to add one.
-                </p>
-              )}
-            </div>
-          )}
-
-          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200 sticky bottom-0 bg-white pb-2">
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleSaveProduct}
-              disabled={isSubmitting}
-              className={`px-4 py-2 text-sm font-medium text-white rounded-md transition-colors ${
-                isSubmitting
-                  ? 'bg-msq-purple-rich/60 cursor-not-allowed'
-                  : 'bg-msq-purple-rich hover:bg-msq-purple-deep'
-              }`}
-            >
-              {isSubmitting ? 'Saving...' : editingProduct ? 'Update Product' : 'Add Product'}
-            </button>
-          </div>
-        </div>
+        <ProductForm
+          formData={formData}
+          onFormDataChange={setFormData}
+          editingProduct={editingProduct}
+          onUpdateSwatchClick={() => setIsUpdateSwatchModalOpen(true)}
+          onManageVariantsClick={() => setIsVariantModalOpen(true)}
+        />
+        <ProductFormActions
+          onCancel={() => setIsModalOpen(false)}
+          onSave={handleSaveProduct}
+          isSubmitting={isSubmitting}
+          isEditing={!!editingProduct}
+        />
       </SlidingPane>
 
       {/* Delete Confirmation Modal */}
-      <AdminModal
+      <DeleteProductModal
         isOpen={isDeleteModalOpen}
         onClose={() => {
-          if (!isDeleting) {
-            setIsDeleteModalOpen(false);
-            setDeleteTarget(null);
-          }
+          setIsDeleteModalOpen(false);
+          setDeleteTarget(null);
         }}
-        title="Delete Product"
-      >
-        <div className="space-y-4">
-          <p className="text-sm text-gray-600">
-            Are you sure you want to delete
-            <span className="font-medium text-gray-900"> {deleteTarget?.name}</span>? This action
-            cannot be undone.
-          </p>
-          <div className="flex justify-end space-x-3 pt-2">
-            <button
-              onClick={() => {
-                if (!isDeleting) {
-                  setIsDeleteModalOpen(false);
-                  setDeleteTarget(null);
-                }
-              }}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
-              disabled={isDeleting}
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleConfirmDelete}
-              disabled={isDeleting}
-              className={`px-4 py-2 text-sm font-medium text-white rounded-md transition-colors ${
-                isDeleting ? 'bg-red-600/70 cursor-not-allowed' : 'bg-red-600 hover:bg-red-700'
-              }`}
-            >
-              {isDeleting ? 'Deleting...' : 'Delete'}
-            </button>
-          </div>
-        </div>
-      </AdminModal>
+        product={deleteTarget}
+        onConfirm={handleConfirmDelete}
+        isDeleting={isDeleting}
+      />
 
       {/* Variant Management Modal */}
       <VariantManagementModal
@@ -544,84 +392,12 @@ const AdminProducts = () => {
       />
 
       {/* Update Swatch Image Modal */}
-      <AdminModal
+      <UpdateSwatchModal
         isOpen={isUpdateSwatchModalOpen}
-        onClose={() => {
-          if (!updateSwatchMutation.isPending) {
-            setIsUpdateSwatchModalOpen(false);
-          }
-        }}
-        title="Update Swatch Image"
-      >
-        <form
-          onSubmit={async e => {
-            e.preventDefault();
-            const fileInput = e.target.querySelector('input[type="file"]');
-            if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-              showErrorToast('Please select a swatch image');
-              return;
-            }
-            try {
-              const formData = new FormData();
-              formData.append('swatchImage', fileInput.files[0]);
-              await updateSwatchMutation.mutateAsync({
-                productId: editingProduct._id,
-                formData,
-              });
-              showSuccessToast('Swatch image updated successfully');
-              setIsUpdateSwatchModalOpen(false);
-            } catch (error) {
-              const msg =
-                error?.response?.data?.message || error?.message || 'Failed to update swatch image';
-              showErrorToast(msg);
-            }
-          }}
-        >
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                New Swatch Image <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="file"
-                name="swatchImage"
-                accept="image/*"
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-msq-purple-rich"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                This image will be used for variant selection. The old swatch image will be
-                replaced.
-              </p>
-            </div>
-            <div className="flex justify-end space-x-3 pt-4">
-              <button
-                type="button"
-                onClick={() => {
-                  if (!updateSwatchMutation.isPending) {
-                    setIsUpdateSwatchModalOpen(false);
-                  }
-                }}
-                disabled={updateSwatchMutation.isPending}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors disabled:opacity-50"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={updateSwatchMutation.isPending}
-                className={`px-4 py-2 text-sm font-medium text-white rounded-md transition-colors ${
-                  updateSwatchMutation.isPending
-                    ? 'bg-msq-purple-rich/60 cursor-not-allowed'
-                    : 'bg-msq-purple-rich hover:bg-msq-purple-deep'
-                }`}
-              >
-                {updateSwatchMutation.isPending ? 'Updating...' : 'Update Swatch'}
-              </button>
-            </div>
-          </div>
-        </form>
-      </AdminModal>
+        onClose={() => setIsUpdateSwatchModalOpen(false)}
+        product={editingProduct}
+        updateSwatchMutation={updateSwatchMutation}
+      />
     </div>
   );
 };
