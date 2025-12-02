@@ -89,8 +89,8 @@ const ProductForm = ({
       </p>
 
       {/* Existing Images - Only show when editing */}
-      {editingProduct && formData.existingImages && formData.existingImages.length > 0 && (
-        <ProductImageGallery images={formData.existingImages} />
+      {editingProduct && editingProduct.images && editingProduct.images.length > 0 && (
+        <ProductImageGallery images={editingProduct.images} />
       )}
 
       <FormField
