@@ -19,6 +19,7 @@ import {
   useDeleteProduct,
   useUpdateProductSwatchImage,
   useDeleteProductImage,
+  useDeleteVariantImage,
 } from '../../hooks/mutations/useProductMutations';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import VariantManagementModal from '../../components/admin/VariantManagementModal';
@@ -46,6 +47,7 @@ const AdminProducts = () => {
   const [isVariantModalOpen, setIsVariantModalOpen] = useState(false);
   const [selectedProductForVariants, setSelectedProductForVariants] = useState(null);
   const [isUpdateSwatchModalOpen, setIsUpdateSwatchModalOpen] = useState(false);
+  const [baseProductForVariant, setBaseProductForVariant] = useState(null);
 
   // Use TanStack Query for products fetching with caching
   const {
@@ -69,6 +71,7 @@ const AdminProducts = () => {
   const deleteProductMutation = useDeleteProduct();
   const updateSwatchMutation = useUpdateProductSwatchImage();
   const deleteImageMutation = useDeleteProductImage();
+  const deleteVariantImageMutation = useDeleteVariantImage();
 
   const columns = [
     {
@@ -153,21 +156,46 @@ const AdminProducts = () => {
     setIsModalOpen(true);
   };
 
-  const handleEditProduct = product => {
-    setEditingProduct(product);
-    setFormData({
-      name: product.name,
-      description: product.description,
-      price: product.price.toString(),
-      category: product.category,
-      stock: product.stock.toString(),
-      images: null, // Reset file input for editing
-      swatchImage: null, // Reset file input for editing
-      isPublished: Boolean(product.isPublished) || false,
-    });
-    // Set the product for variant management
-    setSelectedProductForVariants(product);
+  const handleEditProduct = (product, isVariant = false, baseProduct = null) => {
+    if (isVariant) {
+      // Editing a variant
+      setEditingProduct(product);
+      setBaseProductForVariant(baseProduct);
+      setFormData({
+        stock: product.stock.toString(),
+        images: null, // Reset file input for editing
+        swatchImage: null, // Reset file input for editing
+        isPublished: Boolean(product.isPublished) || false,
+        // Variants inherit name, description, price, category from base
+        name: baseProduct.name,
+        description: baseProduct.description,
+        price: baseProduct.price.toString(),
+        category: baseProduct.category,
+      });
+      setSelectedProductForVariants(baseProduct);
+    } else {
+      // Editing base product (existing logic)
+      setEditingProduct(product);
+      setBaseProductForVariant(null);
+      setFormData({
+        name: product.name,
+        description: product.description,
+        price: product.price.toString(),
+        category: product.category,
+        stock: product.stock.toString(),
+        images: null, // Reset file input for editing
+        swatchImage: null, // Reset file input for editing
+        isPublished: Boolean(product.isPublished) || false,
+      });
+      // Set the product for variant management
+      setSelectedProductForVariants(product);
+    }
     setIsModalOpen(true);
+  };
+
+  const handleEditVariant = (variant, baseProduct) => {
+    setIsVariantModalOpen(false); // Close variant modal
+    handleEditProduct(variant, true, baseProduct);
   };
 
   const handleViewProduct = product => {
@@ -253,17 +281,26 @@ const AdminProducts = () => {
     // Below: update flow via API for editing
     try {
       setIsSubmitting(true);
+      const isVariant = baseProductForVariant !== null;
+      const productId = editingProduct._id; // Works for both base products and variants
       let payload;
       const hasNewImages = formData.images && formData.images.length > 0;
       const hasNewSwatchImage = formData.swatchImage && formData.swatchImage.length > 0;
+
       if (hasNewImages || hasNewSwatchImage) {
         const body = new FormData();
-        body.append('name', formData.name);
-        body.append('description', formData.description || '');
-        body.append('price', formData.price);
-        body.append('category', formData.category);
-        body.append('stock', formData.stock);
-        body.append('isPublished', String(!!formData.isPublished));
+        // For variants, only send fields that can be updated
+        if (isVariant) {
+          body.append('stock', formData.stock);
+          body.append('isPublished', String(!!formData.isPublished));
+        } else {
+          body.append('name', formData.name);
+          body.append('description', formData.description || '');
+          body.append('price', formData.price);
+          body.append('category', formData.category);
+          body.append('stock', formData.stock);
+          body.append('isPublished', String(!!formData.isPublished));
+        }
 
         if (hasNewSwatchImage) {
           body.append('swatchImage', formData.swatchImage[0]);
@@ -274,21 +311,32 @@ const AdminProducts = () => {
         }
         payload = body;
       } else {
-        payload = {
-          name: formData.name,
-          description: formData.description || '',
-          price: formData.price,
-          category: formData.category,
-          stock: formData.stock,
-          isPublished: !!formData.isPublished,
-        };
+        // No new images - JSON payload
+        if (isVariant) {
+          payload = {
+            stock: formData.stock,
+            isPublished: !!formData.isPublished,
+          };
+        } else {
+          payload = {
+            name: formData.name,
+            description: formData.description || '',
+            price: formData.price,
+            category: formData.category,
+            stock: formData.stock,
+            isPublished: !!formData.isPublished,
+          };
+        }
       }
 
       const res = await updateProductMutation.mutateAsync({
-        id: editingProduct._id,
+        id: productId, // Works for both base products and variants
         body: payload,
       });
-      showSuccessToast(res?.message || 'Product updated successfully');
+      showSuccessToast(
+        res?.message ||
+          (isVariant ? 'Variant updated successfully' : 'Product updated successfully')
+      );
     } catch (e) {
       const msg = e?.response?.data?.message || e?.message || 'Failed to update product';
       showErrorToast(msg);
@@ -308,6 +356,7 @@ const AdminProducts = () => {
       // Clear variant management product when closing edit modal
       setSelectedProductForVariants(null);
       setEditingProduct(null);
+      setBaseProductForVariant(null); // Clear variant tracking
     }
   };
 
@@ -321,11 +370,24 @@ const AdminProducts = () => {
       return;
     }
 
+    const isVariant = baseProductForVariant !== null;
+
     try {
-      const result = await deleteImageMutation.mutateAsync({
-        productId: editingProduct._id,
-        publicId,
-      });
+      let result;
+      if (isVariant) {
+        // Use variant deletion endpoint
+        result = await deleteVariantImageMutation.mutateAsync({
+          baseProductId: baseProductForVariant._id,
+          variantId: editingProduct._id,
+          publicId,
+        });
+      } else {
+        // Use base product deletion endpoint
+        result = await deleteImageMutation.mutateAsync({
+          productId: editingProduct._id,
+          publicId,
+        });
+      }
 
       if (result?.data) {
         // Update the editingProduct with the updated product data from the response
@@ -380,8 +442,15 @@ const AdminProducts = () => {
           setIsModalOpen(false);
           setSelectedProductForVariants(null);
           setEditingProduct(null);
+          setBaseProductForVariant(null);
         }}
-        title={editingProduct ? 'Edit Product' : 'Add New Product'}
+        title={
+          baseProductForVariant
+            ? `Edit Variant - ${editingProduct?.variantType ? editingProduct.variantType.charAt(0).toUpperCase() + editingProduct.variantType.slice(1) : 'Variant'}`
+            : editingProduct
+              ? 'Edit Product'
+              : 'Add New Product'
+        }
       >
         <ProductForm
           formData={formData}
@@ -390,6 +459,7 @@ const AdminProducts = () => {
           onUpdateSwatchClick={() => setIsUpdateSwatchModalOpen(true)}
           onManageVariantsClick={() => setIsVariantModalOpen(true)}
           onDeleteImage={handleDeleteImage}
+          isVariant={baseProductForVariant !== null}
         />
         <ProductFormActions
           onCancel={() => setIsModalOpen(false)}
@@ -419,6 +489,7 @@ const AdminProducts = () => {
           // Don't clear selectedProductForVariants here - keep it for the edit modal
         }}
         baseProduct={selectedProductForVariants || editingProduct}
+        onEditVariant={handleEditVariant}
       />
 
       {/* Update Swatch Image Modal */}
