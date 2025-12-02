@@ -6,6 +6,7 @@ import {
   updateProductSwatchImage,
   deleteProductImage,
   deleteProductSwatchImage,
+  deleteVariantImage,
 } from '../../api/products';
 
 /**
@@ -112,6 +113,25 @@ export const useDeleteProductSwatchImage = () => {
 
   return useMutation({
     mutationFn: productId => deleteProductSwatchImage(productId),
+    onSuccess: () => {
+      // Invalidate relevant queries
+      queryClient.invalidateQueries({ queryKey: ['admin', 'products'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] }); // Invalidate public product list
+      queryClient.invalidateQueries({ queryKey: ['products', 'slug'] });
+      queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] }); // Update dashboard stats
+    },
+  });
+};
+
+/**
+ * Mutation hook for deleting a variant gallery image
+ */
+export const useDeleteVariantImage = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ baseProductId, variantId, publicId }) =>
+      deleteVariantImage(baseProductId, variantId, publicId),
     onSuccess: () => {
       // Invalidate relevant queries
       queryClient.invalidateQueries({ queryKey: ['admin', 'products'] });
