@@ -14,6 +14,7 @@ const GalleryImages = lazy(() => import('../components/products/GalleryImages'))
 const QuantitySelector = lazy(() => import('../components/products/QuantitySelector'));
 const CustomSizeInput = lazy(() => import('../components/products/CustomSizeInput'));
 const VariantSelector = lazy(() => import('../components/products/VariantSelector'));
+import ProductSection from '../components/products/ProductSection';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 import ProductCard from '../components/products/ProductCard';
 import FavoritesLinkButton from '../components/favorites/FavoritesLinkButton';
@@ -260,24 +261,30 @@ function ProductDetails() {
             </Suspense>
 
             {/* Variant Selector */}
-            <div className="block pb-4 sm:pb-6">
+            {(product?.swatchImage && getImageUrl(product.swatchImage)) ||
+            (product?.variants && product.variants.length > 0) ? (
+              <ProductSection>
+                <Suspense fallback={null}>
+                  <VariantSelector
+                    baseProduct={product}
+                    variants={product?.variants || []}
+                    selectedVariant={selectedVariant}
+                    onSelect={handleVariantSelect}
+                  />
+                </Suspense>
+              </ProductSection>
+            ) : null}
+
+            {/* Size Selector */}
+            <ProductSection>
               <Suspense fallback={null}>
-                <VariantSelector
-                  baseProduct={product}
-                  variants={product?.variants || []}
-                  selectedVariant={selectedVariant}
-                  onSelect={handleVariantSelect}
-                />
+                <SizeSelect selected={selectedSize} onChange={setSelectedSize}></SizeSelect>
               </Suspense>
-            </div>
+            </ProductSection>
 
-            <Suspense fallback={null}>
-              <SizeSelect selected={selectedSize} onChange={setSelectedSize}></SizeSelect>
-            </Suspense>
-
-            {/* Custom Size Input - Compact inline design */}
+            {/* Custom Size Input */}
             {supportsCustomSizing(product?.category) && (
-              <div className="flex-1 pb-4 sm:pb-6">
+              <ProductSection>
                 <Suspense fallback={null}>
                   <CustomSizeInput
                     category={product?.category}
@@ -287,41 +294,43 @@ function ProductDetails() {
                     isCustomSizeEnabled={isCustomSizeEnabled}
                   />
                 </Suspense>
-              </div>
+              </ProductSection>
             )}
 
             {/* Quantity Selector */}
-            <div className="pb-4 sm:pb-6">
+            <ProductSection>
               <Suspense fallback={null}>
                 <QuantitySelector quantity={selectedQuantity} onChange={setSelectedQuantity} />
               </Suspense>
-            </div>
+            </ProductSection>
 
             {/* Product price and CTA */}
-            <div className="flex py-4 sm:pb-6 space-x-3 sm:space-x-5 justify-between">
-              <div className="w-1/2 px-2 sm:px-3 py-2 bg-[#EEE5E5] rounded-md flex flex-col max-w-[190px]">
-                <p className="text-xs sm:text-sm text-[#B1B2B2]">Total price:</p>
-                <h1 className="text-sm sm:text-base md:text-lg lg:text-2xl font-extrabold text-msq-purple-deep">
-                  GHC {((activeProduct?.price || product?.price) * selectedQuantity).toFixed(2)}
-                </h1>
+            <ProductSection>
+              <div className="flex space-x-3 sm:space-x-5 justify-between">
+                <div className="w-1/2 px-2 sm:px-3 py-2 bg-[#EEE5E5] rounded-md flex flex-col max-w-[190px]">
+                  <p className="text-xs sm:text-sm text-[#B1B2B2]">Total price:</p>
+                  <h1 className="text-sm sm:text-base md:text-lg lg:text-2xl font-extrabold text-msq-purple-deep">
+                    GHC {((activeProduct?.price || product?.price) * selectedQuantity).toFixed(2)}
+                  </h1>
+                </div>
+                <button
+                  className="bg-msq-purple-rich text-xs sm:text-sm md:text-base lg:text-lg text-white rounded-md flex-grow max-w-[320px] cursor-pointer py-2 sm:py-3 hover:bg-msq-purple transition-colors duration-200"
+                  onClick={handleAddToCart}
+                >
+                  Add to Cart
+                </button>
               </div>
-              <button
-                className="bg-msq-purple-rich text-xs sm:text-sm md:text-base lg:text-lg text-white rounded-md flex-grow max-w-[320px] cursor-pointer py-2 sm:py-3 hover:bg-msq-purple transition-colors duration-200"
-                onClick={handleAddToCart}
-              >
-                Add to Cart
-              </button>
-            </div>
+            </ProductSection>
 
             {/* Buy Now Button*/}
-            <div className="py-3 sm:py-4">
+            <ProductSection>
               <button
                 className="bg-msq-purple-rich font-bold text-sm sm:text-base md:text-lg lg:text-xl text-white rounded-md w-full cursor-pointer py-4 hover:bg-msq-purple transition-colors duration-200"
                 onClick={handleBuyNow}
               >
                 Buy Now
               </button>
-            </div>
+            </ProductSection>
           </div>
         </div>
 
