@@ -1,14 +1,8 @@
 import { getImageUrl } from '../../utils/productImages';
 
 function VariantSelector({ baseProduct, variants = [], selectedVariant, onSelect }) {
-  // Check if we have anything to show (base product swatch or variants)
+  // Check if base product has a swatch image
   const hasBaseSwatch = baseProduct?.swatchImage && getImageUrl(baseProduct.swatchImage);
-  const hasVariants = variants && variants.length > 0;
-
-  // Don't render if no base swatch and no variants
-  if (!hasBaseSwatch && !hasVariants) {
-    return null;
-  }
 
   // Get variant type from the first variant (all variants should have the same type)
   const variantType = variants[0]?.variantType || 'color';
