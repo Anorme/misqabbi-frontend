@@ -11,7 +11,7 @@ import { showSuccessToast, showErrorToast } from '../../utils/showToast';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
 import { Edit2, Trash2, Plus, Upload } from 'lucide-react';
 
-const VariantManagementModal = ({ isOpen, onClose, baseProduct }) => {
+const VariantManagementModal = ({ isOpen, onClose, baseProduct, onEditVariant }) => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateSwatchModalOpen, setIsUpdateSwatchModalOpen] = useState(false);
   const [selectedVariantForUpdate, setSelectedVariantForUpdate] = useState(null);
@@ -142,6 +142,13 @@ const VariantManagementModal = ({ isOpen, onClose, baseProduct }) => {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => onEditVariant?.(variant, baseProduct)}
+                        className="p-2 text-msq-purple-rich hover:bg-msq-purple-rich/10 rounded-md transition-colors"
+                        title="Edit Variant"
+                      >
+                        <Edit2 className="h-4 w-4" />
+                      </button>
                       <button
                         onClick={() => openUpdateSwatchModal(variant)}
                         className="p-2 text-msq-purple-rich hover:bg-msq-purple-rich/10 rounded-md transition-colors"
