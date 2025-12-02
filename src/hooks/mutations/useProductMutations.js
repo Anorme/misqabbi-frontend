@@ -4,6 +4,8 @@ import {
   updateAdminProduct,
   deleteAdminProduct,
   updateProductSwatchImage,
+  deleteProductImage,
+  deleteProductSwatchImage,
 } from '../../api/products';
 
 /**
@@ -74,6 +76,42 @@ export const useUpdateProductSwatchImage = () => {
 
   return useMutation({
     mutationFn: ({ productId, formData }) => updateProductSwatchImage(productId, formData),
+    onSuccess: () => {
+      // Invalidate relevant queries
+      queryClient.invalidateQueries({ queryKey: ['admin', 'products'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] }); // Invalidate public product list
+      queryClient.invalidateQueries({ queryKey: ['products', 'slug'] });
+      queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] }); // Update dashboard stats
+    },
+  });
+};
+
+/**
+ * Mutation hook for deleting a product gallery image
+ */
+export const useDeleteProductImage = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ productId, publicId }) => deleteProductImage(productId, publicId),
+    onSuccess: () => {
+      // Invalidate relevant queries
+      queryClient.invalidateQueries({ queryKey: ['admin', 'products'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] }); // Invalidate public product list
+      queryClient.invalidateQueries({ queryKey: ['products', 'slug'] });
+      queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] }); // Update dashboard stats
+    },
+  });
+};
+
+/**
+ * Mutation hook for deleting a product's swatch image
+ */
+export const useDeleteProductSwatchImage = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: productId => deleteProductSwatchImage(productId),
     onSuccess: () => {
       // Invalidate relevant queries
       queryClient.invalidateQueries({ queryKey: ['admin', 'products'] });
