@@ -1,6 +1,7 @@
 import FormField from './FormField';
 import { CATEGORIES } from '../../constants/categories';
 import VariantManagementSection from './VariantManagementSection';
+import ProductImageGallery from './ProductImageGallery';
 
 const ProductForm = ({
   formData,
@@ -87,12 +88,22 @@ const ProductForm = ({
         A small preview image used for variant selection. Optional for base products.
       </p>
 
+      {/* Existing Images - Only show when editing */}
+      {editingProduct && formData.existingImages && formData.existingImages.length > 0 && (
+        <ProductImageGallery images={formData.existingImages} />
+      )}
+
       <FormField
         label="Product Images"
         type="file"
         value={formData.images}
         onChange={files => updateField('images', files)}
       />
+      {editingProduct && (
+        <p className="text-xs text-gray-500 -mt-2 mb-2">
+          Upload new images to add to existing ones.
+        </p>
+      )}
 
       {/* Variant Management Section - Only show when editing */}
       {editingProduct && (
