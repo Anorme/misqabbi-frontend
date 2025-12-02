@@ -10,7 +10,7 @@ function SizeSelect({ selected, onChange }) {
   }
 
   return (
-    <div className="flex flex-col gap-0 pb-4">
+    <div className="flex flex-col gap-0">
       <div className="flex items-baseline gap-2 mb-2">
         <h2 className="text-base sm:text-lg lg:text-xl">Size</h2>
         <button onClick={() => setIsSizeGuideOpen(true)} className="text-xs sm:text-sm">
