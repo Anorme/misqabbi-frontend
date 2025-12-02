@@ -5,6 +5,7 @@ import { CATEGORIES } from '../../constants/categories';
 import { getPrimaryImageUrl } from '../../utils/productImages';
 import DataTable from '../../components/admin/DataTable';
 import AdminModal from '../../components/admin/AdminModal';
+import SlidingPane from '../../components/admin/SlidingPane';
 import FormField from '../../components/admin/FormField';
 import PageHeader from '../../components/admin/PageHeader';
 import { ViewButton, EditButton, DeleteButton } from '../../components/admin/ActionButton';
@@ -343,7 +344,7 @@ const AdminProducts = () => {
         />
       )}
 
-      <AdminModal
+      <SlidingPane
         isOpen={isModalOpen}
         onClose={() => {
           setIsModalOpen(false);
@@ -352,7 +353,7 @@ const AdminProducts = () => {
         }}
         title={editingProduct ? 'Edit Product' : 'Add New Product'}
       >
-        <div className="space-y-4">
+        <div className="space-y-6">
           <FormField
             label="Product Name"
             value={formData.name}
@@ -467,7 +468,7 @@ const AdminProducts = () => {
             </div>
           )}
 
-          <div className="flex justify-end space-x-3 pt-4">
+          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200 sticky bottom-0 bg-white pb-2">
             <button
               onClick={() => setIsModalOpen(false)}
               className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
@@ -487,7 +488,7 @@ const AdminProducts = () => {
             </button>
           </div>
         </div>
-      </AdminModal>
+      </SlidingPane>
 
       {/* Delete Confirmation Modal */}
       <AdminModal
