@@ -253,3 +253,47 @@ const updateProductSwatchImage = async (productId, formData) => {
 };
 
 export { updateProductSwatchImage };
+
+// Delete product image functions
+const deleteProductImage = async (productId, publicId) => {
+  try {
+    // URL encode the publicId to handle slashes and special characters
+    const encodedPublicId = encodeURIComponent(publicId);
+    const response = await axios.delete(
+      `${API_URL}/admin/products/${productId}/images/${encodedPublicId}`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    if (!response.data?.success) {
+      throw new Error(response.data?.error || response.data?.message || 'Failed to delete image');
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting product image:', error);
+    throw error;
+  }
+};
+
+const deleteProductSwatchImage = async productId => {
+  try {
+    const response = await axios.delete(`${API_URL}/admin/products/${productId}/swatch-image`, {
+      withCredentials: true,
+    });
+
+    if (!response.data?.success) {
+      throw new Error(
+        response.data?.error || response.data?.message || 'Failed to delete swatch image'
+      );
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting product swatch image:', error);
+    throw error;
+  }
+};
+
+export { deleteProductImage, deleteProductSwatchImage };
