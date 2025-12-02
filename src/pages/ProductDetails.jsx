@@ -259,6 +259,18 @@ function ProductDetails() {
               <ProductInfo product={product}></ProductInfo>
             </Suspense>
 
+            {/* Variant Selector */}
+            <div className="block pb-4 sm:pb-6">
+              <Suspense fallback={null}>
+                <VariantSelector
+                  baseProduct={product}
+                  variants={product?.variants || []}
+                  selectedVariant={selectedVariant}
+                  onSelect={handleVariantSelect}
+                />
+              </Suspense>
+            </div>
+
             <Suspense fallback={null}>
               <SizeSelect selected={selectedSize} onChange={setSelectedSize}></SizeSelect>
             </Suspense>
@@ -278,16 +290,8 @@ function ProductDetails() {
               </div>
             )}
 
-            {/* Variant Selector and Quantity Selector - Side by side */}
-            <div className="flex items-start justify-between  pb-4 sm:pb-6 px-4 md:px-8 flex-wrap">
-              <Suspense fallback={null}>
-                <VariantSelector
-                  baseProduct={product}
-                  variants={product?.variants || []}
-                  selectedVariant={selectedVariant}
-                  onSelect={handleVariantSelect}
-                />
-              </Suspense>
+            {/* Quantity Selector */}
+            <div className="pb-4 sm:pb-6">
               <Suspense fallback={null}>
                 <QuantitySelector quantity={selectedQuantity} onChange={setSelectedQuantity} />
               </Suspense>
