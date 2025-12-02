@@ -10,6 +10,7 @@ const ProductForm = ({
   onUpdateSwatchClick,
   onManageVariantsClick,
   onDeleteImage,
+  isVariant = false,
 }) => {
   const updateField = (field, value) => {
     onFormDataChange({ ...formData, [field]: value });
@@ -17,36 +18,76 @@ const ProductForm = ({
 
   return (
     <div className="space-y-6">
-      <FormField
-        label="Product Name"
-        value={formData.name}
-        onChange={value => updateField('name', value)}
-        placeholder="Enter product name"
-        required
-        sanitizeType="name"
-      />
+      {/* Show variant type as read-only for variants */}
+      {isVariant && (
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Variant Type</label>
+          <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-sm capitalize">
+            {editingProduct?.variantType || 'N/A'}
+          </div>
+          <p className="text-xs text-gray-500 mt-1">
+            Variant type cannot be changed. Inherits name, description, price, and category from
+            base product.
+          </p>
+        </div>
+      )}
 
-      <FormField
-        label="Description"
-        type="textarea"
-        value={formData.description}
-        onChange={value => updateField('description', value)}
-        placeholder="Enter product description"
-        rows={3}
-        sanitizeType="description"
-      />
+      {/* Hide these fields for variants - they inherit from base */}
+      {!isVariant && (
+        <>
+          <FormField
+            label="Product Name"
+            value={formData.name}
+            onChange={value => updateField('name', value)}
+            placeholder="Enter product name"
+            required
+            sanitizeType="name"
+          />
 
-      <div className="grid grid-cols-2 gap-4">
-        <FormField
-          label="Price"
-          type="number"
-          value={formData.price}
-          onChange={value => updateField('price', value)}
-          placeholder="0.00"
-          required
-          sanitizeType="price"
-        />
+          <FormField
+            label="Description"
+            type="textarea"
+            value={formData.description}
+            onChange={value => updateField('description', value)}
+            placeholder="Enter product description"
+            rows={3}
+            sanitizeType="description"
+          />
 
+          <div className="grid grid-cols-2 gap-4">
+            <FormField
+              label="Price"
+              type="number"
+              value={formData.price}
+              onChange={value => updateField('price', value)}
+              placeholder="0.00"
+              required
+              sanitizeType="price"
+            />
+
+            <FormField
+              label="Stock"
+              type="number"
+              value={formData.stock}
+              onChange={value => updateField('stock', value)}
+              placeholder="0"
+              required
+            />
+          </div>
+
+          <FormField
+            label="Category"
+            type="select"
+            value={formData.category}
+            onChange={value => updateField('category', value)}
+            options={CATEGORIES.filter(cat => cat.value !== '')}
+            required
+          />
+        </>
+      )}
+
+      {/* Stock - always shown, but in different layout for variants */}
+      {isVariant && (
         <FormField
           label="Stock"
           type="number"
@@ -55,16 +96,7 @@ const ProductForm = ({
           placeholder="0"
           required
         />
-      </div>
-
-      <FormField
-        label="Category"
-        type="select"
-        value={formData.category}
-        onChange={value => updateField('category', value)}
-        options={CATEGORIES.filter(cat => cat.value !== '')}
-        required
-      />
+      )}
 
       <div className="flex items-center gap-2">
         <input
@@ -80,13 +112,15 @@ const ProductForm = ({
       </div>
 
       <FormField
-        label="Swatch Image (Optional)"
+        label={isVariant ? 'Swatch Image (Required)' : 'Swatch Image (Optional)'}
         type="file"
         value={formData.swatchImage}
         onChange={files => updateField('swatchImage', files)}
       />
       <p className="text-xs text-gray-500 -mt-2 mb-2">
-        A small preview image used for variant selection. Optional for base products.
+        {isVariant
+          ? 'This image is required for variants and used in the variant picker.'
+          : 'A small preview image used for variant selection. Optional for base products.'}
       </p>
 
       {/* Existing Images - Only show when editing */}
@@ -106,8 +140,8 @@ const ProductForm = ({
         </p>
       )}
 
-      {/* Variant Management Section - Only show when editing */}
-      {editingProduct && (
+      {/* Variant Management Section - Only show when editing base product, not variants */}
+      {editingProduct && !isVariant && (
         <VariantManagementSection
           product={editingProduct}
           onUpdateSwatchClick={onUpdateSwatchClick}
