@@ -296,4 +296,28 @@ const deleteProductSwatchImage = async productId => {
   }
 };
 
-export { deleteProductImage, deleteProductSwatchImage };
+const deleteVariantImage = async (baseProductId, variantId, publicId) => {
+  try {
+    // URL encode the publicId to handle slashes and special characters
+    const encodedPublicId = encodeURIComponent(publicId);
+    const response = await axios.delete(
+      `${API_URL}/admin/products/${baseProductId}/variants/${variantId}/images/${encodedPublicId}`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    if (!response.data?.success) {
+      throw new Error(
+        response.data?.error || response.data?.message || 'Failed to delete variant image'
+      );
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting variant image:', error);
+    throw error;
+  }
+};
+
+export { deleteProductImage, deleteProductSwatchImage, deleteVariantImage };
