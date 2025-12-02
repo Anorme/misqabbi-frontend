@@ -9,6 +9,7 @@ const ProductForm = ({
   editingProduct,
   onUpdateSwatchClick,
   onManageVariantsClick,
+  onDeleteImage,
 }) => {
   const updateField = (field, value) => {
     onFormDataChange({ ...formData, [field]: value });
@@ -90,7 +91,7 @@ const ProductForm = ({
 
       {/* Existing Images - Only show when editing */}
       {editingProduct && editingProduct.images && editingProduct.images.length > 0 && (
-        <ProductImageGallery images={editingProduct.images} />
+        <ProductImageGallery images={editingProduct.images} onDeleteImage={onDeleteImage} />
       )}
 
       <FormField
