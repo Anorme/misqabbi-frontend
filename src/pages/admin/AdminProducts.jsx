@@ -18,6 +18,7 @@ import {
   useUpdateProduct,
   useDeleteProduct,
   useUpdateProductSwatchImage,
+  useDeleteProductImage,
 } from '../../hooks/mutations/useProductMutations';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import VariantManagementModal from '../../components/admin/VariantManagementModal';
@@ -67,6 +68,7 @@ const AdminProducts = () => {
   const updateProductMutation = useUpdateProduct();
   const deleteProductMutation = useDeleteProduct();
   const updateSwatchMutation = useUpdateProductSwatchImage();
+  const deleteImageMutation = useDeleteProductImage();
 
   const columns = [
     {
@@ -313,6 +315,33 @@ const AdminProducts = () => {
     setCurrentPage(page);
   };
 
+  const handleDeleteImage = async publicId => {
+    if (!editingProduct?._id) {
+      showErrorToast('No product selected for editing');
+      return;
+    }
+
+    try {
+      const result = await deleteImageMutation.mutateAsync({
+        productId: editingProduct._id,
+        publicId,
+      });
+
+      if (result?.data) {
+        // Update the editingProduct with the updated product data from the response
+        setEditingProduct(result.data);
+        showSuccessToast('Image deleted successfully');
+      }
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.error ||
+        error?.response?.data?.message ||
+        error?.message ||
+        'Failed to delete image';
+      showErrorToast(errorMessage);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -360,6 +389,7 @@ const AdminProducts = () => {
           editingProduct={editingProduct}
           onUpdateSwatchClick={() => setIsUpdateSwatchModalOpen(true)}
           onManageVariantsClick={() => setIsVariantModalOpen(true)}
+          onDeleteImage={handleDeleteImage}
         />
         <ProductFormActions
           onCancel={() => setIsModalOpen(false)}
