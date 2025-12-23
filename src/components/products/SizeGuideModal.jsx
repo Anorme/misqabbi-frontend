@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import CloseButton from '../ui/CloseButton';
-import sizeChart from '../../assets/size chart (inches).jpg';
+import sizeChart from '../../assets/sizechart.png';
 
 const SizeGuideModal = ({ isOpen, onClose }) => {
   useEffect(() => {
