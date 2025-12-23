@@ -1,5 +1,5 @@
 import { Ruler, Lightbulb, Users, Heart } from 'lucide-react';
-import sizeChartImage from '../assets/size chart (inches).jpg';
+import sizeChartImage from '../assets/sizechart.png';
 import SEO from '../components/SEO';
 
 const SizeGuide = () => {
