@@ -26,7 +26,7 @@ function VariantSelector({ baseProduct, variants = [], selectedVariant, onSelect
 
   return (
     <div className="block w-full">
-      <h2 className="text-base sm:text-lg lg:text-xl p-1">{variantTypeTitle}</h2>
+      <h2 className="text-base sm:text-lg lg:text-xl p-1 text-gray-900">{variantTypeTitle}</h2>
       <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-start">
         {/* Base Product Swatch - Show first if it exists */}
         {hasBaseSwatch && (

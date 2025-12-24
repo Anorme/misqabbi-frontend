@@ -54,7 +54,7 @@ const CustomSizeInput = ({
   return (
     <div className="flex flex-col gap-0">
       <div className="flex items-baseline gap-2 mb-2">
-        <h2 className="text-base sm:text-lg lg:text-xl p-0">Custom Size</h2>
+        <h2 className="text-base sm:text-lg lg:text-xl p-0 text-gray-900">Custom Size</h2>
         <span className="text-xs sm:text-sm top-2">
           <span className="mr-1">(</span>
           Inches
@@ -89,7 +89,7 @@ const CustomSizeInput = ({
                   type="number"
                   value={localMeasurements[field.key] || ''}
                   onChange={e => handleInputChange(field.key, e.target.value)}
-                  className="w-full px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-md text-xs sm:text-sm focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent"
+                  className="w-full px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-md text-xs sm:text-sm text-gray-900 focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent"
                   placeholder={`${field.label}`}
                   min={field.min}
                   max={field.max}
