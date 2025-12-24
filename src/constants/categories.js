@@ -3,7 +3,7 @@ export const CATEGORIES = [
   { value: 'pants', label: 'PANTS' },
   { value: 'skirts', label: 'SKIRTS' },
   { value: 'dresses', label: 'DRESSES' },
-  { value: 'dungarees', label: 'DUNGARREES' },
+  { value: 'dungarees', label: 'DUNGAREES' },
 ];
 
 export const getCategoryLabel = value => {
