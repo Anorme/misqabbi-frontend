@@ -12,7 +12,7 @@ function SizeSelect({ selected, onChange }) {
   return (
     <div className="flex flex-col gap-0">
       <div className="flex items-baseline gap-2 mb-2">
-        <h2 className="text-base sm:text-lg lg:text-xl">Size</h2>
+        <h2 className="text-base sm:text-lg lg:text-xl text-gray-900">Size</h2>
         <button onClick={() => setIsSizeGuideOpen(true)} className="text-xs sm:text-sm">
           <span className="mr-1">(</span>
           <span className="underline cursor-pointer hover:text-msq-purple-rich transition-colors duration-200">
@@ -31,7 +31,7 @@ function SizeSelect({ selected, onChange }) {
               ${
                 selected === size
                   ? 'bg-msq-gold-light text-white border-msq-gold-light'
-                  : 'bg-gray-100 border-0 hover:bg-gray-200'
+                  : 'bg-gray-100 border-0 hover:bg-gray-200 text-gray-900'
               }`}
           >
             {size}

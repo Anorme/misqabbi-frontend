@@ -4,18 +4,18 @@ const QuantitySelector = ({ quantity, onChange }) => {
 
   return (
     <div className="flex flex-col gap-0">
-      <h2 className="text-base sm:text-lg lg:text-xl p-1">Quantity</h2>
+      <h2 className="text-base sm:text-lg lg:text-xl p-1 text-gray-900">Quantity</h2>
       <div className="flex items-center gap-3 sm:gap-4 border border-solid p-2 border-msq-gold-light w-fit">
         {/* Decrease button */}
         <button
           onClick={decrease}
-          className="px-2 sm:px-3 py-1 text-xs sm:text-base font-bold bg-gray-200 rounded hover:bg-gray-300 cursor-pointer transition-colors duration-200"
+          className="px-2 sm:px-3 py-1 text-xs sm:text-base font-bold bg-gray-200 rounded hover:bg-gray-300 cursor-pointer transition-colors duration-200 text-gray-900"
         >
           −
         </button>
 
         {/* Quantity display */}
-        <span className="text-base sm:text-lg font-medium">{quantity}</span>
+        <span className="text-base sm:text-lg font-medium text-gray-900">{quantity}</span>
 
         {/* Increase button */}
         <button
