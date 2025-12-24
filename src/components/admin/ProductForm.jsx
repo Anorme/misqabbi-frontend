@@ -86,16 +86,28 @@ const ProductForm = ({
         </>
       )}
 
-      {/* Stock - always shown, but in different layout for variants */}
+      {/* Price and Stock - shown for variants with editable price */}
       {isVariant && (
-        <FormField
-          label="Stock"
-          type="number"
-          value={formData.stock}
-          onChange={value => updateField('stock', value)}
-          placeholder="0"
-          required
-        />
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            label="Price"
+            type="number"
+            value={formData.price}
+            onChange={value => updateField('price', value)}
+            placeholder="0.00"
+            required
+            sanitizeType="price"
+          />
+
+          <FormField
+            label="Stock"
+            type="number"
+            value={formData.stock}
+            onChange={value => updateField('stock', value)}
+            placeholder="0"
+            required
+          />
+        </div>
       )}
 
       <div className="flex items-center gap-2">
