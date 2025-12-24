@@ -179,7 +179,7 @@ const AdminOrders = () => {
           <select
             value={statusFilter}
             onChange={e => handleStatusFilterChange(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent"
+            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent text-gray-900"
           >
             <option value="">All Orders</option>
             {orderStatuses.map(status => (
