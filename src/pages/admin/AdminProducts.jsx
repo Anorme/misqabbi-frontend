@@ -166,10 +166,10 @@ const AdminProducts = () => {
         images: null, // Reset file input for editing
         swatchImage: null, // Reset file input for editing
         isPublished: Boolean(product.isPublished) || false,
-        // Variants inherit name, description, price, category from base
+        // Variants inherit name, description, category from base, but can have custom price
         name: baseProduct.name,
         description: baseProduct.description,
-        price: baseProduct.price.toString(),
+        price: (product.price ?? baseProduct.price).toString(),
         category: baseProduct.category,
       });
       setSelectedProductForVariants(baseProduct);
@@ -228,9 +228,18 @@ const AdminProducts = () => {
   };
 
   const handleSaveProduct = async () => {
-    if (!formData.name || !formData.price || !formData.category || !formData.stock) {
-      showErrorToast('Please fill in all required fields');
-      return;
+    const isVariant = baseProductForVariant !== null;
+    // Validation: for variants, only price and stock are required; for base products, all fields are required
+    if (isVariant) {
+      if (!formData.price || !formData.stock) {
+        showErrorToast('Please fill in all required fields');
+        return;
+      }
+    } else {
+      if (!formData.name || !formData.price || !formData.category || !formData.stock) {
+        showErrorToast('Please fill in all required fields');
+        return;
+      }
     }
 
     // If creating a new product, call API with multipart/form-data
@@ -291,6 +300,7 @@ const AdminProducts = () => {
         const body = new FormData();
         // For variants, only send fields that can be updated
         if (isVariant) {
+          body.append('price', formData.price);
           body.append('stock', formData.stock);
           body.append('isPublished', String(!!formData.isPublished));
         } else {
@@ -314,6 +324,7 @@ const AdminProducts = () => {
         // No new images - JSON payload
         if (isVariant) {
           payload = {
+            price: formData.price,
             stock: formData.stock,
             isPublished: !!formData.isPublished,
           };
