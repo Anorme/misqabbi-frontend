@@ -20,7 +20,7 @@ const items = [
     image:
       'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_600,c_limit/v1761965680/misqabbi/landing-page/CSI_9944_dsvzfv.jpg',
     price: 200,
-    url: '/product/the-og-mayah',
+    url: '/product/mayah',
   },
   {
     name: 'Belle Pants',
