@@ -30,10 +30,14 @@ const PhoneNumberField = forwardRef(
 
     return (
       <div className={label ? 'mb-4' : ''}>
-        {label && <label className="block mb-1 text-left text-sm font-semibold">{label}</label>}
+        {label && (
+          <label className="block mb-1 text-left text-sm font-semibold text-gray-900">
+            {label}
+          </label>
+        )}
         <div className="flex">
           <select
-            className="px-3 py-3 border border-gray-300 border-r-0 rounded-l-lg focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent transition-colors duration-200 font-lato cursor-pointer bg-gray-50"
+            className="px-3 py-3 border border-gray-300 border-r-0 rounded-l-lg focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent transition-colors duration-200 font-lato cursor-pointer bg-gray-50 text-gray-900"
             value="+233"
             disabled
           >
