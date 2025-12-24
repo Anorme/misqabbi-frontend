@@ -33,7 +33,7 @@ const InputField = forwardRef(
     const iconTopClass = isTextarea ? 'top-3' : 'top-1/2 -translate-y-1/2';
 
     // Put paddingClass after className so icon padding isn't overridden by custom classes
-    const baseInputClasses = `w-full py-3 border border-gray-300 rounded-[18px] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200 font-lato ${error ? 'border-red-500' : ''} ${className} ${paddingClass}`;
+    const baseInputClasses = `w-full py-3 border border-gray-300 rounded-[18px] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200 font-lato text-gray-900 ${error ? 'border-red-500' : ''} ${className} ${paddingClass}`;
     const textareaClasses = isTextarea ? 'min-h-[80px] resize-none' : '';
 
     const InputComponent = isTextarea ? 'textarea' : 'input';
@@ -104,7 +104,7 @@ const InputField = forwardRef(
         {label && label !== '' && (
           <label
             htmlFor={name}
-            className={`block mb-1 text-left text-sm font-semibold ${labelClassName}`}
+            className={`block mb-1 text-left text-sm font-semibold text-gray-900 ${labelClassName}`}
           >
             {label}
           </label>
