@@ -13,7 +13,10 @@ function SizeSelect({ selected, onChange }) {
     <div className="flex flex-col gap-0">
       <div className="flex items-baseline gap-2 mb-2">
         <h2 className="text-base sm:text-lg lg:text-xl text-gray-900">Size</h2>
-        <button onClick={() => setIsSizeGuideOpen(true)} className="text-xs sm:text-sm">
+        <button
+          onClick={() => setIsSizeGuideOpen(true)}
+          className="text-xs sm:text-sm text-gray-900"
+        >
           <span className="mr-1">(</span>
           <span className="underline cursor-pointer hover:text-msq-purple-rich transition-colors duration-200">
             View Size Guide
