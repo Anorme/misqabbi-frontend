@@ -25,11 +25,6 @@ const FAQs = () => {
       answer: 'Returns are only accepted for defective or incorrect items.',
     },
     {
-      question: 'What are the payment options?',
-      answer:
-        'You may pay 50 percent upfront and 50 percent upon delivery, or pay in full when ordering.',
-    },
-    {
       question: 'How does delivery work?',
       answer: 'We use third-party couriers. You may also arrange your own pickup.',
     },
