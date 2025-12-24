@@ -15,7 +15,7 @@ const RichTextEditor = ({ value, onChange, error }) => {
     content: value || '',
     editorProps: {
       attributes: {
-        class: 'focus:outline-none min-h-[200px] px-4 py-3 text-base leading-relaxed',
+        class: 'focus:outline-none min-h-[200px] px-4 py-3 text-base leading-relaxed text-gray-900',
         'data-placeholder': 'Enter product description...',
       },
     },
