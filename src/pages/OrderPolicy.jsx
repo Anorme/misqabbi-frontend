@@ -1,4 +1,4 @@
-import { Clock, Calendar, CreditCard, Truck } from 'lucide-react';
+import { Clock, Calendar, Truck } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const OrderPolicy = () => {
@@ -56,24 +56,6 @@ const OrderPolicy = () => {
                 We accept a limited number of orders weekly to maintain quality and attention to
                 detail. If slots are full, you may book an early slot for the following week or wait
                 for availability.
-              </p>
-            </div>
-          </div>
-
-          {/* Payment Terms */}
-          <div className="flex items-start gap-4 p-4 md:p-6 bg-white border-2 border-gray-100 rounded-lg hover:border-msq-purple-light transition-colors">
-            <div className="flex-shrink-0">
-              <div className="p-2 sm:p-3 bg-msq-purple-rich/10 rounded-full">
-                <CreditCard className="w-6 h-6 sm:w-8 sm:h-8 text-msq-purple-rich" />
-              </div>
-            </div>
-            <div>
-              <h3 className="text-base sm:text-lg md:text-xl font-bebas text-msq-purple-rich mb-2">
-                Payment Terms
-              </h3>
-              <p className="text-xs sm:text-sm lg:text-base text-gray-700 leading-relaxed">
-                You may pay 50 percent upfront and 50 percent upon delivery, or pay in full when
-                placing your order.
               </p>
             </div>
           </div>
