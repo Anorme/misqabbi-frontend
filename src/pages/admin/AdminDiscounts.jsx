@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useQueryClient } from '@tanstack/react-query';
 import { formatCurrency } from '../../utils/admin/tableHelpers';
 import DataTable from '../../components/admin/DataTable';
 import PageHeader from '../../components/admin/PageHeader';
-import { ViewButton, EditButton } from '../../components/admin/ActionButton';
+import { ViewButton, EditButton, DeleteButton } from '../../components/admin/ActionButton';
 import PaginationLocal from '../../components/orders/PaginationLocal';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import { useAdminDiscounts, useAdminDiscountStats } from '../../hooks/queries/useAdmin';
+import { deleteAdminDiscount } from '../../api/adminDiscounts';
+import { showSuccessToast, showErrorToast } from '../../utils/showToast';
 
 const SCOPE_OPTIONS = [
   { value: '', label: 'All scopes' },
@@ -32,6 +35,7 @@ const EXPIRED_OPTIONS = [
 
 const AdminDiscounts = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [q, setQ] = useState('');
@@ -124,12 +128,28 @@ const AdminDiscounts = () => {
     },
   ];
 
+  const handleDeactivate = async d => {
+    if (!window.confirm(`Deactivate discount "${d.code}"? It will no longer be usable.`)) return;
+    try {
+      await deleteAdminDiscount(d._id);
+      showSuccessToast('Discount deactivated');
+      queryClient.invalidateQueries({ queryKey: ['admin', 'discounts'] });
+    } catch (err) {
+      showErrorToast(err?.response?.data?.error || err?.message || 'Failed to deactivate');
+    }
+  };
+
   const actions = [
     { component: ViewButton, onClick: d => navigate(`/admin/discounts/${d._id}`), title: 'View' },
     {
       component: EditButton,
       onClick: d => navigate(`/admin/discounts/${d._id}/edit`),
       title: 'Edit',
+    },
+    {
+      component: DeleteButton,
+      onClick: d => handleDeactivate(d),
+      title: 'Deactivate',
     },
   ];
 
