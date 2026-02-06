@@ -3,6 +3,7 @@ import { fetchAdminDashboard } from '../../api/admin';
 import { fetchAdminProducts } from '../../api/products';
 import { fetchAdminOrders, fetchAdminOrderById } from '../../api/orders';
 import { fetchAdminUsers } from '../../api/users';
+import { getAdminDiscounts } from '../../api/adminDiscounts';
 
 /**
  * Query hook for fetching admin dashboard data
@@ -72,6 +73,19 @@ export const useAdminOrder = (id, options = {}) => {
     enabled: !!id,
     staleTime: 1 * 60 * 1000, // 1 minute
     gcTime: 5 * 60 * 1000, // 5 minutes
+    ...options,
+  });
+};
+
+/**
+ * Query hook for fetching admin discounts list with filters and pagination
+ */
+export const useAdminDiscounts = (params = {}, options = {}) => {
+  return useQuery({
+    queryKey: ['admin', 'discounts', 'list', params],
+    queryFn: () => getAdminDiscounts(params),
+    staleTime: 1 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
     ...options,
   });
 };
