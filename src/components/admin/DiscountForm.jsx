@@ -168,7 +168,13 @@ const DiscountForm = ({
         </div>
       )}
       {codeReadOnly && (
-        <FormField label="Code" value={formData.code} onChange={() => {}} placeholder="—" />
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-1">Code</label>
+          <p className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-md text-gray-900 font-mono">
+            {formData.code || '—'}
+          </p>
+          <p className="mt-1 text-xs text-gray-500">Code cannot be changed when editing.</p>
+        </div>
       )}
 
       <FormField
