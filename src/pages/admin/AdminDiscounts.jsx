@@ -6,7 +6,7 @@ import PageHeader from '../../components/admin/PageHeader';
 import { ViewButton, EditButton } from '../../components/admin/ActionButton';
 import PaginationLocal from '../../components/orders/PaginationLocal';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
-import { useAdminDiscounts } from '../../hooks/queries/useAdmin';
+import { useAdminDiscounts, useAdminDiscountStats } from '../../hooks/queries/useAdmin';
 
 const SCOPE_OPTIONS = [
   { value: '', label: 'All scopes' },
@@ -46,6 +46,9 @@ const AdminDiscounts = () => {
   if (scope) params.scope = scope;
   if (usageType) params.usageType = usageType;
   if (expired) params.expired = expired;
+
+  const { data: statsData } = useAdminDiscountStats();
+  const stats = statsData?.data || { total: 0, active: 0, expired: 0, totalUsage: 0 };
 
   const { data, isLoading, isError, error } = useAdminDiscounts(params);
   const rawList = data?.data || [];
@@ -137,6 +140,27 @@ const AdminDiscounts = () => {
         actionLabel="Create discount"
         onAction={() => navigate('/admin/discounts/new')}
       />
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="bg-white rounded-lg border border-gray-200 p-4">
+          <p className="text-sm font-medium text-gray-500 font-lato">Total discounts</p>
+          <p className="text-2xl font-bebas text-msq-purple-rich mt-1">{stats.total}</p>
+        </div>
+        <div className="bg-white rounded-lg border border-gray-200 p-4">
+          <p className="text-sm font-medium text-gray-500 font-lato">Active</p>
+          <p className="text-2xl font-bebas text-green-600 mt-1">{stats.active}</p>
+        </div>
+        <div className="bg-white rounded-lg border border-gray-200 p-4">
+          <p className="text-sm font-medium text-gray-500 font-lato">Expired</p>
+          <p className="text-2xl font-bebas text-gray-600 mt-1">{stats.expired}</p>
+        </div>
+        <div className="bg-white rounded-lg border border-gray-200 p-4">
+          <p className="text-sm font-medium text-gray-500 font-lato">Total usage</p>
+          <p className="text-2xl font-bebas text-msq-purple-rich mt-1">{stats.totalUsage}</p>
+        </div>
+      </div>
+
       {/* Filters */}
       <div className="mb-4 p-4 bg-white rounded-lg border border-gray-200">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
