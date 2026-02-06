@@ -23,6 +23,7 @@ const Checkout = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isExpressService, setIsExpressService] = useState(false);
+  const [appliedDiscountCode, setAppliedDiscountCode] = useState(null);
 
   // Redirect if cart is empty (but not during order placement)
   useEffect(() => {
@@ -53,6 +54,10 @@ const Checkout = () => {
           deliveryNotes: formData.deliveryNotes,
         },
       };
+
+      if (appliedDiscountCode) {
+        orderData.discountCode = appliedDiscountCode;
+      }
 
       // Create order with expressService query parameter
       const response = await createOrder(orderData, isExpressService);
@@ -106,7 +111,10 @@ const Checkout = () => {
 
           {/* Right Column - Order Summary */}
           <div className="lg:sticky lg:top-6 lg:self-start">
-            <OrderSummary onExpressServiceChange={setIsExpressService} />
+            <OrderSummary
+              onExpressServiceChange={setIsExpressService}
+              onDiscountChange={setAppliedDiscountCode}
+            />
           </div>
         </div>
       </div>
