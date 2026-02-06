@@ -3,7 +3,12 @@ import { fetchAdminDashboard } from '../../api/admin';
 import { fetchAdminProducts } from '../../api/products';
 import { fetchAdminOrders, fetchAdminOrderById } from '../../api/orders';
 import { fetchAdminUsers } from '../../api/users';
-import { getAdminDiscounts, getAdminDiscountStats } from '../../api/adminDiscounts';
+import {
+  getAdminDiscounts,
+  getAdminDiscountStats,
+  getAdminDiscountById,
+  getAdminDiscountUsage,
+} from '../../api/adminDiscounts';
 
 /**
  * Query hook for fetching admin dashboard data
@@ -97,6 +102,34 @@ export const useAdminDiscountStats = (options = {}) => {
   return useQuery({
     queryKey: ['admin', 'discounts', 'stats'],
     queryFn: () => getAdminDiscountStats(),
+    staleTime: 1 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
+    ...options,
+  });
+};
+
+/**
+ * Query hook for a single admin discount by ID (detail + usageStats)
+ */
+export const useAdminDiscount = (id, options = {}) => {
+  return useQuery({
+    queryKey: ['admin', 'discounts', 'detail', id],
+    queryFn: () => getAdminDiscountById(id),
+    enabled: !!id,
+    staleTime: 1 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
+    ...options,
+  });
+};
+
+/**
+ * Query hook for discount usage history (paginated)
+ */
+export const useAdminDiscountUsage = (id, params = {}, options = {}) => {
+  return useQuery({
+    queryKey: ['admin', 'discounts', 'usage', id, params],
+    queryFn: () => getAdminDiscountUsage(id, params),
+    enabled: !!id,
     staleTime: 1 * 60 * 1000,
     gcTime: 5 * 60 * 1000,
     ...options,
