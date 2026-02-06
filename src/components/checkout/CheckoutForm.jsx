@@ -6,7 +6,7 @@ import { validateCheckoutForm } from '../../utils/checkoutValidation';
 import InputField from '../form/InputField';
 import PhoneNumberField from '../form/PhoneNumberField';
 
-const CheckoutForm = ({ onPlaceOrder, userData, isLoading }) => {
+const CheckoutForm = ({ onPlaceOrder, userData }) => {
   const [formData, setFormData] = useState({
     fullName: userData?.name || userData?.displayName || '',
     email: userData?.email || '',
@@ -46,7 +46,7 @@ const CheckoutForm = ({ onPlaceOrder, userData, isLoading }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form id="checkout-form" onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-4">
         <h2 className="font-bebas text-2xl text-msq-purple-rich uppercase tracking-wide">
           Delivery Information
@@ -135,24 +135,6 @@ const CheckoutForm = ({ onPlaceOrder, userData, isLoading }) => {
           sanitizeType="textarea"
           className="rounded-lg focus:ring-msq-purple-rich"
         />
-      </div>
-
-      {/* Submit Button */}
-      <div className="pt-6">
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full bg-msq-purple-rich text-white py-4 px-6 rounded-lg font-lato font-semibold text-lg hover:bg-msq-purple transition-colors duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-md cursor-pointer"
-        >
-          {isLoading ? (
-            <div className="flex items-center justify-center space-x-2">
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-              <span>Processing Order...</span>
-            </div>
-          ) : (
-            'Place Order'
-          )}
-        </button>
       </div>
     </form>
   );
