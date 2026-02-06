@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MdShoppingCart, MdFlashOn } from 'react-icons/md';
+import { MdShoppingCart, MdFlashOn, MdLocalOffer } from 'react-icons/md';
 import { useCartState } from '../../contexts/cart/useCart';
 import {
   getCartItemsWithKeys,
@@ -7,12 +7,17 @@ import {
   getCartSubtotal,
 } from '../../contexts/cart/cartSelectors';
 import { getPrimaryImageUrl } from '../../utils/productImages';
+import { validateDiscount } from '../../api/discounts';
 
 import { EXPRESS_SERVICE_FEE_PER_ITEM } from '../../constants/order';
 
-const OrderSummary = ({ onExpressServiceChange }) => {
+const OrderSummary = ({ onExpressServiceChange, onDiscountChange }) => {
   const cartState = useCartState();
   const [isExpressService, setIsExpressService] = useState(false);
+  const [discountCode, setDiscountCode] = useState('');
+  const [appliedDiscount, setAppliedDiscount] = useState(null);
+  const [discountFeedback, setDiscountFeedback] = useState({ message: '', type: null });
+  const [isValidatingDiscount, setIsValidatingDiscount] = useState(false);
 
   const cartItems = getCartItemsWithKeys(cartState);
   const itemCount = getCartItemCount(cartState);
@@ -20,7 +25,9 @@ const OrderSummary = ({ onExpressServiceChange }) => {
 
   // Calculate express service fee: 150 GHS × total quantity
   const expressServiceFee = isExpressService ? EXPRESS_SERVICE_FEE_PER_ITEM * itemCount : 0;
-  const subtotal = baseSubtotal + expressServiceFee;
+  const subtotalBeforeDiscount = baseSubtotal + expressServiceFee;
+  const discountAmount = appliedDiscount?.amount ?? 0;
+  const finalTotal = Math.max(0, subtotalBeforeDiscount - discountAmount);
 
   const formatPrice = price => {
     return `GHC ${price.toFixed(2)}`;
@@ -28,9 +35,87 @@ const OrderSummary = ({ onExpressServiceChange }) => {
 
   const handleExpressServiceToggle = checked => {
     setIsExpressService(checked);
-    // Notify parent component
+    setAppliedDiscount(null);
+    setDiscountFeedback({ message: '', type: null });
     if (onExpressServiceChange) {
       onExpressServiceChange(checked);
+    }
+    if (onDiscountChange) {
+      onDiscountChange(null);
+    }
+  };
+
+  const buildValidatePayload = () => {
+    const cartTotal =
+      baseSubtotal + (isExpressService ? EXPRESS_SERVICE_FEE_PER_ITEM * itemCount : 0);
+    const items = cartItems.map(item => ({
+      product: item.id,
+      price: item.price,
+      quantity: item.quantity,
+      category: item.category ?? '',
+    }));
+    return { code: discountCode.trim(), cartTotal, itemCount, items };
+  };
+
+  const handleApplyDiscount = async () => {
+    const code = discountCode.trim();
+    if (!code) {
+      setDiscountFeedback({ message: 'Enter a discount code', type: 'error' });
+      return;
+    }
+
+    setIsValidatingDiscount(true);
+    setDiscountFeedback({ message: '', type: null });
+
+    try {
+      const payload = buildValidatePayload();
+      const response = await validateDiscount(payload);
+
+      const discountData = response?.data;
+      const amount = discountData?.discountAmount;
+      const appliedCode = discountData?.code ?? code;
+      const finalTotalFromBackend = discountData?.finalTotal;
+      const savingsLabel = discountData?.savings;
+
+      if (amount != null && amount > 0) {
+        setAppliedDiscount({
+          code: appliedCode,
+          amount,
+          finalTotal: finalTotalFromBackend,
+          savings: savingsLabel,
+        });
+        setDiscountFeedback({
+          message: savingsLabel
+            ? `Discount applied: ${savingsLabel}`
+            : `Discount applied: ${appliedCode}`,
+          type: 'success',
+        });
+        if (onDiscountChange) {
+          onDiscountChange(appliedCode);
+        }
+      } else {
+        setAppliedDiscount(null);
+        setDiscountFeedback({
+          message: response?.message ?? 'This code could not be applied.',
+          type: 'error',
+        });
+        if (onDiscountChange) {
+          onDiscountChange(null);
+        }
+      }
+    } catch (error) {
+      setAppliedDiscount(null);
+      const message =
+        error.response?.data?.error ??
+        error.response?.data?.message ??
+        error.message ??
+        'Invalid or expired code';
+      setDiscountFeedback({ message, type: 'error' });
+      if (onDiscountChange) {
+        onDiscountChange(null);
+      }
+    } finally {
+      setIsValidatingDiscount(false);
     }
   };
 
@@ -141,6 +226,49 @@ const OrderSummary = ({ onExpressServiceChange }) => {
               </p>
             </div>
           )}
+
+          {/* Discount Code */}
+          <div className="pt-4 border-t border-gray-200">
+            <label className="block text-sm font-medium text-gray-700 font-lato mb-2">
+              Discount code
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={discountCode}
+                onChange={e => setDiscountCode(e.target.value)}
+                placeholder="Enter code"
+                className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm font-lato placeholder:text-gray-400 focus:border-msq-purple-rich focus:outline-none focus:ring-1 focus:ring-msq-purple-rich"
+                disabled={isValidatingDiscount}
+                aria-label="Discount code"
+              />
+              <button
+                type="button"
+                onClick={handleApplyDiscount}
+                disabled={isValidatingDiscount || !discountCode.trim()}
+                className="rounded-md bg-msq-purple-rich px-4 py-2 text-sm font-medium text-white font-lato hover:bg-msq-purple-rich/90 focus:outline-none focus:ring-2 focus:ring-msq-purple-rich focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isValidatingDiscount ? 'Applying…' : 'Apply'}
+              </button>
+            </div>
+            {discountFeedback.message && (
+              <p
+                className={`mt-2 text-sm font-lato ${
+                  discountFeedback.type === 'success'
+                    ? 'text-green-600'
+                    : discountFeedback.type === 'error'
+                      ? 'text-red-600'
+                      : 'text-gray-600'
+                }`}
+                role="status"
+              >
+                {discountFeedback.type === 'success' && (
+                  <MdLocalOffer className="inline-block mr-1 align-middle" size={16} />
+                )}
+                {discountFeedback.message}
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
@@ -167,6 +295,19 @@ const OrderSummary = ({ onExpressServiceChange }) => {
             </div>
           )}
 
+          {/* Discount Line Item */}
+          {appliedDiscount && (
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600 font-lato flex items-center space-x-1">
+                <MdLocalOffer className="text-green-600" size={16} />
+                <span>Discount ({appliedDiscount.code})</span>
+              </span>
+              <span className="text-sm font-medium text-green-600 font-lato">
+                -{formatPrice(appliedDiscount.amount)}
+              </span>
+            </div>
+          )}
+
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-600 font-lato">Delivery</span>
             <span className="text-sm font-medium text-msq-purple-rich font-lato">
@@ -179,9 +320,23 @@ const OrderSummary = ({ onExpressServiceChange }) => {
 
           <div className="border-t border-gray-300 pt-3">
             <div className="flex justify-between items-center">
-              <span className="text-lg font-bebas text-gray-900">Subtotal</span>
+              <span className="text-sm text-gray-600 font-lato">Subtotal</span>
+              <span className="text-sm font-medium text-gray-900 font-lato">
+                {formatPrice(subtotalBeforeDiscount)}
+              </span>
+            </div>
+            {appliedDiscount && (
+              <div className="flex justify-between items-center mt-2">
+                <span className="text-sm text-gray-600 font-lato">Discount</span>
+                <span className="text-sm font-medium text-green-600 font-lato">
+                  -{formatPrice(discountAmount)}
+                </span>
+              </div>
+            )}
+            <div className="flex justify-between items-center mt-2">
+              <span className="text-lg font-bebas text-gray-900">Final total</span>
               <span className="text-lg font-bebas font-bold text-msq-purple-rich">
-                {formatPrice(subtotal)}
+                {formatPrice(finalTotal)}
               </span>
             </div>
             <div className="text-xs text-gray-500 font-lato mt-2 text-center">
