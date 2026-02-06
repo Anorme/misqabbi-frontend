@@ -73,6 +73,7 @@ function ProductDetails() {
       slug: activeProduct.slug || product.slug,
       size: isCustomSizeEnabled ? 'CUSTOM' : selectedSize,
       quantity: selectedQuantity,
+      category: activeProduct?.category ?? product?.category ?? '',
     };
 
     // Add custom measurements if enabled
@@ -110,6 +111,7 @@ function ProductDetails() {
       slug: activeProduct.slug || product.slug,
       size: isCustomSizeEnabled ? 'CUSTOM' : selectedSize,
       quantity: selectedQuantity,
+      category: activeProduct?.category ?? product?.category ?? '',
     };
 
     // Add custom measurements if enabled
