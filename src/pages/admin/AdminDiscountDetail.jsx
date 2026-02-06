@@ -1,15 +1,20 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
+import { useQueryClient } from '@tanstack/react-query';
 import { formatCurrency } from '../../utils/admin/tableHelpers';
 import DataTable from '../../components/admin/DataTable';
 import PaginationLocal from '../../components/orders/PaginationLocal';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import { useAdminDiscount, useAdminDiscountUsage } from '../../hooks/queries/useAdmin';
+import { deleteAdminDiscount } from '../../api/adminDiscounts';
+import { showSuccessToast, showErrorToast } from '../../utils/showToast';
 
 const AdminDiscountDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [usagePage, setUsagePage] = useState(1);
+  const [isDeactivating, setIsDeactivating] = useState(false);
   const usageLimit = 20;
 
   const { data: discountData, isLoading, isError, error } = useAdminDiscount(id);
@@ -101,6 +106,23 @@ const AdminDiscountDetail = () => {
 
   const usageStats = discount.usageStats || {};
   const isActive = discount.isActive;
+
+  const handleDeactivate = async () => {
+    if (!window.confirm(`Deactivate discount "${discount.code}"? It will no longer be usable.`))
+      return;
+    setIsDeactivating(true);
+    try {
+      await deleteAdminDiscount(id);
+      showSuccessToast('Discount deactivated');
+      queryClient.invalidateQueries({ queryKey: ['admin', 'discounts'] });
+      navigate('/admin/discounts');
+    } catch (err) {
+      showErrorToast(err?.response?.data?.error || err?.message || 'Failed to deactivate');
+    } finally {
+      setIsDeactivating(false);
+    }
+  };
+
   const typeLabel =
     discount.discountType === 'percentage'
       ? `${discount.discountValue}% off`
@@ -124,6 +146,16 @@ const AdminDiscountDetail = () => {
           >
             Edit
           </button>
+          {isActive && (
+            <button
+              type="button"
+              className="px-4 py-2 text-sm font-medium bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50"
+              onClick={handleDeactivate}
+              disabled={isDeactivating}
+            >
+              {isDeactivating ? 'Deactivating...' : 'Deactivate'}
+            </button>
+          )}
         </div>
       </div>
 
