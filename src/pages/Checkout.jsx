@@ -109,12 +109,28 @@ const Checkout = () => {
             />
           </div>
 
-          {/* Right Column - Order Summary */}
-          <div className="lg:sticky lg:top-6 lg:self-start">
+          {/* Right Column - Order Summary + Place Order */}
+          <div className="lg:sticky lg:top-6 lg:self-start space-y-4">
             <OrderSummary
               onExpressServiceChange={setIsExpressService}
               onDiscountChange={setAppliedDiscountCode}
             />
+            {/* Place Order Button */}
+            <button
+              type="submit"
+              form="checkout-form"
+              disabled={isLoading}
+              className="w-full bg-msq-purple-rich text-white py-4 px-6 rounded-lg font-lato font-semibold text-lg hover:bg-msq-purple transition-colors duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-md cursor-pointer"
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <span>Processing Order...</span>
+                </div>
+              ) : (
+                'Place Order'
+              )}
+            </button>
           </div>
         </div>
       </div>
