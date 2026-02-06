@@ -42,6 +42,7 @@ const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'));
 const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'));
 const AdminUserDetails = lazy(() => import('./pages/admin/AdminUserDetails'));
 const AdminOrderDetails = lazy(() => import('./pages/admin/AdminOrderDetails'));
+const AdminDiscounts = lazy(() => import('./pages/admin/AdminDiscounts'));
 
 const App = () => {
   return (
@@ -295,6 +296,14 @@ const App = () => {
             element={
               <Suspense fallback={<PageLoader />}>
                 <AdminOrderDetails />
+              </Suspense>
+            }
+          />
+          <Route
+            path="discounts"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AdminDiscounts />
               </Suspense>
             }
           />

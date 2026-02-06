@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router';
-import { LayoutDashboard, Package, ShoppingCart, Users, X } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingCart, Users, Tag, X } from 'lucide-react';
 
 const Sidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
@@ -7,6 +7,7 @@ const Sidebar = ({ isOpen, onClose }) => {
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
     { name: 'Products', href: '/admin/products', icon: Package },
     { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
+    { name: 'Discounts', href: '/admin/discounts', icon: Tag },
     { name: 'Users', href: '/admin/users', icon: Users },
   ];
 
