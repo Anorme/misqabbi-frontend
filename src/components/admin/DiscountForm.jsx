@@ -160,7 +160,7 @@ const DiscountForm = ({
                   // Error surfaced by caller or toast
                 }
               }}
-              className="px-4 py-2 text-sm font-medium bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200"
+              className="px-4 py-2 text-sm font-medium bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 ml-2.5 mt-5 mb-5"
             >
               Generate code
             </button>
@@ -199,6 +199,7 @@ const DiscountForm = ({
           onChange={v => update('discountValue', v)}
           placeholder={formData.discountType === 'percentage' ? '20' : '50'}
           required
+          className="h-[41px]"
         />
       </div>
 

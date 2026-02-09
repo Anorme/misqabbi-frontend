@@ -147,7 +147,7 @@ const FormField = ({
             error={error}
             required={required}
             sanitizeType={sanitizeType}
-            className="rounded-md focus:ring-msq-purple-rich"
+            className={`rounded-md focus:ring-msq-purple-rich ${rest.className ?? ''}`.trim()}
             labelClassName=""
           />
         );
