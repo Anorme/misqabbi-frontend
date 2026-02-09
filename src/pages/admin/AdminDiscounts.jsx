@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useQueryClient } from '@tanstack/react-query';
 import { formatCurrency } from '../../utils/admin/tableHelpers';
@@ -43,6 +43,11 @@ const AdminDiscounts = () => {
   const [scope, setScope] = useState('');
   const [usageType, setUsageType] = useState('');
   const [expired, setExpired] = useState('');
+
+  // Reset to first page when any filter changes so we don't request a non-existent page
+  useEffect(() => {
+    setPage(1);
+  }, [q, isActive, scope, usageType, expired]);
 
   const params = { page, limit };
   if (q.trim()) params.q = q.trim();
