@@ -50,7 +50,7 @@ const AdminDashboard = () => {
             <StatCard title="Total Users" value={totalUsers} icon={Users} />
             <StatCard
               title="Total Revenue"
-              value={`GHC ${Number(totalRevenue).toFixed(2)}`}
+              value={`GHC ${(Number(totalRevenue) || 0).toFixed(2)}`}
               icon={TrendingUp}
             />
           </div>
