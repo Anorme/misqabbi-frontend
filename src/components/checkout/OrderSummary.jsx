@@ -207,8 +207,9 @@ const OrderSummary = ({ onExpressServiceChange, onDiscountChange }) => {
                   </span>
                 )}
               </div>
-              <p className="text-xs text-gray-600 font-lato mt-1">
-                Prioritize your order for faster completion with extra attention
+              <p className="text-xs text-gray-500 font-lato mt-1">
+                📦 Regular orders typically take 3-5 working days to complete. Prioritize your order
+                for faster completion with extra attention.
               </p>
               {isExpressService && (
                 <p className="text-xs font-semibold text-msq-purple-rich font-lato mt-1.5">
@@ -217,15 +218,6 @@ const OrderSummary = ({ onExpressServiceChange, onDiscountChange }) => {
               )}
             </div>
           </label>
-
-          {/* Regular Order Timeline Note */}
-          {!isExpressService && (
-            <div className="pt-2 border-t border-gray-200">
-              <p className="text-xs text-gray-500 font-lato">
-                📦 Regular orders typically take 3-5 working days to complete
-              </p>
-            </div>
-          )}
 
           {/* Discount Code */}
           <div className="pt-4 border-t border-gray-200">
@@ -325,22 +317,11 @@ const OrderSummary = ({ onExpressServiceChange, onDiscountChange }) => {
                 {formatPrice(subtotalBeforeDiscount)}
               </span>
             </div>
-            {appliedDiscount && (
-              <div className="flex justify-between items-center mt-2">
-                <span className="text-sm text-gray-600 font-lato">Discount</span>
-                <span className="text-sm font-medium text-green-600 font-lato">
-                  -{formatPrice(discountAmount)}
-                </span>
-              </div>
-            )}
             <div className="flex justify-between items-center mt-2">
               <span className="text-lg font-bebas text-gray-900">Final total</span>
               <span className="text-lg font-bebas font-bold text-msq-purple-rich">
                 {formatPrice(finalTotal)}
               </span>
-            </div>
-            <div className="text-xs text-gray-500 font-lato mt-2 text-center">
-              + Delivery charges will be added by our courier partner
             </div>
           </div>
         </div>
