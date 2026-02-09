@@ -9,10 +9,11 @@ const AdminLayout = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <SEO title="Admin" robots="noindex,nofollow" />
-      {/* Mobile sidebar overlay */}
+      {/* Mobile overlay: only over content area, tap to close sidebar */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden"
+          className="fixed inset-y-0 left-64 right-0 z-40  lg:hidden"
+          aria-hidden
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -20,10 +21,14 @@ const AdminLayout = () => {
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      {/* Main content */}
-      <div className="lg:pl-64">
+      {/* Main content: pushed right on mobile when sidebar open, smooth transition */}
+      <div
+        className={`min-w-0 transition-[margin-left] duration-300 ease-in-out lg:ml-0 lg:pl-64 ${
+          sidebarOpen ? 'ml-64' : ''
+        }`}
+      >
         {/* Mobile header */}
-        <div className="lg:hidden bg-white shadow-sm border-b border-gray-200 px-4 py-3">
+        <div className="lg:hidden bg-white shadow-sm border-b border-gray-200 px-4 py-3 flex justify-end items-center">
           <button
             onClick={() => setSidebarOpen(true)}
             className="text-gray-600 hover:text-gray-900"
@@ -39,8 +44,8 @@ const AdminLayout = () => {
           </button>
         </div>
 
-        {/* Page content */}
-        <main className="p-6">
+        {/* Page content: scrolls horizontally if needed when sidebar is open on small screens */}
+        <main className="p-4 sm:p-6 overflow-x-auto min-w-0">
           <Outlet />
         </main>
       </div>
