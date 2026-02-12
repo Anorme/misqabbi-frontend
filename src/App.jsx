@@ -26,6 +26,7 @@ const Favorites = lazy(() => import('./pages/Favorites'));
 const Register = lazy(() => import('./pages/Register'));
 const Login = lazy(() => import('./pages/Login'));
 const AuthCallback = lazy(() => import('./pages/auth/AuthCallback'));
+const Bespoke = lazy(() => import('./pages/Bespoke'));
 const CategoryPage = lazy(() => import('./pages/CategoryPage'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails'));
 const Orders = lazy(() => import('./pages/Orders'));
@@ -96,6 +97,16 @@ const App = () => {
             </MainLayout>
           }
         ></Route>
+        <Route
+          path="/bespoke"
+          element={
+            <MainLayout>
+              <Suspense fallback={<PageLoader />}>
+                <Bespoke />
+              </Suspense>
+            </MainLayout>
+          }
+        />
         <Route
           path="/about-us"
           element={
