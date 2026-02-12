@@ -190,8 +190,8 @@ const BespokeRequestForm = () => {
         payload.email = currentUser?.email ?? '';
       }
 
-      await submitBespokeRequest(payload);
-      showSuccessToast('Your bespoke request has been received. We will be in touch soon.');
+      const result = await submitBespokeRequest(payload);
+      showSuccessToast(result.message);
       setFormData({
         fullName: '',
         email: '',
