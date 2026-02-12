@@ -184,6 +184,14 @@ const MobileMenu = ({ isOpen, onClose }) => {
                     <div className="text-sm text-gray-500">Discover pieces that feel like you</div>
                   </Link>
                   <Link
+                    to="/bespoke"
+                    onClick={onClose}
+                    className="block py-3 px-3 text-msq-purple-rich hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  >
+                    <div className="font-medium">Bespoke</div>
+                    <div className="text-sm text-gray-500">Custom pieces crafted for you</div>
+                  </Link>
+                  <Link
                     to="/about-us"
                     onClick={onClose}
                     className="block py-3 px-3 text-msq-purple-rich hover:bg-gray-100 rounded-lg transition-colors duration-200"
