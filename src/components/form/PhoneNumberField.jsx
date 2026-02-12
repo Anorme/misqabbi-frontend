@@ -35,15 +35,14 @@ const PhoneNumberField = forwardRef(
             {label}
           </label>
         )}
-        <div className="flex">
-          <select
-            className="px-3 py-3 border border-gray-300 border-r-0 rounded-l-lg focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent transition-colors duration-200 font-lato cursor-pointer bg-gray-50 text-gray-900"
-            value="+233"
-            disabled
+        <div className="flex items-stretch">
+          <div
+            className="flex items-center shrink-0 px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 text-gray-500 font-lato text-sm select-none"
+            aria-hidden="true"
           >
-            <option value="+233">🇬🇭 +233</option>
-          </select>
-          <div className="relative flex-1">
+            +233
+          </div>
+          <div className="relative flex-1 min-w-0">
             <InputField
               ref={ref}
               type="tel"
