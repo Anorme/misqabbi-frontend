@@ -7,13 +7,10 @@ import {
   getCartSubtotal,
 } from '../contexts/cart/cartSelectors';
 import { clearCart } from '../contexts/cart/cartActions';
-import useAuthAction from './useAuthAction';
-
 const useCartDrawer = (isOpen, onClose) => {
   const cartState = useCartState();
   const dispatch = useCartDispatch();
   const navigate = useNavigate();
-  const { requireAuth, isModalOpen, modalContext, closeModal } = useAuthAction();
   const [isAnimating, setIsAnimating] = useState(false);
 
   // Derived state
@@ -50,11 +47,7 @@ const useCartDrawer = (isOpen, onClose) => {
 
   const handleCheckout = () => {
     onClose(); // Close the drawer first
-
-    // Check authentication
-    if (!requireAuth(() => navigate('/checkout'), 'checkout', 1000)) {
-      return; // Auth modal will be shown, don't proceed
-    }
+    navigate('/checkout');
   };
 
   return {
@@ -68,11 +61,6 @@ const useCartDrawer = (isOpen, onClose) => {
     handleBackdropClick,
     handleClearCart,
     handleCheckout,
-
-    // Auth Modal
-    isModalOpen,
-    modalContext,
-    closeModal,
   };
 };
 
