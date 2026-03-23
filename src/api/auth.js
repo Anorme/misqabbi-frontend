@@ -25,6 +25,31 @@ const fetchAuthenticatedUser = async () => {
   }
 };
 
+const createGuestSession = async () => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/auth/guest/session`,
+      {},
+      { withCredentials: true }
+    );
+    const { success, message, data } = response.data;
+
+    if (success && data?.guestId) {
+      return { guestId: data.guestId, message };
+    }
+
+    throw new Error(message || 'Failed to create guest session');
+  } catch (error) {
+    console.error('Error creating guest session:', error);
+    const msg =
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      error.message ||
+      'Failed to create guest session';
+    throw new Error(msg);
+  }
+};
+
 const logoutUser = async () => {
   try {
     const response = await axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true });
@@ -124,6 +149,7 @@ const resetPassword = async (userId, token, newPassword) => {
 export {
   signInWithGoogleRedirect,
   fetchAuthenticatedUser,
+  createGuestSession,
   logoutUser,
   updateUserProfile,
   requestPasswordReset,
