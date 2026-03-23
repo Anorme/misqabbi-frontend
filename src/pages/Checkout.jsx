@@ -6,6 +6,7 @@ import { useCartState } from '../contexts/cart/useCart';
 import { getCartItems } from '../contexts/cart/cartSelectors';
 
 import { createOrder } from '../api/orders';
+import { createGuestSession } from '../api/auth';
 import { showErrorToast } from '../utils/showToast';
 
 import CheckoutHeader from '../components/checkout/CheckoutHeader';
@@ -16,7 +17,7 @@ import SEO from '../components/SEO';
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const { currentUser } = useAuthState();
+  const { currentUser, isAuthenticated } = useAuthState();
   const cartState = useCartState();
 
   const cartItems = getCartItems(cartState);
@@ -36,6 +37,10 @@ const Checkout = () => {
     setIsLoading(true);
 
     try {
+      if (!isAuthenticated) {
+        await createGuestSession();
+      }
+
       // Prepare order data
       const orderData = {
         items: cartItems.map(item => ({
@@ -69,7 +74,12 @@ const Checkout = () => {
         throw new Error('Failed to create order');
       }
     } catch (error) {
-      showErrorToast('Failed to place order.  ' + error.response.data.message);
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        error?.message ||
+        'Unknown error';
+      showErrorToast(`Failed to place order. ${message}`);
     } finally {
       setIsLoading(false);
     }
