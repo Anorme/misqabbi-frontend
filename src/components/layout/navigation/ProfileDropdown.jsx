@@ -134,6 +134,21 @@ const ProfileDropdown = ({ className = '' }) => {
                     </div>
                   </Link>
 
+                  <Link
+                    to="/orders"
+                    onClick={closeDropdown}
+                    className="flex items-center gap-3 p-3 mx-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors duration-200 text-gray-900"
+                    role="menuitem"
+                  >
+                    <div className="p-2 bg-msq-purple-rich text-white rounded-full">
+                      <PackageCheck size={16} />
+                    </div>
+                    <div>
+                      <div className="font-medium text-sm text-msq-purple-rich">My Orders</div>
+                      <div className="text-xs text-gray-500">Order history for this browser</div>
+                    </div>
+                  </Link>
+
                   <div className="px-2">
                     <LoginButton
                       className="w-full justify-center p-3 mb-2 bg-msq-purple-rich text-white rounded-lg hover:opacity-70 transition-colors duration-200"

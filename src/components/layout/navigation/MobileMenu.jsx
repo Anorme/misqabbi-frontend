@@ -132,6 +132,21 @@ const MobileMenu = ({ isOpen, onClose }) => {
             <>
               {/* Guest User Section */}
               <div className="space-y-3">
+                <Link
+                  to="/orders"
+                  onClick={onClose}
+                  ref={firstFocusableRef}
+                  className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors duration-200 text-gray-900"
+                >
+                  <div className="p-2 bg-msq-purple-rich text-white rounded-full">
+                    <PackageCheck size={20} />
+                  </div>
+                  <div>
+                    <div className="font-medium text-msq-purple-rich">My Orders</div>
+                    <div className="text-sm text-gray-500">Order history for this browser</div>
+                  </div>
+                </Link>
+
                 <div className="text-center py-4">
                   <div className="text-gray-600 mb-4">Welcome to Misqabbi</div>
                   <div className="space-y-3">
@@ -142,7 +157,6 @@ const MobileMenu = ({ isOpen, onClose }) => {
                     <Link
                       to="/register"
                       onClick={onClose}
-                      ref={firstFocusableRef}
                       className="block w-full text-center p-3 border border-msq-purple-rich text-msq-purple-rich rounded-lg hover:bg-msq-purple-rich hover:text-white transition-colors duration-200"
                     >
                       Create Account
