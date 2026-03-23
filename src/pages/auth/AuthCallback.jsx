@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { useQueryClient } from '@tanstack/react-query';
 import { fetchAuthenticatedUser } from '../../api/auth';
 import { useAuthDispatch } from '../../contexts/auth/useAuth';
 import { setCurrentUser, setAuthRestored } from '../../contexts/auth/authActions';
@@ -8,6 +9,7 @@ import { LoadingSpinner } from '../../components/ui/LoadingSpinner.jsx';
 const AuthCallback = () => {
   const navigate = useNavigate();
   const dispatch = useAuthDispatch();
+  const queryClient = useQueryClient();
   const maxRetries = 3;
   const retryDelay = 500; // 500ms delay for Safari cookie availability
 
@@ -26,6 +28,7 @@ const AuthCallback = () => {
           // Successfully got user - set auth state
           dispatch(setCurrentUser(user));
           dispatch(setAuthRestored());
+          queryClient.invalidateQueries({ queryKey: ['orders'] });
 
           // Small delay to ensure state propagation, especially for Safari
           setTimeout(() => {
