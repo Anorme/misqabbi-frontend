@@ -21,7 +21,7 @@ const PaymentCallback = () => {
       try {
         const res = await verifyPayment(reference);
         const orderId = res?.data?.order;
-        if (!orderId) throw new Error('Order not found');
+        if (!orderId) throw new Error('Order not found after payment');
 
         // Clear cart after successful payment verification
         cartDispatch(clearCart());
