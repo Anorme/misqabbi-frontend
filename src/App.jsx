@@ -64,11 +64,9 @@ const App = () => {
           path="/orders/:id"
           element={
             <MainLayout>
-              <AuthBoundaryModal>
-                <Suspense fallback={<PageLoader />}>
-                  <OrderDetails />
-                </Suspense>
-              </AuthBoundaryModal>
+              <Suspense fallback={<PageLoader />}>
+                <OrderDetails />
+              </Suspense>
             </MainLayout>
           }
         ></Route>
@@ -76,11 +74,9 @@ const App = () => {
           path="/orders"
           element={
             <MainLayout>
-              <AuthBoundaryModal>
-                <Suspense fallback={<PageLoader />}>
-                  <Orders />
-                </Suspense>
-              </AuthBoundaryModal>
+              <Suspense fallback={<PageLoader />}>
+                <Orders />
+              </Suspense>
             </MainLayout>
           }
         ></Route>
@@ -174,11 +170,9 @@ const App = () => {
           path="/checkout"
           element={
             <MainLayout>
-              <AuthBoundaryModal>
-                <Suspense fallback={<PageLoader />}>
-                  <Checkout />
-                </Suspense>
-              </AuthBoundaryModal>
+              <Suspense fallback={<PageLoader />}>
+                <Checkout />
+              </Suspense>
             </MainLayout>
           }
         ></Route>
