@@ -24,9 +24,9 @@ const AuthActionModal = ({
         };
       case 'checkout':
         return {
-          heading: "Let's wrap this up beautifully 💫",
+          heading: 'Checkout as a guest or with an account',
           message:
-            "To complete your order and make it official, you'll need to sign in. It's quick, secure, and ensures your goodies get to you without a hitch.",
+            'You can complete your order without signing in. Create an account or log in to save your details and keep all orders in one place.',
           primaryButton: 'Log In',
           secondaryButton: 'Create Account',
           tertiaryButton: 'Maybe Later',
