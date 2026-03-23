@@ -86,11 +86,6 @@ function ProductDetails() {
   };
 
   const handleBuyNow = () => {
-    // Check authentication first
-    if (!requireAuth(() => {}, 'checkout')) {
-      return; // Auth modal will be shown, don't proceed
-    }
-
     // Validate custom size if enabled
     if (isCustomSizeEnabled && !isCustomSizeComplete(customMeasurements, product?.category)) {
       alert('Please complete all custom measurements');
