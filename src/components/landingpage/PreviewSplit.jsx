@@ -18,6 +18,7 @@ const PreviewSplit = () => {
             width={800}
             height={500}
           />
+          <div className="absolute inset-0 bg-black/42" />
           <div className="absolute bottom-5 inset-x-0 bg-opacity-30 flex items-center justify-center z-10">
             <StaggerGroup className="text-center text-white md:space-y-3" staggerChildren={0.12}>
               <StaggerItem as="h2" className="text-[38px] md:text-[64px] font-lato ">
@@ -27,7 +28,7 @@ const PreviewSplit = () => {
                 <Button
                   as={Link}
                   to="/category/dresses"
-                  variant="ghost"
+                  variant="primary"
                   className="px-4 py-2 text-[12px] md:px-5 md:py-3 md:text-[16px] font-lato"
                 >
                   SHOP DRESSES
@@ -48,6 +49,7 @@ const PreviewSplit = () => {
             width={800}
             height={500}
           />
+          <div className="absolute inset-0 bg-black/42" />
           <div className="absolute bottom-5 inset-x-0 bg-opacity-30 flex items-center justify-center z-10">
             <StaggerGroup className="text-center text-white  md:space-y-3" staggerChildren={0.12}>
               <StaggerItem as="h2" className="text-[38px] md:text-[64px] font-lato ">
@@ -57,7 +59,7 @@ const PreviewSplit = () => {
                 <Button
                   as={Link}
                   to="/category/skirts"
-                  variant="ghost"
+                  variant="primary"
                   className="px-4 py-2 text-[12px] md:px-5 md:py-3 md:text-[16px] font-lato"
                 >
                   SHOP SKIRTS

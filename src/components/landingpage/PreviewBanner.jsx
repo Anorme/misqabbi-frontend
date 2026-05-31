@@ -15,6 +15,7 @@ const PreviewBanner = () => {
         width={1200}
         height={450}
       />
+      <div className="absolute inset-0 bg-black/42" />
       <div className="relative z-10 h-full flex items-center justify-center">
         <StaggerGroup className="text-center text-white md:space-y-4" staggerChildren={0.12}>
           <StaggerItem
@@ -24,7 +25,7 @@ const PreviewBanner = () => {
             NEW ARRIVAL
           </StaggerItem>
           <StaggerItem>
-            <Button as={Link} to="/shop" variant="ghost" className="md:mt-12 px-5 py-3 font-lato">
+            <Button as={Link} to="/shop" variant="primary" className="md:mt-12 px-5 py-3 font-lato">
               SHOP COLLECTION
             </Button>
           </StaggerItem>
