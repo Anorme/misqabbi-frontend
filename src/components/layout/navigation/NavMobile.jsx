@@ -74,16 +74,20 @@ function NavMobile() {
       >
         <div className="w-full overflow-x-hidden px-1.5 sm:px-3 lg:px-8">
           {/* Top Row: Logo and Icons */}
-          <div className="flex justify-between items-center min-w-0 h-14">
-            {/* Left Section: Logo */}
-            <div className="flex items-center gap-0.5 min-w-0">
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center min-w-0 h-14">
+            {/* Left Section: Menu */}
+            <div className="justify-self-start min-w-0">
               <MenuButton onClick={handleMenuToggle} iconClassName={iconClassName} />
-              <NavLogo variant="mobile" className="-ml-1" />
             </div>
+
+            {/* Center Section: Logo */}
+            <NavLogo variant="mobile" className="justify-self-center" />
 
             {/* Right Section: Icons */}
             <NavActions
               variant="mobile"
+              className="justify-self-end"
+              isSearchOpen={isSearchOpen}
               onSearchToggle={handleSearchToggle}
               iconClassName={iconClassName}
             />
