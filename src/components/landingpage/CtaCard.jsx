@@ -4,7 +4,7 @@ const CtaCard = ({ src, alt }) => {
       <img
         src={src}
         alt={alt}
-        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+        className="w-full h-full object-cover hover:scale-110 transition-transform duration-700 ease-out"
         loading="lazy"
         decoding="async"
         width={400}
