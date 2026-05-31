@@ -15,17 +15,36 @@ const NavActions = ({
   if (variant === 'mobile') {
     return (
       <div className={`flex flex-shrink items-center justify-end gap-0 min-w-0 ${className}`}>
-        <button
-          onClick={onSearchToggle}
-          className={`p-1.5 sm:p-2 cursor-pointer transition-colors duration-200 ${iconClassName}`}
-          aria-label="Toggle search"
-          aria-expanded={isSearchOpen}
-        >
-          <Search size={18} />
-        </button>
-        <FavoritesButton size={18} showCount={true} className={`p-1.5 sm:p-2 ${iconClassName}`} />
-        <CartButton size={18} showCount={true} className={`p-1.5 sm:p-2 ${iconClassName}`} />
-        {showProfile && <ProfileDropdown className={iconClassName} compact />}
+        {inlineSearch && (
+          <div
+            className={`overflow-hidden transition-all duration-300 ease-in-out ${
+              isSearchOpen
+                ? 'w-32 translate-x-0 opacity-100 sm:w-48 md:w-64'
+                : 'w-0 translate-x-4 opacity-0 pointer-events-none'
+            }`}
+          >
+            {isSearchOpen && <div className="min-w-32 sm:min-w-48 md:min-w-64">{inlineSearch}</div>}
+          </div>
+        )}
+        {!isSearchOpen && (
+          <>
+            <button
+              onClick={onSearchToggle}
+              className={`p-1.5 sm:p-2 cursor-pointer transition-colors duration-200 ${iconClassName}`}
+              aria-label="Toggle search"
+              aria-expanded={isSearchOpen}
+            >
+              <Search size={18} />
+            </button>
+            <FavoritesButton
+              size={18}
+              showCount={true}
+              className={`p-1.5 sm:p-2 ${iconClassName}`}
+            />
+            <CartButton size={18} showCount={true} className={`p-1.5 sm:p-2 ${iconClassName}`} />
+            {showProfile && <ProfileDropdown className={iconClassName} compact />}
+          </>
+        )}
       </div>
     );
   }
