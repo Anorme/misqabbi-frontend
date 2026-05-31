@@ -31,7 +31,7 @@ const PreviewPromo = () => {
               variant="primarySlideWhite"
               className="md:mt-12 px-5 py-3 font-lato"
             >
-              START YOUR REQUEST
+              SHOP BESPOKE
             </Button>
           </StaggerItem>
         </StaggerGroup>
