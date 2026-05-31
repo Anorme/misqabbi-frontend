@@ -196,7 +196,10 @@ const AboutUs = () => {
           >
             What We Stand For
           </ViewportReveal>
-          <StaggerGroup className="grid md:grid-cols-3 gap-6 md:gap-8" staggerChildren={0.1}>
+          <StaggerGroup
+            className="grid grid-cols-2 gap-6 md:gap-8 lg:grid-cols-3"
+            staggerChildren={0.1}
+          >
             {/* Value 1: Made-to-Measure */}
             <StaggerItem variants={fadeUp} className="p-2 md:p-4">
               <div className="flex flex-col items-center text-center mb-4">
