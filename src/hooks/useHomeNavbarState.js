@@ -1,13 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router';
 
+const TRANSPARENT_NAV_ROUTES = new Set(['/', '/about-us']);
+
 const useHomeNavbarState = (threshold = 24) => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
-  const [isSolid, setIsSolid] = useState(!isHomePage);
+  const usesTransparentHeroNav = TRANSPARENT_NAV_ROUTES.has(location.pathname);
+  const [isSolid, setIsSolid] = useState(!usesTransparentHeroNav);
 
   useEffect(() => {
-    if (!isHomePage) {
+    if (!usesTransparentHeroNav) {
       setIsSolid(true);
       return;
     }
@@ -22,14 +25,14 @@ const useHomeNavbarState = (threshold = 24) => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isHomePage, threshold]);
+  }, [usesTransparentHeroNav, threshold]);
 
   const navSurfaceClass = useMemo(
     () => (isSolid ? 'bg-white shadow-sm border-none' : 'bg-transparent shadow-none'),
     [isSolid]
   );
 
-  return { isHomePage, isSolid, navSurfaceClass };
+  return { isHomePage, usesTransparentHeroNav, isSolid, navSurfaceClass };
 };
 
 export default useHomeNavbarState;

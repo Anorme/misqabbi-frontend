@@ -14,7 +14,7 @@ function NavMobile() {
   const { closeModal, isModalOpen, modalContext } = useAuthAction();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isHomePage, navSurfaceClass } = useHomeNavbarState();
+  const { usesTransparentHeroNav, navSurfaceClass } = useHomeNavbarState();
   const iconClassName = 'text-msq-gold hover:text-msq-gold-deep';
 
   // Handle search toggle
@@ -101,7 +101,7 @@ function NavMobile() {
           `}
           >
             <div className="pt-4 pb-2">
-              {isHomePage ? (
+              {usesTransparentHeroNav ? (
                 <LandingSearchBar
                   variant="mobile"
                   onClose={handleSearchClose}
