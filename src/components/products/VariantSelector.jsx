@@ -23,6 +23,11 @@ function VariantSelector({ baseProduct, variants = [], selectedVariant, onSelect
 
   // Check if base product is selected (selectedVariant is null)
   const isBaseSelected = selectedVariant === null;
+  const swatchButtonBaseClasses =
+    'relative w-12 h-12 sm:w-14 sm:h-14 rounded-none overflow-hidden border-2 bg-white transition-all duration-200';
+  const selectedSwatchClasses = 'border-msq-gold-light ring-2 ring-msq-gold-light ring-offset-2';
+  const unselectedSwatchClasses =
+    'border-gray-300 hover:border-msq-gold-light hover:-translate-y-0.5';
 
   return (
     <div className="block w-full">
@@ -32,10 +37,8 @@ function VariantSelector({ baseProduct, variants = [], selectedVariant, onSelect
         {hasBaseSwatch && (
           <button
             onClick={handleBaseProductClick}
-            className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 transition-all duration-200 ${
-              isBaseSelected
-                ? 'border-msq-gold-light ring-2 ring-msq-gold-light ring-offset-2 scale-110'
-                : 'border-gray-300 hover:border-msq-gold-light hover:scale-105'
+            className={`${swatchButtonBaseClasses} ${
+              isBaseSelected ? selectedSwatchClasses : unselectedSwatchClasses
             }`}
             aria-label="Select base product"
             title="Base product"
@@ -57,10 +60,8 @@ function VariantSelector({ baseProduct, variants = [], selectedVariant, onSelect
             <button
               key={variant._id}
               onClick={() => handleVariantClick(variant)}
-              className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 transition-all duration-200 ${
-                isSelected
-                  ? 'border-msq-gold-light ring-2 ring-msq-gold-light ring-offset-2 scale-110'
-                  : 'border-gray-300 hover:border-msq-gold-light hover:scale-105'
+              className={`${swatchButtonBaseClasses} ${
+                isSelected ? selectedSwatchClasses : unselectedSwatchClasses
               }`}
               aria-label={`Select ${variant.variantType} variant`}
               title={`${variant.variantType} variant`}
