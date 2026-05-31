@@ -50,7 +50,7 @@ const SearchBar = ({
 
   if (variant === 'mobile') {
     return (
-      <div className={`relative ${className}`}>
+      <div className={`relative min-w-0 ${className}`}>
         <input
           type="text"
           placeholder={placeholder}
