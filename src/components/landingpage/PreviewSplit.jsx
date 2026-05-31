@@ -28,7 +28,7 @@ const PreviewSplit = () => {
                 <Button
                   as={Link}
                   to="/category/dresses"
-                  variant="primary"
+                  variant="primarySlideWhite"
                   className="px-4 py-2 text-[12px] md:px-5 md:py-3 md:text-[16px] font-lato"
                 >
                   SHOP DRESSES
@@ -59,7 +59,7 @@ const PreviewSplit = () => {
                 <Button
                   as={Link}
                   to="/category/skirts"
-                  variant="primary"
+                  variant="primarySlideWhite"
                   className="px-4 py-2 text-[12px] md:px-5 md:py-3 md:text-[16px] font-lato"
                 >
                   SHOP SKIRTS
