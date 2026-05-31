@@ -5,6 +5,7 @@ import { getPrimaryImageUrl } from '../../utils/productImages';
 import CartItemControls from './CartItemControls';
 import SizeSelectorModal from './SizeSelectorModal';
 import useCartItem from '../../hooks/useCartItem';
+import { formatCedis } from '../../utils/formatCurrency';
 
 const CartItem = ({ item, onClose }) => {
   const navigate = useNavigate();
@@ -61,7 +62,7 @@ const CartItem = ({ item, onClose }) => {
         </div>
 
         <p className="text-sm font-lato font-semibold text-msq-purple-rich">
-          GHC {item.price?.toFixed(2) || '0.00'}
+          {formatCedis(item.price)}
         </p>
       </div>
 

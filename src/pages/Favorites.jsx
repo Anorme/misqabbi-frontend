@@ -5,6 +5,7 @@ import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 import { getPrimaryImageUrl } from '../utils/productImages';
 import useAuthAction from '../hooks/useAuthAction';
 import { useEffect } from 'react';
+import { formatCedis } from '../utils/formatCurrency';
 
 const Favorites = () => {
   const { isAuthenticated, isAuthLoading } = useAuthState();
@@ -103,7 +104,7 @@ const Favorites = () => {
                 <div className="p-4">
                   <h3 className="text-lg font-medium text-gray-900 mb-2">{item.name}</h3>
                   <p className="text-xl font-semibold text-msq-purple-rich">
-                    GHC {item.price?.toFixed(2) || '0.00'}
+                    {formatCedis(item.price)}
                   </p>
                 </div>
               </div>
