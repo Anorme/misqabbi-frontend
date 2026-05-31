@@ -60,16 +60,20 @@ const NavTablet = () => {
       >
         <div className="max-w-full overflow-x-hidden px-4 sm:px-6 lg:px-8">
           {/* Top Row: Logo, Nav Links, and Icons */}
-          <div className="flex justify-between items-center h-14">
-            {/* Left Section: Logo and Nav Links */}
-            <div className="flex items-center gap-0">
-              <NavLogo variant="desktop" />
-              <NavLinks tone={linkTone} />
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center h-14">
+            {/* Left Section: Nav Links */}
+            <div className="justify-self-start min-w-0">
+              <NavLinks tone={linkTone} className="min-w-0" />
             </div>
+
+            {/* Center Section: Logo */}
+            <NavLogo variant="desktop" className="justify-self-center" />
 
             {/* Right Section: Icons */}
             <NavActions
               variant="mobile"
+              className="justify-self-end"
+              isSearchOpen={isSearchOpen}
               onSearchToggle={handleSearchToggle}
               iconClassName={iconClassName}
             />
