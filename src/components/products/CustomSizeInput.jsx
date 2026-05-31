@@ -12,6 +12,10 @@ const CustomSizeInput = ({
   onMeasurementsChange,
   onToggleCustomSize,
   isCustomSizeEnabled = false,
+  compact = false,
+  buttonClassName = '',
+  panelClassName = '',
+  inputClassName = '',
 }) => {
   const [localMeasurements, setLocalMeasurements] = useState({});
 
@@ -54,7 +58,13 @@ const CustomSizeInput = ({
   return (
     <div className="flex flex-col gap-0">
       <div className="flex items-baseline gap-2 mb-2">
-        <h2 className="text-base sm:text-lg lg:text-xl p-0 text-gray-900">Custom Size</h2>
+        <h2
+          className={`p-0 text-gray-900 ${
+            compact ? 'text-sm sm:text-base font-medium' : 'text-base sm:text-lg lg:text-xl'
+          }`}
+        >
+          Custom Size
+        </h2>
         <span className="text-xs sm:text-sm top-2 text-gray-900">
           <span className="mr-1">(</span>
           Inches
@@ -74,12 +84,14 @@ const CustomSizeInput = ({
         <button
           type="button"
           onClick={() => onToggleCustomSize(true)}
-          className="w-full py-2 bg-gray-100 hover:bg-gray-200 text-msq-purple-rich rounded-md border-2 border-dashed border-gray-300 hover:border-gray-400 transition-colors duration-200 text-sm sm:text-base font-medium cursor-pointer"
+          className={`w-full py-2 bg-gray-100 hover:bg-gray-200 text-msq-purple-rich rounded-none border-2 border-dashed border-gray-300 hover:border-gray-400 transition-colors duration-200 text-sm sm:text-base font-medium cursor-pointer ${buttonClassName}`}
         >
           Use Custom Size
         </button>
       ) : (
-        <div className="border border-solid p-3 sm:p-4 border-msq-gold-light rounded-md bg-gray-50">
+        <div
+          className={`border border-solid p-3 sm:p-4 border-msq-gold-light rounded-none bg-gray-50 ${panelClassName}`}
+        >
           {/* Measurement Fields */}
           <div className="grid grid-cols-3 gap-2 sm:gap-3">
             {config.fields.map(field => (
@@ -89,7 +101,7 @@ const CustomSizeInput = ({
                   type="number"
                   value={localMeasurements[field.key] || ''}
                   onChange={e => handleInputChange(field.key, e.target.value)}
-                  className="w-full px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-md text-xs sm:text-sm text-gray-900 focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent"
+                  className={`w-full px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-none text-xs sm:text-sm text-gray-900 focus:ring-2 focus:ring-msq-purple-rich focus:border-transparent ${inputClassName}`}
                   placeholder={`${field.label}`}
                   min={field.min}
                   max={field.max}
