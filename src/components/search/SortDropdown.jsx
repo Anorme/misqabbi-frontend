@@ -44,9 +44,9 @@ const SortDropdown = ({
 
   const baseButtonClasses =
     'flex items-center text-msq-purple-deep hover:text-msq-purple-rich font-medium transition-colors duration-200 cursor-pointer';
-  const baseDropdownClasses = 'z-40 bg-white border border-[#949396] shadow-lg rounded-md py-1';
+  const baseDropdownClasses = 'z-40 bg-white shadow-xl shadow-black/10 rounded-md py-1';
 
-  const dropdownClasses = `${baseDropdownClasses} absolute left-0 mt-1 min-w-full`;
+  const dropdownClasses = `${baseDropdownClasses} absolute right-0 mt-1 grid min-w-max max-w-[calc(100vw-2rem)]`;
 
   return (
     <div className={`relative ${className}`} ref={dropdownRef}>
@@ -78,7 +78,7 @@ const SortDropdown = ({
             <button
               key={option.value}
               onClick={() => handleSortClick(option.value)}
-              className={`w-full text-left px-4 py-2 text-sm transition-colors duration-200 cursor-pointer ${
+              className={`w-full whitespace-nowrap text-left px-6 py-2 text-sm transition-colors duration-200 cursor-pointer ${
                 selectedSort === option.value
                   ? 'bg-msq-gold-light/20 text-msq-purple-deep font-medium'
                   : 'text-msq-purple-deep hover:bg-msq-gold-light/10 hover:text-msq-purple-rich'
