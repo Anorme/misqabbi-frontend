@@ -8,7 +8,7 @@ function TrendingItemCard({ name, image, price, url }) {
           <img
             src={image}
             alt={name}
-            className="w-full h-full object-cover rounded-none"
+            className="w-full h-full object-cover rounded-none hover:scale-110 transition-transform duration-700 ease-out"
             loading="lazy"
             decoding="async"
             width={600}
