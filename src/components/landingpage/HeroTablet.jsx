@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { LoadStagger, StaggerItem } from '../ui/motion/MotionWrappers';
 
 const HeroTablet = () => (
   <section className="relative w-full h-[600px] md:h-[700px] max-w-screen-6xl mx-auto overflow-hidden">
@@ -13,21 +14,26 @@ const HeroTablet = () => (
     <div className="absolute inset-0 bg-black/44" />
     {/* Content container */}
     <div className="relative z-10 h-full px-6 sm:px-8 flex items-center justify-center">
-      <div className="max-w-2xl text-center">
-        <h1 className="text-[40px] sm:text-[48px] font-bebas text-white leading-tight">
+      <LoadStagger className="max-w-2xl text-center">
+        <StaggerItem
+          as="h1"
+          className="text-[40px] sm:text-[48px] font-bebas text-white leading-tight"
+        >
           STEP INTO TIMELESS ELEGANCE.
-        </h1>
-        <p className="mt-6 text-base sm:text-lg leading-relaxed text-white/90">
+        </StaggerItem>
+        <StaggerItem as="p" className="mt-6 text-base sm:text-lg leading-relaxed text-white/90">
           Step into a world of elegance and charm, where every piece is designed to celebrate your
           unique beauty and bring your dream wardrobe to life.
-        </p>
-        <Link
-          to="/shop"
-          className="mt-8 inline-block bg-msq-purple-rich hover:opacity-90 text-white text-xl sm:text-2xl font-bebas px-6 py-3 sm:px-8 sm:py-4 rounded-[6px] transition"
-        >
-          SHOP NOW
-        </Link>
-      </div>
+        </StaggerItem>
+        <StaggerItem>
+          <Link
+            to="/shop"
+            className="mt-8 inline-block bg-msq-purple-rich hover:opacity-90 text-white text-xl sm:text-2xl font-bebas px-6 py-3 sm:px-8 sm:py-4 rounded-[6px] transition"
+          >
+            SHOP NOW
+          </Link>
+        </StaggerItem>
+      </LoadStagger>
     </div>
   </section>
 );
