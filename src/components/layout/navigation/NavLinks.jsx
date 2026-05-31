@@ -1,7 +1,8 @@
 import { Link, useLocation } from 'react-router';
 
-const NavLinks = ({ className = '' }) => {
+const NavLinks = ({ className = '', tone = 'solid' }) => {
   const location = useLocation();
+  const isTransparentTone = tone === 'transparent';
 
   const links = [
     { to: '/shop', label: 'Shop' },
@@ -14,8 +15,12 @@ const NavLinks = ({ className = '' }) => {
     const isActive = location.pathname === pathname;
     return `px-1 py-2 text-sm font-medium transition-colors duration-200 ${
       isActive
-        ? 'text-msq-purple-rich border-b-2 border-msq-purple-rich'
-        : 'text-msq-purple-deep hover:text-msq-purple-rich'
+        ? isTransparentTone
+          ? 'text-white border-b-2 border-white'
+          : 'text-msq-purple-rich border-b-2 border-msq-purple-rich'
+        : isTransparentTone
+          ? 'text-white/90 hover:text-white'
+          : 'text-msq-purple-deep hover:text-msq-purple-rich'
     }`;
   };
 
