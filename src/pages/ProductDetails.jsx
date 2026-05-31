@@ -13,6 +13,7 @@ const QuantitySelector = lazy(() => import('../components/products/QuantitySelec
 const VariantSelector = lazy(() => import('../components/products/VariantSelector'));
 import ProductSection from '../components/products/ProductSection';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
+import Button from '../components/ui/Button';
 import ProductCard from '../components/products/ProductCard';
 import AuthActionModal from '../components/auth/AuthActionModal';
 import useAuthAction from '../hooks/useAuthAction';
@@ -248,24 +249,24 @@ function ProductDetails() {
 
             {/* Add to Cart CTA */}
             <ProductSection>
-              <div className="flex justify-between">
-                <button
-                  className="bg-msq-purple-rich text-xs sm:text-sm md:text-base lg:text-lg text-white rounded-md w-full cursor-pointer py-2 sm:py-3 hover:bg-msq-purple transition-colors duration-200"
-                  onClick={handleAddToCart}
-                >
-                  Add to Cart
-                </button>
-              </div>
+              <Button
+                variant="primarySlideTransparent"
+                className="w-full px-8 py-3 text-[24px] font-bebas hover:text-msq-purple-rich sm:px-8 sm:py-4 sm:text-2xl lg:px-10 lg:py-4 lg:text-[30px]"
+                onClick={handleAddToCart}
+              >
+                Add to Cart
+              </Button>
             </ProductSection>
 
             {/* Buy Now Button*/}
             <ProductSection>
-              <button
-                className="bg-msq-purple-rich font-bold text-sm sm:text-base md:text-lg lg:text-xl text-white rounded-md w-full cursor-pointer py-4 hover:bg-msq-purple transition-colors duration-200"
+              <Button
+                variant="primarySlideTransparent"
+                className="w-full px-8 py-3 text-[24px] font-bebas hover:text-msq-purple-rich sm:px-8 sm:py-4 sm:text-2xl lg:px-10 lg:py-4 lg:text-[30px]"
                 onClick={handleBuyNow}
               >
                 Buy Now
-              </button>
+              </Button>
             </ProductSection>
 
             {/* Product Details */}
