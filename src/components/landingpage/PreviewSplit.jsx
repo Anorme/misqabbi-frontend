@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 
 import MsqButton from './MsqButton';
+import { StaggerGroup, StaggerItem } from '../ui/motion/MotionWrappers';
 
 const PreviewSplit = () => {
   return (
@@ -18,12 +19,16 @@ const PreviewSplit = () => {
             height={500}
           />
           <div className="absolute bottom-5 inset-x-0 bg-opacity-30 flex items-center justify-center z-10">
-            <div className="text-center text-white md:space-y-3">
-              <h2 className="text-[38px] md:text-[64px] font-lato ">DRESSES</h2>
-              <Link to="/category/dresses">
-                <MsqButton label="SHOP DRESSES" variant="purple-rich" />
-              </Link>
-            </div>
+            <StaggerGroup className="text-center text-white md:space-y-3" staggerChildren={0.12}>
+              <StaggerItem as="h2" className="text-[38px] md:text-[64px] font-lato ">
+                DRESSES
+              </StaggerItem>
+              <StaggerItem>
+                <Link to="/category/dresses">
+                  <MsqButton label="SHOP DRESSES" variant="purple-rich" />
+                </Link>
+              </StaggerItem>
+            </StaggerGroup>
           </div>
         </div>
 
@@ -39,12 +44,16 @@ const PreviewSplit = () => {
             height={500}
           />
           <div className="absolute bottom-5 inset-x-0 bg-opacity-30 flex items-center justify-center z-10">
-            <div className="text-center text-white  md:space-y-3">
-              <h2 className="text-[38px] md:text-[64px] font-lato ">SKIRTS</h2>
-              <Link to="/category/skirts">
-                <MsqButton label="SHOP SKIRTS" variant="purple-rich" />
-              </Link>
-            </div>
+            <StaggerGroup className="text-center text-white  md:space-y-3" staggerChildren={0.12}>
+              <StaggerItem as="h2" className="text-[38px] md:text-[64px] font-lato ">
+                SKIRTS
+              </StaggerItem>
+              <StaggerItem>
+                <Link to="/category/skirts">
+                  <MsqButton label="SHOP SKIRTS" variant="purple-rich" />
+                </Link>
+              </StaggerItem>
+            </StaggerGroup>
           </div>
         </div>
       </div>

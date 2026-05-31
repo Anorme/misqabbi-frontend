@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 
 import MsqButton from './MsqButton';
+import { StaggerGroup, StaggerItem } from '../ui/motion/MotionWrappers';
 
 const PreviewBanner = () => {
   return (
@@ -15,14 +16,19 @@ const PreviewBanner = () => {
         height={450}
       />
       <div className="relative z-10 h-full flex items-center justify-center">
-        <div className="text-center text-white md:space-y-4">
-          <h1 className="text-[40px] md:text-[128px] font-lato leading-[71px] w-[350px] md:w-[854px]">
+        <StaggerGroup className="text-center text-white md:space-y-4" staggerChildren={0.12}>
+          <StaggerItem
+            as="h1"
+            className="text-[40px] md:text-[128px] font-lato leading-[71px] w-[350px] md:w-[854px]"
+          >
             NEW ARRIVAL
-          </h1>
-          <Link to="/shop">
-            <MsqButton label="SHOP COLLECTION" variant="purple-rich" className=" md:mt-12  " />
-          </Link>
-        </div>
+          </StaggerItem>
+          <StaggerItem>
+            <Link to="/shop">
+              <MsqButton label="SHOP COLLECTION" variant="purple-rich" className=" md:mt-12  " />
+            </Link>
+          </StaggerItem>
+        </StaggerGroup>
       </div>
     </div>
   );
