@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router';
 import useAuthAction from '../../../hooks/useAuthAction';
+import useHomeNavbarState from '../../../hooks/useHomeNavbarState';
 
 import AuthActionModal from '../../auth/AuthActionModal.jsx';
 import ConnectedSearchBar from '../../search/ConnectedSearchBar.jsx';
@@ -14,8 +14,8 @@ function NavMobile() {
   const { closeModal, isModalOpen, modalContext } = useAuthAction();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  const { isHomePage, navSurfaceClass } = useHomeNavbarState();
+  const iconClassName = 'text-msq-gold hover:text-msq-gold-deep';
 
   // Handle search toggle
   const handleSearchToggle = () => {
@@ -69,18 +69,24 @@ function NavMobile() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-40 bg-white shadow-sm pt-2">
-        <div className="max-w-screen-2xl px-2 lg:px-8">
+      <div
+        className={`fixed top-0 left-0 right-0 z-40 max-w-[100vw]  transition-colors duration-300 ${navSurfaceClass}`}
+      >
+        <div className="w-full overflow-x-hidden px-1.5 sm:px-3 lg:px-8">
           {/* Top Row: Logo and Icons */}
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center min-w-0 h-14">
             {/* Left Section: Logo */}
-            <div className="flex items-center space-x-2">
-              <MenuButton onClick={handleMenuToggle} />
-              <NavLogo variant="mobile" className="-ml-2" />
+            <div className="flex items-center gap-0.5 min-w-0">
+              <MenuButton onClick={handleMenuToggle} iconClassName={iconClassName} />
+              <NavLogo variant="mobile" className="-ml-1" />
             </div>
 
             {/* Right Section: Icons */}
-            <NavActions variant="mobile" onSearchToggle={handleSearchToggle} />
+            <NavActions
+              variant="mobile"
+              onSearchToggle={handleSearchToggle}
+              iconClassName={iconClassName}
+            />
           </div>
 
           {/* Search Bar - Animated */}

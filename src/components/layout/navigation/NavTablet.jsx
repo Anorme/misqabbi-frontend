@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router';
 import useAuthAction from '../../../hooks/useAuthAction';
+import useHomeNavbarState from '../../../hooks/useHomeNavbarState';
 
 import AuthActionModal from '../../auth/AuthActionModal.jsx';
 import ConnectedSearchBar from '../../search/ConnectedSearchBar.jsx';
@@ -11,9 +11,10 @@ import NavActions from './NavActions.jsx';
 
 const NavTablet = () => {
   const { closeModal, isModalOpen, modalContext } = useAuthAction();
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  const { isHomePage, isSolid, navSurfaceClass } = useHomeNavbarState();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const iconClassName = 'text-msq-gold hover:text-msq-gold-deep';
+  const linkTone = isHomePage && !isSolid ? 'transparent' : 'solid';
 
   // Handle search toggle
   const handleSearchToggle = () => {
@@ -54,18 +55,24 @@ const NavTablet = () => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-40 bg-white shadow-sm pt-2">
-        <div className="max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+      <div
+        className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${navSurfaceClass}`}
+      >
+        <div className="max-w-full overflow-x-hidden px-4 sm:px-6 lg:px-8">
           {/* Top Row: Logo, Nav Links, and Icons */}
           <div className="flex justify-between items-center h-14">
             {/* Left Section: Logo and Nav Links */}
             <div className="flex items-center gap-0">
               <NavLogo variant="desktop" />
-              <NavLinks />
+              <NavLinks tone={linkTone} />
             </div>
 
             {/* Right Section: Icons */}
-            <NavActions variant="mobile" onSearchToggle={handleSearchToggle} />
+            <NavActions
+              variant="mobile"
+              onSearchToggle={handleSearchToggle}
+              iconClassName={iconClassName}
+            />
           </div>
 
           {/* Search Bar - Animated (Mobile Style) */}
