@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router';
 import useAuthAction from '../../../hooks/useAuthAction';
+import useHomeNavbarState from '../../../hooks/useHomeNavbarState';
 
 import AuthActionModal from '../../auth/AuthActionModal.jsx';
 import ConnectedSearchBar from '../../search/ConnectedSearchBar.jsx';
@@ -11,9 +11,10 @@ import NavActions from './NavActions.jsx';
 
 const NavBar = () => {
   const { closeModal, isModalOpen, modalContext } = useAuthAction();
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  const { isHomePage, isSolid, navSurfaceClass } = useHomeNavbarState();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const iconClassName = 'text-msq-gold hover:text-msq-gold-deep';
+  const linkTone = isHomePage && !isSolid ? 'transparent' : 'solid';
 
   // Handle search toggle
   const handleSearchToggle = () => {
@@ -53,13 +54,15 @@ const NavBar = () => {
   }, [isSearchOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 bg-white shadow-sm">
-      <div className="w-full px-4 sm:px-6 lg:px-8 pt-2">
+    <header
+      className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${navSurfaceClass}`}
+    >
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 md:h-16">
           {/* Left: Logo and Navigation Links */}
           <div className="flex items-center gap-6">
             <NavLogo variant="desktop" />
-            <NavLinks />
+            <NavLinks tone={linkTone} />
           </div>
 
           {/* Center: Search Bar - Toggleable */}
@@ -92,7 +95,11 @@ const NavBar = () => {
           </div>
 
           {/* Right: Actions */}
-          <NavActions variant="desktop" onSearchToggle={handleSearchToggle} />
+          <NavActions
+            variant="desktop"
+            onSearchToggle={handleSearchToggle}
+            iconClassName={iconClassName}
+          />
         </div>
       </div>
 
