@@ -1,4 +1,6 @@
 import TrendingItemCard from './TrendingItemCard';
+import { StaggerGroup, StaggerItem } from '../ui/motion/MotionWrappers';
+import { fadeUp, slideFromLeft } from '../ui/motion/motionPresets';
 
 const items = [
   {
@@ -34,19 +36,35 @@ const items = [
 function TrendingCollection() {
   return (
     <section className="w-full place-content-center">
-      <div className="flex flex-col w-full text-left border-l-msq-purple-rich border-l-3 pl-2 my-4">
-        <h2 className="text-msq-purple-deep font-lato  text-[24px] md:text-[32px] md:mb-2 ">
+      <StaggerGroup
+        className="flex flex-col w-full text-left border-l-msq-purple-rich border-l-3 pl-2 my-4 overflow-hidden"
+        staggerChildren={0.1}
+      >
+        <StaggerItem
+          as="h2"
+          variants={slideFromLeft}
+          className="text-msq-purple-deep font-lato  text-[24px] md:text-[32px] md:mb-2 "
+        >
           Trending this Season
-        </h2>
-        <p className="text-msq-purple-light font-lato text-[12px] md:text-[20px]">
+        </StaggerItem>
+        <StaggerItem
+          as="p"
+          variants={slideFromLeft}
+          className="text-msq-purple-light font-lato text-[12px] md:text-[20px]"
+        >
           Shine bright with this week's must-have trend selections.
-        </p>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-6">
+        </StaggerItem>
+      </StaggerGroup>
+      <StaggerGroup
+        className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-6"
+        staggerChildren={0.1}
+      >
         {items.map(item => (
-          <TrendingItemCard key={item.name} {...item} url={item.url} />
+          <StaggerItem key={item.name} variants={fadeUp}>
+            <TrendingItemCard {...item} url={item.url} />
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerGroup>
     </section>
   );
 }
