@@ -76,6 +76,7 @@ const NavTablet = () => {
               isSearchOpen={isSearchOpen}
               onSearchToggle={handleSearchToggle}
               iconClassName={iconClassName}
+              showProfile
             />
           </div>
 
