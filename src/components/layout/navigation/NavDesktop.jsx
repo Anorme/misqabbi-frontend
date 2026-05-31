@@ -11,10 +11,10 @@ import NavActions from './NavActions.jsx';
 
 const NavBar = () => {
   const { closeModal, isModalOpen, modalContext } = useAuthAction();
-  const { isHomePage, isSolid, navSurfaceClass } = useHomeNavbarState();
+  const { usesTransparentHeroNav, isSolid, navSurfaceClass } = useHomeNavbarState();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const iconClassName = 'text-msq-gold hover:text-msq-gold-deep';
-  const linkTone = isHomePage && !isSolid ? 'transparent' : 'solid';
+  const linkTone = usesTransparentHeroNav && !isSolid ? 'transparent' : 'solid';
 
   // Handle search toggle
   const handleSearchToggle = () => {
@@ -31,7 +31,7 @@ const NavBar = () => {
     setIsSearchOpen(false);
   };
 
-  const inlineSearch = isHomePage ? (
+  const inlineSearch = usesTransparentHeroNav ? (
     <LandingSearchBar
       variant="desktop"
       placeholder="Search"

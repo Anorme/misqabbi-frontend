@@ -5,12 +5,12 @@ import { useLocation } from 'react-router';
 
 const MainLayout = ({ children }) => {
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  const hasTransparentHeroNav = location.pathname === '/' || location.pathname === '/about-us';
 
   return (
     <div className="flex flex-col min-h-screen justify-between">
       <NavBar />
-      <div className={isHomePage ? '' : 'pt-18 md:pt-16'}>{children}</div>
+      <div className={hasTransparentHeroNav ? '' : 'pt-18 md:pt-16'}>{children}</div>
       <Footer />
       <ScrollToTopButton />
     </div>
