@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import useAuthAction from '../../../hooks/useAuthAction';
 import useHomeNavbarState from '../../../hooks/useHomeNavbarState';
 
@@ -9,7 +9,9 @@ import NavLogo from './NavLogo.jsx';
 import NavLinks from './NavLinks.jsx';
 import NavActions from './NavActions.jsx';
 
-const NavBar = () => {
+const CategoryNavigationDesktop = lazy(() => import('./CategoryNavigationDesktop.jsx'));
+
+const NavBar = ({ showCategoryNavigation = false }) => {
   const { closeModal, isModalOpen, modalContext } = useAuthAction();
   const { usesTransparentHeroNav, isSolid, navSurfaceClass } = useHomeNavbarState();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -100,6 +102,11 @@ const NavBar = () => {
           />
         </div>
       </div>
+      {showCategoryNavigation && (
+        <Suspense fallback={null}>
+          <CategoryNavigationDesktop />
+        </Suspense>
+      )}
 
       {/* Auth Action Modal */}
       <AuthActionModal isOpen={isModalOpen} onClose={closeModal} context={modalContext} />

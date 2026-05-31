@@ -84,7 +84,7 @@ const App = () => {
         <Route
           path="/category/:category"
           element={
-            <MainLayout>
+            <MainLayout showCategoryNavigation>
               <CategoryPage />
             </MainLayout>
           }
@@ -92,7 +92,7 @@ const App = () => {
         <Route
           path="/shop"
           element={
-            <MainLayout>
+            <MainLayout showCategoryNavigation>
               <ProductList />
             </MainLayout>
           }

@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import useAuthAction from '../../../hooks/useAuthAction';
 import useHomeNavbarState from '../../../hooks/useHomeNavbarState';
+import useMediaQuery from '../../../hooks/useMediaQuery';
 
 import AuthActionModal from '../../auth/AuthActionModal.jsx';
 import ConnectedSearchBar from '../../search/ConnectedSearchBar.jsx';
@@ -10,11 +11,15 @@ import NavActions from './NavActions.jsx';
 import MenuButton from './MenuButton.jsx';
 import MobileMenu from './MobileMenu.jsx';
 
-function NavMobile() {
+const CategoryNavigationMobile = lazy(() => import('./CategoryNavigationMobile.jsx'));
+const CategoryNavigationTablet = lazy(() => import('./CategoryNavigationTablet.jsx'));
+
+function NavMobile({ showCategoryNavigation = false }) {
   const { closeModal, isModalOpen, modalContext } = useAuthAction();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { usesTransparentHeroNav, navSurfaceClass } = useHomeNavbarState();
+  const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1023px)');
   const iconClassName = 'text-msq-gold hover:text-msq-gold-deep';
 
   // Handle search toggle
@@ -121,6 +126,11 @@ function NavMobile() {
             </div>
           </div>
         </div>
+        {showCategoryNavigation && (
+          <Suspense fallback={null}>
+            {isTablet ? <CategoryNavigationTablet /> : <CategoryNavigationMobile />}
+          </Suspense>
+        )}
       </div>
 
       {/* Auth Action Modal */}

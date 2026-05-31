@@ -5,7 +5,6 @@ import Pagination from '../components/ui/Pagination.jsx';
 import ProductGrid from '../components/products/ProductGrid.jsx';
 import ProductCard from '../components/products/ProductCard.jsx';
 import SEO from '../components/SEO';
-import CategoryNavigation from '../components/layout/navigation/CategoryNavigation.jsx';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 
 import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog.js';
@@ -89,10 +88,9 @@ const CategoryPage = () => {
         description={categoryDescription}
         canonicalPath={`/category/${category.value}`}
       />
-      <CategoryNavigation />
-      <main className="w-full mt-6 lg:mt-12 px-4 sm:px-6 lg:px-8 py-8">
+      <main className="w-full px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
         <div className="mb-6">
-          <h1 className="text-2xl font-bebas text-msq-purple-rich"> {category.label}</h1>
+          <h1 className="text-2xl font-bebas text-msq-purple-rich">{category.label}</h1>
           <p className="text-gray-600 mt-2">{categoryDescription}</p>
         </div>
 
