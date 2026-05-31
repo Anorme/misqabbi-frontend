@@ -3,10 +3,8 @@ import { addToCart } from '../contexts/cart/cartActions';
 import { useCartDispatch } from '../contexts/cart/useCart';
 
 import { useParams, useNavigate } from 'react-router';
-import BackButton from '../components/layout/BackButton';
 
 import { useProduct } from '../hooks/queries/useProducts';
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 const SizeSelect = lazy(() => import('../components/products/SizeSelect'));
 const ProductInfo = lazy(() => import('../components/products/ProductInfo'));
@@ -17,7 +15,6 @@ const VariantSelector = lazy(() => import('../components/products/VariantSelecto
 import ProductSection from '../components/products/ProductSection';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 import ProductCard from '../components/products/ProductCard';
-import FavoritesLinkButton from '../components/favorites/FavoritesLinkButton';
 import AuthActionModal from '../components/auth/AuthActionModal';
 import useAuthAction from '../hooks/useAuthAction';
 import SEO from '../components/SEO';
@@ -40,8 +37,6 @@ function ProductDetails() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const { requireAuth, closeModal, isModalOpen, modalContext } = useAuthAction();
-  const [isImageZoomed, setIsImageZoomed] = useState(false);
-  const EPS = 0.05;
 
   // Use TanStack Query for product fetching with caching
   const { data: product, isLoading: loading, isError, error: queryError } = useProduct(slug);
@@ -140,16 +135,6 @@ function ProductDetails() {
     }
   }, [product]);
 
-  // Get the currently selected image
-  const getSelectedImageUrl = () => {
-    const productImages = activeProduct?.images || product?.images || [];
-    if (productImages.length > 0 && selectedImageIndex < productImages.length) {
-      return getImageUrl(productImages[selectedImageIndex]);
-    }
-    // Fallback to product.image or primary image
-    return activeProduct?.image || product?.image || getPrimaryImageUrl(activeProduct || product);
-  };
-
   // Handle variant selection
   const handleVariantSelect = variant => {
     setSelectedVariant(variant);
@@ -171,7 +156,7 @@ function ProductDetails() {
   if (!product) return <p className="p-4">No product found.</p>;
 
   return (
-    <div className="font-lato px-3 sm:px-4 py-4 lg:py-8 bg-white">
+    <div className="font-lato px-3 sm:px-4 py-0 lg:py-8 bg-white">
       {product && (
         <>
           <SEO
@@ -196,57 +181,24 @@ function ProductDetails() {
           />
         </>
       )}
-      <header className="flex relative items-center justify-center md:mt-8">
-        <BackButton />
-      </header>
-
       <main className="text-start flex flex-col gap-2">
-        <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 py-4 sm:py-6 items-start">
+        <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 py-0 items-start">
           {/* Images Section */}
-          <div className="flex flex-col gap-3 sm:gap-4 lg:gap-5">
-            <div className="relative aspect-[4/5] w-full overflow-hidden">
-              <TransformWrapper
-                key={selectedImageIndex}
-                initialScale={1}
-                minScale={1}
-                maxScale={3}
-                doubleClick={{ disabled: false, mode: 'toggle' }}
-                panning={{ disabled: !isImageZoomed }}
-                wheel={{ disabled: true }}
-                pinch={{ step: 5 }}
-                centerOnInit={true}
-                onPinchingStart={() => setIsImageZoomed(true)}
-                onPinchingStop={({ state }) => setIsImageZoomed(state.scale > 1 + EPS)}
-                onZoomStop={({ state }) => setIsImageZoomed(state.scale > 1 + EPS)}
-              >
-                <TransformComponent wrapperClass="!w-full !h-full flex items-center justify-center">
-                  <img
-                    className="aspect-[4/5] w-full object-cover rounded-none cursor-zoom-in"
-                    src={getSelectedImageUrl()}
-                    alt={product?.name}
-                  />
-                </TransformComponent>
-              </TransformWrapper>
-              <div className="absolute top-3 right-3 z-10">
-                <FavoritesLinkButton
-                  product={{
-                    id: product._id,
-                    name: product.name,
-                    price: product.price,
-                    images: product.images,
-                    slug: product.slug,
-                  }}
-                  onAuthRequired={handleFavoriteClick}
-                />
-              </div>
-            </div>
-
+          <div className="-mx-3 flex flex-col gap-3 sm:-mx-4 sm:gap-4 lg:mx-0 lg:gap-5">
             {/* Image Gallery */}
             <Suspense fallback={null}>
               <GalleryImages
                 product={activeProduct || product}
                 selectedIndex={selectedImageIndex}
                 onImageSelect={setSelectedImageIndex}
+                favoriteProduct={{
+                  id: product._id,
+                  name: product.name,
+                  price: product.price,
+                  images: product.images,
+                  slug: product.slug,
+                }}
+                onFavoriteAuthRequired={handleFavoriteClick}
               />
             </Suspense>
           </div>
