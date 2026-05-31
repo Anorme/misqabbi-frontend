@@ -10,6 +10,7 @@ const PreviewPromo = () => {
         width={1200}
         height={450}
       />
+      <div className="absolute inset-0 bg-black/42" />
       <div className="relative z-10 bg-opacity-40 flex items-center justify-center top-5 md:top-10 inset-x-0">
         <h2 className=" text-[25px] md:text-[96px] w-[220px] font-lato text-white md:w-[743px] md:h-[154px]"></h2>
       </div>
