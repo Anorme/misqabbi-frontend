@@ -206,7 +206,7 @@ function ProductDetails() {
           {/* Product Info Section */}
           <div className="divide-y-2 divide-gray-300 lg:pt-4">
             <Suspense fallback={null}>
-              <ProductInfo product={product} price={activeProduct?.price}></ProductInfo>
+              <ProductInfo product={product} price={activeProduct?.price} section="summary" />
             </Suspense>
 
             {/* Variant Selector */}
@@ -273,6 +273,13 @@ function ProductDetails() {
               >
                 Buy Now
               </button>
+            </ProductSection>
+
+            {/* Product Details */}
+            <ProductSection>
+              <Suspense fallback={null}>
+                <ProductInfo product={product} section="details" />
+              </Suspense>
             </ProductSection>
           </div>
         </div>
