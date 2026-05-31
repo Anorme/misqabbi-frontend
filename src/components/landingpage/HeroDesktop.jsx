@@ -10,6 +10,7 @@ const HeroDesktop = () => (
       fetchPriority="high"
       loading="eager"
     />
+    <div className="absolute inset-0 bg-black/42" />
     {/* Content container */}
     <div className="relative z-10 h-full px-8 flex items-center justify-center">
       <div className="max-w-[1050px]">
