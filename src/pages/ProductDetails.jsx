@@ -206,7 +206,7 @@ function ProductDetails() {
           {/* Product Info Section */}
           <div className="divide-y-2 divide-gray-300 lg:pt-4">
             <Suspense fallback={null}>
-              <ProductInfo product={product}></ProductInfo>
+              <ProductInfo product={product} price={activeProduct?.price}></ProductInfo>
             </Suspense>
 
             {/* Variant Selector */}
@@ -253,17 +253,11 @@ function ProductDetails() {
               </Suspense>
             </ProductSection>
 
-            {/* Product price and CTA */}
+            {/* Add to Cart CTA */}
             <ProductSection>
-              <div className="flex space-x-3 sm:space-x-5 justify-between">
-                <div className="w-1/2 px-2 sm:px-3 py-2 bg-[#EEE5E5] rounded-md flex flex-col max-w-[190px]">
-                  <p className="text-xs sm:text-sm text-[#B1B2B2]">Total price:</p>
-                  <h1 className="text-sm sm:text-base md:text-lg lg:text-2xl font-extrabold text-msq-purple-deep">
-                    GHC {((activeProduct?.price || product?.price) * selectedQuantity).toFixed(2)}
-                  </h1>
-                </div>
+              <div className="flex justify-between">
                 <button
-                  className="bg-msq-purple-rich text-xs sm:text-sm md:text-base lg:text-lg text-white rounded-md flex-grow max-w-[320px] cursor-pointer py-2 sm:py-3 hover:bg-msq-purple transition-colors duration-200"
+                  className="bg-msq-purple-rich text-xs sm:text-sm md:text-base lg:text-lg text-white rounded-md w-full cursor-pointer py-2 sm:py-3 hover:bg-msq-purple transition-colors duration-200"
                   onClick={handleAddToCart}
                 >
                   Add to Cart

@@ -117,7 +117,7 @@ const PriceFilterModal = () => {
             <div className="flex-1">
               <div className="relative">
                 <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm">
-                  GHC
+                  &#8373;
                 </span>
                 <input
                   type="number"
@@ -138,7 +138,7 @@ const PriceFilterModal = () => {
             <div className="flex-1">
               <div className="relative">
                 <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm">
-                  GHC
+                  &#8373;
                 </span>
                 <input
                   type="number"

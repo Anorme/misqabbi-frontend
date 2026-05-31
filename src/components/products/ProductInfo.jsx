@@ -1,6 +1,7 @@
 import DOMPurify from 'dompurify';
+import { formatCedis } from '../../utils/formatCurrency';
 
-function ProductInfo({ product }) {
+function ProductInfo({ product, price = product?.price }) {
   // Sanitize and render description as HTML
   const sanitizedDescription = product?.description
     ? DOMPurify.sanitize(product.description, {
@@ -14,8 +15,8 @@ function ProductInfo({ product }) {
       <h1 className="font-extrabold text-lg sm:text-xl md:text-2xl tracking-tight text-msq-purple">
         {product?.name}
       </h1>
-      <p className="text-xl sm:text-2xl font-extrabold text-msq-purple-deep hidden lg:block">
-        GHC {product?.price}
+      <p className="text-xl sm:text-2xl font-extrabold text-msq-purple-deep">
+        {formatCedis(price)}
       </p>
       <h2 className="text-lg sm:text-xl lg:text-2xl text-gray-900">Details</h2>
       <div
