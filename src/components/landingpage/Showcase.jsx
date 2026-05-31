@@ -1,8 +1,8 @@
 import { Link } from 'react-router';
 
-import MsqButton from './MsqButton';
 import CategoryList from './CategoryList';
 import TrendingCollection from './TrendingCollection';
+import Button from '../ui/Button';
 import { ViewportReveal } from '../ui/motion/MotionWrappers';
 import { slideFromLeft, slideFromRight } from '../ui/motion/motionPresets';
 
@@ -25,13 +25,14 @@ const Showcase = () => {
       </div>
 
       <div className="flex justify-center mt-[29pt] md:mt-[59px]">
-        <Link to="/shop">
-          <MsqButton
-            label="VIEW THE COLLECTION"
-            variant="purple-rich"
-            className="text-[12px] md:text-[16px] lg:text-[18px]"
-          />
-        </Link>
+        <Button
+          as={Link}
+          to="/shop"
+          variant="ghost"
+          className="px-4 py-2 text-[12px] md:px-5 md:py-3 md:text-[16px] lg:text-[18px] font-lato"
+        >
+          VIEW THE COLLECTION
+        </Button>
       </div>
     </section>
   );

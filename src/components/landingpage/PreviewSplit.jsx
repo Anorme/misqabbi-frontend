@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-import MsqButton from './MsqButton';
+import Button from '../ui/Button';
 import { StaggerGroup, StaggerItem } from '../ui/motion/MotionWrappers';
 
 const PreviewSplit = () => {
@@ -24,9 +24,14 @@ const PreviewSplit = () => {
                 DRESSES
               </StaggerItem>
               <StaggerItem>
-                <Link to="/category/dresses">
-                  <MsqButton label="SHOP DRESSES" variant="purple-rich" />
-                </Link>
+                <Button
+                  as={Link}
+                  to="/category/dresses"
+                  variant="ghost"
+                  className="px-4 py-2 text-[12px] md:px-5 md:py-3 md:text-[16px] font-lato"
+                >
+                  SHOP DRESSES
+                </Button>
               </StaggerItem>
             </StaggerGroup>
           </div>
@@ -49,9 +54,14 @@ const PreviewSplit = () => {
                 SKIRTS
               </StaggerItem>
               <StaggerItem>
-                <Link to="/category/skirts">
-                  <MsqButton label="SHOP SKIRTS" variant="purple-rich" />
-                </Link>
+                <Button
+                  as={Link}
+                  to="/category/skirts"
+                  variant="ghost"
+                  className="px-4 py-2 text-[12px] md:px-5 md:py-3 md:text-[16px] font-lato"
+                >
+                  SHOP SKIRTS
+                </Button>
               </StaggerItem>
             </StaggerGroup>
           </div>

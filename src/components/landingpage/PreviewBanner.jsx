@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-import MsqButton from './MsqButton';
+import Button from '../ui/Button';
 import { StaggerGroup, StaggerItem } from '../ui/motion/MotionWrappers';
 
 const PreviewBanner = () => {
@@ -24,9 +24,9 @@ const PreviewBanner = () => {
             NEW ARRIVAL
           </StaggerItem>
           <StaggerItem>
-            <Link to="/shop">
-              <MsqButton label="SHOP COLLECTION" variant="purple-rich" className=" md:mt-12  " />
-            </Link>
+            <Button as={Link} to="/shop" variant="ghost" className="md:mt-12 px-5 py-3 font-lato">
+              SHOP COLLECTION
+            </Button>
           </StaggerItem>
         </StaggerGroup>
       </div>
