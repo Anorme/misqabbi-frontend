@@ -9,7 +9,11 @@ const signInWithGoogleRedirect = async () => {
 
 const fetchAuthenticatedUser = async () => {
   try {
-    const response = await axios.get(`${API_URL}/auth/me`, { withCredentials: true });
+    // On app startup, try refresh if needed but do not redirect guests to login.
+    const response = await axios.get(`${API_URL}/auth/me`, {
+      withCredentials: true,
+      skipAuthRedirect: true,
+    });
 
     const { success, message, data } = response.data;
 

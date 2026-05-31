@@ -22,8 +22,13 @@ export const setupAxiosInterceptor = onSessionExpired => {
     async error => {
       const originalRequest = error.config;
 
-      // Only handle 401 errors, and only once per request
-      if (error.response?.status === 401 && !originalRequest._retry) {
+      // Only handle 401 errors once per request, and never try to refresh the refresh call.
+      if (
+        error.response?.status === 401 &&
+        originalRequest &&
+        !originalRequest._retry &&
+        !originalRequest.url?.includes('/auth/refresh')
+      ) {
         // If already refreshing, queue this request
         if (isRefreshing) {
           return new Promise((resolve, reject) => {
@@ -49,8 +54,11 @@ export const setupAxiosInterceptor = onSessionExpired => {
           // Refresh failed - session expired
           processQueue(refreshError);
 
-          // Call the callback to handle session expiration
-          onSessionExpired();
+          // skipAuthRedirect still allows refresh. It only suppresses forced login navigation
+          // when a silent auth restore fails and the visitor should continue as a guest.
+          if (!originalRequest.skipAuthRedirect) {
+            onSessionExpired();
+          }
 
           return Promise.reject(refreshError);
         } finally {
