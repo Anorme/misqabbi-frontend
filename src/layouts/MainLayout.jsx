@@ -1,5 +1,6 @@
 import NavBar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import ScrollToTopButton from '../components/ui/ScrollToTopButton';
 import { useLocation } from 'react-router';
 
 const MainLayout = ({ children }) => {
@@ -11,6 +12,7 @@ const MainLayout = ({ children }) => {
       <NavBar />
       <div className={isHomePage ? '' : 'pt-18 md:pt-16'}>{children}</div>
       <Footer />
+      <ScrollToTopButton />
     </div>
   );
 };
