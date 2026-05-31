@@ -11,7 +11,6 @@ import { setPage, setTotalPages, setProducts } from '../contexts/catalog/catalog
 import { setSearchFromURL } from '../contexts/catalog/catalogActions.js';
 
 import { useProducts } from '../hooks/queries/useProducts.js';
-import CategoryNavigation from '../components/layout/navigation/CategoryNavigation.jsx';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 
 import scrollToTop from '../utils/scrollToTop.js';
@@ -75,8 +74,7 @@ const ProductList = () => {
         description="Discover Misqabbi&rsquo;s curated lounge and casual wear. Soft, elegant, and made to empower her."
         canonicalPath="/shop"
       />
-      <CategoryNavigation />
-      <main className="w-full px-4 sm:px-6 lg:px-8 pt-12 pb-8">
+      <main className="w-full px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
         {loading ? (
           <div className="flex w-full justify-center items-center lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] py-16">
             <LoadingSpinner size={100} color="#cfb484" />
