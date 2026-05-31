@@ -1,3 +1,5 @@
+import { formatCedis } from '../../utils/formatCurrency';
+
 const ClearCartButton = ({ onClearCart }) => {
   return (
     <button
@@ -14,12 +16,12 @@ const CartTotals = ({ itemCount, subtotal }) => {
     <div className="space-y-2">
       <div className="flex justify-between items-center">
         <span className="text-sm font-lato text-gray-600">Items ({itemCount})</span>
-        <span className="text-sm font-lato font-medium">GHC {subtotal.toFixed(2)}</span>
+        <span className="text-sm font-lato font-medium">{formatCedis(subtotal)}</span>
       </div>
       <div className="flex justify-between items-center">
         <span className="text-lg font-bebas text-gray-900">Subtotal</span>
         <span className="text-lg font-bebas font-bold text-msq-purple-rich">
-          GHC {subtotal.toFixed(2)}
+          {formatCedis(subtotal)}
         </span>
       </div>
     </div>
