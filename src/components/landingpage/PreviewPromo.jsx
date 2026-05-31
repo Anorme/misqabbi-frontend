@@ -1,3 +1,8 @@
+import { Link } from 'react-router';
+
+import Button from '../ui/Button';
+import { StaggerGroup, StaggerItem } from '../ui/motion/MotionWrappers';
+
 const PreviewPromo = () => {
   return (
     <div className="relative w-full h-[120px] md:h-[450px] overflow-hidden">
@@ -11,8 +16,25 @@ const PreviewPromo = () => {
         height={450}
       />
       <div className="absolute inset-0 bg-black/42" />
-      <div className="relative z-10 bg-opacity-40 flex items-center justify-center top-5 md:top-10 inset-x-0">
-        <h2 className=" text-[25px] md:text-[96px] w-[220px] font-lato text-white md:w-[743px] md:h-[154px]"></h2>
+      <div className="relative z-10 h-full flex items-center justify-center">
+        <StaggerGroup className="text-center text-white md:space-y-4" staggerChildren={0.12}>
+          <StaggerItem
+            as="h2"
+            className="text-[40px] md:text-[128px] font-lato leading-[71px] w-[350px] md:w-[854px]"
+          >
+            MADE FOR YOU
+          </StaggerItem>
+          <StaggerItem>
+            <Button
+              as={Link}
+              to="/bespoke"
+              variant="primarySlideWhite"
+              className="md:mt-12 px-5 py-3 font-lato"
+            >
+              START YOUR REQUEST
+            </Button>
+          </StaggerItem>
+        </StaggerGroup>
       </div>
     </div>
   );
