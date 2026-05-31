@@ -1,5 +1,6 @@
 import { Heart, Sparkles, Users, Scissors } from 'lucide-react';
 import SEO from '../SEO';
+import StickyPanBackgroundSection from '../ui/StickyPanBackgroundSection';
 
 const AboutUs = () => {
   return (
@@ -143,40 +144,36 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="w-full">
-        <div className="relative w-full h-[250px] md:h-[300px] lg:h-[250px] overflow-hidden">
-          <img
-            src="https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_1200,c_limit/v1761957956/CSI_0054_ffcm2z.jpg"
-            alt="Misqabbi fashion"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end justify-center pb-8 md:pb-12">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full">
-              <h2 className="font-bebas text-2xl sm:text-3xl md:text-4xl text-white mb-4 md:mb-6">
-                Ready to Start Your Journey?
-              </h2>
-              <p className="text-sm sm:text-base md:text-lg text-white/95 mb-6 md:mb-8 max-w-2xl mx-auto">
-                Discover our collection and experience fashion designed specifically for you.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="/shop"
-                  className="text-sm sm:text-base bg-white text-msq-purple-rich px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center"
-                >
-                  Browse Collection
-                </a>
-                <a
-                  href="/contact-us"
-                  className="text-sm sm:text-base bg-transparent border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold hover:bg-white/10 transition-colors text-center"
-                >
-                  Contact Us
-                </a>
-              </div>
-            </div>
+      {/* CTA Section - sticky scroll-scrubbed background between light sections */}
+      <StickyPanBackgroundSection
+        backgroundImage="https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_1600,c_limit/v1761957956/CSI_0054_ffcm2z.jpg"
+        panScrollRunwayVh={90}
+        panRangePercent={26}
+        scrimOpacity={0.5}
+      >
+        <div className="max-w-4xl mx-auto text-center w-full">
+          <h2 className="font-bebas text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6">
+            Ready to Start Your Journey?
+          </h2>
+          <p className="text-base sm:text-lg md:text-xl text-white/95 mb-6 md:mb-8 max-w-2xl mx-auto">
+            Discover our collection and experience fashion designed specifically for you.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="/shop"
+              className="text-sm sm:text-base bg-white text-msq-purple-rich px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-msq-purple-rich"
+            >
+              Browse Collection
+            </a>
+            <a
+              href="/contact-us"
+              className="text-sm sm:text-base bg-transparent border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold hover:bg-white/10 transition-colors text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-msq-purple-rich"
+            >
+              Contact Us
+            </a>
           </div>
         </div>
-      </section>
+      </StickyPanBackgroundSection>
     </main>
   );
 };
