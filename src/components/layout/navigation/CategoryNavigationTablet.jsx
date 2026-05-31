@@ -5,7 +5,7 @@ import FilterDropdown from '../../search/FilterDropdown.jsx';
 import PriceFilterModal from '../../search/PriceFilterModal.jsx';
 import useCategorySelection from '../../../hooks/useCategorySelection.js';
 import { useCatalogState, useCatalogDispatch } from '../../../contexts/catalog/useCatalog.js';
-import { setSortOption, setDesktopColumns } from '../../../contexts/catalog/catalogActions.js';
+import { setSortOption, setTabletColumns } from '../../../contexts/catalog/catalogActions.js';
 
 const CategoryNavigationTablet = () => {
   const { selectedCategory } = useCategorySelection();
@@ -42,21 +42,21 @@ const CategoryNavigationTablet = () => {
               </div>
               <div className="flex items-center pl-4 space-x-2 h-full">
                 <button
-                  className={`${layout.desktopColumns === 4 ? 'opacity-100' : 'opacity-50'} cursor-pointer`}
-                  aria-label="Set desktop layout to 4 columns"
-                  aria-pressed={layout.desktopColumns === 4}
-                  onClick={() => catalogDispatch(setDesktopColumns(4))}
+                  className={`${layout.tabletColumns === 2 ? 'opacity-100' : 'opacity-50'} cursor-pointer`}
+                  aria-label="Set tablet layout to 2 columns"
+                  aria-pressed={layout.tabletColumns === 2}
+                  onClick={() => catalogDispatch(setTabletColumns(2))}
                 >
-                  {/* Grid icon */}
+                  {/* Two-column tablet grid */}
                   <LayoutGrid className="fill-msq-gold-light stroke-none" size={20} />
                 </button>
                 <button
-                  className={`${layout.desktopColumns === 6 ? 'opacity-100' : 'opacity-50'} cursor-pointer`}
-                  aria-label="Set desktop layout to 6 columns"
-                  aria-pressed={layout.desktopColumns === 6}
-                  onClick={() => catalogDispatch(setDesktopColumns(6))}
+                  className={`${layout.tabletColumns === 4 ? 'opacity-100' : 'opacity-50'} cursor-pointer`}
+                  aria-label="Set tablet layout to 4 columns"
+                  aria-pressed={layout.tabletColumns === 4}
+                  onClick={() => catalogDispatch(setTabletColumns(4))}
                 >
-                  {/* List icon */}
+                  {/* Four-column tablet grid */}
                   <Columns4 className="stroke-msq-gold-light" size={20} />
                 </button>
               </div>

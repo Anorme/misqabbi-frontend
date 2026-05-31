@@ -37,5 +37,8 @@ export const clearPriceFilter = () => createAction(CATALOG_ACTION_TYPES.CLEAR_PR
 export const setMobileColumns = columns =>
   createAction(CATALOG_ACTION_TYPES.SET_MOBILE_COLUMNS, columns);
 
+export const setTabletColumns = columns =>
+  createAction(CATALOG_ACTION_TYPES.SET_TABLET_COLUMNS, columns);
+
 export const setDesktopColumns = columns =>
   createAction(CATALOG_ACTION_TYPES.SET_DESKTOP_COLUMNS, columns);
