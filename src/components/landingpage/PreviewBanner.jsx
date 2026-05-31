@@ -5,11 +5,11 @@ import { StaggerGroup, StaggerItem } from '../ui/motion/MotionWrappers';
 
 const PreviewBanner = () => {
   return (
-    <div className="relative w-full h-[120px] md:h-[450px] overflow-hidden">
+    <div className="group relative w-full h-[120px] md:h-[450px] overflow-hidden">
       <img
         src="https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_1200,c_limit/v1761961275/misqabbi/products/CSI_9996_poumla_df0276.jpg"
         alt="New arrival collection"
-        className="absolute inset-0 w-full h-full object-cover object-top"
+        className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-110"
         loading="lazy"
         decoding="async"
         width={1200}

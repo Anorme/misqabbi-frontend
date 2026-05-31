@@ -8,11 +8,11 @@ const PreviewSplit = () => {
     <div className="w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 ">
         {/* Denim Section */}
-        <div className="relative w-full h-[200px] md:h-[500px] overflow-hidden">
+        <div className="group relative w-full h-[200px] md:h-[500px] overflow-hidden">
           <img
             src="https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_800,c_limit/v1761957976/misqabbi/products/CSI_0103_z9fxdo.jpg"
             alt="Dresses collection"
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
             loading="lazy"
             decoding="async"
             width={800}
@@ -39,11 +39,11 @@ const PreviewSplit = () => {
         </div>
 
         {/* Ankara Section */}
-        <div className="relative w-full h-[200px] md:h-[500px] overflow-hidden">
+        <div className="group relative w-full h-[200px] md:h-[500px] overflow-hidden">
           <img
             src="https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_800,c_limit/v1761963749/misqabbi/landing-page/CSI_9913_lvhkas_62433c.jpg"
             alt="Skirts collection"
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
             loading="lazy"
             decoding="async"
             width={800}
