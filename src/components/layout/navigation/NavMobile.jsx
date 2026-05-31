@@ -50,6 +50,28 @@ function NavMobile({ showCategoryNavigation = false }) {
     setIsMenuOpen(false);
   };
 
+  const inlineSearch = usesTransparentHeroNav ? (
+    <LandingSearchBar
+      variant="desktop"
+      placeholder="Search"
+      onClose={handleSearchClose}
+      isSearchOpen={isSearchOpen}
+      onSearchSubmit={handleSearchClose}
+      className="w-full"
+      inputClassName="h-8 bg-white/95 px-3 pr-9 text-sm shadow-sm placeholder:text-msq-gold-light/70 focus:ring-inset"
+    />
+  ) : (
+    <ConnectedSearchBar
+      variant="desktop"
+      placeholder="Search"
+      onClose={handleSearchClose}
+      isSearchOpen={isSearchOpen}
+      onSearchSubmit={handleSearchClose}
+      className="w-full"
+      inputClassName="h-8 bg-white/95 px-3 pr-9 text-sm shadow-sm placeholder:text-msq-gold-light/70 focus:ring-inset"
+    />
+  );
+
   // Close search on scroll
   useEffect(() => {
     const handleScroll = () => {
@@ -92,38 +114,11 @@ function NavMobile({ showCategoryNavigation = false }) {
             <NavActions
               variant="mobile"
               className="justify-self-end"
+              inlineSearch={inlineSearch}
               isSearchOpen={isSearchOpen}
               onSearchToggle={handleSearchToggle}
               iconClassName={iconClassName}
             />
-          </div>
-
-          {/* Search Bar - Animated */}
-          <div
-            className={`
-            overflow-hidden transition-all duration-300 ease-in-out
-            ${isSearchOpen ? 'h-auto opacity-100' : 'h-0 opacity-0'}
-          `}
-          >
-            <div className="pt-4 pb-2">
-              {usesTransparentHeroNav ? (
-                <LandingSearchBar
-                  variant="mobile"
-                  onClose={handleSearchClose}
-                  isSearchOpen={isSearchOpen}
-                  onSearchSubmit={handleSearchClose}
-                  className="w-full"
-                />
-              ) : (
-                <ConnectedSearchBar
-                  variant="mobile"
-                  onClose={handleSearchClose}
-                  isSearchOpen={isSearchOpen}
-                  onSearchSubmit={handleSearchClose}
-                  className="w-full"
-                />
-              )}
-            </div>
           </div>
         </div>
         {showCategoryNavigation && (
