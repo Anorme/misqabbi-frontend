@@ -3,17 +3,23 @@ import FavoritesButton from '../../favorites/FavoritesButton.jsx';
 import CartButton from '../../cart/CartButton.jsx';
 import ProfileDropdown from './ProfileDropdown.jsx';
 
-const NavActions = ({ variant = 'desktop', className = '', onSearchToggle }) => {
+const NavActions = ({
+  variant = 'desktop',
+  className = '',
+  onSearchToggle,
+  iconClassName = 'text-msq-gold hover:text-msq-gold-deep',
+}) => {
   if (variant === 'mobile') {
     return (
-      <div className={`flex gap-0 items-center justify-end ${className}`}>
-        <CartButton size={20} showCount={true} />
-        <FavoritesButton size={20} showCount={true} />
+      <div className={`flex flex-shrink items-center justify-end gap-0 min-w-0 ${className}`}>
+        <CartButton size={18} showCount={true} className={`p-1.5 sm:p-2 ${iconClassName}`} />
+        <FavoritesButton size={18} showCount={true} className={`p-1.5 sm:p-2 ${iconClassName}`} />
         <button
           onClick={onSearchToggle}
-          className="p-2 text-msq-gold-light cursor-pointer hover:text-msq-gold transition-colors duration-200"
+          className={`p-1.5 sm:p-2 cursor-pointer transition-colors duration-200 ${iconClassName}`}
+          aria-label="Toggle search"
         >
-          <Search size={20} />
+          <Search size={18} />
         </button>
       </div>
     );
@@ -21,18 +27,18 @@ const NavActions = ({ variant = 'desktop', className = '', onSearchToggle }) => 
 
   // Desktop variant
   return (
-    <div className={`flex items-center space-x-2 ${className}`}>
+    <div className={`flex flex-shrink items-center space-x-2 ${className}`}>
       <button
         onClick={onSearchToggle}
-        className="p-2 text-msq-gold-light cursor-pointer hover:text-msq-gold transition-colors duration-200"
+        className={`p-2 cursor-pointer transition-colors duration-200 ${iconClassName}`}
         aria-label="Toggle search"
       >
         <Search size={20} />
       </button>
-      <FavoritesButton size={20} showCount={true} />
-      <CartButton size={20} showCount={true} />
+      <FavoritesButton size={20} showCount={true} className={iconClassName} />
+      <CartButton size={20} showCount={true} className={iconClassName} />
       <div className="">
-        <ProfileDropdown />
+        <ProfileDropdown className={iconClassName} />
       </div>
     </div>
   );

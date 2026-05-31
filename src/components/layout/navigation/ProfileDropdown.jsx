@@ -51,7 +51,7 @@ const ProfileDropdown = ({ className = '' }) => {
       {/* UserRound Icon Trigger */}
       <button
         onClick={toggleDropdown}
-        className="p-2 text-msq-gold-light cursor-pointer"
+        className={`p-2 cursor-pointer transition-colors duration-200 ${className || 'text-msq-gold hover:text-msq-gold-deep'}`}
         aria-label="User menu"
         aria-expanded={isOpen}
         aria-haspopup="true"
