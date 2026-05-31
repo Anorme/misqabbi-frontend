@@ -23,6 +23,7 @@ export const initialState = {
   },
   layout: {
     mobileColumns: 1,
+    tabletColumns: 2,
     desktopColumns: 4,
   },
 };
@@ -118,6 +119,11 @@ export const catalogReducer = (state, action) => {
       return {
         ...state,
         layout: { ...state.layout, mobileColumns: payload },
+      };
+    case CATALOG_ACTION_TYPES.SET_TABLET_COLUMNS:
+      return {
+        ...state,
+        layout: { ...state.layout, tabletColumns: payload },
       };
     case CATALOG_ACTION_TYPES.SET_DESKTOP_COLUMNS:
       return {
