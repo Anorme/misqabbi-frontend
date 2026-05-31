@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import Button from '../ui/Button';
 import { LoadStagger, StaggerItem } from '../ui/motion/MotionWrappers';
 
 const HeroMobile = () => (
@@ -25,12 +26,9 @@ const HeroMobile = () => (
           unique beauty.
         </StaggerItem>
         <StaggerItem>
-          <Link
-            to="/shop"
-            className="inline-block bg-msq-purple-rich hover:opacity-90 text-white text-[24px] font-bebas px-8 py-3 rounded-[6px] transition"
-          >
+          <Button as={Link} to="/shop" variant="ghost" className="px-8 py-3 text-[24px] font-bebas">
             SHOP NOW
-          </Link>
+          </Button>
         </StaggerItem>
       </LoadStagger>
     </div>

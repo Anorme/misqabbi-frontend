@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import Button from '../ui/Button';
 import { LoadStagger, StaggerItem } from '../ui/motion/MotionWrappers';
 
 const HeroDesktop = () => (
@@ -26,12 +27,14 @@ const HeroDesktop = () => (
           unique beauty and bring your dream wardrobe to life.
         </StaggerItem>
         <StaggerItem>
-          <Link
+          <Button
+            as={Link}
             to="/shop"
-            className="mt-20 inline-block bg-msq-purple-rich hover:opacity-90 text-white text-[36px] font-bebas w-[321px] h-[89px] place-content-center rounded-[6px] transition"
+            variant="ghost"
+            className="mt-20 px-10 py-4 text-[30px] font-bebas"
           >
             SHOP NOW
-          </Link>
+          </Button>
         </StaggerItem>
       </LoadStagger>
     </div>
