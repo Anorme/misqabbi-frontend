@@ -58,7 +58,7 @@ const NavTablet = () => {
       <div
         className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${navSurfaceClass}`}
       >
-        <div className="max-w-full overflow-x-hidden px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
           {/* Top Row: Logo, Nav Links, and Icons */}
           <div className="grid grid-cols-[1fr_auto_1fr] items-center h-14">
             {/* Left Section: Nav Links */}
