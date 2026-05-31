@@ -34,7 +34,7 @@ const items = [
 function TrendingCollection() {
   return (
     <section className="w-full place-content-center">
-      <div className="flex flex-col w-[500px] text-left border-l-msq-purple-rich border-l-3 pl-2 my-4">
+      <div className="flex flex-col w-full text-left border-l-msq-purple-rich border-l-3 pl-2 my-4">
         <h2 className="text-msq-purple-deep font-lato  text-[24px] md:text-[32px] md:mb-2 ">
           Trending this Season
         </h2>
