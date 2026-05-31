@@ -1,4 +1,6 @@
 import CtaGrid from './CtaGrid';
+import { ViewportReveal } from '../ui/motion/MotionWrappers';
+import { fadeOnly } from '../ui/motion/motionPresets';
 
 const CtaSection = () => {
   const images = [
@@ -22,7 +24,11 @@ const CtaSection = () => {
 
   return (
     <section className="pb-10 w-full text-center">
-      <h2 className="text-2xl md:text-3xl font-bebas tracking-wide text-msq-purple-rich mb-6">
+      <ViewportReveal
+        as="h2"
+        variants={fadeOnly}
+        className="text-2xl md:text-3xl font-bebas tracking-wide text-msq-purple-rich mb-6"
+      >
         <a
           href="https://www.instagram.com/misqabbigh"
           target="_blank"
@@ -31,7 +37,7 @@ const CtaSection = () => {
         >
           FOLLOW US ON INSTAGRAM <span className="text-msq-purple-light">@MISQABBIGH</span>
         </a>
-      </h2>
+      </ViewportReveal>
 
       <CtaGrid images={images} />
     </section>
