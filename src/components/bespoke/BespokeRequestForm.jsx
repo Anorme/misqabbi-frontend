@@ -12,6 +12,8 @@ import {
 } from '../../utils/sanitization';
 import InputField from '../form/InputField';
 import PhoneNumberField from '../form/PhoneNumberField';
+import Button from '../ui/Button';
+import { StaggerGroup, StaggerItem } from '../ui/motion/MotionWrappers';
 import { CATEGORIES } from '../../constants/categories';
 import { getMeasurementConfig } from '../../constants/customSizeMeasurements';
 import { initializeMeasurements } from '../../utils/customSizeValidation';
@@ -220,9 +222,9 @@ const BespokeRequestForm = () => {
   return (
     <div className="w-full px-2 sm:px-3 lg:px-6 py-6 sm:py-8 lg:py-12 bg-gradient-to-b from-gray-50/40 to-white">
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+        <StaggerGroup className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           {/* Form column: narrower form card, centered */}
-          <div className="lg:col-span-7 flex justify-center lg:justify-start">
+          <StaggerItem className="lg:col-span-7 flex justify-center lg:justify-start">
             <div className="w-full max-w-2xl bg-white rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl p-4 sm:p-5 lg:p-6 border border-gray-100">
               <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 text-left">
                 {isAuthenticated ? (
@@ -480,30 +482,29 @@ const BespokeRequestForm = () => {
                 </div>
 
                 <div className="pt-2">
-                  <button
+                  <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full cursor-pointer bg-gradient-to-r from-msq-purple-rich to-msq-purple text-white py-2 sm:py-2.5 lg:py-3 px-5 sm:px-6 rounded-lg font-lato font-semibold text-sm tracking-wide hover:shadow-lg hover:shadow-msq-purple-rich/30 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none group relative overflow-hidden"
+                    variant="primarySlideWhite"
+                    className="w-full py-2 sm:py-2.5 lg:py-3 px-5 sm:px-6 rounded-lg font-lato font-semibold text-sm tracking-wide hover:shadow-lg hover:shadow-msq-purple-rich/30 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none disabled:hover:scale-100 disabled:hover:shadow-none"
                     aria-label={isLoading ? 'Submitting...' : 'Submit request'}
                   >
-                    <span className="relative z-10 flex items-center justify-center gap-1.5">
-                      {isLoading ? (
-                        <>
-                          <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          <span>Submitting...</span>
-                        </>
-                      ) : (
-                        'Submit request'
-                      )}
-                    </span>
-                  </button>
+                    {isLoading ? (
+                      <span className="flex items-center justify-center gap-1.5">
+                        <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                        <span>Submitting...</span>
+                      </span>
+                    ) : (
+                      'Submit request'
+                    )}
+                  </Button>
                 </div>
               </form>
             </div>
-          </div>
+          </StaggerItem>
 
           {/* Side panel: tagline and short guidance */}
-          <div className="lg:col-span-5">
+          <StaggerItem className="lg:col-span-5">
             <div className="bg-gradient-to-br from-msq-purple-rich to-msq-purple-deep rounded-lg sm:rounded-xl shadow-xl p-4 sm:p-5 lg:p-6 text-white border border-msq-purple-rich/20 lg:sticky lg:top-24">
               <p className="text-white/90 font-lato text-sm sm:text-base leading-relaxed">
                 Share your measurements, style preferences, and reference photos. We’ll follow up to
@@ -513,8 +514,8 @@ const BespokeRequestForm = () => {
                 Made with love, made for you.
               </p>
             </div>
-          </div>
-        </div>
+          </StaggerItem>
+        </StaggerGroup>
       </div>
     </div>
   );
