@@ -31,6 +31,28 @@ const NavBar = () => {
     setIsSearchOpen(false);
   };
 
+  const inlineSearch = isHomePage ? (
+    <LandingSearchBar
+      variant="desktop"
+      placeholder="Search"
+      onClose={handleSearchClose}
+      isSearchOpen={isSearchOpen}
+      onSearchSubmit={handleSearchSubmit}
+      className="w-full"
+      inputClassName="h-9 bg-white/95 px-3 pr-9 text-sm shadow-sm placeholder:text-msq-gold-light/70"
+    />
+  ) : (
+    <ConnectedSearchBar
+      variant="desktop"
+      placeholder="Search"
+      onClose={handleSearchClose}
+      isSearchOpen={isSearchOpen}
+      onSearchSubmit={handleSearchSubmit}
+      className="w-full"
+      inputClassName="h-9 bg-white/95 px-3 pr-9 text-sm shadow-sm placeholder:text-msq-gold-light/70"
+    />
+  );
+
   // Close search on scroll
   useEffect(() => {
     const handleScroll = () => {
@@ -58,45 +80,21 @@ const NavBar = () => {
       className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${navSurfaceClass}`}
     >
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14 md:h-16">
-          {/* Left: Logo and Navigation Links */}
-          <div className="flex items-center gap-6">
-            <NavLogo variant="desktop" />
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center h-14 md:h-16">
+          {/* Left: Navigation Links */}
+          <div className="justify-self-start">
             <NavLinks tone={linkTone} />
           </div>
 
-          {/* Center: Search Bar - Toggleable */}
-          <div
-            className={`flex-1 max-w-lg mx-8 transition-all duration-300 ease-in-out ${
-              isSearchOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}
-          >
-            {isSearchOpen && (
-              <>
-                {isHomePage ? (
-                  <LandingSearchBar
-                    variant="desktop"
-                    onClose={handleSearchClose}
-                    isSearchOpen={isSearchOpen}
-                    onSearchSubmit={handleSearchSubmit}
-                    className="w-full"
-                  />
-                ) : (
-                  <ConnectedSearchBar
-                    variant="desktop"
-                    onClose={handleSearchClose}
-                    isSearchOpen={isSearchOpen}
-                    onSearchSubmit={handleSearchSubmit}
-                    className="w-full"
-                  />
-                )}
-              </>
-            )}
-          </div>
+          {/* Center: Logo */}
+          <NavLogo variant="desktop" className="justify-self-center" />
 
           {/* Right: Actions */}
           <NavActions
             variant="desktop"
+            className="justify-self-end"
+            inlineSearch={inlineSearch}
+            isSearchOpen={isSearchOpen}
             onSearchToggle={handleSearchToggle}
             iconClassName={iconClassName}
           />
