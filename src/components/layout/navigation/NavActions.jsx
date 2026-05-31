@@ -25,7 +25,7 @@ const NavActions = ({
         </button>
         <FavoritesButton size={18} showCount={true} className={`p-1.5 sm:p-2 ${iconClassName}`} />
         <CartButton size={18} showCount={true} className={`p-1.5 sm:p-2 ${iconClassName}`} />
-        {showProfile && <ProfileDropdown className={iconClassName} />}
+        {showProfile && <ProfileDropdown className={iconClassName} compact />}
       </div>
     );
   }
