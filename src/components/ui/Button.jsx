@@ -1,12 +1,15 @@
 import { createElement } from 'react';
 
 const variantClasses = {
-  ghost: 'border-msq-purple-rich text-msq-purple-rich before:bg-msq-purple-rich hover:text-white',
+  primary:
+    'border-msq-purple-rich bg-msq-purple-rich text-white hover:bg-transparent hover:text-msq-purple-rich',
+  ghost:
+    'relative overflow-hidden border-msq-purple-rich text-msq-purple-rich before:absolute before:inset-y-0 before:left-0 before:z-0 before:w-0 before:bg-msq-purple-rich before:transition-all before:duration-300 before:ease-out hover:text-white hover:before:w-full',
 };
 
-const Button = ({ as = 'button', variant = 'ghost', className = '', children, ...props }) => {
+const Button = ({ as = 'button', variant = 'primary', className = '', children, ...props }) => {
   const baseClasses =
-    'relative inline-flex items-center justify-center overflow-hidden border rounded-none cursor-pointer transition-colors duration-300 before:absolute before:inset-y-0 before:left-0 before:z-0 before:w-0 before:transition-all before:duration-300 before:ease-out hover:before:w-full';
+    'inline-flex items-center justify-center border rounded-none cursor-pointer transition-all duration-300';
   const contentClasses = 'relative z-10';
 
   return createElement(
