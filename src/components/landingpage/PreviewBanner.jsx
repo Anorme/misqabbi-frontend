@@ -25,7 +25,12 @@ const PreviewBanner = () => {
             NEW ARRIVAL
           </StaggerItem>
           <StaggerItem>
-            <Button as={Link} to="/shop" variant="primary" className="md:mt-12 px-5 py-3 font-lato">
+            <Button
+              as={Link}
+              to="/shop"
+              variant="primarySlideWhite"
+              className="md:mt-12 px-5 py-3 font-lato"
+            >
               SHOP COLLECTION
             </Button>
           </StaggerItem>
