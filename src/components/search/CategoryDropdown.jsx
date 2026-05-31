@@ -43,11 +43,11 @@ const CategoryDropdown = ({ selectedCategory = '', variant = 'desktop', classNam
     triggerRef.current?.focus();
   };
 
-  const displayText = selectedCategory ? getCategoryLabel(selectedCategory) : 'All CATEGORIES';
+  const displayText = selectedCategory ? getCategoryLabel(selectedCategory) : 'ALL CATEGORIES';
 
   const baseButtonClasses =
     'flex items-center text-msq-purple-deep hover:text-msq-purple-rich font-medium transition-colors duration-200 cursor-pointer';
-  const baseDropdownClasses = 'z-40 bg-white border border-[#949396] shadow-lg rounded-md py-1';
+  const baseDropdownClasses = 'z-40 bg-white shadow-xl shadow-black/10 rounded-md py-1';
 
   const dropdownClasses = `${baseDropdownClasses} absolute left-0 mt-1 min-w-full`; // Button width for both desktop and mobile
 
