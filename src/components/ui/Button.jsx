@@ -2,7 +2,7 @@ import { createElement } from 'react';
 
 const variantClasses = {
   primary:
-    'border-msq-purple-rich bg-msq-purple-rich text-white hover:bg-transparent hover:text-msq-purple-rich',
+    'border-msq-purple-rich bg-msq-purple-rich text-white hover:bg-msq-purple hover:border-msq-purple',
   ghost:
     'relative overflow-hidden border-msq-purple-rich text-msq-purple-rich before:absolute before:inset-y-0 before:left-0 before:z-0 before:w-0 before:bg-msq-purple-rich before:transition-all before:duration-300 before:ease-out hover:text-white hover:before:w-full',
 };
