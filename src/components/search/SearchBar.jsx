@@ -6,6 +6,7 @@ import CloseButton from '../ui/CloseButton';
 
 const SearchBar = ({
   className = '',
+  inputClassName = '',
   placeholder = 'Search',
   showIcon = true,
   variant = 'desktop',
@@ -55,7 +56,7 @@ const SearchBar = ({
           type="text"
           placeholder={placeholder}
           value={value}
-          className="w-full px-4 py-2 border border-msq-gold-light text-msq-gold-light rounded-full focus:outline-none focus:ring-2 focus:ring-msq-gold focus:border-transparent"
+          className={`w-full px-4 py-2 border border-msq-gold-light text-msq-gold-light rounded-full focus:outline-none focus:ring-2 focus:ring-msq-gold focus:border-transparent ${inputClassName}`}
           onKeyDown={onKeyDown}
           onChange={onChange}
           onBlur={handleBlur}
@@ -90,7 +91,7 @@ const SearchBar = ({
         type="text"
         placeholder={placeholder}
         value={value}
-        className="w-full px-4 py-2 border border-msq-gold-light text-msq-gold-light rounded-full focus:outline-none focus:ring-2 focus:ring-msq-gold focus:border-transparent"
+        className={`w-full px-4 py-2 border border-msq-gold-light text-msq-gold-light rounded-full focus:outline-none focus:ring-2 focus:ring-msq-gold focus:border-transparent ${inputClassName}`}
         onKeyDown={onKeyDown}
         onChange={onChange}
         onBlur={handleBlur}
