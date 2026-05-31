@@ -10,6 +10,7 @@ import FavoritesLinkButton from '../favorites/FavoritesLinkButton';
 import AuthActionModal from '../auth/AuthActionModal';
 import useAuthAction from '../../hooks/useAuthAction';
 import StockBadge from './StockBadge';
+import { formatCedis } from '../../utils/formatCurrency';
 
 const ProductCard = ({ product }) => {
   const dispatch = useCartDispatch();
@@ -68,7 +69,7 @@ const ProductCard = ({ product }) => {
         </h3>
         <div className="flex items-center justify-between">
           <span className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-msq-purple-deep">
-            GHC {product.price}
+            {formatCedis(product.price)}
           </span>
           <button type="button" aria-label="Add to cart" onClick={handleAddToCart}>
             {/* Shopping Cart SVG icon */}

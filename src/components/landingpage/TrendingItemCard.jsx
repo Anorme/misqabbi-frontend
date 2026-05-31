@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { formatCedis } from '../../utils/formatCurrency';
 
 function TrendingItemCard({ name, image, price, url }) {
   return (
@@ -21,7 +22,7 @@ function TrendingItemCard({ name, image, price, url }) {
           {name}
         </h3>
         <p className="text-msq-purple-deep text-[14px] md:text-[18px] lg:text-[20px] font-lato text-left">
-          GHC {price}
+          {formatCedis(price)}
         </p>
       </div>
     </div>
