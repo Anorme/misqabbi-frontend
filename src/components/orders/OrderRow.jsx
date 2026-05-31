@@ -1,23 +1,12 @@
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import StatusBadge from './StatusBadge';
 import OrderItems from './OrderItems';
-import { ORDERS_CURRENCY } from './constants';
+import { formatCedis } from '../../utils/formatCurrency';
 
 const formatDate = iso => {
   if (!iso) return '';
   const d = new Date(iso);
   return d.toLocaleDateString();
-};
-
-const formatCurrency = value => {
-  try {
-    return new Intl.NumberFormat(undefined, {
-      style: 'currency',
-      currency: ORDERS_CURRENCY,
-    }).format(Number(value) || 0);
-  } catch {
-    return `${Number(value || 0).toFixed(2)}`;
-  }
 };
 
 const OrderRow = ({ order, isOpen, onToggle, onView }) => {
@@ -26,7 +15,7 @@ const OrderRow = ({ order, isOpen, onToggle, onView }) => {
   const itemCount = Array.isArray(order?.items)
     ? order.items.reduce((sum, it) => sum + (it.quantity || 0), 0)
     : 0;
-  const total = formatCurrency(order?.totalPrice);
+  const total = formatCedis(order?.totalPrice);
 
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden">

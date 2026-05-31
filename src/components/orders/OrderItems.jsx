@@ -1,18 +1,7 @@
 import { Link } from 'react-router';
-import { ORDERS_CURRENCY } from './constants';
 import { getPrimaryImageUrl } from '../../utils/productImages';
 import CustomSizeDisplay from './CustomSizeDisplay';
-
-const formatCurrency = value => {
-  try {
-    return new Intl.NumberFormat(undefined, {
-      style: 'currency',
-      currency: ORDERS_CURRENCY,
-    }).format(Number(value) || 0);
-  } catch {
-    return `${Number(value || 0).toFixed(2)}`;
-  }
-};
+import { formatCedis } from '../../utils/formatCurrency';
 
 const OrderItems = ({ order }) => {
   return (
@@ -23,8 +12,8 @@ const OrderItems = ({ order }) => {
           const imageSrc = getPrimaryImageUrl(product);
           const qty = line?.quantity || 0;
           const unitPrice = product?.price ?? line?.price ?? 0;
-          const unit = formatCurrency(unitPrice);
-          const lineTotal = formatCurrency(unitPrice * qty);
+          const unit = formatCedis(unitPrice);
+          const lineTotal = formatCedis(unitPrice * qty);
           const isCustomSize = line?.size === 'CUSTOM' && line?.customSize;
 
           return (
