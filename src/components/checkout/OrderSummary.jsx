@@ -8,6 +8,7 @@ import {
 } from '../../contexts/cart/cartSelectors';
 import { getPrimaryImageUrl } from '../../utils/productImages';
 import { validateDiscount } from '../../api/discounts';
+import { formatCedis } from '../../utils/formatCurrency';
 
 import { EXPRESS_SERVICE_FEE_PER_ITEM } from '../../constants/order';
 
@@ -28,10 +29,6 @@ const OrderSummary = ({ onExpressServiceChange, onDiscountChange }) => {
   const subtotalBeforeDiscount = baseSubtotal + expressServiceFee;
   const discountAmount = appliedDiscount?.amount ?? 0;
   const finalTotal = Math.max(0, subtotalBeforeDiscount - discountAmount);
-
-  const formatPrice = price => {
-    return `GHC ${price.toFixed(2)}`;
-  };
 
   const handleExpressServiceToggle = checked => {
     setIsExpressService(checked);
@@ -164,7 +161,7 @@ const OrderSummary = ({ onExpressServiceChange, onDiscountChange }) => {
                   Size: {item.size} • Qty: {item.quantity}
                 </p>
                 <p className="text-sm font-medium text-msq-purple-rich font-lato">
-                  {formatPrice(item.price * item.quantity)}
+                  {formatCedis(item.price * item.quantity)}
                 </p>
               </div>
             </div>
@@ -203,7 +200,7 @@ const OrderSummary = ({ onExpressServiceChange, onDiscountChange }) => {
                 </span>
                 {isExpressService && (
                   <span className="ml-2 px-2 py-0.5 text-xs font-semibold bg-msq-purple-rich text-white rounded">
-                    +{formatPrice(expressServiceFee)}
+                    +{formatCedis(expressServiceFee)}
                   </span>
                 )}
               </div>
@@ -270,7 +267,7 @@ const OrderSummary = ({ onExpressServiceChange, onDiscountChange }) => {
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-600 font-lato">Items ({itemCount})</span>
             <span className="text-sm font-medium text-gray-900 font-lato">
-              {formatPrice(baseSubtotal)}
+              {formatCedis(baseSubtotal)}
             </span>
           </div>
 
@@ -282,7 +279,7 @@ const OrderSummary = ({ onExpressServiceChange, onDiscountChange }) => {
                 <span>Express Service ({itemCount} items)</span>
               </span>
               <span className="text-sm font-medium text-msq-purple-rich font-lato">
-                {formatPrice(expressServiceFee)}
+                {formatCedis(expressServiceFee)}
               </span>
             </div>
           )}
@@ -295,7 +292,7 @@ const OrderSummary = ({ onExpressServiceChange, onDiscountChange }) => {
                 <span>Discount ({appliedDiscount.code})</span>
               </span>
               <span className="text-sm font-medium text-green-600 font-lato">
-                -{formatPrice(appliedDiscount.amount)}
+                -{formatCedis(appliedDiscount.amount)}
               </span>
             </div>
           )}
@@ -314,13 +311,13 @@ const OrderSummary = ({ onExpressServiceChange, onDiscountChange }) => {
             <div className="flex justify-between items-center">
               <span className="text-sm text-gray-600 font-lato">Subtotal</span>
               <span className="text-sm font-medium text-gray-900 font-lato">
-                {formatPrice(subtotalBeforeDiscount)}
+                {formatCedis(subtotalBeforeDiscount)}
               </span>
             </div>
             <div className="flex justify-between items-center mt-2">
               <span className="text-lg font-bebas text-gray-900">Final total</span>
               <span className="text-lg font-bebas font-bold text-msq-purple-rich">
-                {formatPrice(finalTotal)}
+                {formatCedis(finalTotal)}
               </span>
             </div>
           </div>
