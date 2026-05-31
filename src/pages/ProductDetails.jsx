@@ -10,7 +10,6 @@ const SizeSelect = lazy(() => import('../components/products/SizeSelect'));
 const ProductInfo = lazy(() => import('../components/products/ProductInfo'));
 const GalleryImages = lazy(() => import('../components/products/GalleryImages'));
 const QuantitySelector = lazy(() => import('../components/products/QuantitySelector'));
-const CustomSizeInput = lazy(() => import('../components/products/CustomSizeInput'));
 const VariantSelector = lazy(() => import('../components/products/VariantSelector'));
 import ProductSection from '../components/products/ProductSection';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
@@ -224,32 +223,26 @@ function ProductDetails() {
               </ProductSection>
             ) : null}
 
-            {/* Size Selector */}
-            <ProductSection>
-              <Suspense fallback={null}>
-                <SizeSelect selected={selectedSize} onChange={setSelectedSize}></SizeSelect>
-              </Suspense>
-            </ProductSection>
-
-            {/* Custom Size Input */}
-            {supportsCustomSizing(product?.category) && (
-              <ProductSection>
-                <Suspense fallback={null}>
-                  <CustomSizeInput
-                    category={product?.category}
-                    measurements={customMeasurements}
-                    onMeasurementsChange={setCustomMeasurements}
-                    onToggleCustomSize={setIsCustomSizeEnabled}
-                    isCustomSizeEnabled={isCustomSizeEnabled}
-                  />
-                </Suspense>
-              </ProductSection>
-            )}
-
             {/* Quantity Selector */}
             <ProductSection>
               <Suspense fallback={null}>
                 <QuantitySelector quantity={selectedQuantity} onChange={setSelectedQuantity} />
+              </Suspense>
+            </ProductSection>
+
+            {/* Size Selector */}
+            <ProductSection>
+              <Suspense fallback={null}>
+                <SizeSelect
+                  selected={selectedSize}
+                  onChange={setSelectedSize}
+                  category={product?.category}
+                  customMeasurements={customMeasurements}
+                  onCustomMeasurementsChange={setCustomMeasurements}
+                  onToggleCustomSize={setIsCustomSizeEnabled}
+                  isCustomSizeEnabled={isCustomSizeEnabled}
+                  supportsCustomSizing={supportsCustomSizing(product?.category)}
+                />
               </Suspense>
             </ProductSection>
 
