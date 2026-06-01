@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Triangle } from 'lucide-react';
 import { SORT_OPTIONS, getSortLabel } from '../../constants/sortOptions';
+
+const MotionDiv = motion.div;
 
 const SortDropdown = ({
   selectedSort = 'latest',
@@ -72,24 +75,33 @@ const SortDropdown = ({
       </button>
 
       {/* Dropdown Menu */}
-      {isOpen && (
-        <div className={dropdownClasses}>
-          {SORT_OPTIONS.map(option => (
-            <button
-              key={option.value}
-              onClick={() => handleSortClick(option.value)}
-              className={`w-full whitespace-nowrap text-left px-6 py-2 text-sm transition-colors duration-200 cursor-pointer ${
-                selectedSort === option.value
-                  ? 'bg-msq-gold-light/20 text-msq-purple-deep font-medium'
-                  : 'text-msq-purple-deep hover:bg-msq-gold-light/10 hover:text-msq-purple-rich'
-              }`}
-              role="menuitem"
-            >
-              {option.label?.toUpperCase()}
-            </button>
-          ))}
-        </div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <MotionDiv
+            className={dropdownClasses}
+            initial={{ opacity: 0, y: -6, scaleY: 0.96 }}
+            animate={{ opacity: 1, y: 0, scaleY: 1 }}
+            exit={{ opacity: 0, y: -6, scaleY: 0.96 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            style={{ transformOrigin: 'top' }}
+          >
+            {SORT_OPTIONS.map(option => (
+              <button
+                key={option.value}
+                onClick={() => handleSortClick(option.value)}
+                className={`w-full whitespace-nowrap text-left px-6 py-2 text-sm transition-colors duration-200 cursor-pointer ${
+                  selectedSort === option.value
+                    ? 'bg-msq-gold-light/20 text-msq-purple-deep font-medium'
+                    : 'text-msq-purple-deep hover:bg-msq-gold-light/10 hover:text-msq-purple-rich'
+                }`}
+                role="menuitem"
+              >
+                {option.label?.toUpperCase()}
+              </button>
+            ))}
+          </MotionDiv>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
