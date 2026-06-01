@@ -1,17 +1,14 @@
 import { Link } from 'react-router';
 import Button from '../ui/Button';
 import { LoadStagger, StaggerItem } from '../ui/motion/MotionWrappers';
+import HeroSlideshow from './HeroSlideshow';
+
+const heroImageSrc =
+  'https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_1920,c_limit/v1761952396/misqabbi/products/CSI_0053_sqkfoq.jpg';
 
 const HeroDesktop = () => (
   <section className="relative w-full h-screen max-w-screen-6xl mx-auto overflow-hidden">
-    {/* Hero image */}
-    <img
-      src="https://res.cloudinary.com/dyciw970t/image/upload/f_auto,q_auto,w_1920,c_limit/v1761952396/misqabbi/products/CSI_0053_sqkfoq.jpg"
-      alt="Hero Image"
-      className="absolute inset-0 w-full h-full object-cover object-center"
-      fetchPriority="high"
-      loading="eager"
-    />
+    <HeroSlideshow firstImageSrc={heroImageSrc} />
     <div className="absolute inset-0 bg-black/42" />
     {/* Content container */}
     <div className="relative z-10 h-full px-8 flex items-center justify-center">
