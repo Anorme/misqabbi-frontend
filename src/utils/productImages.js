@@ -30,3 +30,15 @@ export const getPrimaryImageUrl = (product, placeholder = 'https://via.placehold
   const url = getImageUrl(firstImage);
   return url || placeholder;
 };
+
+/**
+ * Gets the secondary (second) image URL from a product's images array
+ * @param {{ images?: (string | { url: string, publicId: string })[] }} product
+ * @returns {string} The second image URL or empty string
+ */
+export const getSecondaryImageUrl = product => {
+  if (!product?.images || !Array.isArray(product.images) || product.images.length < 2) {
+    return '';
+  }
+  return getImageUrl(product.images[1]);
+};
