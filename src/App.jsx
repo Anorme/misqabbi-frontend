@@ -6,6 +6,7 @@ import AuthBoundaryModal from './components/auth/AuthBoundaryModal';
 import ScrollToTop from './components/ui/ScrollToTop';
 import PageLoader from './components/ui/PageLoader';
 import AdminBoundary from './components/auth/AdminBoundary';
+import ProductDetailsSkeleton from './components/products/ProductDetailsSkeleton';
 
 import './App.css';
 
@@ -242,7 +243,7 @@ const App = () => {
           path="/product/:slug"
           element={
             <MainLayout>
-              <Suspense fallback={<PageLoader />}>
+              <Suspense fallback={<ProductDetailsSkeleton />}>
                 <ProductDetails />
               </Suspense>
             </MainLayout>
