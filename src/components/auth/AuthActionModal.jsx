@@ -69,11 +69,21 @@ const AuthActionModal = ({
     onClose();
   };
 
+  const handleModalContentClick = event => {
+    event.stopPropagation();
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
-        <MotionModal className="fixed inset-0 bg-transparent bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 border border-gray-100">
+        <MotionModal
+          className="fixed inset-0 bg-transparent bg-opacity-50 z-50 flex items-center justify-center p-4"
+          onClick={onClose}
+        >
+          <div
+            className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 border border-gray-100"
+            onClick={handleModalContentClick}
+          >
             {/* Header with Close Button */}
             <div className="flex items-start justify-between mb-5">
               <div className="flex-1 pr-4">
