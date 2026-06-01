@@ -1,9 +1,16 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
+import { Search } from 'lucide-react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
+import Lightbox from 'yet-another-react-lightbox';
+import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
+import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+import 'yet-another-react-lightbox/styles.css';
 import { getImageUrl, getPrimaryImageUrl } from '../../utils/productImages';
 import FavoritesLinkButton from '../favorites/FavoritesLinkButton';
 
+const AUTO_SCROLL_INTERVAL_MS = 3500;
+const AUTO_SCROLL_RESUME_DELAY_MS = 10000;
 const ZOOM_EPSILON = 0.05;
 
 function GalleryImages({
@@ -14,6 +21,10 @@ function GalleryImages({
   onFavoriteAuthRequired,
 }) {
   const [isImageZoomed, setIsImageZoomed] = useState(false);
+  const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const autoScrollResumeTimeoutRef = useRef(null);
+  const isPointerOverGalleryRef = useRef(false);
   const galleryImages = useMemo(() => {
     if (product?.images?.length) {
       return product.images;
@@ -24,6 +35,14 @@ function GalleryImages({
   }, [product]);
 
   const hasMultipleImages = galleryImages.length > 1;
+  const lightboxSlides = useMemo(
+    () =>
+      galleryImages.map((img, idx) => ({
+        src: getImageUrl(img),
+        alt: `${product?.name || 'Product'} image ${idx + 1}`,
+      })),
+    [galleryImages, product?.name]
+  );
   const [mainEmblaRef, mainEmblaApi] = useEmblaCarousel({
     align: 'start',
     loop: hasMultipleImages,
@@ -36,12 +55,65 @@ function GalleryImages({
     loop: false,
   });
 
+  const clearAutoScrollResume = useCallback(() => {
+    if (autoScrollResumeTimeoutRef.current) {
+      window.clearTimeout(autoScrollResumeTimeoutRef.current);
+      autoScrollResumeTimeoutRef.current = null;
+    }
+  }, []);
+
+  const pauseAutoScroll = useCallback(() => {
+    clearAutoScrollResume();
+    setIsAutoScrollPaused(true);
+  }, [clearAutoScrollResume]);
+
+  const resumeAutoScroll = useCallback(() => {
+    clearAutoScrollResume();
+    setIsAutoScrollPaused(false);
+  }, [clearAutoScrollResume]);
+
+  const scheduleAutoScrollResume = useCallback(
+    (resumeWhilePointerOver = false) => {
+      clearAutoScrollResume();
+      autoScrollResumeTimeoutRef.current = window.setTimeout(() => {
+        if (resumeWhilePointerOver || !isPointerOverGalleryRef.current) {
+          setIsAutoScrollPaused(false);
+        }
+
+        autoScrollResumeTimeoutRef.current = null;
+      }, AUTO_SCROLL_RESUME_DELAY_MS);
+    },
+    [clearAutoScrollResume]
+  );
+
+  const handleGalleryMouseEnter = useCallback(() => {
+    isPointerOverGalleryRef.current = true;
+    pauseAutoScroll();
+  }, [pauseAutoScroll]);
+
+  const handleGalleryMouseLeave = useCallback(() => {
+    isPointerOverGalleryRef.current = false;
+    resumeAutoScroll();
+  }, [resumeAutoScroll]);
+
+  const handleLightboxOpen = useCallback(() => {
+    pauseAutoScroll();
+    setIsLightboxOpen(true);
+  }, [pauseAutoScroll]);
+
+  const handleLightboxClose = useCallback(() => {
+    setIsLightboxOpen(false);
+    scheduleAutoScrollResume(true);
+  }, [scheduleAutoScrollResume]);
+
   const handleThumbnailClick = useCallback(
     idx => {
+      pauseAutoScroll();
       onImageSelect?.(idx);
       mainEmblaApi?.scrollTo(idx);
+      scheduleAutoScrollResume(true);
     },
-    [mainEmblaApi, onImageSelect]
+    [mainEmblaApi, onImageSelect, pauseAutoScroll, scheduleAutoScrollResume]
   );
 
   const handleSelect = useCallback(() => {
@@ -78,14 +150,24 @@ function GalleryImages({
   }, [galleryImages.length, mainEmblaApi, selectedIndex, thumbsEmblaApi]);
 
   useEffect(() => {
-    if (!mainEmblaApi || !hasMultipleImages || isImageZoomed) return;
+    if (
+      !mainEmblaApi ||
+      !hasMultipleImages ||
+      isImageZoomed ||
+      isAutoScrollPaused ||
+      isLightboxOpen
+    ) {
+      return;
+    }
 
     const intervalId = window.setInterval(() => {
       mainEmblaApi.scrollNext();
-    }, 3500);
+    }, AUTO_SCROLL_INTERVAL_MS);
 
     return () => window.clearInterval(intervalId);
-  }, [hasMultipleImages, isImageZoomed, mainEmblaApi]);
+  }, [hasMultipleImages, isAutoScrollPaused, isImageZoomed, isLightboxOpen, mainEmblaApi]);
+
+  useEffect(() => clearAutoScrollResume, [clearAutoScrollResume]);
 
   if (galleryImages.length === 0) {
     return null;
@@ -93,8 +175,15 @@ function GalleryImages({
 
   return (
     <div className="w-full lg:px-0">
-      <div className="relative aspect-[4/5] max-h-[calc(100svh-7rem)] min-h-0 w-full overflow-hidden sm:max-h-[calc(100svh-8rem)] lg:max-h-[calc(100vh-10rem)]">
-        <div ref={mainEmblaRef} className="h-full overflow-hidden">
+      <div
+        className="relative aspect-[4/5] max-h-[calc(100svh-7rem)] min-h-0 w-full overflow-hidden sm:max-h-[calc(100svh-8rem)] lg:max-h-[calc(100vh-10rem)]"
+        onMouseEnter={handleGalleryMouseEnter}
+        onMouseLeave={handleGalleryMouseLeave}
+        onPointerDown={pauseAutoScroll}
+        onPointerUp={scheduleAutoScrollResume}
+        onPointerCancel={scheduleAutoScrollResume}
+      >
+        <div ref={mainEmblaRef} className="relative z-0 h-full overflow-hidden">
           <ul className="flex h-full touch-pan-y">
             {galleryImages.map((img, idx) => (
               <li key={idx} className="h-full min-h-0 min-w-0 flex-[0_0_100%]">
@@ -108,9 +197,15 @@ function GalleryImages({
                   wheel={{ disabled: true }}
                   pinch={{ step: 5 }}
                   centerOnInit={true}
-                  onPinchingStart={() => setIsImageZoomed(true)}
+                  onPinchingStart={() => {
+                    pauseAutoScroll();
+                    setIsImageZoomed(true);
+                  }}
                   onPinchingStop={({ state }) => setIsImageZoomed(state.scale > 1 + ZOOM_EPSILON)}
-                  onZoomStart={() => setIsImageZoomed(true)}
+                  onZoomStart={() => {
+                    pauseAutoScroll();
+                    setIsImageZoomed(true);
+                  }}
                   onZoomStop={({ state }) => setIsImageZoomed(state.scale > 1 + ZOOM_EPSILON)}
                 >
                   <TransformComponent wrapperClass="!w-full !h-full" contentClass="!w-full !h-full">
@@ -129,13 +224,22 @@ function GalleryImages({
         </div>
 
         {favoriteProduct ? (
-          <div className="absolute top-3 right-3 z-10">
+          <div className="absolute top-3 right-3 z-20">
             <FavoritesLinkButton
               product={favoriteProduct}
               onAuthRequired={onFavoriteAuthRequired}
             />
           </div>
         ) : null}
+
+        <button
+          type="button"
+          onClick={handleLightboxOpen}
+          className="absolute bottom-3 left-3 z-20 flex cursor-pointer items-center text-msq-gold-light transition-colors duration-200 hover:text-msq-gold focus:outline-none focus-visible:ring-2 focus-visible:ring-msq-gold-light"
+          aria-label="View product image fullscreen"
+        >
+          <Search className="hover:stroke-msq-gold" size={30} aria-hidden="true" />
+        </button>
       </div>
 
       <div className="pt-2 sm:pt-3 lg:pt-4">
@@ -170,6 +274,14 @@ function GalleryImages({
           </ul>
         </div>
       </div>
+
+      <Lightbox
+        open={isLightboxOpen}
+        close={handleLightboxClose}
+        index={selectedIndex}
+        slides={lightboxSlides}
+        plugins={[Fullscreen, Zoom]}
+      />
     </div>
   );
 }
