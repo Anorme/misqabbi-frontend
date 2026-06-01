@@ -4,8 +4,8 @@ import { useParams, useNavigate } from 'react-router';
 import Pagination from '../components/ui/Pagination.jsx';
 import ProductGrid from '../components/products/ProductGrid.jsx';
 import ProductCard from '../components/products/ProductCard.jsx';
+import ProductGridSkeleton from '../components/products/ProductGridSkeleton.jsx';
 import SEO from '../components/SEO';
-import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
 
 import { useCatalogState, useCatalogDispatch } from '../contexts/catalog/useCatalog.js';
 import { setPage, setTotalPages, setProducts } from '../contexts/catalog/catalogActions.js';
@@ -46,6 +46,7 @@ const CategoryPage = () => {
   const {
     data: productsData,
     isLoading: loading,
+    isFetching,
     isError,
     error,
   } = useProducts(
@@ -59,6 +60,7 @@ const CategoryPage = () => {
       enabled: !!category, // Only fetch if category exists
     }
   );
+  const isGridLoading = loading || isFetching;
 
   // Sync query data back to catalog context for consistency
   useEffect(() => {
@@ -94,10 +96,8 @@ const CategoryPage = () => {
           <p className="text-gray-600 mt-2">{categoryDescription}</p>
         </div>
 
-        {loading ? (
-          <div className="flex w-full justify-center items-center lg:ml-[3rem] mt-[3rem] lg:mt-[5rem] py-16">
-            <LoadingSpinner size={100} color="#cfb484" />
-          </div>
+        {isGridLoading ? (
+          <ProductGridSkeleton />
         ) : isError ? (
           <p className="text-center text-red-500">{error?.message || 'Failed to load products'}</p>
         ) : (
