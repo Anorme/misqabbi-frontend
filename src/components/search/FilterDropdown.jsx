@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Triangle } from 'lucide-react';
 import { useCatalogState, useCatalogDispatch } from '../../contexts/catalog/useCatalog';
 import { openFilterModal } from '../../contexts/catalog/catalogActions';
+
+const MotionDiv = motion.div;
 
 const FilterDropdown = ({ variant = 'desktop', className = '' }) => {
   const { priceFilter } = useCatalogState();
@@ -76,17 +79,26 @@ const FilterDropdown = ({ variant = 'desktop', className = '' }) => {
       </button>
 
       {/* Dropdown Menu */}
-      {isOpen && (
-        <div className={dropdownClasses}>
-          <button
-            onClick={handleFilterClick}
-            className="w-full whitespace-nowrap text-left px-6 py-2 text-sm transition-colors duration-200 cursor-pointer text-msq-purple-deep hover:bg-msq-gold-light/10 hover:text-msq-purple-rich"
-            role="menuitem"
+      <AnimatePresence>
+        {isOpen && (
+          <MotionDiv
+            className={dropdownClasses}
+            initial={{ opacity: 0, y: -6, scaleY: 0.96 }}
+            animate={{ opacity: 1, y: 0, scaleY: 1 }}
+            exit={{ opacity: 0, y: -6, scaleY: 0.96 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            style={{ transformOrigin: 'top' }}
           >
-            PRICE
-          </button>
-        </div>
-      )}
+            <button
+              onClick={handleFilterClick}
+              className="w-full whitespace-nowrap text-left px-6 py-2 text-sm transition-colors duration-200 cursor-pointer text-msq-purple-deep hover:bg-msq-gold-light/10 hover:text-msq-purple-rich"
+              role="menuitem"
+            >
+              PRICE
+            </button>
+          </MotionDiv>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
