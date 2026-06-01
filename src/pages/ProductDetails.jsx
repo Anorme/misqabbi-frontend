@@ -12,7 +12,7 @@ const GalleryImages = lazy(() => import('../components/products/GalleryImages'))
 const QuantitySelector = lazy(() => import('../components/products/QuantitySelector'));
 const VariantSelector = lazy(() => import('../components/products/VariantSelector'));
 import ProductSection from '../components/products/ProductSection';
-import { LoadingSpinner } from '../components/ui/LoadingSpinner.jsx';
+import ProductDetailsSkeleton from '../components/products/ProductDetailsSkeleton';
 import Button from '../components/ui/Button';
 import ProductCard from '../components/products/ProductCard';
 import AuthActionModal from '../components/auth/AuthActionModal';
@@ -141,12 +141,7 @@ function ProductDetails() {
     setSelectedImageIndex(0); // Reset to first image when variant changes
   };
 
-  if (loading)
-    return (
-      <div className="min-h-[40vh] flex items-center justify-center">
-        <LoadingSpinner size={80} color="#cfb484" />
-      </div>
-    );
+  if (loading) return <ProductDetailsSkeleton />;
   if (isError)
     return (
       <p className="p-4 text-red-500">
