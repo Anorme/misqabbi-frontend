@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Triangle } from 'lucide-react';
 import { CATEGORIES, getCategoryLabel } from '../../constants/categories';
+
+const MotionDiv = motion.div;
 
 const CategoryDropdown = ({ selectedCategory = '', variant = 'desktop', className = '' }) => {
   const navigate = useNavigate();
@@ -75,24 +78,34 @@ const CategoryDropdown = ({ selectedCategory = '', variant = 'desktop', classNam
       </button>
 
       {/* Dropdown Menu */}
-      {isOpen && (
-        <div className={dropdownClasses}>
-          {CATEGORIES.map(category => (
-            <button
-              key={category.value}
-              onClick={() => handleCategoryClick(category.value)}
-              className={`w-full text-left px-4 py-2 text-sm transition-colors duration-200 cursor-pointer ${
-                selectedCategory === category.value || (!selectedCategory && category.value === '')
-                  ? 'bg-msq-gold-light/20 text-msq-purple-deep font-medium'
-                  : 'text-msq-purple-deep hover:bg-msq-gold-light/10 hover:text-msq-purple-rich'
-              }`}
-              role="menuitem"
-            >
-              {category.label}
-            </button>
-          ))}
-        </div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <MotionDiv
+            className={dropdownClasses}
+            initial={{ opacity: 0, y: -6, scaleY: 0.96 }}
+            animate={{ opacity: 1, y: 0, scaleY: 1 }}
+            exit={{ opacity: 0, y: -6, scaleY: 0.96 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            style={{ transformOrigin: 'top' }}
+          >
+            {CATEGORIES.map(category => (
+              <button
+                key={category.value}
+                onClick={() => handleCategoryClick(category.value)}
+                className={`w-full text-left px-4 py-2 text-sm transition-colors duration-200 cursor-pointer ${
+                  selectedCategory === category.value ||
+                  (!selectedCategory && category.value === '')
+                    ? 'bg-msq-gold-light/20 text-msq-purple-deep font-medium'
+                    : 'text-msq-purple-deep hover:bg-msq-gold-light/10 hover:text-msq-purple-rich'
+                }`}
+                role="menuitem"
+              >
+                {category.label}
+              </button>
+            ))}
+          </MotionDiv>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
