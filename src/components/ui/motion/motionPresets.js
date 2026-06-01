@@ -17,6 +17,24 @@ export const fadeOnly = {
   },
 };
 
+export const presenceFade = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: motionTimings.fast,
+      ease: motionEasing,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: motionTimings.fast,
+      ease: motionEasing,
+    },
+  },
+};
+
 export const fadeUp = {
   hidden: { opacity: 0, y: 16 },
   visible: {
@@ -60,6 +78,92 @@ export const slideFromRight = {
     x: 0,
     transition: {
       duration: motionTimings.base,
+      ease: motionEasing,
+    },
+  },
+};
+
+export const dropdownBelow = {
+  hidden: { opacity: 0, y: -6, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.18,
+      ease: motionEasing,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -6,
+    scale: 0.98,
+    transition: {
+      duration: 0.14,
+      ease: motionEasing,
+    },
+  },
+};
+
+export const dropdownAbove = {
+  hidden: { opacity: 0, y: 6, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.18,
+      ease: motionEasing,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: 6,
+    scale: 0.98,
+    transition: {
+      duration: 0.14,
+      ease: motionEasing,
+    },
+  },
+};
+
+export const bottomSheet = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.26,
+      ease: motionEasing,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: 16,
+    transition: {
+      duration: 0.2,
+      ease: motionEasing,
+    },
+  },
+};
+
+export const modalPop = {
+  hidden: { opacity: 0, y: 8, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.22,
+      ease: motionEasing,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: 8,
+    scale: 0.96,
+    transition: {
+      duration: 0.16,
       ease: motionEasing,
     },
   },
