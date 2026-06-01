@@ -1,11 +1,16 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { forwardRef } from 'react';
 import {
+  bottomSheet,
   createStaggerContainer,
+  dropdownAbove,
+  dropdownBelow,
   fadeOnly,
   fadeUp,
+  modalPop,
   motionEasing,
   motionTimings,
+  presenceFade,
   slideInLeft,
 } from './motionPresets';
 
@@ -163,3 +168,84 @@ export const SlidePanel = forwardRef(({ className = '', children, isOpen, ...pro
 });
 
 SlidePanel.displayName = 'SlidePanel';
+
+export const MotionDropdown = forwardRef(
+  ({ className = '', children, placement = 'bottom', ...props }, ref) => {
+    const shouldReduceMotion = useReducedMotion();
+    const variants = placement === 'top' ? dropdownAbove : dropdownBelow;
+
+    return (
+      <motion.div
+        ref={ref}
+        className={className}
+        variants={shouldReduceMotion ? presenceFade : variants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        {...props}
+      >
+        {children}
+      </motion.div>
+    );
+  }
+);
+
+MotionDropdown.displayName = 'MotionDropdown';
+
+export const MotionBottomSheet = forwardRef(({ className = '', children, ...props }, ref) => {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      variants={shouldReduceMotion ? presenceFade : bottomSheet}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      {...props}
+    >
+      {children}
+    </motion.div>
+  );
+});
+
+MotionBottomSheet.displayName = 'MotionBottomSheet';
+
+export const MotionOverlay = forwardRef(({ className = '', children, ...props }, ref) => {
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      variants={presenceFade}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      {...props}
+    >
+      {children}
+    </motion.div>
+  );
+});
+
+MotionOverlay.displayName = 'MotionOverlay';
+
+export const MotionModal = forwardRef(({ className = '', children, ...props }, ref) => {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      variants={shouldReduceMotion ? presenceFade : modalPop}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      {...props}
+    >
+      {children}
+    </motion.div>
+  );
+});
+
+MotionModal.displayName = 'MotionModal';
