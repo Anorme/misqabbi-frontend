@@ -82,7 +82,7 @@ function GalleryImages({
 
     const intervalId = window.setInterval(() => {
       mainEmblaApi.scrollNext();
-    }, 2500);
+    }, 3500);
 
     return () => window.clearInterval(intervalId);
   }, [hasMultipleImages, isImageZoomed, mainEmblaApi]);
