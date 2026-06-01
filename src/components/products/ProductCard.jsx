@@ -5,7 +5,7 @@ import { ShoppingBag } from 'lucide-react';
 import { useCartDispatch } from '../../contexts/cart/useCart';
 import { addToCart } from '../../contexts/cart/cartActions';
 import { showAddedToCartToast } from '../../utils/showToast';
-import { getPrimaryImageUrl } from '../../utils/productImages';
+import { getPrimaryImageUrl, getSecondaryImageUrl } from '../../utils/productImages';
 import FavoritesLinkButton from '../favorites/FavoritesLinkButton';
 import AuthActionModal from '../auth/AuthActionModal';
 import useAuthAction from '../../hooks/useAuthAction';
@@ -15,6 +15,9 @@ import { formatCedis } from '../../utils/formatCurrency';
 const ProductCard = ({ product }) => {
   const dispatch = useCartDispatch();
   const { requireAuth, closeModal, isModalOpen, modalContext } = useAuthAction();
+  const primaryImageUrl = getPrimaryImageUrl(product);
+  const secondaryImageUrl = getSecondaryImageUrl(product);
+  const hasHoverImage = Boolean(secondaryImageUrl && secondaryImageUrl !== primaryImageUrl);
 
   const handleAddToCart = () => {
     dispatch(
@@ -42,10 +45,18 @@ const ProductCard = ({ product }) => {
         <Link to={`/product/${product.slug}`} className="block">
           <div className="aspect-[3/4] w-full relative">
             <img
-              src={getPrimaryImageUrl(product)}
+              src={primaryImageUrl}
               alt={product.name}
               className="absolute inset-0 w-full h-full object-cover"
             />
+            {hasHoverImage && (
+              <img
+                src={secondaryImageUrl}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
+              />
+            )}
             {/* Stock Badge */}
             <StockBadge stock={product.stock} />
           </div>
