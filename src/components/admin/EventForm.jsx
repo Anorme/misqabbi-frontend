@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import FormField from './FormField';
 import { EVENT_TYPE, EVENT_TYPES, EVENT_TYPE_LABELS } from '../../constants/events';
+import { decodeHtmlEntities } from '../../utils/decodeHtmlEntities';
 
 const TYPE_OPTIONS = EVENT_TYPES.map(value => ({
   value,
@@ -60,16 +61,16 @@ const EventForm = ({ initialData = null, onSubmit, isLoading, error: submitError
     }
 
     const venue = {
-      name: formData.venueName.trim(),
-      address: formData.venueAddress.trim(),
-      url: formData.venueUrl.trim(),
+      name: decodeHtmlEntities(formData.venueName).trim(),
+      address: decodeHtmlEntities(formData.venueAddress).trim(),
+      url: decodeHtmlEntities(formData.venueUrl).trim(),
     };
 
     const payload = {
-      name: formData.name.trim(),
+      name: decodeHtmlEntities(formData.name).trim(),
       description: formData.description,
-      eventDate: new Date(formData.eventDate).toISOString(),
-      type: formData.type,
+      eventDate: new Date(decodeHtmlEntities(formData.eventDate)).toISOString(),
+      type: decodeHtmlEntities(formData.type),
       maxAttendees,
     };
     if (venue.name || venue.address || venue.url) payload.venue = venue;
