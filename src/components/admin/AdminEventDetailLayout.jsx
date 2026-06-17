@@ -5,8 +5,8 @@ import { getEventStatusColor, getEventTypeColor } from '../../utils/events';
 export const DETAIL_TABS = [
   { key: 'overview', label: 'Overview', path: '' },
   { key: 'tickets', label: 'Tickets', path: 'tickets', paidOnly: true },
-  { key: 'registration-form', label: 'Registration Form', path: 'registration-form', stub: true },
-  { key: 'volunteer-form', label: 'Volunteer Form', path: 'volunteer-form', stub: true },
+  { key: 'registration-form', label: 'Registration Form', path: 'registration-form' },
+  { key: 'volunteer-form', label: 'Volunteer Form', path: 'volunteer-form' },
   { key: 'attendees', label: 'Attendees', path: 'attendees', stub: true },
   { key: 'volunteers', label: 'Volunteers', path: 'volunteers', stub: true },
 ];

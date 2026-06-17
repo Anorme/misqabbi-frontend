@@ -53,6 +53,8 @@ const AdminEventNew = lazy(() => import('./pages/admin/AdminEventNew'));
 const AdminEventDetail = lazy(() => import('./pages/admin/AdminEventDetail'));
 const AdminEventEdit = lazy(() => import('./pages/admin/AdminEventEdit'));
 const AdminEventTickets = lazy(() => import('./pages/admin/AdminEventTickets'));
+const AdminEventRegistrationForm = lazy(() => import('./pages/admin/AdminEventRegistrationForm'));
+const AdminEventVolunteerForm = lazy(() => import('./pages/admin/AdminEventVolunteerForm'));
 
 const App = () => {
   return (
@@ -374,6 +376,22 @@ const App = () => {
             element={
               <Suspense fallback={<PageLoader />}>
                 <AdminEventTickets />
+              </Suspense>
+            }
+          />
+          <Route
+            path="events/:id/registration-form"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AdminEventRegistrationForm />
+              </Suspense>
+            }
+          />
+          <Route
+            path="events/:id/volunteer-form"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AdminEventVolunteerForm />
               </Suspense>
             }
           />
