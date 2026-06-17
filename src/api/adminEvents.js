@@ -13,6 +13,12 @@ const buildQueryString = params => {
   return qs.toString();
 };
 
+const appendNonEmptyString = (formData, key, value) => {
+  if (typeof value !== 'string') return;
+  const trimmed = value.trim();
+  if (trimmed) formData.append(key, trimmed);
+};
+
 /**
  * Build FormData for event create/update with optional banner file.
  * @param {Object} data - Event fields
@@ -25,12 +31,14 @@ export const buildEventFormData = (data, bannerFile) => {
   if (data.description != null) formData.append('description', data.description);
   if (data.eventDate != null) formData.append('eventDate', data.eventDate);
   if (data.type != null) formData.append('type', data.type);
-  if (data.maxAttendees != null) formData.append('maxAttendees', String(data.maxAttendees));
-  if (data.venue?.name != null) formData.append('venue[name]', data.venue.name);
-  if (data.venue?.address != null) formData.append('venue[address]', data.venue.address);
-  if (data.venue?.url != null) formData.append('venue[url]', data.venue.url);
-  if (data.banner === null) formData.append('banner', '');
-  if (bannerFile) formData.append('banner', bannerFile);
+  const maxAttendees = Number(data.maxAttendees);
+  if (Number.isFinite(maxAttendees) && maxAttendees > 0) {
+    formData.append('maxAttendees', String(Math.trunc(maxAttendees)));
+  }
+  appendNonEmptyString(formData, 'venue[name]', data.venue?.name);
+  appendNonEmptyString(formData, 'venue[address]', data.venue?.address);
+  appendNonEmptyString(formData, 'venue[url]', data.venue?.url);
+  if (bannerFile instanceof File) formData.append('banner', bannerFile);
   return formData;
 };
 
@@ -84,7 +92,7 @@ export const getAdminEventById = async id => {
  * @returns {Promise<{ success, data: event }>}
  */
 export const updateAdminEvent = async (id, data, bannerFile) => {
-  if (bannerFile || data.banner === null) {
+  if (bannerFile) {
     const formData = buildEventFormData(data, bannerFile);
     const res = await axios.patch(`${BASE}/${id}`, formData, withCredentials);
     if (!res.data?.success) throw new Error(res.data?.error || 'Failed to update event');
