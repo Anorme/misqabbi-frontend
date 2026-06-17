@@ -6,3 +6,4 @@ export {
   getRegistrationStatusColor,
   getVolunteerStatusColor,
 } from './statusBadges';
+export { validateEventForm } from './validateEventForm';
