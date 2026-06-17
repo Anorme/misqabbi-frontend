@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { decodeHtmlEntities } from '../utils/decodeHtmlEntities';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
 const BASE = `${API_URL}/admin/events`;
@@ -15,7 +16,7 @@ const buildQueryString = params => {
 
 const appendNonEmptyString = (formData, key, value) => {
   if (typeof value !== 'string') return;
-  const trimmed = value.trim();
+  const trimmed = decodeHtmlEntities(value).trim();
   if (trimmed) formData.append(key, trimmed);
 };
 
@@ -27,10 +28,10 @@ const appendNonEmptyString = (formData, key, value) => {
  */
 export const buildEventFormData = (data, bannerFile) => {
   const formData = new FormData();
-  if (data.name != null) formData.append('name', data.name);
+  if (data.name != null) formData.append('name', decodeHtmlEntities(data.name));
   if (data.description != null) formData.append('description', data.description);
-  if (data.eventDate != null) formData.append('eventDate', data.eventDate);
-  if (data.type != null) formData.append('type', data.type);
+  if (data.eventDate != null) formData.append('eventDate', decodeHtmlEntities(data.eventDate));
+  if (data.type != null) formData.append('type', decodeHtmlEntities(data.type));
   const maxAttendees = Number(data.maxAttendees);
   if (Number.isFinite(maxAttendees) && maxAttendees > 0) {
     formData.append('maxAttendees', String(Math.trunc(maxAttendees)));
