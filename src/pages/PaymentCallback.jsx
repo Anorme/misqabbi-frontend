@@ -4,6 +4,7 @@ import { verifyPayment } from '../api/payments';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { useCartDispatch } from '../contexts/cart/useCart';
 import { clearCart } from '../contexts/cart/cartActions';
+import { getPaymentCallbackDestination } from '../utils/events/paymentCallbackRouting';
 
 const PaymentCallback = () => {
   const [searchParams] = useSearchParams();
@@ -20,13 +21,22 @@ const PaymentCallback = () => {
     (async () => {
       try {
         const res = await verifyPayment(reference);
-        const orderId = res?.data?.order;
-        if (!orderId) throw new Error('Order not found after payment');
+        const destination = getPaymentCallbackDestination(res, reference);
 
-        // Clear cart after successful payment verification
+        if (destination.type === 'error') {
+          throw new Error(destination.message);
+        }
+
+        if (destination.type === 'event_ticket') {
+          navigate(
+            `/events/${destination.slug}/confirmation?reference=${encodeURIComponent(destination.reference)}`,
+            { replace: true }
+          );
+          return;
+        }
+
         cartDispatch(clearCart());
-
-        navigate(`/orders/${orderId}`, { replace: true });
+        navigate(`/orders/${destination.orderId}`, { replace: true });
       } catch (e) {
         setError(e?.message || 'Verification failed');
       }
