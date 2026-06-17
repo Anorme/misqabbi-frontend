@@ -7,7 +7,7 @@ export const DETAIL_TABS = [
   { key: 'tickets', label: 'Tickets', path: 'tickets', paidOnly: true },
   { key: 'registration-form', label: 'Registration Form', path: 'registration-form' },
   { key: 'volunteer-form', label: 'Volunteer Form', path: 'volunteer-form' },
-  { key: 'attendees', label: 'Attendees', path: 'attendees', stub: true },
+  { key: 'attendees', label: 'Attendees', path: 'attendees' },
   { key: 'volunteers', label: 'Volunteers', path: 'volunteers', stub: true },
 ];
 
