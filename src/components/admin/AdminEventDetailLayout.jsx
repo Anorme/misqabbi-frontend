@@ -8,7 +8,7 @@ export const DETAIL_TABS = [
   { key: 'registration-form', label: 'Registration Form', path: 'registration-form' },
   { key: 'volunteer-form', label: 'Volunteer Form', path: 'volunteer-form' },
   { key: 'attendees', label: 'Attendees', path: 'attendees' },
-  { key: 'volunteers', label: 'Volunteers', path: 'volunteers', stub: true },
+  { key: 'volunteers', label: 'Volunteers', path: 'volunteers' },
 ];
 
 const AdminEventDetailLayout = ({
