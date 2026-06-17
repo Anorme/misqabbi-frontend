@@ -1,9 +1,10 @@
 import { useEffect, useMemo } from 'react';
-import { Link, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import { Calendar, MapPin, Users } from 'lucide-react';
 
 import SEO from '../components/SEO';
 import Button from '../components/ui/Button';
+import EventRegistrationPanel from '../components/events/EventRegistrationPanel';
 import NotFound from '../components/ui/NotFound';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { useEvent } from '../hooks/queries/useEvents';
@@ -25,6 +26,7 @@ const getSpotsLabel = spotsRemaining => {
 
 const EventDetails = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const { data, isLoading, isError, error } = useEvent(slug);
 
   const event = data?.data || null;
@@ -170,15 +172,26 @@ const EventDetails = () => {
 
           <aside className="space-y-6">
             {isFree && (
-              <section className="bg-white rounded-lg border border-gray-200 p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-2">Registration</h2>
-                <p className="text-sm text-gray-600 mb-4">
-                  Reserve your spot for this free event. Online registration opens soon.
-                </p>
-                <Button variant="primary" className="w-full px-4 py-3 text-sm" disabled>
-                  Coming soon
-                </Button>
-              </section>
+              <EventRegistrationPanel
+                event={event}
+                onSuccess={(registration, payload) => {
+                  navigate(`/events/${event.slug}/confirmation`, {
+                    state: {
+                      registrationSummary: {
+                        type: 'free',
+                        event: {
+                          name: event.name,
+                          slug: event.slug,
+                          eventDate: event.eventDate,
+                          venue: event.venue,
+                        },
+                        guestInfo: payload.guestInfo,
+                        registration,
+                      },
+                    },
+                  });
+                }}
+              />
             )}
 
             {isPaid && (
