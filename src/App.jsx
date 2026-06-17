@@ -52,6 +52,7 @@ const AdminEvents = lazy(() => import('./pages/admin/AdminEvents'));
 const AdminEventNew = lazy(() => import('./pages/admin/AdminEventNew'));
 const AdminEventDetail = lazy(() => import('./pages/admin/AdminEventDetail'));
 const AdminEventEdit = lazy(() => import('./pages/admin/AdminEventEdit'));
+const AdminEventTickets = lazy(() => import('./pages/admin/AdminEventTickets'));
 
 const App = () => {
   return (
@@ -365,6 +366,14 @@ const App = () => {
             element={
               <Suspense fallback={<PageLoader />}>
                 <AdminEventEdit />
+              </Suspense>
+            }
+          />
+          <Route
+            path="events/:id/tickets"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AdminEventTickets />
               </Suspense>
             }
           />

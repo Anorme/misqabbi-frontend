@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useParams, useNavigate, NavLink } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
+import AdminEventDetailLayout from '../../components/admin/AdminEventDetailLayout';
 import { useAdminEvent } from '../../hooks/queries/useAdmin';
 import { useUpdateAdminEventStatus } from '../../hooks/mutations/useEventMutations';
 import {
@@ -16,15 +17,6 @@ import {
   getEventTypeColor,
 } from '../../utils/events';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
-
-const DETAIL_TABS = [
-  { key: 'overview', label: 'Overview', path: '' },
-  { key: 'tickets', label: 'Tickets', path: 'tickets', paidOnly: true },
-  { key: 'registration-form', label: 'Registration Form', path: 'registration-form' },
-  { key: 'volunteer-form', label: 'Volunteer Form', path: 'volunteer-form' },
-  { key: 'attendees', label: 'Attendees', path: 'attendees' },
-  { key: 'volunteers', label: 'Volunteers', path: 'volunteers' },
-];
 
 const AdminEventDetail = () => {
   const { id } = useParams();
@@ -44,18 +36,10 @@ const AdminEventDetail = () => {
   const showPaidTicketWarning =
     event?.type === EVENT_TYPE.PAID && event?.status === EVENT_STATUS.DRAFT && !hasActiveTickets;
 
-  const canPublish = event?.status === EVENT_STATUS.DRAFT;
-  const canCancel =
-    event?.status === EVENT_STATUS.DRAFT || event?.status === EVENT_STATUS.PUBLISHED;
-
   const handleStatusChange = async newStatus => {
-    const labels = {
-      [EVENT_STATUS.PUBLISHED]: 'publish',
-      [EVENT_STATUS.CANCELLED]: 'cancel',
-    };
+    const labels = { [EVENT_STATUS.PUBLISHED]: 'publish', [EVENT_STATUS.CANCELLED]: 'cancel' };
     const action = labels[newStatus] || 'update';
     if (!window.confirm(`Are you sure you want to ${action} this event?`)) return;
-
     setStatusError(null);
     try {
       await updateStatus.mutateAsync({ id, status: newStatus });
@@ -74,7 +58,7 @@ const AdminEventDetail = () => {
       </div>
     );
 
-  if (errMsg)
+  if (errMsg || !event)
     return (
       <div>
         <button
@@ -83,103 +67,28 @@ const AdminEventDetail = () => {
         >
           Back to events
         </button>
-        <div className="p-3 rounded-md bg-red-50 text-red-600 text-sm">{errMsg}</div>
-      </div>
-    );
-
-  if (!event)
-    return (
-      <div>
-        <button
-          className="mb-4 px-3 py-2 text-sm bg-gray-100 rounded-md hover:bg-gray-200"
-          onClick={() => navigate('/admin/events')}
-        >
-          Back to events
-        </button>
-        <p className="text-gray-500">Event not found.</p>
+        <div className="p-3 rounded-md bg-red-50 text-red-600 text-sm">
+          {errMsg || 'Event not found.'}
+        </div>
       </div>
     );
 
   const venueLabel = formatEventVenue(event.venue);
 
   return (
-    <div>
-      <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div>
-          <button
-            className="mb-2 px-3 py-2 text-sm bg-gray-100 rounded-md hover:bg-gray-200"
-            onClick={() => navigate('/admin/events')}
-          >
-            Back to events
-          </button>
-          <h1 className="text-2xl font-bebas text-msq-purple-rich uppercase tracking-wide">
-            {event.name}
-          </h1>
-          <p className="text-sm text-gray-500 mt-1">/{event.slug}</p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            className="px-3 py-2 text-sm bg-gray-100 rounded-md hover:bg-gray-200"
-            onClick={() => navigate(`/admin/events/${id}/edit`)}
-          >
-            Edit
-          </button>
-          {canPublish && (
-            <button
-              type="button"
-              disabled={updateStatus.isPending}
-              className="px-3 py-2 text-sm bg-emerald-600 text-white rounded-md hover:bg-emerald-700 disabled:opacity-50"
-              onClick={() => handleStatusChange(EVENT_STATUS.PUBLISHED)}
-            >
-              Publish
-            </button>
-          )}
-          {canCancel && (
-            <button
-              type="button"
-              disabled={updateStatus.isPending}
-              className="px-3 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50"
-              onClick={() => handleStatusChange(EVENT_STATUS.CANCELLED)}
-            >
-              Cancel event
-            </button>
-          )}
-        </div>
-      </div>
-
-      {showPaidTicketWarning && (
-        <div className="mb-4 p-3 rounded-md bg-amber-50 text-amber-800 text-sm border border-amber-200">
-          This paid event has no active ticket types. Add at least one active ticket before
-          publishing.
-        </div>
-      )}
-
-      {statusError && (
-        <div className="mb-4 p-3 rounded-md bg-red-50 text-red-600 text-sm">{statusError}</div>
-      )}
-
-      <nav className="mb-6 flex flex-wrap gap-2 border-b border-gray-200 pb-3">
-        {DETAIL_TABS.filter(tab => !tab.paidOnly || event.type === EVENT_TYPE.PAID).map(tab => {
-          const to = tab.path ? `/admin/events/${id}/${tab.path}` : `/admin/events/${id}`;
-          const isStub = tab.key !== 'overview';
-          return (
-            <NavLink
-              key={tab.key}
-              to={to}
-              end={!tab.path}
-              className={({ isActive }) =>
-                `px-3 py-1.5 text-sm rounded-md transition-colors ${
-                  isActive ? 'bg-msq-purple-rich text-white' : 'text-gray-600 hover:bg-gray-100'
-                } ${isStub ? 'opacity-60 pointer-events-none' : ''}`
-              }
-            >
-              {tab.label}
-            </NavLink>
-          );
-        })}
-      </nav>
-
+    <AdminEventDetailLayout
+      event={event}
+      eventId={id}
+      onBack={() => navigate('/admin/events')}
+      onEdit={() => navigate(`/admin/events/${id}/edit`)}
+      canPublish={event.status === EVENT_STATUS.DRAFT}
+      canCancel={event.status === EVENT_STATUS.DRAFT || event.status === EVENT_STATUS.PUBLISHED}
+      onPublish={() => handleStatusChange(EVENT_STATUS.PUBLISHED)}
+      onCancel={() => handleStatusChange(EVENT_STATUS.CANCELLED)}
+      isUpdatingStatus={updateStatus.isPending}
+      showPaidTicketWarning={showPaidTicketWarning}
+      statusError={statusError}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {event.banner?.url && (
           <div className="lg:col-span-3">
@@ -253,17 +162,17 @@ const AdminEventDetail = () => {
         <div className="bg-white rounded-lg border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Manage</h2>
           <ul className="space-y-2 text-sm text-gray-600">
-            <li>Tickets, forms, attendees, and volunteers will be available in upcoming tabs.</li>
             {event.type === EVENT_TYPE.PAID && (
               <li>
                 Ticket types: {ticketTypes.length} configured
                 {hasActiveTickets ? ' (active tickets available)' : ' (none active yet)'}
               </li>
             )}
+            <li>Use the tabs above to manage tickets, forms, attendees, and volunteers.</li>
           </ul>
         </div>
       </div>
-    </div>
+    </AdminEventDetailLayout>
   );
 };
 
