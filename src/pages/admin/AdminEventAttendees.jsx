@@ -186,7 +186,6 @@ const AdminEventAttendees = () => {
     <AdminEventDetailLayout
       event={event}
       eventId={id}
-      onBack={() => navigate('/admin/events')}
       onEdit={() => navigate(`/admin/events/${id}/edit`)}
       canPublish={event.status === EVENT_STATUS.DRAFT}
       canCancel={event.status === EVENT_STATUS.DRAFT || event.status === EVENT_STATUS.PUBLISHED}
