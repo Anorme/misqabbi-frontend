@@ -35,9 +35,8 @@ const getVolunteerErrorMessage = error => {
  *
  * @param {Object} props
  * @param {Object} props.event - Published event from GET /events/:slug
- * @param {(applicantInfo: Object) => void} [props.onSuccess]
  */
-const EventVolunteerPanel = ({ event, onSuccess }) => {
+const EventVolunteerPanel = ({ event }) => {
   const { currentUser, isAuthenticated } = useAuthState();
   const volunteerMutation = useSubmitVolunteerApplication();
 
@@ -49,6 +48,7 @@ const EventVolunteerPanel = ({ event, onSuccess }) => {
   }));
   const [errors, setErrors] = useState({ identity: {}, customAnswers: {} });
   const [submitError, setSubmitError] = useState('');
+  const [submittedSummary, setSubmittedSummary] = useState(null);
 
   const resolvedEmail = useMemo(
     () => (isAuthenticated ? currentUser?.email : undefined),
@@ -124,7 +124,7 @@ const EventVolunteerPanel = ({ event, onSuccess }) => {
         body: payload,
       });
 
-      onSuccess?.(payload.applicantInfo);
+      setSubmittedSummary(payload.applicantInfo);
     } catch (error) {
       setSubmitError(getVolunteerErrorMessage(error));
     }
@@ -137,6 +137,37 @@ const EventVolunteerPanel = ({ event, onSuccess }) => {
         <p className="text-sm text-gray-500">
           Volunteer applications are not available for this event.
         </p>
+      </section>
+    );
+  }
+
+  if (submittedSummary) {
+    return (
+      <section className="bg-white rounded-lg border border-gray-200 p-6">
+        <h2 className="text-lg font-semibold text-gray-900 mb-2">Volunteer</h2>
+        <div className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+          <p className="font-medium mb-1">Thank you for applying!</p>
+          <p className="text-green-700">
+            Your volunteer application has been received and is pending review. We will contact you
+            if your application is accepted.
+          </p>
+        </div>
+        {(submittedSummary.name || submittedSummary.email) && (
+          <dl className="mt-4 space-y-1 text-sm text-gray-600">
+            {submittedSummary.name && (
+              <div className="flex gap-2">
+                <dt className="font-medium text-gray-700">Name:</dt>
+                <dd>{submittedSummary.name}</dd>
+              </div>
+            )}
+            {submittedSummary.email && (
+              <div className="flex gap-2">
+                <dt className="font-medium text-gray-700">Email:</dt>
+                <dd>{submittedSummary.email}</dd>
+              </div>
+            )}
+          </dl>
+        )}
       </section>
     );
   }
