@@ -48,6 +48,10 @@ const AdminDiscounts = lazy(() => import('./pages/admin/AdminDiscounts'));
 const AdminDiscountDetail = lazy(() => import('./pages/admin/AdminDiscountDetail'));
 const AdminDiscountNew = lazy(() => import('./pages/admin/AdminDiscountNew'));
 const AdminDiscountEdit = lazy(() => import('./pages/admin/AdminDiscountEdit'));
+const AdminEvents = lazy(() => import('./pages/admin/AdminEvents'));
+const AdminEventNew = lazy(() => import('./pages/admin/AdminEventNew'));
+const AdminEventDetail = lazy(() => import('./pages/admin/AdminEventDetail'));
+const AdminEventEdit = lazy(() => import('./pages/admin/AdminEventEdit'));
 
 const App = () => {
   return (
@@ -337,6 +341,38 @@ const App = () => {
             element={
               <Suspense fallback={<PageLoader />}>
                 <AdminDiscountEdit />
+              </Suspense>
+            }
+          />
+          <Route
+            path="events"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AdminEvents />
+              </Suspense>
+            }
+          />
+          <Route
+            path="events/new"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AdminEventNew />
+              </Suspense>
+            }
+          />
+          <Route
+            path="events/:id/edit"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AdminEventEdit />
+              </Suspense>
+            }
+          />
+          <Route
+            path="events/:id"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AdminEventDetail />
               </Suspense>
             }
           />
