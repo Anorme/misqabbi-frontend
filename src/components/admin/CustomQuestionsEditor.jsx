@@ -1,3 +1,5 @@
+import { Plus } from 'lucide-react';
+
 import { FORM_QUESTION_TYPE, FORM_QUESTION_TYPES } from '../../constants/events';
 
 const TYPE_LABELS = {
@@ -8,6 +10,8 @@ const TYPE_LABELS = {
 };
 
 const createQuestionId = () => `q_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+
+const getQuestionOptions = question => (question.options?.length ? question.options : ['Option 1']);
 
 const CustomQuestionsEditor = ({ customQuestions = [], onChange }) => {
   const addQuestion = () => {
@@ -39,12 +43,40 @@ const CustomQuestionsEditor = ({ customQuestions = [], onChange }) => {
     onChange(next);
   };
 
-  const updateOptions = (index, raw) => {
-    const options = raw
-      .split('\n')
-      .map(line => line.trim())
-      .filter(Boolean);
-    updateQuestion(index, { options });
+  const updateOption = (questionIndex, optionIndex, value) => {
+    const question = customQuestions[questionIndex];
+    const options = [...getQuestionOptions(question)];
+    options[optionIndex] = value;
+    updateQuestion(questionIndex, { options });
+  };
+
+  const addOption = questionIndex => {
+    const question = customQuestions[questionIndex];
+    const options = getQuestionOptions(question);
+    updateQuestion(questionIndex, { options: [...options, `Option ${options.length + 1}`] });
+  };
+
+  const removeOption = (questionIndex, optionIndex) => {
+    const question = customQuestions[questionIndex];
+    const options = getQuestionOptions(question);
+    if (options.length <= 1) return;
+    updateQuestion(questionIndex, { options: options.filter((_, i) => i !== optionIndex) });
+  };
+
+  const moveOption = (questionIndex, optionIndex, direction) => {
+    const question = customQuestions[questionIndex];
+    const options = getQuestionOptions(question);
+    const target = optionIndex + direction;
+    if (target < 0 || target >= options.length) return;
+    const next = [...options];
+    [next[optionIndex], next[target]] = [next[target], next[optionIndex]];
+    updateQuestion(questionIndex, { options: next });
+  };
+
+  const normalizeOptions = questionIndex => {
+    const question = customQuestions[questionIndex];
+    const options = (question.options || []).map(option => option.trim()).filter(Boolean);
+    updateQuestion(questionIndex, { options: options.length ? options : ['Option 1'] });
   };
 
   return (
@@ -114,14 +146,53 @@ const CustomQuestionsEditor = ({ customQuestions = [], onChange }) => {
               </div>
 
               {question.type === FORM_QUESTION_TYPE.SELECT && (
-                <div>
-                  <label className="block text-xs text-gray-500 mb-1">Options (one per line)</label>
-                  <textarea
-                    rows={3}
-                    value={(question.options || []).join('\n')}
-                    onChange={e => updateOptions(index, e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md"
-                  />
+                <div className="space-y-2">
+                  <label className="block text-xs text-gray-500">Options</label>
+                  <ul className="space-y-2">
+                    {getQuestionOptions(question).map((option, optionIndex) => (
+                      <li key={optionIndex} className="flex flex-wrap items-center gap-2">
+                        <input
+                          type="text"
+                          value={option}
+                          onChange={e => updateOption(index, optionIndex, e.target.value)}
+                          onBlur={() => normalizeOptions(index)}
+                          className="min-w-[200px] flex-1 px-3 py-2 text-sm border border-gray-200 rounded-md"
+                        />
+                        <button
+                          type="button"
+                          disabled={optionIndex === 0}
+                          onClick={() => moveOption(index, optionIndex, -1)}
+                          className="px-2 py-1 text-xs bg-gray-100 rounded disabled:opacity-40"
+                        >
+                          Move up
+                        </button>
+                        <button
+                          type="button"
+                          disabled={optionIndex === getQuestionOptions(question).length - 1}
+                          onClick={() => moveOption(index, optionIndex, 1)}
+                          className="px-2 py-1 text-xs bg-gray-100 rounded disabled:opacity-40"
+                        >
+                          Move down
+                        </button>
+                        <button
+                          type="button"
+                          disabled={getQuestionOptions(question).length <= 1}
+                          onClick={() => removeOption(index, optionIndex)}
+                          className="px-2 py-1 text-xs text-red-600 bg-red-50 rounded hover:bg-red-100 disabled:opacity-40"
+                        >
+                          Remove
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                  <button
+                    type="button"
+                    onClick={() => addOption(index)}
+                    className="inline-flex items-center px-3 py-1.5 text-sm bg-gray-100 rounded-md hover:bg-gray-200"
+                  >
+                    <Plus className="h-4 w-4 mr-1" />
+                    Add option
+                  </button>
                 </div>
               )}
 
