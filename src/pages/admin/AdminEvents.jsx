@@ -29,16 +29,14 @@ const AdminEvents = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
-  const [q, setQ] = useState('');
   const [status, setStatus] = useState('');
   const [type, setType] = useState('');
 
   useEffect(() => {
     setPage(1);
-  }, [q, status, type]);
+  }, [status, type]);
 
   const params = { page, limit };
-  if (q.trim()) params.q = q.trim();
   if (status) params.status = status;
   if (type) params.type = type;
 
@@ -108,19 +106,12 @@ const AdminEvents = () => {
         onAction={() => navigate('/admin/events/new')}
       />
 
-      <div className="mb-4 p-4 bg-white rounded-lg border border-gray-200">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <input
-            type="search"
-            placeholder="Search events"
-            value={q}
-            onChange={e => setQ(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-msq-purple-rich focus:border-msq-purple-rich"
-          />
+      <div className="mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <select
             value={status}
             onChange={e => setStatus(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-msq-purple-rich"
+            className="px-3 py-2 rounded-md text-sm bg-white shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-msq-purple-rich"
           >
             {STATUS_OPTIONS.map(o => (
               <option key={o.value} value={o.value}>
@@ -131,7 +122,7 @@ const AdminEvents = () => {
           <select
             value={type}
             onChange={e => setType(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-msq-purple-rich"
+            className="px-3 py-2 rounded-md text-sm bg-white shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-msq-purple-rich"
           >
             {TYPE_OPTIONS.map(o => (
               <option key={o.value} value={o.value}>
