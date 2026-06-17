@@ -6,6 +6,7 @@ const NavLinks = ({ className = '', tone = 'solid' }) => {
 
   const links = [
     { to: '/shop', label: 'Shop' },
+    { to: '/events', label: 'Events' },
     { to: '/bespoke', label: 'Bespoke' },
     { to: '/about-us', label: 'About' },
     { to: '/faqs', label: 'FAQs' },
