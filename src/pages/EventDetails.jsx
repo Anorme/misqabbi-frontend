@@ -3,9 +3,9 @@ import { Link, useNavigate, useParams } from 'react-router';
 import { Calendar, MapPin, Users } from 'lucide-react';
 
 import SEO from '../components/SEO';
-import Button from '../components/ui/Button';
 import EventRegistrationPanel from '../components/events/EventRegistrationPanel';
 import EventTicketCheckout from '../components/events/EventTicketCheckout';
+import EventVolunteerPanel from '../components/events/EventVolunteerPanel';
 import NotFound from '../components/ui/NotFound';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { useEvent } from '../hooks/queries/useEvents';
@@ -186,17 +186,7 @@ const EventDetails = () => {
 
             {isPaid && <EventTicketCheckout event={event} />}
 
-            {hasVolunteerForm && (
-              <section className="bg-white rounded-lg border border-gray-200 p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-2">Volunteer</h2>
-                <p className="text-sm text-gray-600 mb-4">
-                  Interested in helping out? Volunteer applications open soon.
-                </p>
-                <Button variant="ghost" className="w-full px-4 py-3 text-sm" disabled>
-                  Coming soon
-                </Button>
-              </section>
-            )}
+            {hasVolunteerForm && <EventVolunteerPanel event={event} />}
           </aside>
         </div>
       </main>
