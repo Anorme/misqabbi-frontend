@@ -9,6 +9,16 @@ import {
   getAdminDiscountById,
   getAdminDiscountUsage,
 } from '../../api/adminDiscounts';
+import {
+  getAdminEvents,
+  getAdminEventById,
+  getAdminRegistrationForm,
+  getAdminVolunteerForm,
+  getAdminEventAttendees,
+  getAdminEventAttendeeById,
+  getAdminVolunteerApplications,
+  getAdminVolunteerApplicationById,
+} from '../../api/adminEvents';
 
 /**
  * Query hook for fetching admin dashboard data
@@ -130,6 +140,119 @@ export const useAdminDiscountUsage = (id, params = {}, options = {}) => {
     queryKey: ['admin', 'discounts', 'usage', id, params],
     queryFn: () => getAdminDiscountUsage(id, params),
     enabled: !!id,
+    staleTime: 1 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
+    ...options,
+  });
+};
+
+/**
+ * Query hook for admin events list with filters and pagination
+ */
+export const useAdminEvents = (params = {}, options = {}) => {
+  return useQuery({
+    queryKey: ['admin', 'events', 'list', params],
+    queryFn: () => getAdminEvents(params),
+    staleTime: 1 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
+    ...options,
+  });
+};
+
+/**
+ * Query hook for a single admin event by ID
+ */
+export const useAdminEvent = (id, options = {}) => {
+  return useQuery({
+    queryKey: ['admin', 'events', 'detail', id],
+    queryFn: () => getAdminEventById(id),
+    enabled: !!id,
+    staleTime: 1 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
+    ...options,
+  });
+};
+
+/**
+ * Query hook for event registration form schema
+ */
+export const useAdminEventRegistrationForm = (id, options = {}) => {
+  return useQuery({
+    queryKey: ['admin', 'events', 'registration-form', id],
+    queryFn: () => getAdminRegistrationForm(id),
+    enabled: !!id,
+    staleTime: 1 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
+    retry: false,
+    ...options,
+  });
+};
+
+/**
+ * Query hook for event volunteer form schema
+ */
+export const useAdminEventVolunteerForm = (id, options = {}) => {
+  return useQuery({
+    queryKey: ['admin', 'events', 'volunteer-form', id],
+    queryFn: () => getAdminVolunteerForm(id),
+    enabled: !!id,
+    staleTime: 1 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
+    retry: false,
+    ...options,
+  });
+};
+
+/**
+ * Query hook for event attendees (registrations)
+ */
+export const useAdminEventAttendees = (id, params = {}, options = {}) => {
+  return useQuery({
+    queryKey: ['admin', 'events', 'attendees', id, params],
+    queryFn: () => getAdminEventAttendees(id, params),
+    enabled: !!id,
+    staleTime: 1 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
+    ...options,
+  });
+};
+
+/**
+ * Query hook for a single event attendee registration
+ */
+export const useAdminEventAttendee = (eventId, registrationId, options = {}) => {
+  return useQuery({
+    queryKey: ['admin', 'events', 'attendees', eventId, 'detail', registrationId],
+    queryFn: () => getAdminEventAttendeeById(eventId, registrationId),
+    enabled: !!eventId && !!registrationId,
+    staleTime: 1 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
+    ...options,
+  });
+};
+
+/**
+ * Query hook for volunteer applications on an event
+ */
+export const useAdminVolunteerApplications = (id, params = {}, options = {}) => {
+  return useQuery({
+    queryKey: ['admin', 'events', 'volunteers', id, params],
+    queryFn: () => getAdminVolunteerApplications(id, params),
+    enabled: !!id,
+    staleTime: 1 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
+    ...options,
+  });
+};
+
+/**
+ * Query hook for a single volunteer application
+ */
+export const useAdminVolunteerApplication = (eventId, applicationId, options = {}) => {
+  return useQuery({
+    queryKey: ['admin', 'events', 'volunteers', eventId, 'detail', applicationId],
+    queryFn: () => getAdminVolunteerApplicationById(eventId, applicationId),
+    enabled: !!eventId && !!applicationId,
     staleTime: 1 * 60 * 1000,
     gcTime: 5 * 60 * 1000,
     ...options,
