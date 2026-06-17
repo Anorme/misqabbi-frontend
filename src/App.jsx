@@ -30,6 +30,7 @@ const AuthCallback = lazy(() => import('./pages/auth/AuthCallback'));
 const Bespoke = lazy(() => import('./pages/Bespoke'));
 const Events = lazy(() => import('./pages/Events'));
 const EventDetails = lazy(() => import('./pages/EventDetails'));
+const EventConfirmation = lazy(() => import('./pages/EventConfirmation'));
 const CategoryPage = lazy(() => import('./pages/CategoryPage'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails'));
 const Orders = lazy(() => import('./pages/Orders'));
@@ -117,6 +118,16 @@ const App = () => {
             <MainLayout>
               <Suspense fallback={<PageLoader />}>
                 <Events />
+              </Suspense>
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/events/:slug/confirmation"
+          element={
+            <MainLayout>
+              <Suspense fallback={<PageLoader />}>
+                <EventConfirmation />
               </Suspense>
             </MainLayout>
           }

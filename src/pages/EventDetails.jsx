@@ -1,21 +1,16 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { Calendar, MapPin, Users } from 'lucide-react';
 
 import SEO from '../components/SEO';
 import Button from '../components/ui/Button';
 import EventRegistrationPanel from '../components/events/EventRegistrationPanel';
+import EventTicketCheckout from '../components/events/EventTicketCheckout';
 import NotFound from '../components/ui/NotFound';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { useEvent } from '../hooks/queries/useEvents';
 import { EVENT_TYPE, EVENT_TYPE_LABELS } from '../constants/events';
-import { formatCurrency } from '../utils/admin/tableHelpers';
-import {
-  formatEventDate,
-  formatEventVenue,
-  getEventTypeColor,
-  pesewasToGhs,
-} from '../utils/events';
+import { formatEventDate, formatEventVenue, getEventTypeColor } from '../utils/events';
 import scrollToTop from '../utils/scrollToTop';
 
 const getSpotsLabel = spotsRemaining => {
@@ -30,11 +25,6 @@ const EventDetails = () => {
   const { data, isLoading, isError, error } = useEvent(slug);
 
   const event = data?.data || null;
-
-  const activeTickets = useMemo(
-    () => (event?.ticketTypes || []).filter(t => t.isActive),
-    [event?.ticketTypes]
-  );
 
   useEffect(() => {
     if (!isLoading && event) {
@@ -194,59 +184,7 @@ const EventDetails = () => {
               />
             )}
 
-            {isPaid && (
-              <section className="bg-white rounded-lg border border-gray-200 p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">Tickets</h2>
-                {activeTickets.length === 0 ? (
-                  <p className="text-sm text-gray-500">Tickets are not available yet.</p>
-                ) : (
-                  <ul className="space-y-3 mb-4">
-                    {activeTickets.map(ticket => {
-                      const soldOut = ticket.remainingQuantity === 0;
-                      return (
-                        <li
-                          key={ticket._id}
-                          className={`rounded-lg border p-4 ${soldOut ? 'border-gray-200 bg-gray-50 opacity-75' : 'border-gray-200'}`}
-                        >
-                          <div className="flex items-start justify-between gap-3">
-                            <div>
-                              <p className="font-medium text-gray-900">{ticket.name}</p>
-                              <p className="text-sm text-gray-600 mt-1">
-                                {formatCurrency(pesewasToGhs(ticket.pricePesewas))}
-                              </p>
-                            </div>
-                            {soldOut && (
-                              <span className="shrink-0 inline-flex px-2 py-0.5 text-xs font-medium rounded-full bg-gray-200 text-gray-700">
-                                Sold out
-                              </span>
-                            )}
-                          </div>
-                          <dl className="mt-3 grid grid-cols-2 gap-2 text-xs text-gray-600">
-                            <div>
-                              <dt className="text-gray-500">Available</dt>
-                              <dd className="font-medium text-gray-800">
-                                {ticket.remainingQuantity ?? 0}
-                              </dd>
-                            </div>
-                            {ticket.expiresAt && (
-                              <div>
-                                <dt className="text-gray-500">Sales end</dt>
-                                <dd className="font-medium text-gray-800">
-                                  {formatEventDate(ticket.expiresAt)}
-                                </dd>
-                              </div>
-                            )}
-                          </dl>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-                <Button variant="primary" className="w-full px-4 py-3 text-sm" disabled>
-                  Coming soon
-                </Button>
-              </section>
-            )}
+            {isPaid && <EventTicketCheckout event={event} />}
 
             {hasVolunteerForm && (
               <section className="bg-white rounded-lg border border-gray-200 p-6">
