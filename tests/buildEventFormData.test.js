@@ -47,4 +47,18 @@ describe('buildEventFormData', () => {
     expect(formData.get('venue[url]')).toBe('https://maps.example.com');
     expect(formData.has('venue')).toBe(false);
   });
+
+  test('decodes HTML entities from scalar fields before appending', () => {
+    const formData = buildEventFormData(
+      {
+        name: 'Summer &#x2F; Showcase',
+        eventDate: '2026-07-01T10:00:00.000Z',
+        venue: { url: 'https:&#x2F;&#x2F;maps.example.com&#x2F;event' },
+      },
+      null
+    );
+
+    expect(formData.get('name')).toBe('Summer / Showcase');
+    expect(formData.get('venue[url]')).toBe('https://maps.example.com/event');
+  });
 });
