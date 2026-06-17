@@ -29,6 +29,7 @@ const Login = lazy(() => import('./pages/Login'));
 const AuthCallback = lazy(() => import('./pages/auth/AuthCallback'));
 const Bespoke = lazy(() => import('./pages/Bespoke'));
 const Events = lazy(() => import('./pages/Events'));
+const EventDetails = lazy(() => import('./pages/EventDetails'));
 const CategoryPage = lazy(() => import('./pages/CategoryPage'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails'));
 const Orders = lazy(() => import('./pages/Orders'));
@@ -116,6 +117,16 @@ const App = () => {
             <MainLayout>
               <Suspense fallback={<PageLoader />}>
                 <Events />
+              </Suspense>
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/events/:slug"
+          element={
+            <MainLayout>
+              <Suspense fallback={<PageLoader />}>
+                <EventDetails />
               </Suspense>
             </MainLayout>
           }
