@@ -14,7 +14,6 @@ export const DETAIL_TABS = [
 const AdminEventDetailLayout = ({
   event,
   eventId,
-  onBack,
   onEdit,
   canPublish,
   canCancel,
@@ -31,16 +30,9 @@ const AdminEventDetailLayout = ({
     <div>
       <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <button
-            className="mb-2 px-3 py-2 text-sm bg-gray-100 rounded-md hover:bg-gray-200"
-            onClick={onBack}
-          >
-            Back to events
-          </button>
           <h1 className="text-2xl font-bebas text-msq-purple-rich uppercase tracking-wide">
             {event.name}
           </h1>
-          <p className="text-sm text-gray-500 mt-1">/{event.slug}</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <button
