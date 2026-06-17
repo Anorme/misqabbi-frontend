@@ -35,6 +35,8 @@ const AdminEventVolunteerForm = () => {
   const formLoadError = formIsError
     ? formError?.response?.data?.error || formError?.message || 'Failed to load volunteer form'
     : null;
+  const formSchema = formData?.data ?? null;
+  const isFormConfigured = formSchema != null;
 
   const ticketTypes = event?.ticketTypes || [];
   const hasActiveTickets = ticketTypes.some(t => t.isActive);
@@ -95,7 +97,8 @@ const AdminEventVolunteerForm = () => {
         title="Volunteer form"
         description="Configure the fields applicants fill out when applying to volunteer."
         identityKey="applicantInfo"
-        initialSchema={formData?.data}
+        initialSchema={formSchema}
+        isConfigured={isFormConfigured}
         isLoading={formLoading}
         loadError={formLoadError}
         isSaving={upsertForm.isPending}

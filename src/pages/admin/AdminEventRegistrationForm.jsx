@@ -35,6 +35,8 @@ const AdminEventRegistrationForm = () => {
   const formLoadError = formIsError
     ? formError?.response?.data?.error || formError?.message || 'Failed to load registration form'
     : null;
+  const formSchema = formData?.data ?? null;
+  const isFormConfigured = formSchema != null;
 
   const ticketTypes = event?.ticketTypes || [];
   const hasActiveTickets = ticketTypes.some(t => t.isActive);
@@ -95,7 +97,8 @@ const AdminEventRegistrationForm = () => {
         title="Registration form"
         description="Configure the fields guests fill out when registering for this event."
         identityKey="guestInfo"
-        initialSchema={formData?.data}
+        initialSchema={formSchema}
+        isConfigured={isFormConfigured}
         isLoading={formLoading}
         loadError={formLoadError}
         isSaving={upsertForm.isPending}
