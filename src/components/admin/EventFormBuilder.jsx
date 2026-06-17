@@ -13,17 +13,25 @@ export const DEFAULT_FORM_SCHEMA = {
   customQuestions: [],
 };
 
+const createDefaultFormSchema = () => ({
+  builtinFields: DEFAULT_FORM_SCHEMA.builtinFields.map(fieldConfig => ({ ...fieldConfig })),
+  customQuestions: [],
+});
+
 const EventFormBuilder = ({
   title,
   description,
   identityKey = 'guestInfo',
   initialSchema,
+  isConfigured = Boolean(initialSchema),
   isLoading,
   loadError,
   onSave,
   isSaving,
+  setupLabel,
 }) => {
-  const [schema, setSchema] = useState(DEFAULT_FORM_SCHEMA);
+  const [schema, setSchema] = useState(createDefaultFormSchema);
+  const [builderOpen, setBuilderOpen] = useState(false);
   const [saveError, setSaveError] = useState(null);
 
   useEffect(() => {
@@ -32,8 +40,12 @@ const EventFormBuilder = ({
         builtinFields: initialSchema.builtinFields ?? DEFAULT_FORM_SCHEMA.builtinFields,
         customQuestions: initialSchema.customQuestions ?? [],
       });
+      setBuilderOpen(false);
+    } else if (!isConfigured) {
+      setSchema(createDefaultFormSchema());
+      setBuilderOpen(false);
     }
-  }, [initialSchema]);
+  }, [initialSchema, isConfigured]);
 
   const handleSave = async () => {
     if (!schema.builtinFields.length) {
@@ -43,7 +55,7 @@ const EventFormBuilder = ({
     setSaveError(null);
     try {
       await onSave(schema);
-      showSuccessToast('Form saved');
+      showSuccessToast(isConfigured ? 'Form saved' : 'Form created');
     } catch (err) {
       const msg = err?.response?.data?.error || err?.message || 'Failed to save form';
       setSaveError(msg);
@@ -51,12 +63,36 @@ const EventFormBuilder = ({
     }
   };
 
+  const shouldShowBuilder = isConfigured || builderOpen;
+  const ctaLabel = setupLabel || `Set up ${title.toLowerCase()}`;
+  const saveLabel = isConfigured ? 'Save form' : 'Create form';
+
   if (isLoading) {
     return <p className="text-sm text-gray-500">Loading form…</p>;
   }
 
   if (loadError) {
     return <div className="p-3 rounded-md bg-red-50 text-red-600 text-sm">{loadError}</div>;
+  }
+
+  if (!shouldShowBuilder) {
+    return (
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+        <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+        {description && <p className="text-sm text-gray-500 mt-1">{description}</p>}
+        <p className="text-sm text-gray-600 mt-4">
+          This form has not been set up yet. Start with the default name and email fields, then
+          customize the questions before saving.
+        </p>
+        <button
+          type="button"
+          onClick={() => setBuilderOpen(true)}
+          className="mt-4 px-4 py-2 text-sm bg-msq-purple-rich text-white rounded-md shadow-sm hover:bg-msq-purple-deep cursor-pointer"
+        >
+          {ctaLabel}
+        </button>
+      </div>
+    );
   }
 
   return (
@@ -91,7 +127,7 @@ const EventFormBuilder = ({
           onClick={handleSave}
           className="px-4 py-2 text-sm bg-msq-purple-rich text-white rounded-md hover:bg-msq-purple-deep disabled:opacity-50"
         >
-          {isSaving ? 'Saving…' : 'Save form'}
+          {isSaving ? 'Saving…' : saveLabel}
         </button>
       </div>
     </div>
