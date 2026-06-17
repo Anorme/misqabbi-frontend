@@ -38,30 +38,52 @@ const EventForm = ({ initialData = null, onSubmit, isLoading, error: submitError
       removeBanner: false,
     };
   });
+  const [validationErrors, setValidationErrors] = useState({});
 
-  const update = (key, value) => setFormData(prev => ({ ...prev, [key]: value }));
+  const update = (key, value) => {
+    setFormData(prev => ({ ...prev, [key]: value }));
+    if (key === 'maxAttendees') {
+      setValidationErrors(prev => {
+        if (!prev.maxAttendees) return prev;
+        const next = { ...prev };
+        delete next.maxAttendees;
+        return next;
+      });
+    }
+  };
 
   const buildPayload = () => {
+    const maxAttendees = Number(formData.maxAttendees);
+    if (!Number.isInteger(maxAttendees) || maxAttendees <= 0) {
+      setValidationErrors({ maxAttendees: 'Max attendees must be a positive whole number.' });
+      return null;
+    }
+
+    const venue = {
+      name: formData.venueName.trim(),
+      address: formData.venueAddress.trim(),
+      url: formData.venueUrl.trim(),
+    };
+
     const payload = {
       name: formData.name.trim(),
       description: formData.description,
       eventDate: new Date(formData.eventDate).toISOString(),
       type: formData.type,
-      maxAttendees: Number(formData.maxAttendees),
-      venue: {
-        name: formData.venueName.trim(),
-        address: formData.venueAddress.trim(),
-        url: formData.venueUrl.trim(),
-      },
+      maxAttendees,
     };
+    if (venue.name || venue.address || venue.url) payload.venue = venue;
     if (formData.removeBanner) payload.banner = null;
+    setValidationErrors({});
     return payload;
   };
 
   const handleSubmit = e => {
     e.preventDefault();
+    const payload = buildPayload();
+    if (!payload) return;
     onSubmit({
-      data: buildPayload(),
+      data: payload,
       bannerFile: formData.bannerFile?.[0] || null,
     });
   };
@@ -114,6 +136,7 @@ const EventForm = ({ initialData = null, onSubmit, isLoading, error: submitError
         value={formData.maxAttendees}
         onChange={value => update('maxAttendees', value)}
         placeholder="100"
+        error={validationErrors.maxAttendees}
         required
       />
 
