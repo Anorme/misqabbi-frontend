@@ -7,6 +7,8 @@ import { validateEventForm } from '../../utils/events/validateEventForm';
 import Button from '../ui/Button';
 import DynamicEventForm from './DynamicEventForm';
 
+const panelClass = 'rounded-xl bg-white p-5 shadow-sm ring-1 ring-gray-100 sm:p-6';
+
 const buildInitialGuestInfo = (formSchema, currentUser) => {
   const guestInfo = {};
   const fields = formSchema?.builtinFields || [];
@@ -133,7 +135,7 @@ const EventRegistrationPanel = ({ event, onSuccess }) => {
 
   if (!registrationForm) {
     return (
-      <section className="bg-white rounded-lg border border-gray-200 p-6">
+      <section className={panelClass}>
         <h2 className="text-lg font-semibold text-gray-900 mb-2">Registration</h2>
         <p className="text-sm text-gray-500">Registration is not available for this event yet.</p>
       </section>
@@ -141,7 +143,7 @@ const EventRegistrationPanel = ({ event, onSuccess }) => {
   }
 
   return (
-    <section className="bg-white rounded-lg border border-gray-200 p-6">
+    <section className={panelClass}>
       <h2 className="text-lg font-semibold text-gray-900 mb-2">Registration</h2>
       <p className="text-sm text-gray-600 mb-4">
         Reserve your spot for this free event. Fill in the details below to register.
