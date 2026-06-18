@@ -39,24 +39,24 @@ const EventCard = ({ event }) => {
           </span>
         </div>
       </Link>
-      <div className="px-4 py-2">
+      <div className="py-2 text-center">
         <Link to={`/events/${event.slug}`}>
-          <h3 className="text-xs sm:text-xs md:text-sm lg:text-lg font-medium text-msq-purple uppercase text-left tracking-wide hover:text-msq-purple-rich transition-colors">
+          <h3 className="text-xs sm:text-xs md:text-sm lg:text-lg font-medium text-msq-purple uppercase tracking-wide hover:text-msq-purple-rich transition-colors">
             {event.name}
           </h3>
         </Link>
-        <p className="mt-1 text-xs sm:text-sm text-gray-600 flex items-start gap-1">
+        <p className="mt-1 flex items-start justify-center gap-1 text-xs text-gray-600 sm:text-sm">
           <Calendar className="w-3.5 h-3.5 mt-0.5 shrink-0" aria-hidden="true" />
           <span>{formatEventDate(event.eventDate)}</span>
         </p>
         {venueLabel && (
-          <p className="mt-0.5 text-xs sm:text-sm text-gray-600 flex items-start gap-1">
+          <p className="mt-0.5 flex items-start justify-center gap-1 text-xs text-gray-600 sm:text-sm">
             <MapPin className="w-3.5 h-3.5 mt-0.5 shrink-0" aria-hidden="true" />
             <span className="line-clamp-2">{venueLabel}</span>
           </p>
         )}
         {spotsLabel && (
-          <p className="mt-1 text-xs sm:text-sm font-medium text-msq-purple-deep flex items-center gap-1">
+          <p className="mt-1 flex items-center justify-center gap-1 text-xs font-medium text-msq-purple-deep sm:text-sm">
             <Users className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
             <span>{spotsLabel}</span>
           </p>
