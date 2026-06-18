@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react';
+import { ChevronDown, ChevronUp, Plus, Trash2 } from 'lucide-react';
 
 import { FORM_QUESTION_TYPE, FORM_QUESTION_TYPES } from '../../constants/events';
 
@@ -12,6 +12,12 @@ const TYPE_LABELS = {
 const createQuestionId = () => `q_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
 
 const getQuestionOptions = question => (question.options?.length ? question.options : ['Option 1']);
+
+const inputClass =
+  'w-full rounded-md bg-gray-50 px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-gray-100 outline-none transition focus:bg-white focus:ring-2 focus:ring-msq-purple-rich/30';
+const labelClass = 'block text-left text-xs font-medium text-gray-500 mb-1';
+const iconButtonClass =
+  'inline-flex h-8 w-8 items-center justify-center rounded-md text-gray-500 transition hover:bg-gray-100 hover:text-gray-900 disabled:pointer-events-none disabled:opacity-30';
 
 const CustomQuestionsEditor = ({ customQuestions = [], onChange }) => {
   const addQuestion = () => {
@@ -80,19 +86,15 @@ const CustomQuestionsEditor = ({ customQuestions = [], onChange }) => {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="flex items-center justify-between gap-3">
-        <div>
-          <h3 className="text-sm font-medium text-gray-900">Custom questions</h3>
-          <p className="text-xs text-gray-500">
-            Add optional questions beyond the identity fields.
-          </p>
-        </div>
+        <h3 className="text-sm font-medium text-gray-900">Custom questions</h3>
         <button
           type="button"
           onClick={addQuestion}
-          className="px-3 py-1.5 text-sm bg-gray-100 rounded-md hover:bg-gray-200"
+          className="inline-flex items-center rounded-md bg-gray-100 px-3 py-1.5 text-sm text-gray-800 transition hover:bg-gray-200"
         >
+          <Plus className="mr-1 h-4 w-4" />
           Add question
         </button>
       </div>
@@ -102,19 +104,19 @@ const CustomQuestionsEditor = ({ customQuestions = [], onChange }) => {
       ) : (
         <ul className="space-y-4">
           {customQuestions.map((question, index) => (
-            <li key={question.id} className="rounded-lg border border-gray-200 p-4 space-y-3">
+            <li key={question.id} className="space-y-4 rounded-xl bg-gray-50/60 p-4 shadow-sm">
               <div className="flex flex-wrap items-start gap-3">
                 <div className="flex-1 min-w-[200px]">
-                  <label className="block text-xs text-gray-500 mb-1">Label</label>
+                  <label className={labelClass}>Label</label>
                   <input
                     type="text"
                     value={question.label}
                     onChange={e => updateQuestion(index, { label: e.target.value })}
-                    className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md"
+                    className={inputClass}
                   />
                 </div>
                 <div className="w-40">
-                  <label className="block text-xs text-gray-500 mb-1">Type</label>
+                  <label className={labelClass}>Type</label>
                   <select
                     value={question.type}
                     onChange={e => {
@@ -125,7 +127,7 @@ const CustomQuestionsEditor = ({ customQuestions = [], onChange }) => {
                       }
                       updateQuestion(index, patch);
                     }}
-                    className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md"
+                    className={inputClass}
                   >
                     {FORM_QUESTION_TYPES.map(type => (
                       <option key={type} value={type}>
@@ -147,40 +149,46 @@ const CustomQuestionsEditor = ({ customQuestions = [], onChange }) => {
 
               {question.type === FORM_QUESTION_TYPE.SELECT && (
                 <div className="space-y-2">
-                  <label className="block text-xs text-gray-500">Options</label>
+                  <label className={labelClass}>Options</label>
                   <ul className="space-y-2">
                     {getQuestionOptions(question).map((option, optionIndex) => (
-                      <li key={optionIndex} className="flex flex-wrap items-center gap-2">
+                      <li key={optionIndex} className="flex flex-wrap items-center gap-1.5">
                         <input
                           type="text"
                           value={option}
                           onChange={e => updateOption(index, optionIndex, e.target.value)}
                           onBlur={() => normalizeOptions(index)}
-                          className="min-w-[200px] flex-1 px-3 py-2 text-sm border border-gray-200 rounded-md"
+                          className={`${inputClass} min-w-[200px] flex-1`}
                         />
                         <button
                           type="button"
                           disabled={optionIndex === 0}
                           onClick={() => moveOption(index, optionIndex, -1)}
-                          className="px-2 py-1 text-xs bg-gray-100 rounded disabled:opacity-40"
+                          className={iconButtonClass}
+                          aria-label="Move option up"
+                          title="Move option up"
                         >
-                          Move up
+                          <ChevronUp className="h-4 w-4" />
                         </button>
                         <button
                           type="button"
                           disabled={optionIndex === getQuestionOptions(question).length - 1}
                           onClick={() => moveOption(index, optionIndex, 1)}
-                          className="px-2 py-1 text-xs bg-gray-100 rounded disabled:opacity-40"
+                          className={iconButtonClass}
+                          aria-label="Move option down"
+                          title="Move option down"
                         >
-                          Move down
+                          <ChevronDown className="h-4 w-4" />
                         </button>
                         <button
                           type="button"
                           disabled={getQuestionOptions(question).length <= 1}
                           onClick={() => removeOption(index, optionIndex)}
-                          className="px-2 py-1 text-xs text-red-600 bg-red-50 rounded hover:bg-red-100 disabled:opacity-40"
+                          className={`${iconButtonClass} text-red-500 hover:bg-red-50 hover:text-red-600`}
+                          aria-label="Remove option"
+                          title="Remove option"
                         >
-                          Remove
+                          <Trash2 className="h-4 w-4" />
                         </button>
                       </li>
                     ))}
@@ -188,37 +196,43 @@ const CustomQuestionsEditor = ({ customQuestions = [], onChange }) => {
                   <button
                     type="button"
                     onClick={() => addOption(index)}
-                    className="inline-flex items-center px-3 py-1.5 text-sm bg-gray-100 rounded-md hover:bg-gray-200"
+                    className="inline-flex items-center rounded-md px-2.5 py-1.5 text-sm text-gray-700 transition hover:bg-gray-100 hover:text-gray-900"
                   >
-                    <Plus className="h-4 w-4 mr-1" />
+                    <Plus className="mr-1 h-4 w-4" />
                     Add option
                   </button>
                 </div>
               )}
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap justify-end gap-1">
                 <button
                   type="button"
                   disabled={index === 0}
                   onClick={() => moveQuestion(index, -1)}
-                  className="px-2 py-1 text-xs bg-gray-100 rounded disabled:opacity-40"
+                  className={iconButtonClass}
+                  aria-label="Move question up"
+                  title="Move question up"
                 >
-                  Move up
+                  <ChevronUp className="h-4 w-4" />
                 </button>
                 <button
                   type="button"
                   disabled={index === customQuestions.length - 1}
                   onClick={() => moveQuestion(index, 1)}
-                  className="px-2 py-1 text-xs bg-gray-100 rounded disabled:opacity-40"
+                  className={iconButtonClass}
+                  aria-label="Move question down"
+                  title="Move question down"
                 >
-                  Move down
+                  <ChevronDown className="h-4 w-4" />
                 </button>
                 <button
                   type="button"
                   onClick={() => removeQuestion(index)}
-                  className="px-2 py-1 text-xs text-red-600 bg-red-50 rounded hover:bg-red-100 ml-auto"
+                  className={`${iconButtonClass} text-red-500 hover:bg-red-50 hover:text-red-600`}
+                  aria-label="Remove question"
+                  title="Remove question"
                 >
-                  Remove
+                  <Trash2 className="h-4 w-4" />
                 </button>
               </div>
             </li>
