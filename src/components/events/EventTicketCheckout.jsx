@@ -9,6 +9,9 @@ import Button from '../ui/Button';
 import DynamicEventForm from './DynamicEventForm';
 
 const EVENT_CHECKOUT_SLUG_KEY = 'misqabbi_event_checkout_slug';
+const panelClass = 'rounded-xl bg-white p-5 shadow-sm ring-1 ring-gray-100 sm:p-6';
+const inputClass =
+  'rounded-md bg-gray-50 px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-gray-100 outline-none transition focus:bg-white focus:ring-2 focus:ring-msq-purple-rich/30';
 
 const buildInitialGuestInfo = (formSchema, currentUser) => {
   const guestInfo = {};
@@ -171,7 +174,7 @@ const EventTicketCheckout = ({ event }) => {
 
   if (activeTickets.length === 0) {
     return (
-      <section className="bg-white rounded-lg border border-gray-200 p-6">
+      <section className={panelClass}>
         <h2 className="text-lg font-semibold text-gray-900 mb-2">Tickets</h2>
         <p className="text-sm text-gray-500">Tickets are not available yet.</p>
       </section>
@@ -180,7 +183,7 @@ const EventTicketCheckout = ({ event }) => {
 
   if (!registrationForm) {
     return (
-      <section className="bg-white rounded-lg border border-gray-200 p-6">
+      <section className={panelClass}>
         <h2 className="text-lg font-semibold text-gray-900 mb-2">Tickets</h2>
         <p className="text-sm text-gray-500">Registration is not available for this event yet.</p>
       </section>
@@ -188,7 +191,7 @@ const EventTicketCheckout = ({ event }) => {
   }
 
   return (
-    <section className="bg-white rounded-lg border border-gray-200 p-6">
+    <section className={panelClass}>
       <h2 className="text-lg font-semibold text-gray-900 mb-2">Get tickets</h2>
       <p className="text-sm text-gray-600 mb-4">
         Select a ticket type and complete the registration form to proceed to payment.
@@ -207,12 +210,12 @@ const EventTicketCheckout = ({ event }) => {
                 return (
                   <li key={ticket._id}>
                     <label
-                      className={`flex items-start gap-3 rounded-lg border p-3 cursor-pointer ${
+                      className={`flex items-start gap-3 rounded-lg p-3 shadow-sm ring-1 cursor-pointer ${
                         soldOut
-                          ? 'border-gray-200 bg-gray-50 opacity-75 cursor-not-allowed'
+                          ? 'bg-gray-50 ring-gray-100 opacity-75 cursor-not-allowed'
                           : isSelected
-                            ? 'border-msq-purple-rich ring-1 ring-msq-purple-rich/30'
-                            : 'border-gray-200 hover:border-gray-300'
+                            ? 'bg-white ring-msq-purple-rich/40'
+                            : 'bg-gray-50/70 ring-gray-100 hover:bg-white hover:ring-gray-200'
                       }`}
                     >
                       <input
@@ -264,11 +267,11 @@ const EventTicketCheckout = ({ event }) => {
                   max={maxQuantity}
                   value={quantity}
                   onChange={handleQuantityChange}
-                  className="w-24 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-msq-purple-rich/30"
+                  className={`${inputClass} w-24`}
                 />
               </div>
 
-              <div className="rounded-md bg-gray-50 border border-gray-200 px-3 py-2 text-sm">
+              <div className="rounded-md bg-gray-50 px-3 py-2 text-sm shadow-sm ring-1 ring-gray-100">
                 <span className="text-gray-600">Total: </span>
                 <span className="font-semibold text-gray-900">
                   {formatCurrency(pesewasToGhs(lineTotalPesewas))}

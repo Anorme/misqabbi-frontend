@@ -7,6 +7,8 @@ import { validateEventForm } from '../../utils/events/validateEventForm';
 import Button from '../ui/Button';
 import DynamicEventForm from './DynamicEventForm';
 
+const panelClass = 'rounded-xl bg-white p-5 shadow-sm ring-1 ring-gray-100 sm:p-6';
+
 const buildInitialApplicantInfo = (formSchema, currentUser) => {
   const applicantInfo = {};
   const fields = formSchema?.builtinFields || [];
@@ -132,7 +134,7 @@ const EventVolunteerPanel = ({ event }) => {
 
   if (!volunteerForm) {
     return (
-      <section className="bg-white rounded-lg border border-gray-200 p-6">
+      <section className={panelClass}>
         <h2 className="text-lg font-semibold text-gray-900 mb-2">Volunteer</h2>
         <p className="text-sm text-gray-500">
           Volunteer applications are not available for this event.
@@ -143,7 +145,7 @@ const EventVolunteerPanel = ({ event }) => {
 
   if (submittedSummary) {
     return (
-      <section className="bg-white rounded-lg border border-gray-200 p-6">
+      <section className={panelClass}>
         <h2 className="text-lg font-semibold text-gray-900 mb-2">Volunteer</h2>
         <div className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
           <p className="font-medium mb-1">Thank you for applying!</p>
@@ -173,7 +175,7 @@ const EventVolunteerPanel = ({ event }) => {
   }
 
   return (
-    <section className="bg-white rounded-lg border border-gray-200 p-6">
+    <section className={panelClass}>
       <h2 className="text-lg font-semibold text-gray-900 mb-2">Volunteer</h2>
       <p className="text-sm text-gray-600 mb-4">
         Interested in helping out? Fill in the form below to apply as a volunteer.
