@@ -84,6 +84,17 @@ const EventDetails = () => {
       />
       <main className="w-full px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
         <div className="mx-auto max-w-5xl space-y-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="mb-3 flex justify-center">
+              <span
+                className={`inline-flex px-2.5 py-1 text-xs font-medium rounded-full ${getEventTypeColor(event.type)}`}
+              >
+                {EVENT_TYPE_LABELS[event.type] || event.type}
+              </span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-bebas text-msq-purple-rich">{event.name}</h1>
+          </div>
+
           {event.banner?.url && (
             <img
               src={event.banner.url}
@@ -93,57 +104,56 @@ const EventDetails = () => {
           )}
 
           <div className="space-y-6">
-            <div className="flex flex-wrap items-center gap-3">
-              <h1 className="text-2xl sm:text-3xl font-bebas text-msq-purple-rich">{event.name}</h1>
-              <span
-                className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${getEventTypeColor(event.type)}`}
-              >
-                {EVENT_TYPE_LABELS[event.type] || event.type}
-              </span>
-            </div>
+            <div
+              className={`grid justify-items-center gap-4 text-center text-sm text-gray-700 sm:items-center sm:text-left ${
+                venueLabel ? 'sm:grid-cols-2' : ''
+              }`}
+            >
+              <div className="space-y-3">
+                <p className="flex items-start justify-center gap-2 sm:justify-start">
+                  <Calendar className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" />
+                  <span>{formatEventDate(event.eventDate)}</span>
+                </p>
+                {spotsLabel && (
+                  <p className="flex items-center justify-center gap-2 font-medium text-msq-purple-deep sm:justify-start">
+                    <Users className="w-4 h-4 shrink-0" aria-hidden="true" />
+                    <span>{spotsLabel}</span>
+                  </p>
+                )}
+              </div>
 
-            <div className="space-y-2 text-sm text-gray-700">
-              <p className="flex items-start gap-2">
-                <Calendar className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" />
-                <span>{formatEventDate(event.eventDate)}</span>
-              </p>
               {venueLabel && (
-                <p className="flex items-start gap-2">
+                <p className="flex items-start justify-center gap-2 sm:justify-self-end">
                   <MapPin className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" />
                   <span>
-                    {venueLabel}
+                    <span className="block">{venueLabel}</span>
                     {venueLink && (
-                      <>
-                        {' · '}
-                        <a
-                          href={venueLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-msq-purple-rich hover:underline"
-                        >
-                          View location
-                        </a>
-                      </>
+                      <a
+                        href={venueLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-1 block text-msq-purple-rich hover:underline"
+                      >
+                        View location
+                      </a>
                     )}
                   </span>
-                </p>
-              )}
-              {spotsLabel && (
-                <p className="flex items-center gap-2 font-medium text-msq-purple-deep">
-                  <Users className="w-4 h-4 shrink-0" aria-hidden="true" />
-                  <span>{spotsLabel}</span>
                 </p>
               )}
             </div>
 
             {event.description && (
-              <section className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-gray-100 sm:p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">About this event</h2>
-                <div
-                  className="prose prose-sm max-w-none text-gray-700"
-                  dangerouslySetInnerHTML={{ __html: event.description }}
-                />
-              </section>
+              <div className="space-y-3">
+                <h2 className="text-lg font-semibold text-gray-700">About this event</h2>
+                <section className="rounded-xl bg-msq-purple-rich/5 px-5 py-5 sm:px-6">
+                  <div className="border-l-2 border-msq-purple-rich/30 pl-4">
+                    <div
+                      className="prose prose-sm max-w-3xl text-gray-700 prose-p:leading-relaxed prose-strong:text-gray-900 prose-a:text-msq-purple-rich prose-a:underline"
+                      dangerouslySetInnerHTML={{ __html: event.description }}
+                    />
+                  </div>
+                </section>
+              </div>
             )}
           </div>
 
