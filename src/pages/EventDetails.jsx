@@ -83,74 +83,61 @@ const EventDetails = () => {
         type="article"
       />
       <main className="w-full px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
-        <Link
-          to="/events"
-          className="inline-block mb-6 text-sm text-msq-purple-rich hover:underline"
-        >
-          ← Back to events
-        </Link>
-
-        {event.banner?.url && (
-          <div className="mb-6">
+        <div className="mx-auto max-w-5xl space-y-8">
+          {event.banner?.url && (
             <img
               src={event.banner.url}
               alt={event.name}
-              className="w-full max-h-80 object-cover rounded-lg border border-gray-200"
+              className="max-h-80 w-full rounded-xl object-cover shadow-sm"
             />
-          </div>
-        )}
+          )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
-            <div>
-              <div className="flex flex-wrap items-center gap-3 mb-2">
-                <h1 className="text-2xl sm:text-3xl font-bebas text-msq-purple-rich">
-                  {event.name}
-                </h1>
-                <span
-                  className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${getEventTypeColor(event.type)}`}
-                >
-                  {EVENT_TYPE_LABELS[event.type] || event.type}
-                </span>
-              </div>
+          <div className="space-y-6">
+            <div className="flex flex-wrap items-center gap-3">
+              <h1 className="text-2xl sm:text-3xl font-bebas text-msq-purple-rich">{event.name}</h1>
+              <span
+                className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${getEventTypeColor(event.type)}`}
+              >
+                {EVENT_TYPE_LABELS[event.type] || event.type}
+              </span>
+            </div>
 
-              <div className="space-y-2 text-sm text-gray-700">
+            <div className="space-y-2 text-sm text-gray-700">
+              <p className="flex items-start gap-2">
+                <Calendar className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" />
+                <span>{formatEventDate(event.eventDate)}</span>
+              </p>
+              {venueLabel && (
                 <p className="flex items-start gap-2">
-                  <Calendar className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" />
-                  <span>{formatEventDate(event.eventDate)}</span>
+                  <MapPin className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" />
+                  <span>
+                    {venueLabel}
+                    {venueLink && (
+                      <>
+                        {' · '}
+                        <a
+                          href={venueLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-msq-purple-rich hover:underline"
+                        >
+                          View location
+                        </a>
+                      </>
+                    )}
+                  </span>
                 </p>
-                {venueLabel && (
-                  <p className="flex items-start gap-2">
-                    <MapPin className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" />
-                    <span>
-                      {venueLabel}
-                      {venueLink && (
-                        <>
-                          {' · '}
-                          <a
-                            href={venueLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-msq-purple-rich hover:underline"
-                          >
-                            View location
-                          </a>
-                        </>
-                      )}
-                    </span>
-                  </p>
-                )}
-                {spotsLabel && (
-                  <p className="flex items-center gap-2 font-medium text-msq-purple-deep">
-                    <Users className="w-4 h-4 shrink-0" aria-hidden="true" />
-                    <span>{spotsLabel}</span>
-                  </p>
-                )}
-              </div>
+              )}
+              {spotsLabel && (
+                <p className="flex items-center gap-2 font-medium text-msq-purple-deep">
+                  <Users className="w-4 h-4 shrink-0" aria-hidden="true" />
+                  <span>{spotsLabel}</span>
+                </p>
+              )}
             </div>
 
             {event.description && (
-              <section className="bg-white rounded-lg border border-gray-200 p-6">
+              <section className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-gray-100 sm:p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">About this event</h2>
                 <div
                   className="prose prose-sm max-w-none text-gray-700"
@@ -160,7 +147,7 @@ const EventDetails = () => {
             )}
           </div>
 
-          <aside className="space-y-6">
+          <div className="space-y-6">
             {isFree && (
               <EventRegistrationPanel
                 event={event}
@@ -187,7 +174,7 @@ const EventDetails = () => {
             {isPaid && <EventTicketCheckout event={event} />}
 
             {hasVolunteerForm && <EventVolunteerPanel event={event} />}
-          </aside>
+          </div>
         </div>
       </main>
     </>
