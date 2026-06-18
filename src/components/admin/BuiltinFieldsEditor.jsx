@@ -33,16 +33,13 @@ const BuiltinFieldsEditor = ({ builtinFields = [], onChange }) => {
   return (
     <div className="space-y-3">
       <h3 className="text-sm font-medium text-gray-900">Identity fields</h3>
-      <p className="text-xs text-gray-500">
-        Choose which contact fields appear on the form and whether each is required.
-      </p>
       <ul className="space-y-2">
         {BUILTIN_FORM_FIELDS.map(field => {
           const enabled = isEnabled(field);
           return (
             <li
               key={field}
-              className="flex flex-wrap items-center gap-3 rounded-md border border-gray-200 px-3 py-2"
+              className="flex flex-wrap items-center gap-3 rounded-lg bg-gray-50/60 px-3 py-2 shadow-sm"
             >
               <label className="flex items-center gap-2 text-sm text-gray-700">
                 <input
