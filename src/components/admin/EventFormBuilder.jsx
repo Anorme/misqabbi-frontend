@@ -20,7 +20,6 @@ const createDefaultFormSchema = () => ({
 
 const EventFormBuilder = ({
   title,
-  description,
   identityKey = 'guestInfo',
   initialSchema,
   isConfigured = Boolean(initialSchema),
@@ -79,7 +78,6 @@ const EventFormBuilder = ({
     return (
       <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
         <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
-        {description && <p className="text-sm text-gray-500 mt-1">{description}</p>}
         <p className="text-sm text-gray-600 mt-4">
           This form has not been set up yet. Start with the default name and email fields, then
           customize the questions before saving.
@@ -99,11 +97,10 @@ const EventFormBuilder = ({
     <div className="space-y-6">
       <div>
         <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
-        {description && <p className="text-sm text-gray-500 mt-1">{description}</p>}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="space-y-6 bg-white rounded-lg border border-gray-200 p-4">
+        <div className="space-y-6 rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-100">
           <BuiltinFieldsEditor
             builtinFields={schema.builtinFields}
             onChange={builtinFields => setSchema(prev => ({ ...prev, builtinFields }))}
