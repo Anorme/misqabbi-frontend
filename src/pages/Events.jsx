@@ -66,27 +66,25 @@ const Events = () => {
           </p>
         </div>
 
-        <div className="mb-6 p-4 bg-white rounded-lg border border-gray-200">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <input
-              type="search"
-              placeholder="Search events"
-              value={q}
-              onChange={e => setQ(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-msq-purple-rich focus:border-msq-purple-rich"
-            />
-            <select
-              value={type}
-              onChange={e => setType(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-msq-purple-rich focus:border-msq-purple-rich"
-            >
-              {TYPE_OPTIONS.map(o => (
-                <option key={o.value} value={o.value}>
-                  {o.label}
-                </option>
-              ))}
-            </select>
-          </div>
+        <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <input
+            type="search"
+            placeholder="Search events"
+            value={q}
+            onChange={e => setQ(e.target.value)}
+            className="rounded-md bg-gray-50 px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-gray-100 outline-none transition focus:bg-white focus:ring-2 focus:ring-msq-purple-rich/30"
+          />
+          <select
+            value={type}
+            onChange={e => setType(e.target.value)}
+            className="rounded-md bg-gray-50 px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-gray-100 outline-none transition focus:bg-white focus:ring-2 focus:ring-msq-purple-rich/30"
+          >
+            {TYPE_OPTIONS.map(o => (
+              <option key={o.value} value={o.value}>
+                {o.label}
+              </option>
+            ))}
+          </select>
         </div>
 
         {isGridLoading ? (
