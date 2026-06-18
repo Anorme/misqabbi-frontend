@@ -50,7 +50,7 @@ const DynamicEventForm = ({
       <div key={field} className="mb-4">
         <label
           htmlFor={`${identityKey}-${field}`}
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="mb-1 block text-left text-sm font-medium text-gray-700"
         >
           {BUILTIN_LABELS[field] || field}
           {required && <span className="text-red-500 ml-1">*</span>}
@@ -88,7 +88,7 @@ const DynamicEventForm = ({
           <div key={id} className="mb-4">
             <label
               htmlFor={`question-${id}`}
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="mb-1 block text-left text-sm font-medium text-gray-700"
             >
               {label}
               {required && <span className="text-red-500 ml-1">*</span>}
@@ -117,7 +117,7 @@ const DynamicEventForm = ({
           <div key={id} className="mb-4">
             <label
               htmlFor={`question-${id}`}
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="mb-1 block text-left text-sm font-medium text-gray-700"
             >
               {label}
               {required && <span className="text-red-500 ml-1">*</span>}
@@ -179,7 +179,7 @@ const DynamicEventForm = ({
           <div key={id} className="mb-4">
             <label
               htmlFor={`question-${id}`}
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="mb-1 block text-left text-sm font-medium text-gray-700"
             >
               {label}
               {required && <span className="text-red-500 ml-1">*</span>}
