@@ -38,10 +38,10 @@ const DynamicEventForm = ({
   const customErrors = errors.customAnswers || {};
 
   const baseInputClass =
-    'w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-msq-purple-rich/30';
-  const readOnlyInputClass = `${baseInputClass} border-gray-200 bg-gray-50 text-gray-700`;
+    'w-full rounded-md bg-gray-50 px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-gray-100 outline-none transition focus:bg-white focus:ring-2 focus:ring-msq-purple-rich/30 disabled:cursor-not-allowed';
+  const readOnlyInputClass = `${baseInputClass} text-gray-700`;
   const interactiveInputClass = fieldError =>
-    `${baseInputClass} bg-white text-gray-900 ${fieldError ? 'border-red-500' : 'border-gray-300'}`;
+    `${baseInputClass} ${fieldError ? 'ring-red-300 focus:ring-red-300' : ''}`;
 
   const renderBuiltinField = ({ field, required }) => {
     const fieldError = identityErrors[field];
