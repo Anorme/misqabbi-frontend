@@ -99,7 +99,7 @@ const AdminEventDetail = () => {
           </div>
         )}
 
-        <div className="lg:col-span-2 bg-white rounded-lg border border-gray-200 p-6">
+        <div className="lg:col-span-3 bg-white rounded-lg border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Details</h2>
           <div
             className="prose prose-sm max-w-none text-gray-700 mb-6"
@@ -156,19 +156,6 @@ const AdminEventDetail = () => {
               </div>
             )}
           </dl>
-        </div>
-
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Manage</h2>
-          <ul className="space-y-2 text-sm text-gray-600">
-            {event.type === EVENT_TYPE.PAID && (
-              <li>
-                Ticket types: {ticketTypes.length} configured
-                {hasActiveTickets ? ' (active tickets available)' : ' (none active yet)'}
-              </li>
-            )}
-            <li>Use the tabs above to manage tickets, forms, attendees, and volunteers.</li>
-          </ul>
         </div>
       </div>
     </AdminEventDetailLayout>
