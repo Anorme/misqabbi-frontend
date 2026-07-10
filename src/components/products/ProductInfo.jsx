@@ -31,7 +31,7 @@ function ProductInfo({ product, price = product?.price, section = 'all' }) {
         <>
           <h2 className="text-lg sm:text-xl lg:text-2xl text-gray-900">Details</h2>
           <div
-            className="text-sm md:text-base leading-snug md:leading-normal product-description text-gray-900"
+            className="text-sm md:text-base leading-snug md:leading-normal rich-text-content text-gray-900"
             dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
           />
         </>
