@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Link } from 'react-router';
-import { Calendar, MapPin, Users } from 'lucide-react';
+import { ArrowUpRight, Calendar, MapPin, Users } from 'lucide-react';
 
 import { EVENT_TYPE_LABELS } from '../../constants/events';
 import { formatEventDate, formatEventVenue } from '../../utils/events';
@@ -61,6 +61,14 @@ const EventCard = ({ event }) => {
             <span>{spotsLabel}</span>
           </p>
         )}
+        <Link
+          to={`/events/${event.slug}`}
+          className="mt-3 inline-flex items-center justify-center gap-1 whitespace-nowrap text-xs sm:text-sm font-medium text-black hover:text-msq-purple-rich transition-colors"
+          aria-label={`View ${event.name}`}
+        >
+          View
+          <ArrowUpRight className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+        </Link>
       </div>
     </div>
   );
