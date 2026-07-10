@@ -109,6 +109,10 @@ body,
   font-style: italic;
 }
 
+.ProseMirror br {
+  line-height: 1.6;
+}
+
 /* Rich Text Content Rendering Styles */
 .rich-text-content p {
   margin: 0.75rem 0;
