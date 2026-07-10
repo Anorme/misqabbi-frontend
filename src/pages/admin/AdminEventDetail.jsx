@@ -102,7 +102,7 @@ const AdminEventDetail = () => {
         <div className="lg:col-span-3 bg-white rounded-lg border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Details</h2>
           <div
-            className="prose prose-sm max-w-none text-gray-700 mb-6"
+            className="rich-text-content max-w-none text-gray-700 mb-6"
             dangerouslySetInnerHTML={{ __html: event.description }}
           />
           <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
