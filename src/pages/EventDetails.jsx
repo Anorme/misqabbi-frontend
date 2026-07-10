@@ -99,7 +99,7 @@ const EventDetails = () => {
             <img
               src={event.banner.url}
               alt={event.name}
-              className="max-h-80 w-full rounded-xl object-cover shadow-sm"
+              className="block w-full h-auto rounded-xl shadow-sm"
             />
           )}
 
