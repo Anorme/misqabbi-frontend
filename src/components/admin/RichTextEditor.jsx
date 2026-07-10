@@ -3,7 +3,7 @@ import StarterKit from '@tiptap/starter-kit';
 import { sanitizeHTML } from '../../utils/sanitization';
 import { useEffect } from 'react';
 
-const RichTextEditor = ({ value, onChange, error }) => {
+const RichTextEditor = ({ value, onChange, error, placeholder = 'Enter description...' }) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -16,7 +16,7 @@ const RichTextEditor = ({ value, onChange, error }) => {
     editorProps: {
       attributes: {
         class: 'focus:outline-none min-h-[200px] px-4 py-3 text-base leading-relaxed text-gray-900',
-        'data-placeholder': 'Enter product description...',
+        'data-placeholder': placeholder,
       },
     },
     onUpdate: ({ editor }) => {
@@ -72,6 +72,14 @@ const RichTextEditor = ({ value, onChange, error }) => {
           title="Italic"
         >
           <em>I</em>
+        </button>
+        <button
+          type="button"
+          onClick={() => editor.chain().focus().setHardBreak().run()}
+          className="px-3 py-1.5 rounded text-sm font-semibold transition-colors bg-white text-gray-700 hover:bg-gray-100"
+          title="Line break (Shift+Enter)"
+        >
+          ↵
         </button>
         <button
           type="button"
