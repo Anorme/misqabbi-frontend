@@ -148,7 +148,7 @@ const EventDetails = () => {
                 <section className="rounded-xl bg-msq-purple-rich/5 px-5 py-5 sm:px-6">
                   <div className="border-l-2 border-msq-purple-rich/30 pl-4">
                     <div
-                      className="prose prose-sm max-w-3xl text-gray-700 prose-p:leading-relaxed prose-strong:text-gray-900 prose-a:text-msq-purple-rich prose-a:underline"
+                      className="rich-text-content max-w-3xl text-gray-700 [&_a]:text-msq-purple-rich [&_a]:underline [&_strong]:text-gray-900"
                       dangerouslySetInnerHTML={{ __html: event.description }}
                     />
                   </div>
