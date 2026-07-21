@@ -12,3 +12,8 @@ export {
   getPaymentCallbackDestination,
   resolveEventCheckoutSlug,
 } from './paymentCallbackRouting';
+export {
+  isEventRegistrationOpen,
+  isPastEvent,
+  REGISTRATION_CLOSED_MESSAGE,
+} from './registrationWindow';
