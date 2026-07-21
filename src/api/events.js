@@ -14,8 +14,8 @@ const buildQueryString = params => {
 };
 
 /**
- * GET /events?page&limit&type&q
- * @param {Object} params - page, limit, type (free|paid), q
+ * GET /events?page&limit&type&q&when
+ * @param {Object} params - page, limit, type (free|paid), q, when (upcoming|past|all)
  * @returns {Promise<{ success, data: event[], pagination }>}
  */
 export const getPublishedEvents = async (params = {}) => {
