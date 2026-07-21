@@ -21,6 +21,7 @@ const Contact = lazy(() => import('./pages/Contact'));
 const FAQs = lazy(() => import('./pages/FAQs'));
 const ReturnPolicy = lazy(() => import('./pages/ReturnPolicy'));
 const OrderPolicy = lazy(() => import('./pages/OrderPolicy'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const SizeGuide = lazy(() => import('./pages/SizeGuide'));
 const Checkout = lazy(() => import('./pages/Checkout'));
 const Favorites = lazy(() => import('./pages/Favorites'));
@@ -198,6 +199,16 @@ const App = () => {
             <MainLayout>
               <Suspense fallback={<PageLoader />}>
                 <OrderPolicy />
+              </Suspense>
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path="/privacy-policy"
+          element={
+            <MainLayout>
+              <Suspense fallback={<PageLoader />}>
+                <PrivacyPolicy />
               </Suspense>
             </MainLayout>
           }
