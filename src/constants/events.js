@@ -87,23 +87,25 @@ export const EVENT_WHEN_HEADINGS = {
 
 export const EVENT_WHEN_DESCRIPTIONS = {
   [EVENT_WHEN.UPCOMING]:
-    'Join us for workshops, gatherings, and experiences designed with you in mind.',
-  [EVENT_WHEN.PAST]: 'Browse events that have already taken place.',
-  [EVENT_WHEN.ALL]: 'Browse every published Misqabbi event.',
+    'Moments made for her, workshops, gatherings, and soft little experiences worth showing up for.',
+  [EVENT_WHEN.PAST]:
+    "A look back at the moments we've shared, the laughs, the looks, the girlies who showed up.",
+  [EVENT_WHEN.ALL]:
+    "Every Misqabbi moment in one place, what's coming and the ones we'll always remember.",
 };
 
 export const EVENT_WHEN_EMPTY = {
   [EVENT_WHEN.UPCOMING]: {
     title: 'No upcoming events',
-    body: 'Check back soon for workshops, gatherings, and new experiences.',
+    body: "We're preparing something special. Check back soon.",
   },
   [EVENT_WHEN.PAST]: {
-    title: 'No past events',
-    body: 'Past events will appear here after their date has passed.',
+    title: 'No past events yet',
+    body: 'Our first chapters are still being written.',
   },
   [EVENT_WHEN.ALL]: {
-    title: 'No events found',
-    body: 'There are no published events to show right now.',
+    title: 'Nothing to show just yet',
+    body: 'New Misqabbi moments are on the way.',
   },
 };
 
