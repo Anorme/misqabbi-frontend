@@ -176,7 +176,7 @@ function GalleryImages({
   return (
     <div className="w-full lg:px-0">
       <div
-        className="relative aspect-[2/3] max-h-[calc(100svh-4rem)] min-h-0 w-full overflow-hidden sm:max-h-[calc(100svh-5rem)] lg:max-h-[calc(100vh-6rem)]"
+        className="relative aspect-[2/3] max-h-[calc(100svh-7rem)] min-h-0 w-full overflow-hidden sm:max-h-[calc(100svh-8rem)] lg:max-h-[calc(100vh-6rem)]"
         onMouseEnter={handleGalleryMouseEnter}
         onMouseLeave={handleGalleryMouseLeave}
         onPointerDown={pauseAutoScroll}
