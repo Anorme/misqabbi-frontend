@@ -94,7 +94,7 @@ const MobileProductDetailsSkeleton = () => {
     <div className="md:hidden">
       <div className="-mx-3 flex flex-col gap-3">
         <GallerySkeleton
-          imageClassName="h-[min(150vw,calc(100svh-4rem))]"
+          imageClassName="h-[min(150vw,calc(100svh-7rem))]"
           thumbnails={mobileThumbnails}
           thumbnailClassName="flex-[0_0_25%]"
         />
@@ -112,7 +112,7 @@ const TabletProductDetailsSkeleton = () => {
     <div className="hidden md:block lg:hidden">
       <div className="-mx-4 flex flex-col gap-4">
         <GallerySkeleton
-          imageClassName="h-[min(150vw,calc(100svh-5rem))]"
+          imageClassName="h-[min(150vw,calc(100svh-8rem))]"
           thumbnails={tabletThumbnails}
           thumbnailClassName="flex-[0_0_19%]"
         />
