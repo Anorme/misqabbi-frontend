@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { SOCIALS_MAP } from '../../constants/socials';
+import { LEGAL_FOOTER_LINKS } from '../../constants/legal/legalMeta';
 import { subscribeToNewsletter } from '../../api/newsletter';
 import { showSuccessToast, showErrorToast } from '../../utils/showToast';
 
@@ -56,26 +57,13 @@ const Footer = () => {
               Customer Care
             </h3>
             <ul className="space-y-3">
-              <li>
-                <Link to="/faqs" className="text-white/90 hover:text-white">
-                  FAQs
-                </Link>
-              </li>
-              <li>
-                <Link to="/return-policy" className="text-white/90 hover:text-white">
-                  Return Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/order-policy" className="text-white/90 hover:text-white">
-                  Order Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/size-guide" className="text-white/90 hover:text-white">
-                  Size Guide
-                </Link>
-              </li>
+              {LEGAL_FOOTER_LINKS.map(link => (
+                <li key={link.to}>
+                  <Link to={link.to} className="text-white/90 hover:text-white">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
