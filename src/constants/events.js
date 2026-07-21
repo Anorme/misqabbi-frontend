@@ -92,6 +92,21 @@ export const EVENT_WHEN_DESCRIPTIONS = {
   [EVENT_WHEN.ALL]: 'Browse every published Misqabbi event.',
 };
 
+export const EVENT_WHEN_EMPTY = {
+  [EVENT_WHEN.UPCOMING]: {
+    title: 'No upcoming events',
+    body: 'Check back soon for workshops, gatherings, and new experiences.',
+  },
+  [EVENT_WHEN.PAST]: {
+    title: 'No past events',
+    body: 'Past events will appear here after their date has passed.',
+  },
+  [EVENT_WHEN.ALL]: {
+    title: 'No events found',
+    body: 'There are no published events to show right now.',
+  },
+};
+
 export const REGISTRATION_STATUS_LABELS = {
   [REGISTRATION_STATUS.PENDING]: 'Pending',
   [REGISTRATION_STATUS.CONFIRMED]: 'Confirmed',

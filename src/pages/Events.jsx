@@ -12,6 +12,7 @@ import {
   EVENT_TYPES,
   EVENT_WHEN,
   EVENT_WHEN_DESCRIPTIONS,
+  EVENT_WHEN_EMPTY,
   EVENT_WHEN_HEADINGS,
   EVENT_WHEN_LABELS,
 } from '../constants/events';
@@ -53,6 +54,7 @@ const Events = () => {
   const isSearching = Boolean(q.trim() || type);
   const heading = EVENT_WHEN_HEADINGS[when] || EVENT_WHEN_HEADINGS[EVENT_WHEN.UPCOMING];
   const description = EVENT_WHEN_DESCRIPTIONS[when] || EVENT_WHEN_DESCRIPTIONS[EVENT_WHEN.UPCOMING];
+  const emptyCopy = EVENT_WHEN_EMPTY[when] || EVENT_WHEN_EMPTY[EVENT_WHEN.ALL];
   const errMsg = isError
     ? error?.response?.data?.error || error?.message || 'Failed to load events'
     : null;
@@ -145,11 +147,11 @@ const Events = () => {
           </div>
         ) : events.length === 0 ? (
           <div className="p-8 text-center border border-gray-200 rounded-lg bg-white">
-            <div className="text-lg font-medium text-gray-900">No events found</div>
+            <div className="text-lg font-medium text-gray-900">
+              {isSearching ? 'No events found' : emptyCopy.title}
+            </div>
             <p className="mt-2 text-sm text-gray-600">
-              {isSearching
-                ? 'Try adjusting your search or filters.'
-                : 'Check back soon for upcoming events.'}
+              {isSearching ? 'Try adjusting your search or filters.' : emptyCopy.body}
             </p>
           </div>
         ) : (
