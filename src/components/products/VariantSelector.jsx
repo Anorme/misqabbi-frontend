@@ -24,7 +24,7 @@ function VariantSelector({ baseProduct, variants = [], selectedVariant, onSelect
   // Check if base product is selected (selectedVariant is null)
   const isBaseSelected = selectedVariant === null;
   const swatchButtonBaseClasses =
-    'relative w-12 h-12 sm:w-14 sm:h-14 rounded-none overflow-hidden border-2 bg-white transition-all duration-200';
+    'relative w-12 h-12 sm:w-14 sm:h-14 cursor-pointer rounded-none overflow-hidden border-2 bg-white transition-all duration-200';
   const selectedSwatchClasses = 'border-msq-gold-light ring-2 ring-msq-gold-light ring-offset-2';
   const unselectedSwatchClasses =
     'border-gray-300 hover:border-msq-gold-light hover:-translate-y-0.5';
