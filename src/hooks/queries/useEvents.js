@@ -3,7 +3,7 @@ import { getPublishedEvents, getEventBySlug } from '../../api/events';
 
 /**
  * Query hook for published events listing
- * @param {Object} params - page, limit, type, q
+ * @param {Object} params - page, limit, type, q, when
  */
 export const useEvents = (params = {}, options = {}) => {
   return useQuery({

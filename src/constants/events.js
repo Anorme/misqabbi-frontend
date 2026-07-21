@@ -15,6 +15,15 @@ export const EVENT_TYPE = {
 
 export const EVENT_TYPES = Object.values(EVENT_TYPE);
 
+/** Public events list time window filter */
+export const EVENT_WHEN = {
+  UPCOMING: 'upcoming',
+  PAST: 'past',
+  ALL: 'all',
+};
+
+export const EVENT_WHENS = Object.values(EVENT_WHEN);
+
 /** Registration status after RSVP or checkout */
 export const REGISTRATION_STATUS = {
   PENDING: 'pending',
@@ -62,6 +71,25 @@ export const EVENT_STATUS_LABELS = {
 export const EVENT_TYPE_LABELS = {
   [EVENT_TYPE.FREE]: 'Free',
   [EVENT_TYPE.PAID]: 'Paid',
+};
+
+export const EVENT_WHEN_LABELS = {
+  [EVENT_WHEN.UPCOMING]: 'Upcoming',
+  [EVENT_WHEN.PAST]: 'Past',
+  [EVENT_WHEN.ALL]: 'All',
+};
+
+export const EVENT_WHEN_HEADINGS = {
+  [EVENT_WHEN.UPCOMING]: 'Upcoming Events',
+  [EVENT_WHEN.PAST]: 'Past Events',
+  [EVENT_WHEN.ALL]: 'All Events',
+};
+
+export const EVENT_WHEN_DESCRIPTIONS = {
+  [EVENT_WHEN.UPCOMING]:
+    'Join us for workshops, gatherings, and experiences designed with you in mind.',
+  [EVENT_WHEN.PAST]: 'Browse events that have already taken place.',
+  [EVENT_WHEN.ALL]: 'Browse every published Misqabbi event.',
 };
 
 export const REGISTRATION_STATUS_LABELS = {
