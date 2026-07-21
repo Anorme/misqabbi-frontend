@@ -4,7 +4,12 @@ import { createGuestSession } from '../../api/auth';
 import { useAuthState } from '../../contexts/auth/useAuth';
 import { useCheckoutEvent } from '../../hooks/mutations/useEventMutations';
 import { formatCurrency } from '../../utils/admin/tableHelpers';
-import { pesewasToGhs, validateEventForm } from '../../utils/events';
+import {
+  isEventRegistrationOpen,
+  pesewasToGhs,
+  REGISTRATION_CLOSED_MESSAGE,
+  validateEventForm,
+} from '../../utils/events';
 import Button from '../ui/Button';
 import DynamicEventForm from './DynamicEventForm';
 
@@ -47,6 +52,7 @@ const EventTicketCheckout = ({ event }) => {
   const checkoutMutation = useCheckoutEvent();
 
   const registrationForm = event.registrationForm;
+  const isClosed = !isEventRegistrationOpen(event);
   const activeTickets = useMemo(
     () => (event.ticketTypes || []).filter(t => t.isActive),
     [event.ticketTypes]
@@ -197,7 +203,9 @@ const EventTicketCheckout = ({ event }) => {
         Select a ticket type and complete the registration form to proceed to payment.
       </p>
 
-      {eventFull ? (
+      {isClosed ? (
+        <p className="text-sm font-medium text-gray-600">{REGISTRATION_CLOSED_MESSAGE}.</p>
+      ) : eventFull ? (
         <p className="text-sm font-medium text-red-600">This event is full — no spots remaining.</p>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-5" noValidate>
