@@ -3,7 +3,11 @@ import { useMemo, useState } from 'react';
 import { createGuestSession } from '../../api/auth';
 import { useAuthState } from '../../contexts/auth/useAuth';
 import { useRegisterForEvent } from '../../hooks/mutations/useEventMutations';
-import { validateEventForm } from '../../utils/events/validateEventForm';
+import {
+  isEventRegistrationOpen,
+  REGISTRATION_CLOSED_MESSAGE,
+  validateEventForm,
+} from '../../utils/events';
 import Button from '../ui/Button';
 import DynamicEventForm from './DynamicEventForm';
 
@@ -44,6 +48,7 @@ const EventRegistrationPanel = ({ event, onSuccess }) => {
   const registerMutation = useRegisterForEvent();
 
   const registrationForm = event.registrationForm;
+  const isClosed = !isEventRegistrationOpen(event);
   const isFull = event.spotsRemaining === 0;
 
   const [values, setValues] = useState(() => ({
@@ -149,7 +154,9 @@ const EventRegistrationPanel = ({ event, onSuccess }) => {
         Reserve your spot for this free event. Fill in the details below to register.
       </p>
 
-      {isFull ? (
+      {isClosed ? (
+        <p className="text-sm font-medium text-gray-600">{REGISTRATION_CLOSED_MESSAGE}.</p>
+      ) : isFull ? (
         <p className="text-sm font-medium text-red-600">This event is full — no spots remaining.</p>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4" noValidate>

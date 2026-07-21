@@ -3,7 +3,11 @@ import { useMemo, useState } from 'react';
 import { createGuestSession } from '../../api/auth';
 import { useAuthState } from '../../contexts/auth/useAuth';
 import { useSubmitVolunteerApplication } from '../../hooks/mutations/useEventMutations';
-import { validateEventForm } from '../../utils/events/validateEventForm';
+import {
+  isEventRegistrationOpen,
+  REGISTRATION_CLOSED_MESSAGE,
+  validateEventForm,
+} from '../../utils/events';
 import Button from '../ui/Button';
 import DynamicEventForm from './DynamicEventForm';
 
@@ -43,6 +47,7 @@ const EventVolunteerPanel = ({ event }) => {
   const volunteerMutation = useSubmitVolunteerApplication();
 
   const volunteerForm = event.volunteerForm;
+  const isClosed = !isEventRegistrationOpen(event);
 
   const [values, setValues] = useState(() => ({
     applicantInfo: buildInitialApplicantInfo(volunteerForm, currentUser),
@@ -181,32 +186,36 @@ const EventVolunteerPanel = ({ event }) => {
         Interested in helping out? Fill in the form below to apply as a volunteer.
       </p>
 
-      <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-        <DynamicEventForm
-          formSchema={volunteerForm}
-          identityKey="applicantInfo"
-          values={values}
-          errors={errors}
-          readOnly={false}
-          onIdentityFieldChange={handleIdentityFieldChange}
-          onCustomAnswerChange={handleCustomAnswerChange}
-        />
+      {isClosed ? (
+        <p className="text-sm font-medium text-gray-600">{REGISTRATION_CLOSED_MESSAGE}.</p>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+          <DynamicEventForm
+            formSchema={volunteerForm}
+            identityKey="applicantInfo"
+            values={values}
+            errors={errors}
+            readOnly={false}
+            onIdentityFieldChange={handleIdentityFieldChange}
+            onCustomAnswerChange={handleCustomAnswerChange}
+          />
 
-        {submitError && (
-          <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
-            {submitError}
-          </div>
-        )}
+          {submitError && (
+            <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+              {submitError}
+            </div>
+          )}
 
-        <Button
-          type="submit"
-          variant="primary"
-          className="w-full px-4 py-3 text-sm"
-          disabled={volunteerMutation.isPending}
-        >
-          {volunteerMutation.isPending ? 'Submitting…' : 'Apply to volunteer'}
-        </Button>
-      </form>
+          <Button
+            type="submit"
+            variant="primary"
+            className="w-full px-4 py-3 text-sm"
+            disabled={volunteerMutation.isPending}
+          >
+            {volunteerMutation.isPending ? 'Submitting…' : 'Apply to volunteer'}
+          </Button>
+        </form>
+      )}
     </section>
   );
 };
