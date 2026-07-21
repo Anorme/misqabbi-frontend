@@ -10,7 +10,7 @@ import NotFound from '../components/ui/NotFound';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { useEvent } from '../hooks/queries/useEvents';
 import { EVENT_TYPE, EVENT_TYPE_LABELS } from '../constants/events';
-import { formatEventDate, formatEventVenue, getEventTypeColor } from '../utils/events';
+import { formatEventDate, formatEventVenue, getEventTypeColor, isPastEvent } from '../utils/events';
 import scrollToTop from '../utils/scrollToTop';
 
 const getSpotsLabel = spotsRemaining => {
@@ -65,6 +65,7 @@ const EventDetails = () => {
   const venueLabel = formatEventVenue(event.venue);
   const venueLink = event.venue?.url || event.venue?.link;
   const spotsLabel = getSpotsLabel(event.spotsRemaining);
+  const showSpotsRemaining = Boolean(spotsLabel) && !isPastEvent(event);
   const isFree = event.type === EVENT_TYPE.FREE;
   const isPaid = event.type === EVENT_TYPE.PAID;
   const hasVolunteerForm = Boolean(event.volunteerForm);
@@ -114,7 +115,7 @@ const EventDetails = () => {
                   <Calendar className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" />
                   <span>{formatEventDate(event.eventDate)}</span>
                 </p>
-                {spotsLabel && (
+                {showSpotsRemaining && (
                   <p className="flex items-center justify-center gap-2 font-medium text-msq-purple-deep sm:justify-start">
                     <Users className="w-4 h-4 shrink-0" aria-hidden="true" />
                     <span>{spotsLabel}</span>
