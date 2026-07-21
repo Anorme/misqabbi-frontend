@@ -3,13 +3,12 @@ import { Calendar, CalendarClock, CalendarDays } from 'lucide-react';
 
 import ProductGrid from '../components/products/ProductGrid';
 import EventCard from '../components/events/EventCard';
+import EventTypeFilterDropdown from '../components/events/EventTypeFilterDropdown';
 import PaginationLocal from '../components/orders/PaginationLocal';
 import SEO from '../components/SEO';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { useEvents } from '../hooks/queries/useEvents';
 import {
-  EVENT_TYPE_LABELS,
-  EVENT_TYPES,
   EVENT_WHEN,
   EVENT_WHEN_DESCRIPTIONS,
   EVENT_WHEN_EMPTY,
@@ -17,11 +16,6 @@ import {
   EVENT_WHEN_LABELS,
 } from '../constants/events';
 import scrollToTop from '../utils/scrollToTop';
-
-const TYPE_OPTIONS = [
-  { value: '', label: 'All types' },
-  ...EVENT_TYPES.map(value => ({ value, label: EVENT_TYPE_LABELS[value] })),
-];
 
 const WHEN_OPTIONS = [
   { value: EVENT_WHEN.UPCOMING, icon: CalendarClock },
@@ -106,18 +100,7 @@ const Events = () => {
             })}
           </div>
 
-          <select
-            value={type}
-            onChange={e => setType(e.target.value)}
-            aria-label="Filter events by type"
-            className="cursor-pointer rounded-md bg-gray-50 px-3 py-2 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-gray-100 outline-none transition hover:bg-white hover:ring-gray-200 focus:bg-white focus:ring-2 focus:ring-msq-purple-rich/30"
-          >
-            {TYPE_OPTIONS.map(o => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
+          <EventTypeFilterDropdown value={type} onChange={setType} />
         </div>
 
         {isGridLoading ? (
