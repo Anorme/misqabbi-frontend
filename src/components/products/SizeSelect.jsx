@@ -15,7 +15,7 @@ function SizeSelect({
   onToggleCustomSize,
   supportsCustomSizing = false,
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
