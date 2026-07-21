@@ -22,6 +22,7 @@ const FAQs = lazy(() => import('./pages/FAQs'));
 const ReturnPolicy = lazy(() => import('./pages/ReturnPolicy'));
 const OrderPolicy = lazy(() => import('./pages/OrderPolicy'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const SizeGuide = lazy(() => import('./pages/SizeGuide'));
 const Checkout = lazy(() => import('./pages/Checkout'));
 const Favorites = lazy(() => import('./pages/Favorites'));
@@ -209,6 +210,16 @@ const App = () => {
             <MainLayout>
               <Suspense fallback={<PageLoader />}>
                 <PrivacyPolicy />
+              </Suspense>
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path="/terms-of-service"
+          element={
+            <MainLayout>
+              <Suspense fallback={<PageLoader />}>
+                <TermsOfService />
               </Suspense>
             </MainLayout>
           }
