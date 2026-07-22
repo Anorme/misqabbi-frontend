@@ -19,7 +19,7 @@ export const TERMS_OF_SERVICE = {
       title: 'Acceptance of terms',
       icon: 'CheckCircle',
       paragraphs: [
-        'These Terms form a binding agreement between you and Misqabbi. We may update these Terms from time to time. The "Last updated" date at the top of this page shows the latest revision. If you continue to use the site after changes are posted, you should review the updated Terms.',
+        'These Terms form a binding agreement between you and Misqabbi. We may update these Terms from time to time. If you continue to use the site after changes are posted, you should review the updated Terms.',
       ],
     },
     {

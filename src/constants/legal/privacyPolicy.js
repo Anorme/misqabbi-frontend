@@ -159,7 +159,7 @@ export const PRIVACY_POLICY = {
       title: 'Changes to this policy',
       icon: 'FileText',
       paragraphs: [
-        'We may update this Privacy Policy from time to time. The "Last updated" date at the top of this page shows when it was last revised. Continued use of our website after changes are posted means you should review the updated policy.',
+        'We may update this Privacy Policy from time to time. Continued use of our website after changes are posted means you should review the updated policy.',
       ],
     },
     {
