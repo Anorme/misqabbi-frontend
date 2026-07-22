@@ -105,7 +105,6 @@ const PolicyPageLayout = ({ policy }) => {
     description,
     subtitle,
     canonicalPath,
-    lastUpdated = LEGAL_META.lastUpdated,
     intro,
     sections = [],
     closing,
@@ -125,17 +124,14 @@ const PolicyPageLayout = ({ policy }) => {
             {subtitle}
           </p>
         )}
-        {lastUpdated && (
-          <p className="mt-3 text-xs sm:text-sm text-gray-500">Last updated: {lastUpdated}</p>
-        )}
       </header>
 
       <PolicySectionLegend sections={sections} variant="mobile" />
 
-      <div className="lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10 xl:gap-14">
+      <div className="lg:flex lg:items-start lg:gap-10 xl:gap-14">
         <PolicySectionLegend sections={sections} variant="desktop" />
 
-        <div className="min-w-0">
+        <div className="min-w-0 lg:flex-1">
           {intro && (
             <section className="mb-10 lg:mb-12 p-4 md:p-8 bg-gradient-to-br from-msq-purple-light/10 to-msq-purple-rich/10 rounded-xl border border-msq-purple-light/20">
               <div className="flex items-start gap-4">

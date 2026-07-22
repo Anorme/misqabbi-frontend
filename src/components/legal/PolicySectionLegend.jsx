@@ -46,7 +46,7 @@ const PolicySectionLegend = ({ sections = [], variant = 'mobile' }) => {
     return (
       <nav
         aria-label="On this page"
-        className="hidden lg:block lg:sticky lg:top-24 self-start w-full max-w-[240px]"
+        className="hidden lg:block lg:sticky lg:top-24 lg:w-60 lg:shrink-0 lg:self-start text-center"
       >
         <p className="font-bebas text-lg text-msq-purple-rich mb-4 tracking-wide">On this page</p>
         <ul className="space-y-1 border-l border-msq-purple-light/40">
@@ -57,7 +57,7 @@ const PolicySectionLegend = ({ sections = [], variant = 'mobile' }) => {
                 <a
                   href={`#${section.id}`}
                   onClick={event => handleNavClick(event, section.id)}
-                  className={`block pl-4 py-2 text-sm font-lato leading-snug transition-colors border-l-2 -ml-px ${
+                  className={`block px-3 py-2 text-sm font-lato leading-snug transition-colors border-l-2 -ml-px ${
                     isActive
                       ? 'border-msq-purple-rich text-msq-purple-rich font-semibold'
                       : 'border-transparent text-gray-600 hover:text-msq-purple-rich hover:border-msq-purple-light'
@@ -74,33 +74,40 @@ const PolicySectionLegend = ({ sections = [], variant = 'mobile' }) => {
   }
 
   return (
-    <nav
-      aria-label="On this page"
-      className="lg:hidden mb-10 p-4 sm:p-5 rounded-xl border border-msq-purple-light/20 bg-gradient-to-br from-msq-purple-light/10 to-msq-purple-rich/10"
-    >
+    <nav aria-label="On this page" className="lg:hidden mb-10 text-center">
       <p className="font-bebas text-base sm:text-lg text-msq-purple-rich mb-3 tracking-wide">
         On this page
       </p>
-      <ul className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-thin">
-        {sections.map(section => {
-          const isActive = activeId === section.id;
-          return (
-            <li key={section.id} className="shrink-0">
-              <a
-                href={`#${section.id}`}
-                onClick={event => handleNavClick(event, section.id)}
-                className={`inline-flex items-center min-h-10 px-3 py-2 text-xs sm:text-sm font-lato rounded-lg border transition-colors whitespace-nowrap ${
-                  isActive
-                    ? 'bg-msq-purple-rich text-white border-msq-purple-rich'
-                    : 'bg-white text-msq-purple-rich border-gray-100 hover:border-msq-purple-light'
-                }`}
-              >
-                {section.title}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+      <div className="overflow-hidden rounded-lg border border-msq-purple-light/30">
+        <table className="w-full border-collapse text-center">
+          <tbody>
+            {sections.map((section, index) => {
+              const isActive = activeId === section.id;
+              const isLast = index === sections.length - 1;
+              return (
+                <tr
+                  key={section.id}
+                  className={isLast ? undefined : 'border-b border-msq-purple-light/30'}
+                >
+                  <td className="p-0">
+                    <a
+                      href={`#${section.id}`}
+                      onClick={event => handleNavClick(event, section.id)}
+                      className={`block px-3.5 py-2.5 text-sm font-lato leading-snug transition-colors ${
+                        isActive
+                          ? 'bg-msq-purple-rich/10 text-msq-purple-rich font-semibold'
+                          : 'text-gray-700 hover:bg-msq-purple-light/10 hover:text-msq-purple-rich'
+                      }`}
+                    >
+                      {section.title}
+                    </a>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </nav>
   );
 };
