@@ -133,14 +133,14 @@ const PolicyPageLayout = ({ policy }) => {
 
         <div className="min-w-0 lg:flex-1">
           {intro && (
-            <section className="mb-10 lg:mb-12 p-4 md:p-8 bg-gradient-to-br from-msq-purple-light/10 to-msq-purple-rich/10 rounded-xl border border-msq-purple-light/20">
-              <div className="flex items-start gap-4">
+            <section className="mb-10 lg:mb-12 p-4 md:p-8 bg-gradient-to-br from-msq-purple-light/10 to-msq-purple-rich/10 rounded-xl border border-msq-purple-light/20 text-center">
+              <div className="flex flex-col items-center gap-4">
                 {intro.icon && (
                   <div className="flex-shrink-0">
                     {resolveIcon(intro.icon, 'w-8 h-8 sm:w-10 sm:h-10 text-msq-purple-rich')}
                   </div>
                 )}
-                <div>
+                <div className="min-w-0 w-full">
                   {intro.title && (
                     <h2 className="text-lg md:text-xl lg:text-2xl font-bebas text-msq-purple-rich mb-2 md:mb-3">
                       {intro.title}
@@ -163,7 +163,7 @@ const PolicyPageLayout = ({ policy }) => {
                   <article
                     key={section.id}
                     id={section.id}
-                    className="scroll-mt-28 flex items-start gap-4 p-4 md:p-6 bg-white border-2 border-gray-100 rounded-lg hover:border-msq-purple-light transition-colors"
+                    className="scroll-mt-28 flex flex-col items-center gap-3 p-4 md:p-6 bg-white border-2 border-gray-100 rounded-lg hover:border-msq-purple-light transition-colors text-center"
                   >
                     {section.icon && (
                       <div className="flex-shrink-0">
@@ -179,7 +179,7 @@ const PolicyPageLayout = ({ policy }) => {
                         )}
                       </div>
                     )}
-                    <div className="min-w-0">
+                    <div className="min-w-0 w-full">
                       <h2 className="text-base sm:text-lg md:text-xl font-bebas text-msq-purple-rich mb-2">
                         {section.title}
                       </h2>
@@ -196,7 +196,7 @@ const PolicyPageLayout = ({ policy }) => {
                         </p>
                       ))}
                       {section.bullets?.length > 0 && (
-                        <ul className="mt-1 space-y-2 list-disc pl-5 text-xs sm:text-sm lg:text-base text-gray-700 leading-relaxed">
+                        <ul className="mt-1 space-y-2 list-disc list-inside text-xs sm:text-sm lg:text-base text-gray-700 leading-relaxed">
                           {section.bullets.map((bullet, index) => (
                             <li key={`${section.id}-b-${index}`}>
                               {renderRichText(bullet, `${section.id}-b-${index}`)}
@@ -213,13 +213,13 @@ const PolicyPageLayout = ({ policy }) => {
 
           {closing && (
             <section
-              className={`mb-10 lg:mb-12 p-4 md:p-8 rounded-xl ${
+              className={`mb-10 lg:mb-12 p-4 md:p-8 rounded-xl text-center ${
                 closing.variant === 'solid'
                   ? 'bg-msq-purple-rich text-white'
                   : 'bg-gradient-to-br from-msq-purple-light/10 to-msq-purple-rich/10 border border-msq-purple-light/20'
               }`}
             >
-              <div className="flex items-start gap-4">
+              <div className="flex flex-col items-center gap-4">
                 {closing.icon && (
                   <div className="flex-shrink-0">
                     {resolveIcon(
@@ -230,7 +230,7 @@ const PolicyPageLayout = ({ policy }) => {
                     )}
                   </div>
                 )}
-                <div>
+                <div className="min-w-0 w-full">
                   {closing.title && (
                     <h2
                       className={`text-lg md:text-xl lg:text-2xl font-bebas mb-2 md:mb-3 ${
