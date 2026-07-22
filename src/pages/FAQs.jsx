@@ -67,13 +67,13 @@ const FAQs = () => {
 
       {/* Additional Help Section */}
       <section className="mt-16 p-4 md:p-8 bg-msq-purple-rich rounded-lg text-white">
-        <h2 className="text-lg md:text-xl lg:text-2xl font-bebas mb-2 md:mb-4">
+        <h2 className="text-lg md:text-xl lg:text-2xl font-bebas mb-2 md:mb-4 text-center">
           Still have questions?
         </h2>
-        <p className=" text-xs sm:text-sm lg:text-base mb-2 md:mb-4">
+        <p className="text-xs sm:text-sm lg:text-base mb-2 md:mb-4 text-center">
           Can't find the answer you're looking for? Please reach out to our friendly support team.
         </p>
-        <div className="flex flex-col sm:flex-row gap-2 md:gap-4">
+        <div className="flex flex-col sm:flex-row gap-2 md:gap-4 justify-center">
           <a
             href="https://wa.me/233507226511"
             target="_blank"

@@ -78,15 +78,15 @@ const SizeGuide = () => {
 
       {/* Additional Information Section */}
       <section className="mt-12 p-4 md:p-8 bg-gradient-to-br from-msq-purple-light/10 to-msq-purple-rich/10 rounded-xl border border-msq-purple-light/20">
-        <h2 className="text-lg md:text-xl lg:text-2xl font-bebas text-msq-purple-rich mb-2 md:mb-4">
+        <h2 className="text-lg md:text-xl lg:text-2xl font-bebas text-msq-purple-rich mb-2 md:mb-4 text-center">
           Need More Help?
         </h2>
-        <p className="text-xs sm:text-sm lg:text-base text-gray-700 mb-4 md:mb-6 leading-relaxed">
+        <p className="text-xs sm:text-sm lg:text-base text-gray-700 mb-4 md:mb-6 leading-relaxed text-center">
           If you&apos;re unsure about your measurements or need assistance, don&apos;t hesitate to
           reach out. Our team is here to help you find the perfect fit for your made-to-measure
           pieces.
         </p>
-        <div className="flex flex-col sm:flex-row gap-2 md:gap-4">
+        <div className="flex flex-col sm:flex-row gap-2 md:gap-4 justify-center">
           <a
             href="https://wa.me/233507226511"
             target="_blank"

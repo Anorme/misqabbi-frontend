@@ -266,27 +266,23 @@ const PolicyPageLayout = ({ policy }) => {
               }`}
             >
               <h2
-                className={`text-lg md:text-xl lg:text-2xl font-bebas mb-2 md:mb-4 ${
-                  contactCta.variant === 'solid' ? 'text-white' : 'text-msq-purple-rich text-center'
+                className={`text-lg md:text-xl lg:text-2xl font-bebas mb-2 md:mb-4 text-center ${
+                  contactCta.variant === 'solid' ? 'text-white' : 'text-msq-purple-rich'
                 }`}
               >
                 {contactCta.title}
               </h2>
               {contactCta.body && (
                 <p
-                  className={`text-xs sm:text-sm lg:text-base mb-4 md:mb-6 leading-relaxed ${
-                    contactCta.variant === 'solid' ? 'text-white/95' : 'text-gray-700 text-center'
+                  className={`text-xs sm:text-sm lg:text-base mb-4 md:mb-6 leading-relaxed text-center ${
+                    contactCta.variant === 'solid' ? 'text-white/95' : 'text-gray-700'
                   }`}
                 >
                   {renderRichText(contactCta.body, 'cta')}
                 </p>
               )}
               {contactCta.actions?.length > 0 && (
-                <div
-                  className={`flex flex-col sm:flex-row gap-2 md:gap-4 ${
-                    contactCta.variant === 'solid' ? '' : 'justify-center'
-                  }`}
-                >
+                <div className="flex flex-col sm:flex-row gap-2 md:gap-4 justify-center">
                   {contactCta.actions.map(action => {
                     const className =
                       action.style === 'primary'
